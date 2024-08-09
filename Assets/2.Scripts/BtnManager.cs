@@ -1,9 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BtnManager : MonoBehaviour
 {
+    public static BtnManager Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    /// <summary>
+    /// ∏ﬁ¿Œæ¿
+    /// </summary>
+    public void StartBtn()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    /// <summary>
+    /// ∞‘¿”æ¿
+    /// </summary>
     [SerializeField] GameObject heroPanel;
     [SerializeField] GameObject storePanel;
     [SerializeField] GameObject treasurePanel;

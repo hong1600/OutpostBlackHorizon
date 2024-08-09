@@ -4,6 +4,22 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     // Start is called before the first frame update
     void Start()
     {

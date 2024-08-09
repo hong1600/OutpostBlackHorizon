@@ -8,9 +8,10 @@ public class Enemy : MonoBehaviour
 
     BoxCollider2D box;
 
+    GameObject wayPointTrs;
     [SerializeField] Transform[] wayPoint;
-    [SerializeField] Transform target;
-    [SerializeField] int wayPointIndex = 0;
+    Transform target;
+    int wayPointIndex = 0;
 
     int id;
     int hp;
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         box = GetComponent<BoxCollider2D>();
+        wayPointTrs = GameObject.Find("WayPoints");
     }
 
     private void Start()
@@ -26,6 +28,12 @@ public class Enemy : MonoBehaviour
         id = EnemyData.enemyId;
         hp = EnemyData.enemyHp;
         speed = EnemyData.enemySpeed;
+
+        wayPoint = new Transform[wayPointTrs.transform.childCount];
+        for (int i = 0; i < wayPoint.Length; i++)
+        {
+            wayPoint[i] = wayPointTrs.transform.GetChild(i);
+        }
 
         target = wayPoint[wayPointIndex];
     }
