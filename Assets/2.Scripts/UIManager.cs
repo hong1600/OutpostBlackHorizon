@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
+
+    [SerializeField] TextMeshProUGUI roundText;
+    [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] TextMeshProUGUI monsterCountText;
+    [SerializeField] Slider monsterCountSlider;
 
     private void Awake()
     {
@@ -20,15 +27,29 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        
+        timer();
+        round();
+        monsterSlider();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void round()
     {
-        
+        roundText.text = $"WAVE {GameManager.Instance.CurRound.ToString()}";
+    }
+
+    private void timer()
+    {
+        int min = GameManager.Instance.Min;
+        float sec = GameManager.Instance.Sec;
+
+        timerText.text = string.Format("{0:00}:{1:00}", min, (int)sec);
+    }
+
+    private void monsterSlider()
+    {
+        monsterCountSlider.value = 0;
+        monsterCountText.text = $"0 / 100";
     }
 }

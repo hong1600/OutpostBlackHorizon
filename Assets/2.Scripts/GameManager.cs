@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,26 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject enemy1;
     [SerializeField] GameObject spawnPoint;
-    float spawnTime = 1;
+    [SerializeField] float spawndelay = 0.4f;
+
+    int min;
+    float sec;
+    [SerializeField] bool spawnTime;
+    [SerializeField] int curRound;
+    [SerializeField] int curMonster;
+    [SerializeField] int maxMonster;
+
+
+    public int CurRound 
+    { get { return curRound; } }
+    public int Min 
+    { get { return min; } }
+    public float Sec 
+    { get { return sec; } }
+    public int CurMonster
+    { get { return curMonster; } }
+    public int MaxMonster
+    { get { return maxMonster; } }
 
     private void Awake()
     {
@@ -26,23 +46,59 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        sec = 3;
+        min = 0;
+        curRound = 0;
+        spawnTime = false;
         spawnPoint = GameObject.Find("SpawnPoint");
     }
 
     private void Update()
     {
+        countDown();
         spawnMonster();
+        monsterCounter();
+    }
+
+    private void countDown()
+    {
+        sec -= Time.deltaTime;
+
+        if(sec <= 0) 
+        {
+            StartCoroutine(spawner());
+
+            if (min < 0)
+            {
+                min -= 1;
+            }
+        }
+    }
+
+    IEnumerator spawner()
+    {
+        curRound++;
+        sec = 20f;
+        spawnTime = true;
+
+        yield return new WaitForSeconds(17);
+
+        spawnTime = false;
     }
 
     private void spawnMonster()
     {
-        if (spawnTime <= 0)
+        if (spawndelay <= 0 && spawnTime == true)
         {
             Instantiate(enemy1, spawnPoint.transform.position, Quaternion.identity);
-            spawnTime = 0.3f;
+            spawndelay = 0.4f;
         }
 
-        spawnTime -= Time.deltaTime;
+        spawndelay -= Time.deltaTime;
     }
 
+    private void monsterCounter()
+    {
+        
+    }
 }
