@@ -23,8 +23,6 @@ public class UIManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Update()
@@ -49,7 +47,7 @@ public class UIManager : MonoBehaviour
 
     private void monsterSlider()
     {
-        monsterCountSlider.value = 0;
-        monsterCountText.text = $"0 / 100";
+        monsterCountSlider.value = (float)GameManager.Instance.CurMonster/(float)GameManager.Instance.MaxMonster;
+        monsterCountText.text = $"{GameManager.Instance.CurMonster} / {GameManager.Instance.MaxMonster}";
     }
 }
