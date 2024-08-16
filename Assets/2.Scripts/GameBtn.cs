@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameBtn : MonoBehaviour
 {
-
     [SerializeField] GameObject randomPanel;
     [SerializeField] GameObject upgradePanel;
     [SerializeField] GameObject mixPanel;
@@ -17,7 +16,10 @@ public class GameBtn : MonoBehaviour
 
     public void spawnBtn()
     {
-        
+        if(GameManager.Instance.MyGold > GameManager.Instance.SpawnGold) 
+        {
+            GameManager.Instance.spawnUnit();
+        }
     }
 
     public void randomBtn()
@@ -64,7 +66,5 @@ public class GameBtn : MonoBehaviour
             speed1 = true;
             speedText.text = "X1";
         }
-
     }
-
 }

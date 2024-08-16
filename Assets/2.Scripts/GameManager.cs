@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,14 +7,21 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    int min;
-    float sec;
-    [SerializeField] bool spawnTime;
-    [SerializeField]int curRound;
-    [SerializeField]int curMonster;
-    [SerializeField] int maxMonster;
+    [Header("시스템")]
     [SerializeField] GameObject warningPanel;
     [SerializeField] GameObject GameOverPanel;
+    int min;
+    float sec;
+    bool spawnTime;
+    int curRound;
+    int curMonster;
+    int maxMonster;
+    bool checkWarning = true;
+    bool checkGameOver = false;
+    float gold;
+    int spawnGold;
+    int coin;
+    int unitCount;
 
     [Header("유닛")]
     [SerializeField] GameObject unit;
@@ -25,8 +30,6 @@ public class GameManager : MonoBehaviour
     [Header("몬스터")]
     [SerializeField] GameObject monster;
     [SerializeField] List<GameObject> enemy = new List<GameObject>();
-    [SerializeField] GameObject enemy1;
-    [SerializeField] GameObject enemy2;
     [SerializeField] GameObject enemySpawnPoint;
     [SerializeField] float enemySpawndelay = 0.85f;
 
@@ -40,6 +43,14 @@ public class GameManager : MonoBehaviour
     { get { return curMonster; } }
     public int MaxMonster
     { get { return maxMonster; } }
+    public float MyGold
+    { get { return gold; } }
+    public int SpawnGold
+    { get { return spawnGold; } }
+    public int Coin
+    { get { return coin; } }
+    public int UnitCount
+    { get { return unitCount; } }
 
     private void Awake()
     {
@@ -61,19 +72,41 @@ public class GameManager : MonoBehaviour
         }
 
         enemySpawnPoint = GameObject.Find("SpawnPoint");
-        sec = 3;
+
         min = 0;
-        curRound = 0;
+        sec = 3;
         spawnTime = false;
+        curRound = 0;
         curMonster = 0;
         maxMonster = 100;
+        checkWarning = true;
+        checkGameOver = false;
+        gold = 170f;
+        spawnGold = 20;
+        coin = 0;
+        unitCount = 0;
     }
 
     private void Update()
     {
+        if (checkGameOver) return;
+
         countDown();
         spawnMonster();
-        monsterCounter();
+        monsterCount();
+        warning();
+        gameOver();
+    }
+
+    public void spawnUnit()
+    {
+        gold -= spawnGold;
+        spawnGold += 2;
+    }
+
+    public void spawnLevelUp()
+    {
+
     }
 
     private void countDown()
@@ -82,7 +115,7 @@ public class GameManager : MonoBehaviour
 
         if(sec <= 0) 
         {
-            StartCoroutine(spawner());
+            StartCoroutine(spawn());
 
             if (min < 0)
             {
@@ -91,7 +124,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator spawner()
+    IEnumerator spawn()
     {
         curRound++;
         sec = 20f;
@@ -114,16 +147,21 @@ public class GameManager : MonoBehaviour
         enemySpawndelay -= Time.deltaTime;
     }
 
-    private void monsterCounter()
+    private void monsterCount()
     {
         curMonster = monster.transform.childCount;
     }
 
     private void warning()
     {
-        if (curMonster >= maxMonster / curMonster * 80)
+        if (curMonster >= maxMonster * 0.8f && checkWarning == true)
         {
             StartCoroutine(Warning());
+            checkWarning = false;
+        }
+        if (curMonster < maxMonster * 0.8f)
+        {
+            checkWarning = true;
         }
     }
 
@@ -131,14 +169,14 @@ public class GameManager : MonoBehaviour
     {
         warningPanel.SetActive(true);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
         warningPanel.SetActive(false);
     }
 
     private void gameOver()
     {
-        if (curMonster == maxMonster)
+        if (curMonster >= maxMonster)
         {
             StartCoroutine(GameOver());
         }
@@ -147,10 +185,13 @@ public class GameManager : MonoBehaviour
     IEnumerator GameOver()
     {
         GameOverPanel.SetActive(true);
+        checkGameOver = true;
+        Time.timeScale = 0.5f;
 
         yield return new WaitForSeconds(1.5f);
 
         GameOverPanel.SetActive(false);
+        Time.timeScale = 1f;
         SceneManager.LoadScene(3);
     }
 }

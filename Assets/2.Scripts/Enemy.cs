@@ -13,9 +13,9 @@ public class Enemy : MonoBehaviour
     Transform target;
     int wayPointIndex = 0;
 
-    int id;
-    int hp;
-    float speed;
+    string enemyName;
+    int enemyHp;
+    float enemySpeed;
 
     private void Awake()
     {
@@ -25,9 +25,9 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        id = EnemyData.enemyId;
-        hp = EnemyData.enemyHp;
-        speed = EnemyData.enemySpeed;
+        enemyName = EnemyData.enemyName;
+        enemyHp = EnemyData.enemyHp;
+        enemySpeed = EnemyData.enemySpeed;
 
         wayPoint = new Transform[wayPointTrs.transform.childCount];
         for (int i = 0; i < wayPoint.Length; i++)
@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
     private void move()
     {
         Vector3 dir = target.position - transform.position;
-        transform.Translate(dir.normalized * speed * Time.deltaTime);
+        transform.Translate(dir.normalized * enemySpeed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, target.position) <= 0.05f)
         {
