@@ -2,12 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainBtn : MonoBehaviour
 {
     [SerializeField] GameObject heroPanel;
     [SerializeField] GameObject storePanel;
     [SerializeField] GameObject treasurePanel;
+    [SerializeField] GameObject optionPanel;
+    [SerializeField] GameObject settingPanel;
+    [SerializeField] Image bgmImg;
+    [SerializeField] Image sfxImg;
+
+    bool option;
+    bool bgm;
+    bool sfx;
+
+    private void Start()
+    {
+        option = false;
+        bgm = false;
+        sfx = false;
+    }
 
     public void StartBtn()
     {
@@ -32,6 +48,7 @@ public class MainBtn : MonoBehaviour
         heroPanel.SetActive(false);
         storePanel.SetActive(false);
         treasurePanel.SetActive(false);
+        
     }
     public void treasureBtn()
     {
@@ -39,4 +56,58 @@ public class MainBtn : MonoBehaviour
         storePanel.SetActive(false);
         treasurePanel.SetActive(true);
     }
+
+    public void optionBtn() 
+    {
+        if (option == false)
+        {
+            optionPanel.SetActive(true);
+            option = true;
+        }
+        else
+        {
+            optionPanel.SetActive(false);
+            option = false;
+        }
+    }
+
+    public void settingBtn()
+    {
+        settingPanel.SetActive(true);
+        optionPanel.SetActive(false);
+    }
+
+    public void settingBtnClose()
+    {
+        settingPanel.SetActive(false);
+        option = false;
+    }
+
+    public void bgmBtn()
+    {
+        if (bgm == false)
+        {
+            bgmImg.color = new Color(1, 0, 0, 1);
+            bgm = true;
+        }
+        else
+        {
+            bgmImg.color = new Color(1, 0, 0, 0);
+            bgm = false;
+        }
+    }
+    public void sfxBtn()
+    {
+        if (sfx == false)
+        {
+            sfxImg.color = new Color(1, 0, 0, 1);
+            sfx = true;
+        }
+        else
+        {
+            sfxImg.color = new Color(1, 0, 0, 0);
+            sfx = false;
+        }
+    }
+
 }

@@ -4,10 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class GameUI : MonoBehaviour
 {
-    public static UIManager Instance;
-
     [SerializeField] TextMeshProUGUI roundText;
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] TextMeshProUGUI monsterCountText;
@@ -17,19 +15,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI spawnGoldText;
     [SerializeField] TextMeshProUGUI coinText;
     [SerializeField] TextMeshProUGUI UnitCountText;
-
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
 
     private void Update()
     {

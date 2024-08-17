@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] EnemyData EnemyData;
+    [SerializeField] EnemyData enemyData;
 
     BoxCollider2D box;
 
@@ -25,9 +25,9 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        enemyName = EnemyData.enemyName;
-        enemyHp = EnemyData.enemyHp;
-        enemySpeed = EnemyData.enemySpeed;
+        enemyName = enemyData.enemyName;
+        enemyHp = enemyData.enemyHp;
+        enemySpeed = enemyData.enemySpeed;
 
         wayPoint = new Transform[wayPointTrs.transform.childCount];
         for (int i = 0; i < wayPoint.Length; i++)

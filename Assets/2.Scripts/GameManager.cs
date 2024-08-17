@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         enemySpawnPoint = GameObject.Find("SpawnPoint");
 
         min = 0;
-        sec = 3;
+        sec = 5;
         spawnTime = false;
         curRound = 0;
         curMonster = 0;

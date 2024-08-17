@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6720428827120844}
   - component: {fileID: 865769622593753075}
   - component: {fileID: 5096228174394567812}
+  - component: {fileID: -173674953052193772}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Untagged
@@ -106,3 +107,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-173674953052193772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6998770804326711730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef18008d45ffcd46be83da1775c891b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitData: {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
