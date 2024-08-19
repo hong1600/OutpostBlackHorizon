@@ -12,9 +12,6 @@ public class LoadScene : MonoBehaviour
     [SerializeField] GameObject loadingText;
     [SerializeField] GameObject pressText;
 
-    GameObject player;
-    Rigidbody2D playerrigid;
-
     private void Start()
     {
         StartCoroutine(loadScene());
@@ -50,15 +47,9 @@ public class LoadScene : MonoBehaviour
                 loadingText.SetActive(false);
                 pressText.SetActive(true);
             }
-
-            if (Input.GetKeyDown(KeyCode.Space) && slider.value >= 1f
-            && operation.progress >= 0.9f)
+            if (slider.value >= 1f && operation.progress >= 0.9f)
             {
                 operation.allowSceneActivation = true;
-                if (player != null)
-                {
-                    playerrigid.simulated = true;
-                }
             }
         }
     }

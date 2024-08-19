@@ -27,7 +27,7 @@ public class MainBtn : MonoBehaviour
 
     public void StartBtn()
     {
-        SceneManager.LoadScene(1);
+        LoadScene.loadScene(2);
     }
 
     public void heroBtn()
