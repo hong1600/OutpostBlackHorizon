@@ -11,6 +11,7 @@ public class PlayerData
     public float maxExp = 100f;
     public int gold = 0;
     public int gem = 0;
+    public int paper = 0;
     public bool first = true;
 }
 

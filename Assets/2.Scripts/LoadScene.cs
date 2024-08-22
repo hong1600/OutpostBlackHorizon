@@ -47,7 +47,7 @@ public class LoadScene : MonoBehaviour
                 loadingText.SetActive(false);
                 pressText.SetActive(true);
             }
-            if (slider.value >= 1f && operation.progress >= 0.9f)
+            if (slider.value >= 1f && operation.progress >= 0.9f && Input.anyKeyDown)
             {
                 operation.allowSceneActivation = true;
             }

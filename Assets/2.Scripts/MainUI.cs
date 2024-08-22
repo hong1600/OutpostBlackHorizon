@@ -27,6 +27,8 @@ public class MainUI : MonoBehaviour
     private void level()
     {
         levelText.text = DataManager.instance.playerdata.level.ToString();
+
+        expSlider.value = DataManager.instance.playerdata.curExp / DataManager.instance.playerdata.maxExp;
     }
 
     private void gold()

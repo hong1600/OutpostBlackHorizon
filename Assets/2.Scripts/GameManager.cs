@@ -26,6 +26,12 @@ public class GameManager : MonoBehaviour
     [Header("¿Ø¥÷")]
     [SerializeField] GameObject unit;
     [SerializeField] List<GameObject> unitSpawnPointList = new List<GameObject>();
+    string[] firstSelectOption = { "A", "B", "C" };
+    float[] firstSelectWeight = { 0.2f, 0.3f, 0.5f };
+    [SerializeField] List<GameObject> unitListA = new List<GameObject>();
+    [SerializeField] List<GameObject> unitListB = new List<GameObject>();
+    [SerializeField] List<GameObject> unitListC = new List<GameObject>();
+    int groundNum;
 
     [Header("∏ÛΩ∫≈Õ")]
     [SerializeField] GameObject monster;
@@ -66,10 +72,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < unitSpawnPointList.Count; i++)
-        {
-            Instantiate(new GameObject($"spawnPoint{i}"), unit.transform);
-        }
+        //for (int i = 0; i < unitSpawnPointList.Count; i++)
+        //{
+        //    Instantiate(new GameObject($"spawnPoint{i}"), unit.transform);
+        //}
 
         enemySpawnPoint = GameObject.Find("SpawnPoint");
 
@@ -91,6 +97,7 @@ public class GameManager : MonoBehaviour
     {
         if (checkGameOver) return;
 
+        CheckGround();
         countDown();
         spawnMonster();
         monsterCount();
@@ -102,11 +109,68 @@ public class GameManager : MonoBehaviour
     {
         gold -= spawnGold;
         spawnGold += 2;
+
+        string firstSelection = FirstSelectRandom(firstSelectOption, firstSelectWeight);
+
+        int randA = Random.Range(0, 1);
+        int randB = Random.Range(0, 1);
+        int randC = Random.Range(0, 1);
+
+        switch ( firstSelection ) 
+        {
+            case "A":
+                Instantiate(unitListA[randA], unitSpawnPointList[groundNum].transform.position,
+                    Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                break;
+            case "B":
+                Instantiate(unitListB[randB], unitSpawnPointList[groundNum].transform.position,
+                    Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                break;
+            case "C":
+                Instantiate(unitListC[randC], unitSpawnPointList[groundNum].transform.position,
+                    Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                break;
+        }
     }
 
-    public void spawnLevelUp()
+    private void CheckGround()  
     {
+        int num = 0;
 
+        for (num = 0; num < unitSpawnPointList.Count; num++)
+        {
+            if (unitSpawnPointList[num].transform.childCount > 0)
+            {
+                num++;
+            }
+            else if (unitSpawnPointList[num].transform.childCount <= 0)
+            {
+                groundNum = num;
+            }
+        }
+    }
+
+    string FirstSelectRandom(string[] options, float[] weights)
+    {
+        float totalWeight = 0f;
+        foreach(float weight in weights)
+        {
+            totalWeight += weight;
+        }
+
+        float randomValue = Random.Range(0, totalWeight);
+        float cumulativeWeight = 0f;
+
+        for(int i = 0; i < options.Length; i++) 
+        {
+            cumulativeWeight += weights[i];
+            if(randomValue < cumulativeWeight) 
+            {
+                return options[i];
+            }
+        }
+
+        return options[options.Length - 1];
     }
 
     private void countDown()
