@@ -15,5 +15,5 @@ MonoBehaviour:
   unitName: Fox
   unitDamage: 0.5
   attackSpeed: 3
-  attackRange: 1
+  attackRange: 2
   unitGrade: 1

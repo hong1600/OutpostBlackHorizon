@@ -15,5 +15,5 @@ MonoBehaviour:
   unitName: Eagle
   unitDamage: 3
   attackSpeed: 2
-  attackRange: 1
+  attackRange: 3
   unitGrade: 0

@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
     float gold;
     int spawnGold;
     int coin;
-    int unitCount;
 
     [Header("РЏДж")]
     [SerializeField] GameObject unit;
@@ -56,7 +55,7 @@ public class GameManager : MonoBehaviour
     public int Coin
     { get { return coin; } }
     public int UnitCount
-    { get { return unitCount; } }
+    { get { return groundNum; } }
 
     private void Awake()
     {
@@ -90,7 +89,6 @@ public class GameManager : MonoBehaviour
         gold = 170f;
         spawnGold = 20;
         coin = 0;
-        unitCount = 0;
     }
 
     private void Update()
@@ -135,17 +133,11 @@ public class GameManager : MonoBehaviour
 
     private void CheckGround()  
     {
-        int num = 0;
-
-        for (num = 0; num < unitSpawnPointList.Count; num++)
+        for (groundNum = 0; groundNum < unitSpawnPointList.Count; groundNum++)
         {
-            if (unitSpawnPointList[num].transform.childCount > 0)
+            if (unitSpawnPointList[groundNum].transform.childCount <= 0)
             {
-                num++;
-            }
-            else if (unitSpawnPointList[num].transform.childCount <= 0)
-            {
-                groundNum = num;
+                return;
             }
         }
     }

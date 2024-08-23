@@ -57,6 +57,6 @@ public class GameUI : MonoBehaviour
 
         coinText.text = GameManager.Instance.Coin.ToString();
 
-        UnitCountText.text = GameManager.Instance.UnitCount.ToString();
+        UnitCountText.text = $"{GameManager.Instance.UnitCount.ToString()} / 20";
     }
 }

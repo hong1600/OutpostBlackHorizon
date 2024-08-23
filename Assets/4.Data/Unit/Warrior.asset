@@ -15,5 +15,5 @@ MonoBehaviour:
   unitName: Warrior
   unitDamage: 1
   attackSpeed: 1
-  attackRange: 1
+  attackRange: 2
   unitGrade: 2
