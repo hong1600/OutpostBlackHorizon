@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     int maxMonster;
     bool checkWarning = true;
     bool checkGameOver = false;
-    float gold;
+    [SerializeField] float gold;
     int spawnGold;
     int coin;
 

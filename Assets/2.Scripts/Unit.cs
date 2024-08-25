@@ -17,7 +17,6 @@ public class Unit : MonoBehaviour
     [SerializeField] float distance = 1;
     [SerializeField] bool attackReady;
 
-
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -56,7 +55,7 @@ public class Unit : MonoBehaviour
 
     private void attack()
     {
-        if (attackReady) 
+        if (attackReady == true)
         {
             anim.SetBool("isAttack", true);
         }
