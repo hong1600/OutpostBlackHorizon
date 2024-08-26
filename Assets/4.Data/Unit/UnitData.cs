@@ -8,7 +8,7 @@ public enum UnitGrade { a, b ,c}
 public class UnitData : ScriptableObject
 {
     public string unitName;
-    public float unitDamage;
+    public int unitDamage;
     public int attackSpeed;
     public float attackRange;
     public UnitGrade unitGrade;

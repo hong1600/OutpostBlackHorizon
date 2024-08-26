@@ -17,6 +17,9 @@ public class Enemy : MonoBehaviour
     int enemyHp;
     float enemySpeed;
 
+    public int EnemyHp 
+    { get { return enemyHp; } set { value = enemyHp; } }
+
     private void Awake()
     {
         box = GetComponent<BoxCollider2D>();
@@ -41,6 +44,7 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         move();
+        die();
     }
 
     private void move()
@@ -64,6 +68,22 @@ public class Enemy : MonoBehaviour
         {
             wayPointIndex++;
         }
+
         target = wayPoint[wayPointIndex];
+    }
+
+    public void takeDamage(int damage)
+    {
+        enemyHp -= damage;
+
+        if (enemyHp <= 0)
+        {
+            die();
+        }
+    }
+
+    private void die()
+    {
+        Destroy(gameObject);
     }
 }

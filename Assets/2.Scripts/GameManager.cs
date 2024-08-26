@@ -145,6 +145,7 @@ public class GameManager : MonoBehaviour
     string FirstSelectRandom(string[] options, float[] weights)
     {
         float totalWeight = 0f;
+
         foreach(float weight in weights)
         {
             totalWeight += weight;
@@ -156,6 +157,7 @@ public class GameManager : MonoBehaviour
         for(int i = 0; i < options.Length; i++) 
         {
             cumulativeWeight += weights[i];
+
             if(randomValue < cumulativeWeight) 
             {
                 return options[i];

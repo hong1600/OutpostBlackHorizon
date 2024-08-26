@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Bat
   enemySpeed: 1.5
-  enemyHp: 1
+  enemyHp: 5
