@@ -8496,7 +8496,7 @@ GameObject:
   - component: {fileID: 845934781}
   - component: {fileID: 845934780}
   m_Layer: 5
-  m_Name: CoinPanel
+  m_Name: MoneyPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10059,7 +10059,7 @@ MonoBehaviour:
   monsterCountText: {fileID: 913928017}
   monsterCountSlider: {fileID: 1073232770}
   warningText: {fileID: 1368994610}
-  myGold: {fileID: 972873572}
+  Gold: {fileID: 972873572}
   spawnGoldText: {fileID: 687563490}
   coinText: {fileID: 394972056}
   UnitCountText: {fileID: 553271435}

@@ -1,28 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] EnemyData enemyData;
 
     BoxCollider2D box;
+    Animator anim;
 
     GameObject wayPointTrs;
     [SerializeField] Transform[] wayPoint;
     Transform target;
     int wayPointIndex = 0;
 
+    [SerializeField] GameObject healthBarBack;
+    [SerializeField] Image healthBarFill;
+
+    public bool isDie;
+
     string enemyName;
-    int enemyHp;
+    [SerializeField] float enemyHp;
+    [SerializeField] float curhp;
     float enemySpeed;
 
-    public int EnemyHp 
+    public float EnemyHp 
     { get { return enemyHp; } set { value = enemyHp; } }
 
     private void Awake()
     {
         box = GetComponent<BoxCollider2D>();
+        anim = GetComponent<Animator>();
         wayPointTrs = GameObject.Find("WayPoints");
     }
 
@@ -31,6 +40,9 @@ public class Enemy : MonoBehaviour
         enemyName = enemyData.enemyName;
         enemyHp = enemyData.enemyHp;
         enemySpeed = enemyData.enemySpeed;
+        curhp = enemyHp;
+
+        healthBarFill.fillAmount = 1;
 
         wayPoint = new Transform[wayPointTrs.transform.childCount];
         for (int i = 0; i < wayPoint.Length; i++)
@@ -43,8 +55,9 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (isDie) return;
         move();
-        die();
+        hpBar();
     }
 
     private void move()
@@ -56,6 +69,11 @@ public class Enemy : MonoBehaviour
         {
             nextMove();
         }
+    }
+
+    private void hpBar()
+    {
+        healthBarFill.fillAmount = curhp / enemyHp;
     }
 
     private void nextMove()
@@ -74,9 +92,9 @@ public class Enemy : MonoBehaviour
 
     public void takeDamage(int damage)
     {
-        enemyHp -= damage;
+        curhp -= damage;
 
-        if (enemyHp <= 0)
+        if (curhp <= 0)
         {
             die();
         }
@@ -84,6 +102,9 @@ public class Enemy : MonoBehaviour
 
     private void die()
     {
-        Destroy(gameObject);
+        GameManager.Instance.Gold += 1;
+        anim.SetBool("isDie", true);
+        isDie = true;
+        Destroy(gameObject, 0.3f);
     }
 }

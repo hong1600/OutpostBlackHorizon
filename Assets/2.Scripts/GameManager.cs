@@ -48,8 +48,8 @@ public class GameManager : MonoBehaviour
     { get { return curMonster; } }
     public int MaxMonster
     { get { return maxMonster; } }
-    public float MyGold
-    { get { return gold; } }
+    public float Gold
+    { get { return gold; } set { gold = value; } }
     public int SpawnGold
     { get { return spawnGold; } }
     public int Coin
@@ -71,11 +71,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //for (int i = 0; i < unitSpawnPointList.Count; i++)
-        //{
-        //    Instantiate(new GameObject($"spawnPoint{i}"), unit.transform);
-        //}
-
         enemySpawnPoint = GameObject.Find("SpawnPoint");
 
         min = 0;
@@ -110,9 +105,9 @@ public class GameManager : MonoBehaviour
 
         string firstSelection = FirstSelectRandom(firstSelectOption, firstSelectWeight);
 
-        int randA = Random.Range(0, 1);
-        int randB = Random.Range(0, 1);
-        int randC = Random.Range(0, 1);
+        int randA = Random.Range(0, unitListA.Count);
+        int randB = Random.Range(0, unitListB.Count);
+        int randC = Random.Range(0, unitListC.Count);
 
         switch ( firstSelection ) 
         {

@@ -77,12 +77,6 @@ public class MainBtn : MonoBehaviour
         optionPanel.SetActive(false);
     }
 
-    public void settingBtnClose()
-    {
-        settingPanel.SetActive(false);
-        option = false;
-    }
-
     public void bgmBtn()
     {
         if (bgm == false)
@@ -96,6 +90,7 @@ public class MainBtn : MonoBehaviour
             bgm = false;
         }
     }
+
     public void sfxBtn()
     {
         if (sfx == false)

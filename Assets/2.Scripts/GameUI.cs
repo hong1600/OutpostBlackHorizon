@@ -11,7 +11,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI monsterCountText;
     [SerializeField] Slider monsterCountSlider;
     [SerializeField] TextMeshProUGUI warningText;
-    [SerializeField] TextMeshProUGUI myGold;
+    [SerializeField] TextMeshProUGUI Gold;
     [SerializeField] TextMeshProUGUI spawnGoldText;
     [SerializeField] TextMeshProUGUI coinText;
     [SerializeField] TextMeshProUGUI UnitCountText;
@@ -51,7 +51,7 @@ public class GameUI : MonoBehaviour
 
     private void money()
     {
-        myGold.text = GameManager.Instance.MyGold.ToString();
+        Gold.text = GameManager.Instance.Gold.ToString();
 
         spawnGoldText.text = GameManager.Instance.SpawnGold.ToString();
 

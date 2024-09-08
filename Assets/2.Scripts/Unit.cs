@@ -15,7 +15,9 @@ public class Unit : MonoBehaviour
     Animator anim;
     SpriteRenderer sprite;
 
-    [SerializeField] bool attackReady;
+    [SerializeField] GameObject target;
+
+    Coroutine attackCoroutine;
 
     private void Awake()
     {
@@ -34,7 +36,6 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        checkEnemy();
         attack();
         turn();
         targetEnemy(transform);
@@ -51,14 +52,18 @@ public class Unit : MonoBehaviour
         RaycastHit2D[] hits = Physics2D.CircleCastAll(playerPos.position, attackRange,
             Vector2.zero, 0, LayerMask.GetMask("Enemy"));
 
-        GameObject target = null;
-
+        target = null;
         float minDistance = Mathf.Infinity;
 
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider.CompareTag("Enemy"))
             {
+                Enemy enemy = hit.collider.GetComponent<Enemy>();
+
+                if(enemy == null || enemy.isDie == true)
+                    continue;
+
                 float distance = Vector3.Distance(playerPos.position, hit.transform.position);
 
                 if (distance < minDistance)
@@ -72,36 +77,35 @@ public class Unit : MonoBehaviour
         return target;
     }
 
-    private void checkEnemy()
-    {
-        if (Physics2D.CircleCast(transform.position, attackRange,
-            Vector2.zero, 0, LayerMask.GetMask("Enemy")))
-        {
-            attackReady = true;
-        }
-        else { attackReady = false; }
-    }
-
     private void attack()
     {
-        if (attackReady == true)
+        if (target != null)
         {
-            StartCoroutine(Attack());
-            anim.SetBool("isAttack", true);
+            if (attackCoroutine == null)
+            {
+                attackCoroutine = StartCoroutine(Attack());
+            }
         }
         else
         {
-            StopCoroutine(Attack());
-            anim.SetBool("isAttack", false);
+            if (attackCoroutine != null)
+            {
+                StopCoroutine(Attack());
+                anim.SetBool("isAttack", false);
+            }
         }
     }
 
     IEnumerator Attack()
     {
-        GameObject target = targetEnemy(transform);
-
+        anim.SetBool("isAttack", true);
         while (true) 
         {
+            if (target == null)
+            {
+                yield break;
+            }
+
             Enemy enemy = target.GetComponent<Enemy>();
 
             if (enemy != null)
@@ -109,19 +113,19 @@ public class Unit : MonoBehaviour
                 enemy.takeDamage(attackDamage);
             }
 
-            yield return new WaitForSeconds(1.5f / attackSpeed);
+            yield return new WaitForSeconds(attackSpeed);
         }
     }
 
     private void turn()
     {
-        if (targetEnemy(transform) == null) return;
+        if (target == null) return;
 
-        if (targetEnemy(transform).transform.position.x < transform.position.x)
+        if (target.transform.position.x < transform.position.x)
         {
             sprite.flipX = true;
         }
-        else if (targetEnemy(transform).transform.position.x > transform.position.x)
+        else if (target.transform.position.x > transform.position.x)
         {
             sprite.flipX = false;
         }

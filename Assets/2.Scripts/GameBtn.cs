@@ -30,7 +30,7 @@ public class GameBtn : MonoBehaviour
 
     public void spawnBtn()
     {
-        if (GameManager.Instance.MyGold > GameManager.Instance.SpawnGold)
+        if (GameManager.Instance.Gold > GameManager.Instance.SpawnGold)
         {
             GameManager.Instance.spawnUnit();
         }
