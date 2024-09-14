@@ -13,6 +13,8 @@ public class MainBtn : MonoBehaviour
     [SerializeField] GameObject settingPanel;
     [SerializeField] Image bgmImg;
     [SerializeField] Image sfxImg;
+    [SerializeField] GameObject treasureDcPanel;
+    [SerializeField] MainUI mainUI;
 
     bool option;
     bool bgm;
@@ -28,6 +30,14 @@ public class MainBtn : MonoBehaviour
     public void StartBtn()
     {
         LoadScene.loadScene(2);
+    }
+
+    public void closeBtn(GameObject button)
+    {
+        if (button.transform.parent != null)
+        {
+            button.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     public void heroBtn()
@@ -48,13 +58,23 @@ public class MainBtn : MonoBehaviour
         heroPanel.SetActive(false);
         storePanel.SetActive(false);
         treasurePanel.SetActive(false);
-        
     }
+
     public void treasureBtn()
     {
         heroPanel.SetActive(false);
         storePanel.SetActive(false);
         treasurePanel.SetActive(true);
+    }
+
+    public void treasureDcBtn(int index)
+    {
+        mainUI.treasureDc(index);
+    }
+
+    public void treasureUpgradeBtn()
+    {
+        mainUI.treasureUpgrade();
     }
 
     public void optionBtn() 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerData
 {
     public string name = "";
@@ -13,6 +14,8 @@ public class PlayerData
     public int gem = 0;
     public int paper = 0;
     public bool first = true;
+
+    public List<TreasureData> items = new List<TreasureData>();
 }
 
 public class DataManager : MonoBehaviour

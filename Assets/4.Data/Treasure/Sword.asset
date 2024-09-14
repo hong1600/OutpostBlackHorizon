@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde6ddf439b3267419e1a91cd1a2e1df, type: 3}
+  m_Name: Sword
+  m_EditorClassIdentifier: 
+  treasureName: "\uB300\uAC80"
+  treasureLevel: 1
+  treasureCurExp: 0
+  treasureMaxExp: 1
+  treasureCost: 1000
+  treasureBase: 1
+  treasureUpgrade: 1
+  treasureDc: "\uBCF4\uC2A4\uC5D0\uAC8C \uAC00\uD558\uB294 \uD53C\uD574 {0}%(+{1}%)\uC99D\uAC00"

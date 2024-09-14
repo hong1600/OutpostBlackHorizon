@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498da0fc17a2c9b4285047183d60f8e3, type: 3}
   m_Name: Wizard1
   m_EditorClassIdentifier: 
-  unitName: Wizard1
+  unitName: "\uB9C8\uB140"
   unitDamage: 2
   attackSpeed: 2
   attackRange: 3
   unitGrade: 1
+  unitImg: {fileID: 462434960, guid: 90c7332c857b6b043bad30766e14a946, type: 3}
+  unitLevel: 1

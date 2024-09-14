@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public enum UnitGrade { a, b ,c}
 
 [CreateAssetMenu(fileName = "Unit", menuName = "Scriptble Object/UnitData")]
+
 public class UnitData : ScriptableObject
 {
     public string unitName;
@@ -13,4 +14,6 @@ public class UnitData : ScriptableObject
     public int attackSpeed;
     public float attackRange;
     public UnitGrade unitGrade;
+    public Sprite unitImg;
+    public float unitLevel;
 }
