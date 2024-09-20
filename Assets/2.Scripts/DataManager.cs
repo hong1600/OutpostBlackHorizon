@@ -16,6 +16,7 @@ public class PlayerData
     public bool first = true;
 
     public List<TreasureData> items = new List<TreasureData>();
+    public List<UnitData> units = new List<UnitData>();
 }
 
 public class DataManager : MonoBehaviour

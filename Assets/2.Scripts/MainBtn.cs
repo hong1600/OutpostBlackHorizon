@@ -13,7 +13,6 @@ public class MainBtn : MonoBehaviour
     [SerializeField] GameObject settingPanel;
     [SerializeField] Image bgmImg;
     [SerializeField] Image sfxImg;
-    [SerializeField] GameObject treasureDcPanel;
     [SerializeField] MainUI mainUI;
 
     bool option;
@@ -75,6 +74,11 @@ public class MainBtn : MonoBehaviour
     public void treasureUpgradeBtn()
     {
         mainUI.treasureUpgrade();
+    }
+
+    public void heroDcBtn(int index)
+    {
+        mainUI.heroDc(index);
     }
 
     public void optionBtn() 

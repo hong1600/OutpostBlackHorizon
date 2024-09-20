@@ -16,4 +16,5 @@ public class UnitData : ScriptableObject
     public UnitGrade unitGrade;
     public Sprite unitImg;
     public float unitLevel;
+    public string skill1Name;
 }

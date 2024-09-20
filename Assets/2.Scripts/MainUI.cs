@@ -8,12 +8,15 @@ using UnityEngine.UI;
 
 public class MainUI : MonoBehaviour
 {
+    [Header("메인")]
     [SerializeField] TextMeshProUGUI levelText;
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI gemText;
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] Slider expSlider;
 
+    [Header("유물")]
+    [SerializeField] TreasureData curItems;
     [SerializeField] GameObject treasureDcPanel; 
     [SerializeField] TextMeshProUGUI treasureNameText;
     [SerializeField] TextMeshProUGUI treasureLevelText;
@@ -21,12 +24,22 @@ public class MainUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI treasureUpgradeText;
     [SerializeField] TextMeshProUGUI treasureCostText;
     [SerializeField] Image treasureFill;
-
-    [SerializeField] TreasureData curItems;
-
     [SerializeField] List<Image> treasureSlider = new List<Image>();
     [SerializeField] List<TextMeshProUGUI> treasureLevel = new List<TextMeshProUGUI>();
     [SerializeField] List<TextMeshProUGUI> treasureExp = new List<TextMeshProUGUI>();
+
+    [Header("영웅")]
+    [SerializeField] UnitData curHero;
+    [SerializeField] GameObject heroDcPanel;
+    [SerializeField] TextMeshProUGUI heroNameText;
+    [SerializeField] TextMeshProUGUI heroLevelText;
+    [SerializeField] TextMeshProUGUI heroDamageText;
+    [SerializeField] TextMeshProUGUI heroAttackSpeedText;
+    [SerializeField] TextMeshProUGUI heroSkillNameText;
+
+    [Header("상점")]
+    [SerializeField] float store;
+
 
     private void Start()
     {
@@ -118,5 +131,22 @@ public class MainUI : MonoBehaviour
             treasureUpdate1();
 
         }
+    }
+
+    public void heroDc(int index)
+    {
+        curHero = DataManager.instance.playerdata.units[index];
+
+        heroUpdate2();
+
+        heroDcPanel.SetActive(true);
+    }
+
+    private void heroUpdate2()
+    {
+        heroNameText.text = curHero.unitName;
+        heroLevelText.text = curHero.unitLevel.ToString();
+        heroDamageText.text = curHero.unitDamage.ToString();
+        heroAttackSpeedText.text = curHero.attackSpeed.ToString();
     }
 }
