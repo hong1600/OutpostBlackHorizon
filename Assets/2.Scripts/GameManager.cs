@@ -21,6 +21,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] float gold;
     int spawnGold;
     int coin;
+    float upgradeCost1;
+    float upgradeCost2;
+    float upgradeCost3;
+    float upgradeCost4;
+    float upgradeLevel1;
+    float upgradeLevel2;
+    float upgradeLevel3;
+    float upgradeLevel4;
 
     [Header("РЏДж")]
     [SerializeField] GameObject unit;
@@ -56,6 +64,23 @@ public class GameManager : MonoBehaviour
     { get { return coin; } }
     public int UnitCount
     { get { return groundNum; } }
+    public float UpgradeCost1 
+    { get { return upgradeCost1; } set { upgradeCost1 = value; } }
+    public float UpgradeCost2
+    { get { return upgradeCost2; } set { upgradeCost2 = value; } }
+    public float UpgradeCost3
+    { get { return upgradeCost3; } set { upgradeCost3 = value; } }
+    public float UpgradeCost4
+    { get { return upgradeCost4; } set { upgradeCost4 = value; } }
+    public float UpgradeLevel1
+    { get { return upgradeLevel1; } set { upgradeLevel1 = value; } }
+    public float UpgradeLevel2
+    { get { return upgradeLevel2; } set { upgradeLevel2 = value; } }
+    public float UpgradeLevel3
+    { get { return upgradeLevel3; } set { upgradeLevel3 = value; } }
+    public float UpgradeLevel4
+    { get { return upgradeLevel4; } set { upgradeLevel4 = value; } }
+
 
     private void Awake()
     {
@@ -84,6 +109,14 @@ public class GameManager : MonoBehaviour
         gold = 170f;
         spawnGold = 20;
         coin = 0;
+        upgradeCost1 = 30;
+        upgradeCost2 = 50;
+        upgradeCost3 = 1;
+        upgradeCost4 = 100;
+        upgradeLevel1 = 1;
+        upgradeLevel2 = 1;
+        upgradeLevel3 = 1;
+        upgradeLevel4 = 1;
     }
 
     private void Update()
@@ -246,5 +279,15 @@ public class GameManager : MonoBehaviour
         GameOverPanel.SetActive(false);
         Time.timeScale = 1f;
         SceneManager.LoadScene(3);
+    }
+
+    public void upgradeBtn(int index)
+    {
+        if (upgradeCost1 < gold && index == 1)
+        {
+            gold -= upgradeCost1;
+            upgradeCost1 *= 2;
+            upgradeLevel1++;
+        }
     }
 }

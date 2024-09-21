@@ -7,16 +7,14 @@ using UnityEngine.UI;
 
 public class GameBtn : MonoBehaviour
 {
+    [Header("∏ﬁ¿Œ")]
     [SerializeField] GameObject randomPanel;
     [SerializeField] GameObject upgradePanel;
     [SerializeField] GameObject mixPanel;
     [SerializeField] GameObject settingPanel;
-
     [SerializeField] Image bgmImg;
     [SerializeField] Image sfxImg;
-
     [SerializeField] TextMeshProUGUI speedText;
-
     bool speed1;
     bool bgm;
     bool sfx;
@@ -118,5 +116,10 @@ public class GameBtn : MonoBehaviour
             sfxImg.color = new Color(1, 0, 0, 0);
             sfx = false;
         }
+    }
+
+    public void upgradeBtn1(int index)
+    {
+        GameManager.Instance.upgradeBtn(index);
     }
 }

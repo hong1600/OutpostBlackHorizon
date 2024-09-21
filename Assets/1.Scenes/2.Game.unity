@@ -633,7 +633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &86618403
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6917,7 +6917,7 @@ GameObject:
   - component: {fileID: 696661737}
   - component: {fileID: 696661736}
   m_Layer: 5
-  m_Name: GoldText
+  m_Name: CoinText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10059,10 +10059,20 @@ MonoBehaviour:
   monsterCountText: {fileID: 913928017}
   monsterCountSlider: {fileID: 1073232770}
   warningText: {fileID: 1368994610}
-  Gold: {fileID: 972873572}
+  mainGold: {fileID: 972873572}
   spawnGoldText: {fileID: 687563490}
   coinText: {fileID: 394972056}
   UnitCountText: {fileID: 553271435}
+  upgradeGoldText: {fileID: 954359483}
+  upgradeCoinText: {fileID: 696661736}
+  upgradeCost1Text: {fileID: 891889197}
+  upgradeCost2Text: {fileID: 811128182}
+  upgradeCost3Text: {fileID: 276391535}
+  upgradeCost4Text: {fileID: 1992303975}
+  upgradeLevel1Text: {fileID: 1664687830}
+  upgradeLevel2Text: {fileID: 1258558258}
+  upgradeLevel3Text: {fileID: 315280996}
+  upgradeLevel4Text: {fileID: 234842692}
 --- !u!4 &1004812087
 Transform:
   m_ObjectHideFlags: 0

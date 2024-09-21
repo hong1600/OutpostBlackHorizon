@@ -6,57 +6,65 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
+    [Header("메인")]
     [SerializeField] TextMeshProUGUI roundText;
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] TextMeshProUGUI monsterCountText;
     [SerializeField] Slider monsterCountSlider;
     [SerializeField] TextMeshProUGUI warningText;
-    [SerializeField] TextMeshProUGUI Gold;
+    [SerializeField] TextMeshProUGUI mainGold;
     [SerializeField] TextMeshProUGUI spawnGoldText;
     [SerializeField] TextMeshProUGUI coinText;
     [SerializeField] TextMeshProUGUI UnitCountText;
 
+    [Header("업그레이드")]
+    [SerializeField] TextMeshProUGUI upgradeGoldText;
+    [SerializeField] TextMeshProUGUI upgradeCoinText;
+    [SerializeField] TextMeshProUGUI upgradeCost1Text;
+    [SerializeField] TextMeshProUGUI upgradeCost2Text;
+    [SerializeField] TextMeshProUGUI upgradeCost3Text;
+    [SerializeField] TextMeshProUGUI upgradeCost4Text;
+    [SerializeField] TextMeshProUGUI upgradeLevel1Text;
+    [SerializeField] TextMeshProUGUI upgradeLevel2Text;
+    [SerializeField] TextMeshProUGUI upgradeLevel3Text;
+    [SerializeField] TextMeshProUGUI upgradeLevel4Text;
+
     private void Update()
     {
-        timer();
-        round();
-        monsterSlider();
-        warning();
-        money();
+        main();
+        upgradePanel();
     }
 
-    private void round()
+    private void main()
     {
         roundText.text = $"WAVE {GameManager.Instance.CurRound.ToString()}";
-    }
 
-    private void timer()
-    {
         int min = GameManager.Instance.Min;
         float sec = GameManager.Instance.Sec;
-
         timerText.text = string.Format("{0:00}:{1:00}", min, (int)sec);
-    }
 
-    private void monsterSlider()
-    {
-        monsterCountSlider.value = (float)GameManager.Instance.CurMonster/(float)GameManager.Instance.MaxMonster;
+        monsterCountSlider.value = (float)GameManager.Instance.CurMonster / (float)GameManager.Instance.MaxMonster;
         monsterCountText.text = $"{GameManager.Instance.CurMonster} / {GameManager.Instance.MaxMonster}";
-    }
 
-    private void warning()
-    {
         warningText.text = $"{GameManager.Instance.CurMonster} / {GameManager.Instance.MaxMonster}";
+
+        mainGold.text = GameManager.Instance.Gold.ToString();
+        spawnGoldText.text = GameManager.Instance.SpawnGold.ToString();
+        coinText.text = GameManager.Instance.Coin.ToString();
+        UnitCountText.text = $"{GameManager.Instance.UnitCount.ToString()} / 20";
     }
 
-    private void money()
+    private void upgradePanel()
     {
-        Gold.text = GameManager.Instance.Gold.ToString();
-
-        spawnGoldText.text = GameManager.Instance.SpawnGold.ToString();
-
-        coinText.text = GameManager.Instance.Coin.ToString();
-
-        UnitCountText.text = $"{GameManager.Instance.UnitCount.ToString()} / 20";
+        upgradeGoldText.text = GameManager.Instance.Gold.ToString();
+        upgradeCoinText.text = GameManager.Instance.Coin.ToString();
+        upgradeCost1Text.text = GameManager.Instance.UpgradeCost1.ToString();
+        upgradeCost2Text.text = GameManager.Instance.UpgradeCost2.ToString();
+        upgradeCost3Text.text = GameManager.Instance.UpgradeCost3.ToString();
+        upgradeCost4Text.text = GameManager.Instance.UpgradeCost4.ToString();
+        upgradeLevel1Text.text = "LV." + GameManager.Instance.UpgradeLevel1.ToString();
+        upgradeLevel2Text.text = "LV." + GameManager.Instance.UpgradeLevel2.ToString();
+        upgradeLevel3Text.text = "LV." + GameManager.Instance.UpgradeLevel3.ToString();
+        upgradeLevel4Text.text = "LV." + GameManager.Instance.UpgradeLevel4.ToString();
     }
 }
