@@ -38,6 +38,12 @@ public class MainBtn : MonoBehaviour
             button.transform.parent.gameObject.SetActive(false);
         }
     }
+    public void mainBtn()
+    {
+        heroPanel.SetActive(false);
+        storePanel.SetActive(false);
+        treasurePanel.SetActive(false);
+    }
 
     public void heroBtn()
     {
@@ -50,12 +56,6 @@ public class MainBtn : MonoBehaviour
     {
         heroPanel.SetActive(false);
         storePanel.SetActive(true);
-        treasurePanel.SetActive(false);
-    }
-    public void mainBtn()
-    {
-        heroPanel.SetActive(false);
-        storePanel.SetActive(false);
         treasurePanel.SetActive(false);
     }
 
@@ -76,10 +76,6 @@ public class MainBtn : MonoBehaviour
         mainUI.treasureUpgrade();
     }
 
-    public void heroDcBtn(int index)
-    {
-        mainUI.heroDc(index);
-    }
 
     public void optionBtn() 
     {
@@ -129,4 +125,8 @@ public class MainBtn : MonoBehaviour
         }
     }
 
+    public void heroUpgradeBtn()
+    {
+        mainUI.HeroUpgrade();
+    }
 }

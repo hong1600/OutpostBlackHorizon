@@ -117,9 +117,4 @@ public class GameBtn : MonoBehaviour
             sfx = false;
         }
     }
-
-    public void upgradeBtn1(int index)
-    {
-        GameManager.Instance.upgradeBtn(index);
-    }
 }

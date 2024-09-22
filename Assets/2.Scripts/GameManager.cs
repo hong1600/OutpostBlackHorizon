@@ -5,6 +5,41 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public int CurRound 
+    { get { return curRound; } }
+    public int Min 
+    { get { return min; } }
+    public float Sec 
+    { get { return sec; } }
+    public int CurMonster
+    { get { return curMonster; } }
+    public int MaxMonster
+    { get { return maxMonster; } }
+    public float Gold
+    { get { return gold; } set { gold = value; } }
+    public int SpawnGold
+    { get { return spawnGold; } }
+    public int Coin
+    { get { return coin; } }
+    public int UnitCount
+    { get { return groundNum; } }
+    public float UpgradeCost1 
+    { get { return upgradeCost1; } set { upgradeCost1 = value; } }
+    public float UpgradeCost2
+    { get { return upgradeCost2; } set { upgradeCost2 = value; } }
+    public float UpgradeCost3
+    { get { return upgradeCost3; } set { upgradeCost3 = value; } }
+    public float UpgradeCost4
+    { get { return upgradeCost4; } set { upgradeCost4 = value; } }
+    public float UpgradeLevel1
+    { get { return upgradeLevel1; } set { upgradeLevel1 = value; } }
+    public float UpgradeLevel2
+    { get { return upgradeLevel2; } set { upgradeLevel2 = value; } }
+    public float UpgradeLevel3
+    { get { return upgradeLevel3; } set { upgradeLevel3 = value; } }
+    public float UpgradeLevel4
+    { get { return upgradeLevel4; } set { upgradeLevel4 = value; } }
+
     public static GameManager Instance;
 
     [Header("╫ц╫╨еш")]
@@ -46,40 +81,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject enemySpawnPoint;
     [SerializeField] float enemySpawndelay = 0.85f;
 
-    public int CurRound 
-    { get { return curRound; } }
-    public int Min 
-    { get { return min; } }
-    public float Sec 
-    { get { return sec; } }
-    public int CurMonster
-    { get { return curMonster; } }
-    public int MaxMonster
-    { get { return maxMonster; } }
-    public float Gold
-    { get { return gold; } set { gold = value; } }
-    public int SpawnGold
-    { get { return spawnGold; } }
-    public int Coin
-    { get { return coin; } }
-    public int UnitCount
-    { get { return groundNum; } }
-    public float UpgradeCost1 
-    { get { return upgradeCost1; } set { upgradeCost1 = value; } }
-    public float UpgradeCost2
-    { get { return upgradeCost2; } set { upgradeCost2 = value; } }
-    public float UpgradeCost3
-    { get { return upgradeCost3; } set { upgradeCost3 = value; } }
-    public float UpgradeCost4
-    { get { return upgradeCost4; } set { upgradeCost4 = value; } }
-    public float UpgradeLevel1
-    { get { return upgradeLevel1; } set { upgradeLevel1 = value; } }
-    public float UpgradeLevel2
-    { get { return upgradeLevel2; } set { upgradeLevel2 = value; } }
-    public float UpgradeLevel3
-    { get { return upgradeLevel3; } set { upgradeLevel3 = value; } }
-    public float UpgradeLevel4
-    { get { return upgradeLevel4; } set { upgradeLevel4 = value; } }
 
 
     private void Awake()

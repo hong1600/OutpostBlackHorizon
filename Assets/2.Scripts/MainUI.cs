@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class MainUI : MonoBehaviour
 {
+    public UnitData CurHero { get { return curHero; } set { curHero = value; } }
+
     [Header("메인")]
     [SerializeField] TextMeshProUGUI levelText;
     [SerializeField] TextMeshProUGUI goldText;
@@ -35,7 +37,9 @@ public class MainUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI heroLevelText;
     [SerializeField] TextMeshProUGUI heroDamageText;
     [SerializeField] TextMeshProUGUI heroAttackSpeedText;
-    [SerializeField] TextMeshProUGUI heroSkillNameText;
+    [SerializeField] TextMeshProUGUI heroSkillNameText1;
+    [SerializeField] TextMeshProUGUI heroSkillNameText2;
+    [SerializeField] TextMeshProUGUI heroUpgradeCost;
 
     [Header("상점")]
     [SerializeField] float store;
@@ -49,6 +53,11 @@ public class MainUI : MonoBehaviour
     private void Update()
     {
         main();
+
+        if(Input.GetKeyDown(KeyCode.G)) 
+        {
+            DataManager.instance.playerdata.gold += 10000;
+        }
     }
 
     private void main()
@@ -126,10 +135,8 @@ public class MainUI : MonoBehaviour
                     curItems.treasureBase += curItems.treasureUpgrade;
                     break;
             }
-
             treasureUpdate2();
             treasureUpdate1();
-
         }
     }
 
@@ -145,8 +152,108 @@ public class MainUI : MonoBehaviour
     private void heroUpdate2()
     {
         heroNameText.text = curHero.unitName;
-        heroLevelText.text = curHero.unitLevel.ToString();
+        heroLevelText.text = "LV." + curHero.unitLevel.ToString();
         heroDamageText.text = curHero.unitDamage.ToString();
         heroAttackSpeedText.text = curHero.attackSpeed.ToString();
+        heroUpgradeCost.text = curHero.unitUpgradeCost.ToString();
+        heroSkillNameText1.text = $"<u><color=yellow>[{curHero.skill1Name}]</color></u> 스킬이 해금됩니다";
+        heroSkillNameText2.text = $"<u><color=yellow>[{curHero.skill1Name}]</color></u> 스킬의 발동확률이 +80% 증가합니다";
     }
+
+    public void HeroUpgrade()
+    {
+        if (curHero.unitUpgradeCost < DataManager.instance.playerdata.gold)
+        {
+            switch (curHero.unitLevel)
+            {
+                case 1:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 2:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 3:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+                case 4:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 5:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 6:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 7:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 8:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 9:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 10:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 11:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 12:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 13:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 14:
+                    curHero.unitUpgradeCost += 1000f;
+                    curHero.unitLevel += 1f;
+                    curHero.unitDamage += 5;
+                    break;
+
+                case 15:
+                    break;
+            }
+            heroUpdate2();
+        }
+    }
+
 }

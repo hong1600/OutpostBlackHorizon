@@ -15,11 +15,18 @@ public class InventoryManager : MonoBehaviour
 
     private void loadHero()
     {
-        foreach(UnitData unit in units) 
+        //foreach(UnitData unit in units) 
+        //{
+        //    GameObject newSlot = Instantiate(heroBtnPre, content);
+        //    HeroSlot slot = newSlot.GetComponent<HeroSlot>();
+        //    slot.setHero(unit);
+        //}
+
+        for (int i  = 0; i < units.Length; i++) 
         {
             GameObject newSlot = Instantiate(heroBtnPre, content);
             HeroSlot slot = newSlot.GetComponent<HeroSlot>();
-            slot.setHero(unit);
+            slot.setHero(units[i]);
         }
     }
 }

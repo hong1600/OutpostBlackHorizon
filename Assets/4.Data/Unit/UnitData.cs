@@ -18,4 +18,5 @@ public class UnitData : ScriptableObject
     public Sprite unitImg;
     public float unitLevel;
     public string skill1Name;
+    public float unitUpgradeCost;
 }
