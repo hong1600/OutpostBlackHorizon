@@ -22,3 +22,4 @@ MonoBehaviour:
   unitLevel: 1
   skill1Name: "\uAC10\uC5FC"
   unitUpgradeCost: 1000
+  unitStoreCost: 1600

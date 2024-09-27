@@ -44,4 +44,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e431ec4053d19a42ae4cb25ff00cf92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerdata:
+    name: 
+    level: 1
+    curExp: 0
+    maxExp: 100
+    gold: 0
+    gem: 0
+    paper: 0
+    first: 1
+    items:
+    - {fileID: 11400000, guid: 3c987688cd443c543bef7873426eefbe, type: 2}
+    - {fileID: 11400000, guid: 52e90990357f3454b970605f2b548503, type: 2}
+    - {fileID: 11400000, guid: 631fcc07e83eee042a1ad29d210e3157, type: 2}
+    - {fileID: 11400000, guid: d7261f93391faa1438692694bae10e39, type: 2}
+    - {fileID: 11400000, guid: 3436f53bb57a7324caf99d3484358838, type: 2}
+    - {fileID: 11400000, guid: 4d59f16b98fa2b84f8026f5e1247eb88, type: 2}
+    - {fileID: 11400000, guid: c8f188bb44a133e4e9467683f82e93dc, type: 2}
+    - {fileID: 11400000, guid: d8aada2e95c2a534985ff2fa2b481adf, type: 2}
+    units:
+    - {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
+    - {fileID: 11400000, guid: 23f56d5d9bacb36439610d6f61ae65e8, type: 2}
+    - {fileID: 11400000, guid: 6fe336f25d5f7e645a7df9d26d6bda97, type: 2}
+    - {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
   path: 

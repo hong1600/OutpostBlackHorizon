@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Damage
   m_EditorClassIdentifier: 
   treasureName: "\uD798\uC758\uBB3C\uC57D"
-  treasureLevel: 2
+  treasureLevel: 1
   treasureCurExp: 0
-  treasureMaxExp: 2
-  treasureCost: 2000
-  treasureBase: 2
+  treasureMaxExp: 1
+  treasureCost: 1000
+  treasureBase: 1
   treasureUpgrade: 1
   treasureDc: "\uC804\uCCB4 \uACF5\uACA9\uB825 {0}%(+{1}%)\uC99D\uAC00"

@@ -113,7 +113,7 @@ public class Unit : MonoBehaviour
                 enemy.takeDamage(attackDamage);
             }
 
-            yield return new WaitForSeconds(attackSpeed);
+            yield return new WaitForSeconds(1 / attackSpeed);
         }
     }
 

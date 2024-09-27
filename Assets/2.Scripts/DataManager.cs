@@ -27,6 +27,9 @@ public class DataManager : MonoBehaviour
 
     public string path;
 
+    public List<TreasureData> item;
+    public List<UnitData> unit;
+
     private void Awake()
     {
         if (instance == null)
@@ -53,5 +56,7 @@ public class DataManager : MonoBehaviour
     {
         string data = File.ReadAllText(path);
         playerdata = JsonUtility.FromJson<PlayerData>(data);
+        playerdata.items = item;
+        playerdata.units = unit;
     }
 }

@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MainUI : MonoBehaviour
 {
     public UnitData CurHero { get { return curHero; } set { curHero = value; } }
+    [SerializeField] MainBtn btn;
 
     [Header("메인")]
     [SerializeField] TextMeshProUGUI levelText;
@@ -42,12 +44,22 @@ public class MainUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI heroUpgradeCost;
 
     [Header("상점")]
-    [SerializeField] float store;
-
+    [SerializeField] Button[] storeUnitBtn;
+    [SerializeField] UnitData[] storeUnits;
+    [SerializeField] Image[] storeUnitsImg;
+    [SerializeField] TextMeshProUGUI[] storeUnitsNameText;
+    [SerializeField] TextMeshProUGUI[] storeUnitsCostText;
+    [SerializeField] GameObject storeUnitDcPanel;
+    [SerializeField] Image storeUnitsDcImg;
+    [SerializeField] TextMeshProUGUI storeUnitsDcCost;
 
     private void Start()
     {
+        storeUnitSlotReset();
+
         treasureUpdate1();
+
+        DataManager.instance.saveData();
     }
 
     private void Update()
@@ -256,4 +268,42 @@ public class MainUI : MonoBehaviour
         }
     }
 
+    public void storeUnitSlotClick(int index)
+    {
+        UnitData curUnit = DataManager.instance.playerdata.units[index];
+
+        storeUnitsDcImg.sprite = curUnit.unitImg;
+        storeUnitsDcCost.text = curUnit.unitStoreCost.ToString();
+
+        storeUnitDcPanel.SetActive(true);
+    }
+
+    private void storeUnitDcUpdate()
+    {
+        
+    }
+
+    public void storeUnitSlotReset()
+    {
+        for (int i = 0; i < storeUnitsImg.Length; i++)
+        {
+            int slotRand = UnityEngine.Random.Range(0, storeUnits.Length);
+            int curUnitIndex = storeUnits[slotRand].index;
+
+            storeUnitsImg[i].sprite = storeUnits[slotRand].unitImg;
+            storeUnitsNameText[i].text = storeUnits[slotRand].unitName;
+            storeUnitsCostText[i].text = storeUnits[slotRand].unitStoreCost.ToString();
+
+            storeUnitBtn[i].GetComponent<Button>().onClick.RemoveAllListeners();
+
+            int index = curUnitIndex;
+            storeUnitBtn[i].GetComponent<Button>().onClick.AddListener
+                (() => btn.storeUnitBtn(index));
+        }
+    }
+
+    public void storeUnitBuy()
+    {
+        //if(DataManager.instance.playerdata.gold >= storeUnitSlotClick.curuni)
+    }
 }

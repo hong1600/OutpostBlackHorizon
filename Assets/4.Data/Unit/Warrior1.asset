@@ -22,3 +22,4 @@ MonoBehaviour:
   unitLevel: 1
   skill1Name: "\uB178\uD68D"
   unitUpgradeCost: 1000
+  unitStoreCost: 500

@@ -11,12 +11,21 @@ public class StartScene : MonoBehaviour
     [SerializeField] GameObject namePanel;
     [SerializeField] TMP_InputField nameText;
 
+    [SerializeField] GameObject unText;
+    [SerializeField] GameObject bbalText;
+    [SerializeField] GameObject unbbalText;
+    [SerializeField] GameObject jonmangameText;
+
     bool bAnykey;
 
     private void Start()
     {
+        DataManager.instance.loadData();
+
         bAnykey = false;
         Invoke("anykey", 2.5f);
+
+        startAnim();
     }
 
     private void Update()
@@ -49,6 +58,24 @@ public class StartScene : MonoBehaviour
         DataManager.instance.playerdata.name = nameText.text;
         DataManager.instance.playerdata.first = false;
         LoadScene.loadScene(1);
-        DataManager.instance.saveData();
     }
+
+    private void startAnim()
+    {
+        StartCoroutine(startanim());
+    }
+
+    IEnumerator startanim()
+    {
+        yield return new WaitForSeconds(1);
+
+        Destroy(unText);
+        Destroy(bbalText);
+        jonmangameText.SetActive(true);
+
+        yield return new WaitForSeconds(0.15f);
+
+        unbbalText.SetActive(true);
+    }
+
 }
