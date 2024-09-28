@@ -20,4 +20,6 @@ public class UnitData : ScriptableObject
     public string skill1Name;
     public float unitUpgradeCost;
     public float unitStoreCost;
+    public float unitCurExp;
+    public float unitMaxExp;
 }

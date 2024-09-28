@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde6ddf439b3267419e1a91cd1a2e1df, type: 3}
   m_Name: MoneyGun
   m_EditorClassIdentifier: 
+  index: 4
   treasureName: "\uBA38\uB2C8\uAC74"
   treasureLevel: 1
   treasureCurExp: 0
   treasureMaxExp: 1
   treasureCost: 1000
+  treasureImg: {fileID: 21300000, guid: c412474da5d4b0d468d0bec75a37a3e7, type: 3}
   treasureBase: 1
   treasureUpgrade: 0.3
   treasureDc: "\uBCF4\uC720\uC911\uC778 \uCF54\uC778\uC758 \uB9CC\uD07C \uC804\uCCB4
     \uACF5\uACA9\uB825 \uC99D\uAC00\uB7C9\uC774 {0}%(+{1}%)\uC0C1\uC2B9"
-  treasureImg: {fileID: 0}
+  storeCost: 3000

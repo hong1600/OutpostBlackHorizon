@@ -10,7 +10,7 @@ public class PlayerData
     public int level = 1;
     public float curExp = 0f;
     public float maxExp = 100f;
-    public int gold = 0;
+    public float gold = 0;
     public int gem = 0;
     public int paper = 0;
     public bool first = true;

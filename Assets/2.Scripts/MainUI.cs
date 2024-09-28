@@ -21,12 +21,13 @@ public class MainUI : MonoBehaviour
 
     [Header("유물")]
     [SerializeField] TreasureData curItems;
-    [SerializeField] GameObject treasureDcPanel; 
+    [SerializeField] GameObject treasureDcPanel;
     [SerializeField] TextMeshProUGUI treasureNameText;
     [SerializeField] TextMeshProUGUI treasureLevelText;
     [SerializeField] TextMeshProUGUI treasureExpText;
     [SerializeField] TextMeshProUGUI treasureUpgradeText;
     [SerializeField] TextMeshProUGUI treasureCostText;
+    [SerializeField] Image treasureImg;
     [SerializeField] Image treasureFill;
     [SerializeField] List<Image> treasureSlider = new List<Image>();
     [SerializeField] List<TextMeshProUGUI> treasureLevel = new List<TextMeshProUGUI>();
@@ -44,18 +45,22 @@ public class MainUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI heroUpgradeCost;
 
     [Header("상점")]
+    [SerializeField] UnitData curUnit;
+    [SerializeField] TreasureData curItem;
     [SerializeField] Button[] storeUnitBtn;
     [SerializeField] UnitData[] storeUnits;
+    [SerializeField] TreasureData[] storeItems;
     [SerializeField] Image[] storeUnitsImg;
     [SerializeField] TextMeshProUGUI[] storeUnitsNameText;
     [SerializeField] TextMeshProUGUI[] storeUnitsCostText;
     [SerializeField] GameObject storeUnitDcPanel;
     [SerializeField] Image storeUnitsDcImg;
     [SerializeField] TextMeshProUGUI storeUnitsDcCost;
+    bool clickUnit;
 
     private void Start()
     {
-        storeUnitSlotReset();
+        storeSlotReset();
 
         treasureUpdate1();
 
@@ -66,7 +71,7 @@ public class MainUI : MonoBehaviour
     {
         main();
 
-        if(Input.GetKeyDown(KeyCode.G)) 
+        if (Input.GetKeyDown(KeyCode.G))
         {
             DataManager.instance.playerdata.gold += 10000;
         }
@@ -115,6 +120,7 @@ public class MainUI : MonoBehaviour
         treasureUpgradeText.text = string.Format
             (curItems.treasureDc, curItems.treasureBase, curItems.treasureUpgrade);
         treasureFill.fillAmount = curItems.treasureCurExp / curItems.treasureMaxExp;
+        treasureImg.sprite = curItems.treasureImg;
     }
 
     public void treasureUpgrade()
@@ -126,7 +132,7 @@ public class MainUI : MonoBehaviour
                 case 1:
                     curItems.treasureCost = 2000;
                     curItems.treasureLevel = 2;
-                    curItems.treasureCurExp = 0;
+                    curItems.treasureCurExp -= curItems.treasureMaxExp;
                     curItems.treasureMaxExp++;
                     curItems.treasureBase += curItems.treasureUpgrade;
                     break;
@@ -134,7 +140,7 @@ public class MainUI : MonoBehaviour
                 case 2:
                     curItems.treasureCost = 3000;
                     curItems.treasureLevel = 3;
-                    curItems.treasureCurExp = 0;
+                    curItems.treasureCurExp -= curItems.treasureMaxExp;
                     curItems.treasureMaxExp++;
                     curItems.treasureBase += curItems.treasureUpgrade;
                     break;
@@ -142,7 +148,7 @@ public class MainUI : MonoBehaviour
                 case 3:
                     curItems.treasureCost = 4000;
                     curItems.treasureLevel = 4;
-                    curItems.treasureCurExp = 0;
+                    curItems.treasureCurExp -= curItems.treasureMaxExp;
                     curItems.treasureMaxExp++;
                     curItems.treasureBase += curItems.treasureUpgrade;
                     break;
@@ -174,7 +180,8 @@ public class MainUI : MonoBehaviour
 
     public void HeroUpgrade()
     {
-        if (curHero.unitUpgradeCost < DataManager.instance.playerdata.gold)
+        if (curHero.unitUpgradeCost < DataManager.instance.playerdata.gold
+            && curHero.unitMaxExp <= curHero.unitCurExp)
         {
             switch (curHero.unitLevel)
             {
@@ -182,83 +189,112 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 2:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 3:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
+
                 case 4:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 5:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 6:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 7:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 8:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 9:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    break;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
 
+                    break;
                 case 10:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 11:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 12:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 13:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 14:
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
+                    curHero.unitCurExp = 0f;
+                    curHero.unitMaxExp += 1f;
                     break;
 
                 case 15:
@@ -268,42 +304,95 @@ public class MainUI : MonoBehaviour
         }
     }
 
-    public void storeUnitSlotClick(int index)
+    public void storeSlotClick(int index, string Name)
     {
-        UnitData curUnit = DataManager.instance.playerdata.units[index];
-
-        storeUnitsDcImg.sprite = curUnit.unitImg;
-        storeUnitsDcCost.text = curUnit.unitStoreCost.ToString();
-
-        storeUnitDcPanel.SetActive(true);
-    }
-
-    private void storeUnitDcUpdate()
-    {
-        
-    }
-
-    public void storeUnitSlotReset()
-    {
-        for (int i = 0; i < storeUnitsImg.Length; i++)
+        if (Name == "Unit")
         {
-            int slotRand = UnityEngine.Random.Range(0, storeUnits.Length);
-            int curUnitIndex = storeUnits[slotRand].index;
+            curUnit = DataManager.instance.playerdata.units[index];
+            clickUnit = true;
 
-            storeUnitsImg[i].sprite = storeUnits[slotRand].unitImg;
-            storeUnitsNameText[i].text = storeUnits[slotRand].unitName;
-            storeUnitsCostText[i].text = storeUnits[slotRand].unitStoreCost.ToString();
+            storeUnitsDcImg.sprite = curUnit.unitImg;
+            storeUnitsDcCost.text = curUnit.unitStoreCost.ToString();
 
-            storeUnitBtn[i].GetComponent<Button>().onClick.RemoveAllListeners();
+            storeUnitDcPanel.SetActive(true);
 
-            int index = curUnitIndex;
-            storeUnitBtn[i].GetComponent<Button>().onClick.AddListener
-                (() => btn.storeUnitBtn(index));
+        }
+        else if (Name == "Treasure")
+        {
+            curItem = DataManager.instance.playerdata.items[index];
+            clickUnit = false;
+
+            storeUnitsDcImg.sprite = curItem.treasureImg;
+            storeUnitsDcCost.text = curItem.storeCost.ToString();
+
+            storeUnitDcPanel.SetActive(true);
         }
     }
 
-    public void storeUnitBuy()
+    public void storeSlotReset()
     {
-        //if(DataManager.instance.playerdata.gold >= storeUnitSlotClick.curuni)
+        for (int i = 0; i < storeUnitsImg.Length; i++)
+        {
+            int or = UnityEngine.Random.Range(0, 2);
+
+            if (or == 0)
+            {
+                int slotRand = UnityEngine.Random.Range(0, storeUnits.Length);
+                int curUnitIndex = storeUnits[slotRand].index;
+
+                storeUnitsImg[i].sprite = storeUnits[slotRand].unitImg;
+                storeUnitsNameText[i].text = storeUnits[slotRand].unitName;
+                storeUnitsCostText[i].text = storeUnits[slotRand].unitStoreCost.ToString();
+
+                storeUnitBtn[i].GetComponent<Button>().onClick.RemoveAllListeners();
+
+                int index = curUnitIndex;
+                string Name = "Unit";
+                storeUnitBtn[i].GetComponent<Button>().onClick.AddListener
+                    (() => btn.storeUnitBtn(index, Name));
+
+            }
+            else if (or == 1)
+            {
+                int slotRand = UnityEngine.Random.Range(0, treasureSlider.Count);
+                int curItemIndex = storeItems[slotRand].index;
+
+                storeUnitsImg[i].sprite = storeItems[slotRand].treasureImg;
+                storeUnitsNameText[i].text = storeItems[slotRand].treasureName;
+                storeUnitsCostText[i].text = storeItems[slotRand].storeCost.ToString();
+
+                storeUnitBtn[i].GetComponent<Button>().onClick.RemoveAllListeners();
+
+                int index = curItemIndex;
+                string Name = "Treasure";
+                storeUnitBtn[i].GetComponent<Button>().onClick.AddListener
+                    (() => btn.storeUnitBtn(index, Name));
+            }
+        }
+    }
+
+    public void storeBuy()
+    {
+        if (clickUnit == true)
+        {
+            if (DataManager.instance.playerdata.gold >= curUnit.unitStoreCost)
+            {
+                DataManager.instance.playerdata.gold -= curUnit.unitStoreCost;
+                curUnit.unitCurExp += 1f;
+                storeUnitDcPanel.SetActive(false);
+            }
+        }
+
+        else
+        {
+            if (DataManager.instance.playerdata.gold >= curItem.storeCost)
+            {
+                DataManager.instance.playerdata.gold -= curItem.storeCost;
+                curItem.treasureCurExp += 1;
+                treasureUpdate1();
+                storeUnitDcPanel.SetActive(false);
+
+            }
+        }
     }
 }

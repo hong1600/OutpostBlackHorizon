@@ -130,22 +130,22 @@ public class MainBtn : MonoBehaviour
         mainUI.HeroUpgrade();
     }
 
-    public void storeUnitBtn(int index)
+    public void storeUnitBtn(int index, string Name)
     {
-        mainUI.storeUnitSlotClick(index);
+        mainUI.storeSlotClick(index, Name);
     }
 
     public void storeResetBtn()
     {
         if (DataManager.instance.playerdata.gold >= 1000)
         {
-            mainUI.storeUnitSlotReset();
+            mainUI.storeSlotReset();
             DataManager.instance.playerdata.gold -= 1000;
         }
     }
 
     public void storeBuyBtn()
     {
-        mainUI.storeUnitBuy();
+        mainUI.storeBuy();
     }
 }
