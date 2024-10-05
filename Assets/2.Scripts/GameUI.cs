@@ -16,6 +16,9 @@ public class GameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI spawnGoldText;
     [SerializeField] TextMeshProUGUI coinText;
     [SerializeField] TextMeshProUGUI UnitCountText;
+    [SerializeField] GameObject warningPanel;
+    [SerializeField] GameObject GameOverPanel;
+    bool checkWarning = true;
 
     [Header("업그레이드")]
     [SerializeField] TextMeshProUGUI upgradeGoldText;
@@ -33,6 +36,7 @@ public class GameUI : MonoBehaviour
     {
         main();
         upgradePanel();
+        warning();
     }
 
     private void main()
@@ -67,4 +71,27 @@ public class GameUI : MonoBehaviour
         upgradeLevel3Text.text = "LV." + GameManager.Instance.UpgradeLevel3.ToString();
         upgradeLevel4Text.text = "LV." + GameManager.Instance.UpgradeLevel4.ToString();
     }
+
+    private void warning()
+    {
+        if (GameManager.Instance.CurMonster >= GameManager.Instance.MaxMonster * 0.8f && checkWarning == true)
+        {
+            StartCoroutine(Warning());
+            checkWarning = false;
+        }
+        if (GameManager.Instance.CurMonster < GameManager.Instance.MaxMonster * 0.8f)
+        {
+            checkWarning = true;
+        }
+    }
+
+    IEnumerator Warning()
+    {
+        warningPanel.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        warningPanel.SetActive(false);
+    }
+
 }
