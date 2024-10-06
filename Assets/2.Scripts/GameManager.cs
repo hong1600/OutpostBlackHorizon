@@ -39,20 +39,30 @@ public class GameManager : MonoBehaviour
     { get { return upgradeLevel3; } set { upgradeLevel3 = value; } }
     public float UpgradeLevel4
     { get { return upgradeLevel4; } set { upgradeLevel4 = value; } }
+    public float RewardGold 
+    { get { return rewardGold; } set { rewardGold = value; } }
+    public float RewardGem
+    { get { return rewardGem; } set { rewardGem = value; } }
+    public float RewardPaper
+    { get { return rewardPaper; } set { rewardPaper = value; } }
+    public float RewardExp
+    { get { return rewardExp; } set { rewardExp = value; } }
 
     public static GameManager Instance;
 
     [Header("╫ц╫╨еш")]
-    [SerializeField] GameObject warningPanel;
-    [SerializeField] GameObject GameOverPanel;
+    [SerializeField] GameObject gameOverPanel;
     int min;
     float sec;
     bool spawnTime;
     int curRound;
     int curMonster;
     int maxMonster;
-    bool checkWarning = true;
-    bool checkGameOver = false;
+    float rewardGold;
+    float rewardGem;
+    float rewardPaper;
+    float rewardExp;
+    bool checkGameOver;
     [SerializeField] float gold;
     int spawnGold;
     int coin;
@@ -105,7 +115,9 @@ public class GameManager : MonoBehaviour
         curRound = 0;
         curMonster = 0;
         maxMonster = 100;
-        checkWarning = true;
+        rewardGold = 0;
+        rewardGem = 0;
+        rewardPaper = 0;
         checkGameOver = false;
         gold = 170f;
         spawnGold = 20;
@@ -128,7 +140,6 @@ public class GameManager : MonoBehaviour
         countDown();
         spawnMonster();
         monsterCount();
-        warning();
         gameOver();
     }
 
@@ -239,28 +250,6 @@ public class GameManager : MonoBehaviour
         curMonster = monster.transform.childCount;
     }
 
-    private void warning()
-    {
-        if (curMonster >= maxMonster * 0.8f && checkWarning == true)
-        {
-            StartCoroutine(Warning());
-            checkWarning = false;
-        }
-        if (curMonster < maxMonster * 0.8f)
-        {
-            checkWarning = true;
-        }
-    }
-
-    IEnumerator Warning()
-    {
-        warningPanel.SetActive(true);
-
-        yield return new WaitForSeconds(3f);
-
-        warningPanel.SetActive(false);
-    }
-
     private void gameOver()
     {
         if (curMonster >= maxMonster)
@@ -271,13 +260,31 @@ public class GameManager : MonoBehaviour
 
     IEnumerator GameOver()
     {
-        GameOverPanel.SetActive(true);
+        gameOverPanel.SetActive(true);
         checkGameOver = true;
         Time.timeScale = 0.5f;
 
         yield return new WaitForSeconds(1.5f);
 
-        GameOverPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(3);
+    }
+
+    private void clearGame()
+    {
+        StartCoroutine(GameOver());
+    }
+
+    IEnumerator ClearGame()
+    {
+        gameOverPanel.SetActive(true);
+        checkGameOver = false;
+        Time.timeScale = 0.5f;
+
+        yield return new WaitForSeconds(1.5f);
+
+        gameOverPanel.SetActive(false);
         Time.timeScale = 1f;
         SceneManager.LoadScene(3);
     }
@@ -291,4 +298,5 @@ public class GameManager : MonoBehaviour
             upgradeLevel1++;
         }
     }
+
 }
