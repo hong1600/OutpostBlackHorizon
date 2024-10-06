@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -26,6 +27,29 @@ public class GameBtn : MonoBehaviour
         sfx = false;
     }
 
+    private void showPanelOpen(GameObject targetPanel)
+    {
+        if (targetPanel.activeSelf == false)
+        {
+            targetPanel.SetActive(true);
+        }
+        targetPanel.transform.localScale = Vector3.zero;
+        targetPanel.transform.DOScale(Vector3.one, 0.2f);
+    }
+
+    public void closeBtn(GameObject button)
+    {
+        Transform buttonParent = button.transform.parent;
+
+        if (buttonParent != null)
+        {
+            buttonParent.gameObject.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() =>
+            {
+                buttonParent.gameObject.SetActive(false);
+            });
+        }
+    }
+
     public void spawnBtn()
     {
         if (GameManager.Instance.Gold > GameManager.Instance.SpawnGold)
@@ -36,32 +60,17 @@ public class GameBtn : MonoBehaviour
 
     public void randomBtn()
     {
-        randomPanel.SetActive(true);
+        showPanelOpen(randomPanel);
     }
 
     public void upgradeBtn()
     {
-        upgradePanel.SetActive(true);
+        showPanelOpen(upgradePanel);
     }
 
     public void mixBtn()
     {
-        mixPanel.SetActive(true);
-    }
-
-    public void randomCloseBtn()
-    {
-        randomPanel.SetActive(false);
-    }
-
-    public void upgradeCloseBtn()
-    {
-        upgradePanel.SetActive(false);
-    }
-
-    public void mixCloseBtn()
-    {
-        mixPanel.SetActive(false);
+        showPanelOpen(mixPanel);
     }
 
     public void speedUpBtn()
@@ -82,12 +91,7 @@ public class GameBtn : MonoBehaviour
 
     public void setting()
     {
-        settingPanel.SetActive(true);
-    }
-
-    public void settingClose()
-    {
-        settingPanel.SetActive(false);
+        showPanelOpen(settingPanel);
     }
 
     public void bgmBtn()

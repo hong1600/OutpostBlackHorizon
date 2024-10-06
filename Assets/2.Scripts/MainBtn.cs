@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class MainBtn : MonoBehaviour
 {
@@ -33,11 +34,17 @@ public class MainBtn : MonoBehaviour
 
     public void closeBtn(GameObject button)
     {
-        if (button.transform.parent != null)
+        Transform buttonParent = button.transform.parent;
+
+        if (buttonParent != null)
         {
-            button.transform.parent.gameObject.SetActive(false);
+            buttonParent.gameObject.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() =>
+            {
+                buttonParent.gameObject.SetActive(false);
+            });
         }
     }
+
     public void mainBtn()
     {
         heroPanel.SetActive(false);

@@ -1,9 +1,9 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,6 +43,9 @@ public class MainUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI heroSkillNameText1;
     [SerializeField] TextMeshProUGUI heroSkillNameText2;
     [SerializeField] TextMeshProUGUI heroUpgradeCost;
+    [SerializeField] Image heroImg;
+    [SerializeField] Image heroSlider;
+    [SerializeField] TextMeshProUGUI heroSliderText;
 
     [Header("상점")]
     [SerializeField] UnitData curUnit;
@@ -77,6 +80,17 @@ public class MainUI : MonoBehaviour
         }
     }
 
+    private void showPanelOpen(GameObject targetPanel)
+    {
+        if (targetPanel.activeSelf == false)
+        {
+            targetPanel.SetActive(true);
+        }
+        targetPanel.transform.localScale = Vector3.zero;
+        targetPanel.transform.DOScale(Vector3.one, 0.2f);
+    }
+
+
     private void main()
     {
         nameText.text = DataManager.instance.playerdata.name.ToString();
@@ -96,7 +110,7 @@ public class MainUI : MonoBehaviour
 
         treasureUpdate2();
 
-        treasureDcPanel.SetActive(true);
+        showPanelOpen(treasureDcPanel);
     }
 
     private void treasureUpdate1()
@@ -164,18 +178,23 @@ public class MainUI : MonoBehaviour
 
         heroUpdate2();
 
-        heroDcPanel.SetActive(true);
+        showPanelOpen(heroDcPanel);
     }
 
     private void heroUpdate2()
     {
+        heroImg.sprite = curHero.unitImg;
         heroNameText.text = curHero.unitName;
         heroLevelText.text = "LV." + curHero.unitLevel.ToString();
         heroDamageText.text = curHero.unitDamage.ToString();
         heroAttackSpeedText.text = curHero.attackSpeed.ToString();
         heroUpgradeCost.text = curHero.unitUpgradeCost.ToString();
-        heroSkillNameText1.text = $"<u><color=yellow>[{curHero.skill1Name}]</color></u> 스킬이 해금됩니다";
-        heroSkillNameText2.text = $"<u><color=yellow>[{curHero.skill1Name}]</color></u> 스킬의 발동확률이 +80% 증가합니다";
+        heroSkillNameText1.text =
+            $"<u><color=yellow>[{curHero.skill1Name}]</color></u> 스킬이 해금됩니다";
+        heroSkillNameText2.text =
+            $"<u><color=yellow>[{curHero.skill1Name}]</color></u> 스킬의 발동확률이 +80% 증가합니다";
+        heroSlider.fillAmount = curHero.unitCurExp / curHero.unitMaxExp;
+        heroSliderText.text = $"{curHero.unitCurExp} / {curHero.unitMaxExp}";
     }
 
     public void HeroUpgrade()
@@ -189,7 +208,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -197,7 +216,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -205,7 +224,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -213,7 +232,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -221,7 +240,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -229,7 +248,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -237,7 +256,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -245,7 +264,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -253,7 +272,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
 
                     break;
@@ -261,7 +280,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -269,7 +288,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -277,7 +296,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -285,7 +304,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -293,7 +312,7 @@ public class MainUI : MonoBehaviour
                     curHero.unitUpgradeCost += 1000f;
                     curHero.unitLevel += 1f;
                     curHero.unitDamage += 5;
-                    curHero.unitCurExp = 0f;
+                    curHero.unitCurExp -= curHero.unitMaxExp;
                     curHero.unitMaxExp += 1f;
                     break;
 
@@ -314,7 +333,7 @@ public class MainUI : MonoBehaviour
             storeUnitsDcImg.sprite = curUnit.unitImg;
             storeUnitsDcCost.text = curUnit.unitStoreCost.ToString();
 
-            storeUnitDcPanel.SetActive(true);
+            showPanelOpen(storeUnitDcPanel);
 
         }
         else if (Name == "Treasure")
@@ -325,7 +344,7 @@ public class MainUI : MonoBehaviour
             storeUnitsDcImg.sprite = curItem.treasureImg;
             storeUnitsDcCost.text = curItem.storeCost.ToString();
 
-            storeUnitDcPanel.SetActive(true);
+            showPanelOpen(storeUnitDcPanel);
         }
     }
 
