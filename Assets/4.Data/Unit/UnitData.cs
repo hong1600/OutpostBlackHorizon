@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum UnitGrade { a, b ,c}
-
 [CreateAssetMenu(fileName = "Unit", menuName = "Scriptble Object/UnitData")]
 
 public class UnitData : ScriptableObject
@@ -14,7 +12,6 @@ public class UnitData : ScriptableObject
     public int unitDamage;
     public int attackSpeed;
     public float attackRange;
-    public UnitGrade unitGrade;
     public Sprite unitImg;
     public float unitLevel;
     public string skill1Name;
@@ -22,4 +19,5 @@ public class UnitData : ScriptableObject
     public float unitStoreCost;
     public float unitCurExp;
     public float unitMaxExp;
+    public float unitGrade;
 }

@@ -76,7 +76,6 @@ public class GameManager : MonoBehaviour
     float upgradeLevel4;
 
     [Header("РЏДж")]
-    [SerializeField] GameObject unit;
     [SerializeField] List<GameObject> unitSpawnPointList = new List<GameObject>();
     string[] firstSelectOption = { "A", "B", "C" };
     float[] firstSelectWeight = { 0.2f, 0.3f, 0.5f };

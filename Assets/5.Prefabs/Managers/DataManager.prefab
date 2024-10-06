@@ -63,8 +63,66 @@ MonoBehaviour:
     - {fileID: 11400000, guid: c8f188bb44a133e4e9467683f82e93dc, type: 2}
     - {fileID: 11400000, guid: d8aada2e95c2a534985ff2fa2b481adf, type: 2}
     units:
-    - {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
-    - {fileID: 11400000, guid: 23f56d5d9bacb36439610d6f61ae65e8, type: 2}
-    - {fileID: 11400000, guid: 6fe336f25d5f7e645a7df9d26d6bda97, type: 2}
-    - {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
+    - index: 0
+      unitName: 
+      unitDamage: 0
+      attackSpeed: 0
+      attackRange: 0
+      unitImg: {fileID: 0}
+      unitLevel: 0
+      skill1Name: 
+      unitUpgradeCost: 0
+      unitStoreCost: 0
+      unitCurExp: 0
+      unitMaxExp: 0
+      unitGrade: 0
+    - index: 0
+      unitName: 
+      unitDamage: 0
+      attackSpeed: 0
+      attackRange: 0
+      unitImg: {fileID: 0}
+      unitLevel: 0
+      skill1Name: 
+      unitUpgradeCost: 0
+      unitStoreCost: 0
+      unitCurExp: 0
+      unitMaxExp: 0
+      unitGrade: 0
+    - index: 0
+      unitName: 
+      unitDamage: 0
+      attackSpeed: 0
+      attackRange: 0
+      unitImg: {fileID: 0}
+      unitLevel: 0
+      skill1Name: 
+      unitUpgradeCost: 0
+      unitStoreCost: 0
+      unitCurExp: 0
+      unitMaxExp: 0
+      unitGrade: 0
+    - index: 0
+      unitName: 
+      unitDamage: 0
+      attackSpeed: 0
+      attackRange: 0
+      unitImg: {fileID: 0}
+      unitLevel: 0
+      skill1Name: 
+      unitUpgradeCost: 0
+      unitStoreCost: 0
+      unitCurExp: 0
+      unitMaxExp: 0
+      unitGrade: 0
   path: 
+  allUnits:
+  - {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
+  - {fileID: 11400000, guid: 6fe336f25d5f7e645a7df9d26d6bda97, type: 2}
+  - {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
+  - {fileID: 11400000, guid: 23f56d5d9bacb36439610d6f61ae65e8, type: 2}
+  playerUnits:
+  - {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
+  - {fileID: 11400000, guid: 6fe336f25d5f7e645a7df9d26d6bda97, type: 2}
+  - {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
+  - {fileID: 11400000, guid: 23f56d5d9bacb36439610d6f61ae65e8, type: 2}

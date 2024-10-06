@@ -1107,6 +1107,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+      propertyPath: allItem.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
       propertyPath: item.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 3c987688cd443c543bef7873426eefbe, type: 2}
@@ -1154,6 +1158,38 @@ PrefabInstance:
       propertyPath: unit.Array.data[3]
       value: 
       objectReference: {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
+    - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+      propertyPath: allItem.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3c987688cd443c543bef7873426eefbe, type: 2}
+    - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+      propertyPath: allItem.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 52e90990357f3454b970605f2b548503, type: 2}
+    - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+      propertyPath: allItem.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 631fcc07e83eee042a1ad29d210e3157, type: 2}
+    - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+      propertyPath: allItem.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: d7261f93391faa1438692694bae10e39, type: 2}
+    - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+      propertyPath: allItem.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3436f53bb57a7324caf99d3484358838, type: 2}
+    - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+      propertyPath: allItem.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4d59f16b98fa2b84f8026f5e1247eb88, type: 2}
+    - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+      propertyPath: allItem.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: c8f188bb44a133e4e9467683f82e93dc, type: 2}
+    - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+      propertyPath: allItem.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: d8aada2e95c2a534985ff2fa2b481adf, type: 2}
     - target: {fileID: 5348925604797578186, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
       propertyPath: m_Name
       value: DataManager

@@ -17,7 +17,6 @@ MonoBehaviour:
   unitDamage: 20
   attackSpeed: 1
   attackRange: 2
-  unitGrade: 2
   unitImg: {fileID: -3318188226485093758, guid: ae72133dacba6ec4eb33ecde48f50e56, type: 3}
   unitLevel: 1
   skill1Name: "\uB178\uD68D"
@@ -25,3 +24,4 @@ MonoBehaviour:
   unitStoreCost: 500
   unitCurExp: 0
   unitMaxExp: 1
+  unitGrade: 0

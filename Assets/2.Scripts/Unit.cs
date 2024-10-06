@@ -10,7 +10,7 @@ public class Unit : MonoBehaviour
     int attackDamage;
     int attackSpeed;
     float attackRange;
-    UnitGrade unitGrade;
+    float unitGrade;
 
     Animator anim;
     SpriteRenderer sprite;
