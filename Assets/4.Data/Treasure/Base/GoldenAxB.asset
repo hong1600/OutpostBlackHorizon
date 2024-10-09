@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bde6ddf439b3267419e1a91cd1a2e1df, type: 3}
-  m_Name: Sword
+  m_Name: GoldenAxB
   m_EditorClassIdentifier: 
-  index: 7
-  treasureName: "\uB300\uAC80"
+  index: 2
+  treasureName: "\uD669\uAE08\uB3C4\uB07C"
   treasureLevel: 1
   treasureCurExp: 0
   treasureMaxExp: 1
   treasureCost: 1000
-  treasureImg: {fileID: 21300000, guid: a3c122a9dcb68e840962412c5b92ee8e, type: 3}
+  treasureImg: {fileID: 21300000, guid: 85347bc126f1e6a4fbfc1b7a8f1d9150, type: 3}
   treasureBase: 1
   treasureUpgrade: 1
-  treasureDc: "\uBCF4\uC2A4\uC5D0\uAC8C \uAC00\uD558\uB294 \uD53C\uD574 {0}%(+{1}%)\uC99D\uAC00"
+  treasureDc: "\uCC98\uCE58 \uC2DC \uCF54\uC778 {0}(+{1})\uC99D\uAC00"
   storeCost: 3000

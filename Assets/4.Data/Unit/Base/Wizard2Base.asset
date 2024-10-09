@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 498da0fc17a2c9b4285047183d60f8e3, type: 3}
-  m_Name: Warrior2
+  m_Name: Wizard2Base
   m_EditorClassIdentifier: 
-  index: 3
-  unitName: "\uC6A9\uC0AC"
-  unitDamage: 50
+  index: 2
+  unitName: "\uD751\uB9C8\uBC95\uC0AC"
+  unitDamage: 40
   attackSpeed: 1
-  attackRange: 2
-  unitImg: {fileID: 21300000, guid: ae297123f091bbf4e8f1835eb98fb293, type: 3}
+  attackRange: 3
+  unitImg: {fileID: -803321122, guid: 836ba81373ddf664c8a192783efe0ecd, type: 3}
   unitLevel: 1
-  skill1Name: "\uBD88\uAE30\uB465"
+  skill1Name: "\uAC10\uC5FC"
   unitUpgradeCost: 1000
-  unitStoreCost: 2000
+  unitStoreCost: 1600
   unitCurExp: 0
   unitMaxExp: 1
-  unitGrade: 2
+  unitGrade: 1

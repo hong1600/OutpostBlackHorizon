@@ -83,7 +83,6 @@ public class MainBtn : MonoBehaviour
         mainUI.treasureUpgrade();
     }
 
-
     public void optionBtn() 
     {
         if (option == false)

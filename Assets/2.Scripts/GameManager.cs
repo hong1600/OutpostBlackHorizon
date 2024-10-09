@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     bool spawnTime;
     int curRound;
     int curMonster;
-    int maxMonster;
+    [SerializeField] int maxMonster;
     float rewardGold;
     float rewardGem;
     float rewardPaper;
@@ -107,13 +107,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         enemySpawnPoint = GameObject.Find("SpawnPoint");
-
         min = 0;
         sec = 5;
         spawnTime = false;
         curRound = 0;
         curMonster = 0;
-        maxMonster = 100;
+        maxMonster = 70;
         rewardGold = 0;
         rewardGem = 0;
         rewardPaper = 0;
@@ -267,7 +266,7 @@ public class GameManager : MonoBehaviour
 
         gameOverPanel.SetActive(false);
         Time.timeScale = 1f;
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(4);
     }
 
     private void clearGame()
@@ -297,5 +296,4 @@ public class GameManager : MonoBehaviour
             upgradeLevel1++;
         }
     }
-
 }

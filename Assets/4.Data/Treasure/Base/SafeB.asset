@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bde6ddf439b3267419e1a91cd1a2e1df, type: 3}
-  m_Name: Sword
+  m_Name: SafeB
   m_EditorClassIdentifier: 
-  index: 7
-  treasureName: "\uB300\uAC80"
+  index: 5
+  treasureName: "\uAE08\uACE0"
   treasureLevel: 1
   treasureCurExp: 0
   treasureMaxExp: 1
   treasureCost: 1000
-  treasureImg: {fileID: 21300000, guid: a3c122a9dcb68e840962412c5b92ee8e, type: 3}
+  treasureImg: {fileID: 21300000, guid: 67b794112a1dcfb43a9a37e493d7b0ac, type: 3}
   treasureBase: 1
-  treasureUpgrade: 1
-  treasureDc: "\uBCF4\uC2A4\uC5D0\uAC8C \uAC00\uD558\uB294 \uD53C\uD574 {0}%(+{1}%)\uC99D\uAC00"
+  treasureUpgrade: 2.1
+  treasureDc: "\uC6E8\uC774\uBE0C \uB9C8\uB2E4 \uBCF4\uC720 \uC911\uC778 \uCF54\uC778
+    {0}%(+{1}%)\uC9C0\uAE09"
   storeCost: 3000

@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class MainUI : MonoBehaviour
 {
-    public UnitData CurHero { get { return curHero; } set { curHero = value; } }
     [SerializeField] MainBtn btn;
 
     [Header("메인")]
@@ -20,7 +19,7 @@ public class MainUI : MonoBehaviour
     [SerializeField] Slider expSlider;
 
     [Header("유물")]
-    [SerializeField] TreasureData curItems;
+    [SerializeField] ItemState curItems;
     [SerializeField] GameObject treasureDcPanel;
     [SerializeField] TextMeshProUGUI treasureNameText;
     [SerializeField] TextMeshProUGUI treasureLevelText;
@@ -34,7 +33,7 @@ public class MainUI : MonoBehaviour
     [SerializeField] List<TextMeshProUGUI> treasureExp = new List<TextMeshProUGUI>();
 
     [Header("영웅")]
-    [SerializeField] UnitData curHero;
+    [SerializeField] UnitState curHero;
     [SerializeField] GameObject heroDcPanel;
     [SerializeField] TextMeshProUGUI heroNameText;
     [SerializeField] TextMeshProUGUI heroLevelText;
@@ -48,8 +47,8 @@ public class MainUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI heroSliderText;
 
     [Header("상점")]
-    [SerializeField] UnitData curUnit;
-    [SerializeField] TreasureData curItem;
+    [SerializeField] UnitState curUnit;
+    [SerializeField] ItemState curItem;
     [SerializeField] Button[] storeUnitBtn;
     [SerializeField] UnitData[] storeUnits;
     [SerializeField] TreasureData[] storeItems;
@@ -106,7 +105,7 @@ public class MainUI : MonoBehaviour
 
     public void treasureDc(int index)
     {
-        curItems = DataManager.instance.allItem[index];
+        curItems = DataManager.instance.curItem(index);
 
         treasureUpdate2();
 
@@ -117,7 +116,7 @@ public class MainUI : MonoBehaviour
     {
         for (int i = 0; i < treasureSlider.Count; i++)
         {
-            curItems = DataManager.instance.allItem[i];
+            curItems = DataManager.instance.curItem(i);
 
             treasureSlider[i].fillAmount = curItems.treasureCurExp / curItems.treasureMaxExp;
             treasureLevel[i].text = "LV." + curItems.treasureLevel.ToString();
@@ -174,7 +173,7 @@ public class MainUI : MonoBehaviour
 
     public void heroDc(int index)
     {
-        curHero = DataManager.instance.allUnits[index];
+        curHero = DataManager.instance.curUnit(index);
 
         heroUpdate2();
 
@@ -327,7 +326,7 @@ public class MainUI : MonoBehaviour
     {
         if (Name == "Unit")
         {
-            curHero = DataManager.instance.allUnits[index];
+            curHero = DataManager.instance.curUnit(index);
             clickUnit = true;
 
             storeUnitsDcImg.sprite = curUnit.unitImg;
@@ -338,7 +337,7 @@ public class MainUI : MonoBehaviour
         }
         else if (Name == "Treasure")
         {
-            curItem = DataManager.instance.allItem[index];
+            curItem = DataManager.instance.curItem(index);
             clickUnit = false;
 
             storeUnitsDcImg.sprite = curItem.treasureImg;

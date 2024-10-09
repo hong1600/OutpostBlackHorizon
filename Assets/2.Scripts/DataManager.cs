@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -16,8 +15,8 @@ public class PlayerData
     public int paper = 0;
     public bool first = true;
 
-    public List<ItemState> items = new List<ItemState>();
-    public List<UnitState> units = new List<UnitState>();
+    public List<UnitState> units = null;
+    public List<ItemState> items = null;
 }
 
 [System.Serializable]
@@ -54,6 +53,7 @@ public class UnitState
     }
 }
 
+[System.Serializable]
 public class ItemState
 {
     public int index;
@@ -90,10 +90,10 @@ public class DataManager : MonoBehaviour
     public PlayerData playerdata = new PlayerData();
     public string path;
 
-    public List<UnitData> allUnits;
-    public List<UnitState> playerUnits;
-    public List<TreasureData> allItem;
-    public List<ItemState> playerItem;
+    public List<TreasureData> item;
+    public List<UnitData> unit;
+    public List<TreasureData> itemBase;
+    public List<UnitData> unitBase;
 
     private void Awake()
     {
@@ -111,16 +111,58 @@ public class DataManager : MonoBehaviour
         path = Application.persistentDataPath + "/save";
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            saveData();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        { 
+            loadData();
+        }
+    }
+
     public void saveData()
     {
-        playerdata.units.Clear();
-        for(int i = 0; i < playerUnits.Count; i++) 
-        {
-            playerdata.units.Add(playerUnits[i]);
-        }
+        //for (int i = 0; i < playerdata.items.Count; i++)
+        //{
+        //    ItemState curItem = playerdata.items[i];
+        //    curItem.index = ;
+        //    curItem.treasureName = item[i].treasureName;
+        //    curItem.treasureLevel = item[i].treasureLevel;
+        //    curItem.treasureCurExp = item[i].treasureCurExp;
+        //    curItem.treasureMaxExp = item[i].treasureMaxExp;
+        //    curItem.treasureCost = item[i].treasureCost;
+        //    curItem.treasureBase = item[i].treasureBase;
+        //    curItem.treasureUpgrade = item[i].treasureUpgrade;
+        //    curItem.treasureDc = item[i].treasureDc;
 
-        string data = JsonUtility.ToJson(playerdata);
+        //    playerdata.items.Add(curItem);
+        //}
+        //for (int i = 0; i < unit.Count; i++)
+        //{
+        //    UnitState curUnit = new UnitState(unit[i]);
+
+        //    curUnit.index = i;
+        //    curUnit.unitName = unit[i].unitName;
+        //    curUnit.unitDamage = unit[i].unitDamage;
+        //    curUnit.attackSpeed = unit[i].attackSpeed;
+        //    curUnit.unitLevel = unit[i].unitLevel;
+        //    curUnit.unitCurExp = unit[i].unitCurExp;
+        //    curUnit.unitMaxExp = unit[i].unitMaxExp;
+        //    curUnit.unitUpgradeCost = unit[i].unitUpgradeCost;
+        //    curUnit.unitStoreCost = unit[i].unitStoreCost;
+        //    curUnit.attackRange = unit[i].attackRange;
+        //    curUnit.skill1Name = unit[i].skill1Name;
+        //    curUnit.unitGrade = unit[i].unitGrade;
+
+        //    playerdata.units.Add(curUnit);
+        //}
+
+        string data = JsonUtility.ToJson(playerdata, true);
         File.WriteAllText(path, data);
+        Debug.Log("Save!");
     }
 
     public void loadData()
@@ -130,57 +172,81 @@ public class DataManager : MonoBehaviour
             string data = File.ReadAllText(path);
             playerdata = JsonUtility.FromJson<PlayerData>(data);
 
-            playerUnits.Clear();
-
             for (int i = 0; i < playerdata.units.Count; i++)
             {
-                UnitState saveUnitState = playerdata.units[i];
-                UnitData baseUnit = allUnits.Find(u => u.index == saveUnitState.index);
+                UnitState saveUnit = playerdata.units[i];
+
+                UnitData baseUnit = unit.Find(u => u.index == saveUnit.index);
 
                 if (baseUnit != null)
                 {
-                    UnitState newUnitState = new UnitState(baseUnit)
-                    {
-                        index = saveUnitState.index,
-                        unitName = saveUnitState.unitName,
-                        unitDamage = saveUnitState.unitDamage,
-                        attackSpeed = saveUnitState.attackSpeed,
-                        attackRange = saveUnitState.attackRange,
-                        unitLevel = saveUnitState.unitLevel,
-                        skill1Name = saveUnitState.skill1Name,
-                        unitUpgradeCost = saveUnitState.unitUpgradeCost,
-                        unitStoreCost = saveUnitState.unitStoreCost,
-                        unitCurExp = saveUnitState.unitCurExp,
-                        unitMaxExp = saveUnitState.unitMaxExp,
-                        unitGrade = saveUnitState.unitGrade
-                    };
-                    playerUnits.Add(newUnitState);
+                    UnitState loadUnit = new UnitState(baseUnit);
+                    loadUnit.index = saveUnit.index;
+                    loadUnit.unitName = saveUnit.unitName;
+                    loadUnit.unitDamage = saveUnit.unitDamage;
+                    loadUnit.attackSpeed = saveUnit.attackSpeed;
+                    loadUnit.attackRange = saveUnit.attackRange;
+                    loadUnit.unitLevel = saveUnit.unitLevel;
+                    loadUnit.unitCurExp = saveUnit.unitCurExp;
+                    loadUnit.unitMaxExp = saveUnit.unitMaxExp;
+                    loadUnit.unitUpgradeCost = saveUnit.unitUpgradeCost;
+                    loadUnit.unitStoreCost = saveUnit.unitStoreCost;
+                    loadUnit.skill1Name = saveUnit.skill1Name;
+                    loadUnit.unitGrade = saveUnit.unitGrade;
+
+                    playerdata.units[i] = loadUnit;
                 }
             }
+
+            for (int i = 0; i < playerdata.items.Count; i++)
+            {
+                ItemState saveItem = playerdata.items[i];
+
+                TreasureData baseItem = item.Find(i => i.index == saveItem.index);
+
+                if (baseItem != null)
+                {
+                    ItemState loadItem = new ItemState(baseItem);
+                    loadItem.index = saveItem.index;
+                    loadItem.treasureName = saveItem.treasureName;
+                    loadItem.treasureLevel = saveItem.treasureLevel;
+                    loadItem.treasureCurExp = saveItem.treasureCurExp;
+                    loadItem.treasureMaxExp = saveItem.treasureMaxExp;
+                    loadItem.treasureCost = saveItem.treasureCost;
+                    loadItem.treasureImg = saveItem.treasureImg;
+                    loadItem.treasureBase = saveItem.treasureBase;
+                    loadItem.treasureUpgrade = saveItem.treasureUpgrade;
+                    loadItem.treasureDc = saveItem.treasureDc;
+                    loadItem.storeCost = saveItem.storeCost;
+
+                    playerdata.items[i] = loadItem;
+                }
+            }
+            Debug.Log("Load!");
         }
         else
         {
-            playerUnits.Clear();
+            playerdata.units = new List<UnitState>();
 
-            for (int i = 0; i < playerdata.units.Count; i++)
+            for (int i = 0; i < unit.Count; i++)
             {
-                UnitData baseUnit = allUnits[i];
-                UnitState newUnitState = new UnitState(baseUnit)
-                {
-                    index = baseUnit.index,
-                    unitName = baseUnit.unitName,
-                    unitDamage = baseUnit.unitDamage,
-                    attackSpeed = baseUnit.attackSpeed,
-                    attackRange = baseUnit.attackRange,
-                    unitLevel = baseUnit.unitLevel,
-                    skill1Name = baseUnit.skill1Name,
-                    unitUpgradeCost = baseUnit.unitUpgradeCost,
-                    unitStoreCost = baseUnit.unitStoreCost,
-                    unitCurExp = baseUnit.unitCurExp,
-                    unitMaxExp = baseUnit.unitMaxExp,
-                    unitGrade = baseUnit.unitGrade
-                };
+                UnitState newUnit = new UnitState(unit[i]);
+                playerdata.units.Add(newUnit);
+            }
+            for (int i = 0; i < item.Count; i++)
+            {
+                ItemState newItem = new ItemState(item[i]);
+                playerdata.items.Add(newItem);
             }
         }
     }
+    public UnitState curUnit(int index)
+    {
+        return playerdata.units.Find(u => u.index == index);
+    }
+    public ItemState curItem(int index)
+    {
+        return playerdata.items.Find(i => i.index == index);
+    }
 }
+

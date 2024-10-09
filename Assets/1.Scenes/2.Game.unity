@@ -11279,8 +11279,8 @@ MonoBehaviour:
   spawnGoldText: {fileID: 687563490}
   coinText: {fileID: 394972056}
   UnitCountText: {fileID: 553271435}
-  warningPanel: {fileID: 0}
-  GameOverPanel: {fileID: 0}
+  warningPanel: {fileID: 2071378680}
+  GameOverPanel: {fileID: 607162865}
   upgradeGoldText: {fileID: 954359483}
   upgradeCoinText: {fileID: 696661736}
   upgradeCost1Text: {fileID: 891889197}
@@ -21657,6 +21657,10 @@ PrefabInstance:
       propertyPath: monster
       value: 
       objectReference: {fileID: 243551108}
+    - target: {fileID: 5183116248784772463, guid: a0fce6a12374e3a44bf2c9c87f8eefd2, type: 3}
+      propertyPath: maxMonster
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 5183116248784772463, guid: a0fce6a12374e3a44bf2c9c87f8eefd2, type: 3}
       propertyPath: gameOverPanel
       value: 

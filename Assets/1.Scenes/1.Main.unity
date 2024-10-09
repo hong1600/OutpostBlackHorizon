@@ -26705,9 +26705,9 @@ MonoBehaviour:
   heroBtnPre: {fileID: 7652227536282677288, guid: b75b77b703ef091449044650d7431fc5, type: 3}
   units:
   - {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
-  - {fileID: 11400000, guid: 23f56d5d9bacb36439610d6f61ae65e8, type: 2}
   - {fileID: 11400000, guid: 6fe336f25d5f7e645a7df9d26d6bda97, type: 2}
   - {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
+  - {fileID: 11400000, guid: 23f56d5d9bacb36439610d6f61ae65e8, type: 2}
 --- !u!4 &2057871789
 Transform:
   m_ObjectHideFlags: 0

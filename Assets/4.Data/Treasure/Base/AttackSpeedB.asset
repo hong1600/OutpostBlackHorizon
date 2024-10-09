@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bde6ddf439b3267419e1a91cd1a2e1df, type: 3}
-  m_Name: Sword
+  m_Name: AttackSpeedB
   m_EditorClassIdentifier: 
-  index: 7
-  treasureName: "\uB300\uAC80"
+  index: 1
+  treasureName: "\uC694\uC815\uD65C"
   treasureLevel: 1
   treasureCurExp: 0
   treasureMaxExp: 1
   treasureCost: 1000
-  treasureImg: {fileID: 21300000, guid: a3c122a9dcb68e840962412c5b92ee8e, type: 3}
+  treasureImg: {fileID: 21300000, guid: 2fb76302d01d4f842b34d1663f81cab2, type: 3}
   treasureBase: 1
   treasureUpgrade: 1
-  treasureDc: "\uBCF4\uC2A4\uC5D0\uAC8C \uAC00\uD558\uB294 \uD53C\uD574 {0}%(+{1}%)\uC99D\uAC00"
+  treasureDc: "\uC804\uCCB4 \uACF5\uACA9\uC18D\uB3C4 {0}%(+{1}%)\uC99D\uAC00"
   storeCost: 3000

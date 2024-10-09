@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498da0fc17a2c9b4285047183d60f8e3, type: 3}
   m_Name: Wizard2
   m_EditorClassIdentifier: 
-  index: 3
+  index: 2
   unitName: "\uD751\uB9C8\uBC95\uC0AC"
   unitDamage: 40
   attackSpeed: 1
   attackRange: 3
-  unitGrade: 1
   unitImg: {fileID: -803321122, guid: 836ba81373ddf664c8a192783efe0ecd, type: 3}
   unitLevel: 1
   skill1Name: "\uAC10\uC5FC"
@@ -25,3 +24,4 @@ MonoBehaviour:
   unitStoreCost: 1600
   unitCurExp: 0
   unitMaxExp: 1
+  unitGrade: 1

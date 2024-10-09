@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bde6ddf439b3267419e1a91cd1a2e1df, type: 3}
-  m_Name: Sword
+  m_Name: SwordB
   m_EditorClassIdentifier: 
   index: 7
   treasureName: "\uB300\uAC80"
