@@ -326,7 +326,7 @@ public class MainUI : MonoBehaviour
     {
         if (Name == "Unit")
         {
-            curHero = DataManager.instance.curUnit(index);
+            curUnit = DataManager.instance.curUnit(index);
             clickUnit = true;
 
             storeUnitsDcImg.sprite = curUnit.unitImg;

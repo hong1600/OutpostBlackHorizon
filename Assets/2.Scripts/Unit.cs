@@ -7,10 +7,10 @@ public class Unit : MonoBehaviour
     [SerializeField] UnitData unitData;
 
     string unitName;
-    int attackDamage;
-    int attackSpeed;
-    float attackRange;
-    float unitGrade;
+    [SerializeField] int attackDamage;
+    [SerializeField] int attackSpeed;
+    [SerializeField] float attackRange;
+    [SerializeField] float unitGrade;
 
     Animator anim;
     SpriteRenderer sprite;
@@ -90,7 +90,8 @@ public class Unit : MonoBehaviour
         {
             if (attackCoroutine != null)
             {
-                StopCoroutine(Attack());
+                StopCoroutine(attackCoroutine);
+                attackCoroutine = null;
                 anim.SetBool("isAttack", false);
             }
         }

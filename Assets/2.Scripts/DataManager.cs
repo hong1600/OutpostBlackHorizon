@@ -27,7 +27,6 @@ public class UnitState
     public int unitDamage;
     public int attackSpeed;
     public float attackRange;
-    public Sprite unitImg;
     public float unitLevel;
     public string skill1Name;
     public float unitUpgradeCost;
@@ -35,6 +34,7 @@ public class UnitState
     public float unitCurExp;
     public float unitMaxExp;
     public float unitGrade;
+    public Sprite unitImg;
 
     public UnitState(UnitData unitData)
     {
@@ -62,11 +62,11 @@ public class ItemState
     public int treasureCurExp;
     public int treasureMaxExp;
     public int treasureCost;
-    public Sprite treasureImg;
     public float treasureBase;
     public float treasureUpgrade;
     public string treasureDc;
     public float storeCost;
+    public Sprite treasureImg;
 
     public ItemState(TreasureData itemData)
     {
@@ -125,41 +125,6 @@ public class DataManager : MonoBehaviour
 
     public void saveData()
     {
-        //for (int i = 0; i < playerdata.items.Count; i++)
-        //{
-        //    ItemState curItem = playerdata.items[i];
-        //    curItem.index = ;
-        //    curItem.treasureName = item[i].treasureName;
-        //    curItem.treasureLevel = item[i].treasureLevel;
-        //    curItem.treasureCurExp = item[i].treasureCurExp;
-        //    curItem.treasureMaxExp = item[i].treasureMaxExp;
-        //    curItem.treasureCost = item[i].treasureCost;
-        //    curItem.treasureBase = item[i].treasureBase;
-        //    curItem.treasureUpgrade = item[i].treasureUpgrade;
-        //    curItem.treasureDc = item[i].treasureDc;
-
-        //    playerdata.items.Add(curItem);
-        //}
-        //for (int i = 0; i < unit.Count; i++)
-        //{
-        //    UnitState curUnit = new UnitState(unit[i]);
-
-        //    curUnit.index = i;
-        //    curUnit.unitName = unit[i].unitName;
-        //    curUnit.unitDamage = unit[i].unitDamage;
-        //    curUnit.attackSpeed = unit[i].attackSpeed;
-        //    curUnit.unitLevel = unit[i].unitLevel;
-        //    curUnit.unitCurExp = unit[i].unitCurExp;
-        //    curUnit.unitMaxExp = unit[i].unitMaxExp;
-        //    curUnit.unitUpgradeCost = unit[i].unitUpgradeCost;
-        //    curUnit.unitStoreCost = unit[i].unitStoreCost;
-        //    curUnit.attackRange = unit[i].attackRange;
-        //    curUnit.skill1Name = unit[i].skill1Name;
-        //    curUnit.unitGrade = unit[i].unitGrade;
-
-        //    playerdata.units.Add(curUnit);
-        //}
-
         string data = JsonUtility.ToJson(playerdata, true);
         File.WriteAllText(path, data);
         Debug.Log("Save!");
@@ -193,6 +158,7 @@ public class DataManager : MonoBehaviour
                     loadUnit.unitStoreCost = saveUnit.unitStoreCost;
                     loadUnit.skill1Name = saveUnit.skill1Name;
                     loadUnit.unitGrade = saveUnit.unitGrade;
+                    loadUnit.unitImg = Resources.Load<Sprite>("Units/" + saveUnit.index.ToString());
 
                     playerdata.units[i] = loadUnit;
                 }
@@ -213,11 +179,11 @@ public class DataManager : MonoBehaviour
                     loadItem.treasureCurExp = saveItem.treasureCurExp;
                     loadItem.treasureMaxExp = saveItem.treasureMaxExp;
                     loadItem.treasureCost = saveItem.treasureCost;
-                    loadItem.treasureImg = saveItem.treasureImg;
                     loadItem.treasureBase = saveItem.treasureBase;
                     loadItem.treasureUpgrade = saveItem.treasureUpgrade;
                     loadItem.treasureDc = saveItem.treasureDc;
                     loadItem.storeCost = saveItem.storeCost;
+                    loadItem.treasureImg = Resources.Load<Sprite>("Items/" + saveItem.index.ToString());
 
                     playerdata.items[i] = loadItem;
                 }

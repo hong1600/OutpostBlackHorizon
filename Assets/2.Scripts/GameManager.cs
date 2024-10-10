@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
         rewardGem = 0;
         rewardPaper = 0;
         checkGameOver = false;
-        gold = 170f;
+        gold = 10000f;
         spawnGold = 20;
         coin = 0;
         upgradeCost1 = 30;

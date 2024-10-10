@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2098289469151005781
+--- !u!1 &7681517431164572206
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4019022314514970622}
-  - component: {fileID: 5183116248784772463}
+  - component: {fileID: 1067289794795864747}
+  - component: {fileID: 4245101106704281249}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -17,31 +17,66 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4019022314514970622
+--- !u!4 &1067289794795864747
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2098289469151005781}
+  m_GameObject: {fileID: 7681517431164572206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.6489999, y: 0.19757882, z: 0.06565531}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5183116248784772463
+--- !u!114 &4245101106704281249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2098289469151005781}
+  m_GameObject: {fileID: 7681517431164572206}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1575bcbd5d6064844b65fa35800b53d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy1: {fileID: 2103829473234354377, guid: 23ef851970153fc40a1314c46763e82e, type: 3}
+  gameOverPanel: {fileID: 0}
+  maxMonster: 50
+  gold: 0
+  unitSpawnPointList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  unitListA:
+  - {fileID: 1582679196788840441, guid: 68807bb5be3bf8a44904d8912b7e2a78, type: 3}
+  unitListB:
+  - {fileID: 108908867050425898, guid: 8cdc2a63f0562eb47a94a92456f6de34, type: 3}
+  - {fileID: 8542601979106673295, guid: 78abc5df83a4f6b43a138de8a440e611, type: 3}
+  unitListC:
+  - {fileID: 5003890506298207457, guid: c99af1bf15fe081478a682afad125306, type: 3}
+  monster: {fileID: 0}
+  enemy:
+  - {fileID: 7588598504335026717, guid: 23ef851970153fc40a1314c46763e82e, type: 3}
+  - {fileID: 2583741815164723318, guid: 4df01dac5df2c584db1568d81e57ed0e, type: 3}
+  - {fileID: 3508307432542092769, guid: 237342e5c0ee7cb458a8d76a75be8b61, type: 3}
+  - {fileID: 7588598504335026717, guid: 23ef851970153fc40a1314c46763e82e, type: 3}
+  - {fileID: 2583741815164723318, guid: 4df01dac5df2c584db1568d81e57ed0e, type: 3}
+  - {fileID: 3508307432542092769, guid: 237342e5c0ee7cb458a8d76a75be8b61, type: 3}
+  enemySpawnPoint: {fileID: 0}
+  enemySpawndelay: 0.85

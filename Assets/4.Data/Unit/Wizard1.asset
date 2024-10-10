@@ -15,8 +15,8 @@ MonoBehaviour:
   index: 1
   unitName: "\uB9C8\uB140"
   unitDamage: 30
-  attackSpeed: 2
-  attackRange: 3
+  attackSpeed: 1
+  attackRange: 2
   unitImg: {fileID: 462434960, guid: 90c7332c857b6b043bad30766e14a946, type: 3}
   unitLevel: 1
   skill1Name: "\uB3C5\uAD6C\uB984"

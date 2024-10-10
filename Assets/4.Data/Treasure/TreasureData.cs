@@ -13,9 +13,9 @@ public class TreasureData : ScriptableObject
     public int treasureCurExp;
     public int treasureMaxExp;
     public int treasureCost;
-    public Sprite treasureImg;
     public float treasureBase;
     public float treasureUpgrade;
     public string treasureDc;
     public float storeCost;
+    public Sprite treasureImg;
 }
