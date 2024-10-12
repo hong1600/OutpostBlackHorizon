@@ -821,7 +821,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &86618403
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12253,7 +12253,7 @@ GameObject:
   - component: {fileID: 1146845370}
   - component: {fileID: 1146845369}
   m_Layer: 5
-  m_Name: SpawnBtn
+  m_Name: Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12368,7 +12368,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1146845370}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1642436183}
+        m_TargetAssemblyTypeName: GameBtn, Assembly-CSharp
+        m_MethodName: unitUpgradeBtn
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1146845372
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14854,7 +14866,7 @@ GameObject:
   - component: {fileID: 1314109655}
   - component: {fileID: 1314109654}
   m_Layer: 5
-  m_Name: SpawnBtn
+  m_Name: Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14969,7 +14981,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1314109655}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1642436183}
+        m_TargetAssemblyTypeName: GameBtn, Assembly-CSharp
+        m_MethodName: unitUpgradeBtn
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1314109657
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17187,6 +17211,26 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1573742514}
     - target: {fileID: 4245101106704281249, guid: b9aa530411b052c4aaeb8b48a6dff12d, type: 3}
+      propertyPath: unitListB.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245101106704281249, guid: b9aa530411b052c4aaeb8b48a6dff12d, type: 3}
+      propertyPath: unitListB.Array.data[0]
+      value: 
+      objectReference: {fileID: 8542601979106673295, guid: 8cdc2a63f0562eb47a94a92456f6de34, type: 3}
+    - target: {fileID: 4245101106704281249, guid: b9aa530411b052c4aaeb8b48a6dff12d, type: 3}
+      propertyPath: unitListB.Array.data[1]
+      value: 
+      objectReference: {fileID: 108908867050425898, guid: 78abc5df83a4f6b43a138de8a440e611, type: 3}
+    - target: {fileID: 4245101106704281249, guid: b9aa530411b052c4aaeb8b48a6dff12d, type: 3}
+      propertyPath: unitListB.Array.data[2]
+      value: 
+      objectReference: {fileID: 8542601979106673295, guid: 8cdc2a63f0562eb47a94a92456f6de34, type: 3}
+    - target: {fileID: 4245101106704281249, guid: b9aa530411b052c4aaeb8b48a6dff12d, type: 3}
+      propertyPath: unitListB.Array.data[3]
+      value: 
+      objectReference: {fileID: 108908867050425898, guid: 78abc5df83a4f6b43a138de8a440e611, type: 3}
+    - target: {fileID: 4245101106704281249, guid: b9aa530411b052c4aaeb8b48a6dff12d, type: 3}
       propertyPath: unitSpawnPointList.Array.size
       value: 15
       objectReference: {fileID: 0}
@@ -17253,6 +17297,10 @@ PrefabInstance:
     - target: {fileID: 7681517431164572206, guid: b9aa530411b052c4aaeb8b48a6dff12d, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7681517431164572206, guid: b9aa530411b052c4aaeb8b48a6dff12d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18996,6 +19044,7 @@ MonoBehaviour:
   bgmImg: {fileID: 1345380654}
   sfxImg: {fileID: 700166445}
   speedText: {fileID: 1543967206}
+  gameUI: {fileID: 0}
 --- !u!4 &1642436184
 Transform:
   m_ObjectHideFlags: 0
@@ -19025,7 +19074,7 @@ GameObject:
   - component: {fileID: 1643587947}
   - component: {fileID: 1643587946}
   m_Layer: 5
-  m_Name: SpawnBtn
+  m_Name: Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19140,7 +19189,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1643587947}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1642436183}
+        m_TargetAssemblyTypeName: GameBtn, Assembly-CSharp
+        m_MethodName: unitUpgradeBtn
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1643587949
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23517,7 +23578,7 @@ GameObject:
   - component: {fileID: 2029695457}
   - component: {fileID: 2029695456}
   m_Layer: 5
-  m_Name: SpawnBtn
+  m_Name: Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23632,7 +23693,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2029695457}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1642436183}
+        m_TargetAssemblyTypeName: GameBtn, Assembly-CSharp
+        m_MethodName: unitUpgradeBtn
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &2029695459
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23783,7 +23856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2038429004
 RectTransform:
   m_ObjectHideFlags: 0

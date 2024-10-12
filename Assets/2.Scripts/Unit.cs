@@ -7,10 +7,10 @@ public class Unit : MonoBehaviour
     [SerializeField] UnitData unitData;
 
     string unitName;
-    [SerializeField] int attackDamage;
-    [SerializeField] int attackSpeed;
-    [SerializeField] float attackRange;
-    [SerializeField] float unitGrade;
+    public int attackDamage;
+    public int attackSpeed;
+    public float attackRange;
+    public float unitGrade;
 
     Animator anim;
     SpriteRenderer sprite;
@@ -18,6 +18,12 @@ public class Unit : MonoBehaviour
     [SerializeField] GameObject target;
 
     Coroutine attackCoroutine;
+
+    bool upgrade2 = false;
+    bool upgrade3 = false;
+    bool upgrade4 = false;
+    bool upgrade5 = false;
+    bool upgrade6 = false;
 
     private void Awake()
     {
@@ -32,6 +38,8 @@ public class Unit : MonoBehaviour
         attackSpeed = unitData.attackSpeed;
         attackRange = unitData.attackRange;
         unitGrade = unitData.unitGrade;
+
+        upgrade();
     }
 
     private void Update()
@@ -129,6 +137,133 @@ public class Unit : MonoBehaviour
         else if (target.transform.position.x > transform.position.x)
         {
             sprite.flipX = false;
+        }
+    }
+
+    public void upgrade()
+    {
+        if (unitGrade == 0)
+        {
+            switch ((GameManager.Instance.UpgradeLevel1))
+            {
+                case 2:
+                    if (upgrade2 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 3:
+                    if (upgrade3 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 4:
+                    if (upgrade4 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 5:
+                    if (upgrade5 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 6:
+                    if (upgrade6 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+            }
+        }
+        if (unitGrade == 1)
+        {
+            switch ((GameManager.Instance.UpgradeLevel2))
+            {
+                case 2:
+                    if (upgrade2 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 3:
+                    if (upgrade3 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 4:
+                    if (upgrade4 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 5:
+                    if (upgrade5 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 6:
+                    if (upgrade6 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+            }
+        }
+        if (unitGrade == 2)
+        {
+            switch ((GameManager.Instance.UpgradeLevel3))
+            {
+                case 2:
+                    if (upgrade2 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 3:
+                    if (upgrade3 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 4:
+                    if (upgrade4 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 5:
+                    if (upgrade5 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+                case 6:
+                    if (upgrade6 == false)
+                    {
+                        attackDamage *= 2;
+                        upgrade2 = true;
+                    }
+                    break;
+            }
         }
     }
 }

@@ -52,18 +52,19 @@ public class GameManager : MonoBehaviour
 
     [Header("╫ц╫╨еш")]
     [SerializeField] GameObject gameOverPanel;
+    [SerializeField] int maxMonster;
+    [SerializeField] float gold;
+    public List<Unit> curUnitList = new List<Unit>();
     int min;
     float sec;
     bool spawnTime;
     int curRound;
     int curMonster;
-    [SerializeField] int maxMonster;
     float rewardGold;
     float rewardGem;
     float rewardPaper;
     float rewardExp;
     bool checkGameOver;
-    [SerializeField] float gold;
     int spawnGold;
     int coin;
     float upgradeCost1;
@@ -155,16 +156,22 @@ public class GameManager : MonoBehaviour
         switch ( firstSelection ) 
         {
             case "A":
-                Instantiate(unitListA[randA], unitSpawnPointList[groundNum].transform.position,
+                GameObject spawnUnitA = Instantiate(unitListA[randA],
+                    unitSpawnPointList[groundNum].transform.position,
                     Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                curUnitList.Add(spawnUnitA.GetComponent<Unit>());
                 break;
             case "B":
-                Instantiate(unitListB[randB], unitSpawnPointList[groundNum].transform.position,
+                GameObject spawnUnitB = Instantiate(unitListB[randB],
+                    unitSpawnPointList[groundNum].transform.position,
                     Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                curUnitList.Add(spawnUnitB.GetComponent<Unit>());
                 break;
             case "C":
-                Instantiate(unitListC[randC], unitSpawnPointList[groundNum].transform.position,
+                GameObject spawnUnitC = Instantiate(unitListC[randC],
+                    unitSpawnPointList[groundNum].transform.position,
                     Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                curUnitList.Add(spawnUnitC.GetComponent<Unit>());
                 break;
         }
     }

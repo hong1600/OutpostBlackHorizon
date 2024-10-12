@@ -16,6 +16,7 @@ public class GameBtn : MonoBehaviour
     [SerializeField] Image bgmImg;
     [SerializeField] Image sfxImg;
     [SerializeField] TextMeshProUGUI speedText;
+    [SerializeField] GameUI gameUI;
     bool speed1;
     bool bgm;
     bool sfx;
@@ -55,6 +56,69 @@ public class GameBtn : MonoBehaviour
         if (GameManager.Instance.Gold > GameManager.Instance.SpawnGold)
         {
             GameManager.Instance.spawnUnit();
+        }
+    }
+
+    public void unitUpgradeBtn(int index)
+    {
+        List<Unit> unitList = GameManager.Instance.curUnitList;
+
+        if (index == 0)
+        {
+            if (GameManager.Instance.UpgradeLevel1 < 6)
+            {
+                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost1;
+                GameManager.Instance.UpgradeCost1 += 10f;
+                GameManager.Instance.UpgradeLevel1 += 1f;
+
+                for (int i = 0; i < unitList.Count; i++)
+                {
+                    if (unitList[i].unitGrade == 0)
+                    {
+                        unitList[i].upgrade();
+                    }
+                }
+            }
+
+        }
+        if (index == 1)
+        {
+            if (GameManager.Instance.UpgradeLevel2 < 6)
+            {
+                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost1;
+                GameManager.Instance.UpgradeCost2 += 10f;
+                GameManager.Instance.UpgradeLevel2 += 1f;
+
+                for (int i = 0; i < unitList.Count; i++)
+                {
+                    if (unitList[i].unitGrade == 1)
+                    {
+                        unitList[i].upgrade();
+                    }
+                }
+
+            }
+        }
+        if (index == 2)
+        {
+            if (GameManager.Instance.UpgradeLevel3 < 6)
+            {
+                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost1;
+                GameManager.Instance.UpgradeCost3 += 10f;
+                GameManager.Instance.UpgradeLevel3 += 1f;
+
+                for (int i = 0; i < unitList.Count; i++)
+                {
+                    {
+                        unitList[i].upgrade();
+                    }
+                }
+
+            }
+        }
+        if (index == 3)
+        {
+
         }
     }
 
