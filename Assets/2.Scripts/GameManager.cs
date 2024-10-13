@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
     { get { return rewardPaper; } set { rewardPaper = value; } }
     public float RewardExp
     { get { return rewardExp; } set { rewardExp = value; } }
+    public float[][] FirstSelectWeight
+    { get { return firstSelectWeight; } set { firstSelectWeight = value; } }
 
     public static GameManager Instance;
 
@@ -79,7 +81,15 @@ public class GameManager : MonoBehaviour
     [Header("РЏДж")]
     [SerializeField] List<GameObject> unitSpawnPointList = new List<GameObject>();
     string[] firstSelectOption = { "A", "B", "C" };
-    float[] firstSelectWeight = { 0.2f, 0.3f, 0.5f };
+    [SerializeField] float[][] firstSelectWeight = new float[][]
+    {
+        new float[] { 0.05f, 0.15f, 0.8f },
+        new float[] { 0.06f, 0.16f, 0.78f },
+        new float[] { 0.07f, 0.17f, 0.76f },
+        new float[] { 0.08f, 0.18f, 0.74f },
+        new float[] { 0.09f, 0.19f, 0.72f },
+        new float[] { 0.10f, 0.20f, 0.70f }
+    };
     [SerializeField] List<GameObject> unitListA = new List<GameObject>();
     [SerializeField] List<GameObject> unitListB = new List<GameObject>();
     [SerializeField] List<GameObject> unitListC = new List<GameObject>();
@@ -147,7 +157,7 @@ public class GameManager : MonoBehaviour
         gold -= spawnGold;
         spawnGold += 2;
 
-        string firstSelection = FirstSelectRandom(firstSelectOption, firstSelectWeight);
+        string firstSelection = FirstSelectRandom(firstSelectOption, firstSelectWeight[(int)upgradeLevel4 - 1]);
 
         int randA = Random.Range(0, unitListA.Count);
         int randB = Random.Range(0, unitListB.Count);
@@ -176,17 +186,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CheckGround()  
-    {
-        for (groundNum = 0; groundNum < unitSpawnPointList.Count; groundNum++)
-        {
-            if (unitSpawnPointList[groundNum].transform.childCount <= 0)
-            {
-                return;
-            }
-        }
-    }
-
     string FirstSelectRandom(string[] options, float[] weights)
     {
         float totalWeight = 0f;
@@ -211,6 +210,18 @@ public class GameManager : MonoBehaviour
 
         return options[options.Length - 1];
     }
+
+    private void CheckGround()  
+    {
+        for (groundNum = 0; groundNum < unitSpawnPointList.Count; groundNum++)
+        {
+            if (unitSpawnPointList[groundNum].transform.childCount <= 0)
+            {
+                return;
+            }
+        }
+    }
+
 
     private void countDown()
     {

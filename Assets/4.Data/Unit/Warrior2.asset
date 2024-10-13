@@ -24,4 +24,4 @@ MonoBehaviour:
   unitStoreCost: 2000
   unitCurExp: 0
   unitMaxExp: 1
-  unitGrade: 2
+  unitGrade: 3

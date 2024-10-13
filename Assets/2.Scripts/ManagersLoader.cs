@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ManagersLoader : MonoBehaviour
 {
-    [SerializeField] GameObject gameManager;
     [SerializeField] GameObject dataManager;
 
     private void Awake()
@@ -12,10 +11,6 @@ public class ManagersLoader : MonoBehaviour
         if (GameObject.Find("DataManager") == null)
         {
             Instantiate(dataManager);
-        }
-        if (GameObject.Find("GameManager") == null)
-        {
-            Instantiate(gameManager);
         }
     }
 }

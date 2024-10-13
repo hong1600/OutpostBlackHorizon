@@ -7349,7 +7349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 10
+  m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
@@ -15145,7 +15145,18 @@ MonoBehaviour:
   gemText: {fileID: 200044872}
   nameText: {fileID: 1077290181}
   expSlider: {fileID: 1826118710}
-  curItems: {fileID: 0}
+  curItems:
+    index: 0
+    treasureName: 
+    treasureLevel: 0
+    treasureCurExp: 0
+    treasureMaxExp: 0
+    treasureCost: 0
+    treasureBase: 0
+    treasureUpgrade: 0
+    treasureDc: 
+    storeCost: 0
+    treasureImg: {fileID: 0}
   treasureDcPanel: {fileID: 1539918003}
   treasureNameText: {fileID: 894119469}
   treasureLevelText: {fileID: 450337035}
@@ -15181,7 +15192,20 @@ MonoBehaviour:
   - {fileID: 232104339}
   - {fileID: 1801818149}
   - {fileID: 1763950909}
-  curHero: {fileID: 0}
+  curHero:
+    index: 0
+    unitName: 
+    unitDamage: 0
+    attackSpeed: 0
+    attackRange: 0
+    unitLevel: 0
+    skill1Name: 
+    unitUpgradeCost: 0
+    unitStoreCost: 0
+    unitCurExp: 0
+    unitMaxExp: 0
+    unitGrade: 0
+    unitImg: {fileID: 0}
   heroDcPanel: {fileID: 1913660361}
   heroNameText: {fileID: 407873315}
   heroLevelText: {fileID: 1747830288}
@@ -15193,8 +15217,32 @@ MonoBehaviour:
   heroImg: {fileID: 2035270449}
   heroSlider: {fileID: 1795991111}
   heroSliderText: {fileID: 858756222}
-  curUnit: {fileID: 0}
-  curItem: {fileID: 0}
+  curUnit:
+    index: 0
+    unitName: 
+    unitDamage: 0
+    attackSpeed: 0
+    attackRange: 0
+    unitLevel: 0
+    skill1Name: 
+    unitUpgradeCost: 0
+    unitStoreCost: 0
+    unitCurExp: 0
+    unitMaxExp: 0
+    unitGrade: 0
+    unitImg: {fileID: 0}
+  curItem:
+    index: 0
+    treasureName: 
+    treasureLevel: 0
+    treasureCurExp: 0
+    treasureMaxExp: 0
+    treasureCost: 0
+    treasureBase: 0
+    treasureUpgrade: 0
+    treasureDc: 
+    storeCost: 0
+    treasureImg: {fileID: 0}
   storeUnitBtn:
   - {fileID: 443880799}
   - {fileID: 127153453}
@@ -26702,7 +26750,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 1934942479}
-  heroBtnPre: {fileID: 7652227536282677288, guid: b75b77b703ef091449044650d7431fc5, type: 3}
+  heroBtn1Pre: {fileID: 7652227536282677288, guid: b75b77b703ef091449044650d7431fc5, type: 3}
+  heroBtn2Pre: {fileID: 7652227536282677288, guid: 39b857a6fbe77f3458f6a95f87cd8445, type: 3}
+  heroBtn3Pre: {fileID: 7652227536282677288, guid: 74a5d11491a5a604eb02c7e32d455f5f, type: 3}
+  heroBtn4Pre: {fileID: 7652227536282677288, guid: e4aa1effb9b556d449ac3d3fd1e46d7a, type: 3}
   units:
   - {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
   - {fileID: 11400000, guid: 6fe336f25d5f7e645a7df9d26d6bda97, type: 2}

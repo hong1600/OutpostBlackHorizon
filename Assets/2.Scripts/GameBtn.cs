@@ -8,15 +8,14 @@ using UnityEngine.UI;
 
 public class GameBtn : MonoBehaviour
 {
-    [Header("∏ﬁ¿Œ")]
     [SerializeField] GameObject randomPanel;
     [SerializeField] GameObject upgradePanel;
     [SerializeField] GameObject mixPanel;
     [SerializeField] GameObject settingPanel;
+    [SerializeField] GameObject spawnperPaenl;
     [SerializeField] Image bgmImg;
     [SerializeField] Image sfxImg;
     [SerializeField] TextMeshProUGUI speedText;
-    [SerializeField] GameUI gameUI;
     bool speed1;
     bool bgm;
     bool sfx;
@@ -33,9 +32,13 @@ public class GameBtn : MonoBehaviour
         if (targetPanel.activeSelf == false)
         {
             targetPanel.SetActive(true);
+            targetPanel.transform.localScale = Vector3.zero;
+            targetPanel.transform.DOScale(Vector3.one, 0.2f);
         }
-        targetPanel.transform.localScale = Vector3.zero;
-        targetPanel.transform.DOScale(Vector3.one, 0.2f);
+        else 
+        {
+            return;
+        }
     }
 
     public void closeBtn(GameObject button)
@@ -79,13 +82,12 @@ public class GameBtn : MonoBehaviour
                     }
                 }
             }
-
         }
         if (index == 1)
         {
             if (GameManager.Instance.UpgradeLevel2 < 6)
             {
-                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost1;
+                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost2;
                 GameManager.Instance.UpgradeCost2 += 10f;
                 GameManager.Instance.UpgradeLevel2 += 1f;
 
@@ -103,7 +105,7 @@ public class GameBtn : MonoBehaviour
         {
             if (GameManager.Instance.UpgradeLevel3 < 6)
             {
-                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost1;
+                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost3;
                 GameManager.Instance.UpgradeCost3 += 10f;
                 GameManager.Instance.UpgradeLevel3 += 1f;
 
@@ -118,7 +120,12 @@ public class GameBtn : MonoBehaviour
         }
         if (index == 3)
         {
-
+            if (GameManager.Instance.UpgradeLevel4 < 6)
+            {
+                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost4;
+                GameManager.Instance.UpgradeCost4 += 10f;
+                GameManager.Instance.UpgradeLevel4 += 1f;
+            }
         }
     }
 
@@ -130,6 +137,11 @@ public class GameBtn : MonoBehaviour
     public void upgradeBtn()
     {
         showPanelOpen(upgradePanel);
+    }
+
+    public void spawnPer()
+    {
+        showPanelOpen(spawnperPaenl);
     }
 
     public void mixBtn()

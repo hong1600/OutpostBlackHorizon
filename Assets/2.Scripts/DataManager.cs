@@ -109,6 +109,8 @@ public class DataManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         path = Application.persistentDataPath + "/save";
+
+        loadData();
     }
 
     private void Update()
@@ -127,7 +129,6 @@ public class DataManager : MonoBehaviour
     {
         string data = JsonUtility.ToJson(playerdata, true);
         File.WriteAllText(path, data);
-        Debug.Log("Save!");
     }
 
     public void loadData()
@@ -188,7 +189,6 @@ public class DataManager : MonoBehaviour
                     playerdata.items[i] = loadItem;
                 }
             }
-            Debug.Log("Load!");
         }
         else
         {

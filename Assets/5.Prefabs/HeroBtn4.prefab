@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 3977127676446315142}
   - component: {fileID: -952116986600150193}
   m_Layer: 5
-  m_Name: HeroBtn1
+  m_Name: HeroBtn4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,11 +238,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.69411767, g: 0.6509804, b: 0.5372549, a: 1}
-    m_HighlightedColor: {r: 0.69411767, g: 0.6509804, b: 0.5372549, a: 1}
-    m_PressedColor: {r: 0.4339623, g: 0.40637907, b: 0.33365968, a: 1}
-    m_SelectedColor: {r: 0.69411767, g: 0.6509804, b: 0.5372549, a: 1}
-    m_DisabledColor: {r: 0.69411767, g: 0.6509804, b: 0.5372549, a: 0.5019608}
+    m_NormalColor: {r: 0.7169812, g: 0.5301114, b: 0.1724813, a: 1}
+    m_HighlightedColor: {r: 0.7176471, g: 0.5294118, b: 0.17254902, a: 1}
+    m_PressedColor: {r: 0.5377358, g: 0.3984661, b: 0.13443395, a: 1}
+    m_SelectedColor: {r: 0.7176471, g: 0.5294118, b: 0.17254902, a: 1}
+    m_DisabledColor: {r: 0.7176471, g: 0.5294118, b: 0.17254902, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -31,6 +32,9 @@ public class GameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI upgradeLevel2Text;
     [SerializeField] TextMeshProUGUI upgradeLevel3Text;
     [SerializeField] TextMeshProUGUI upgradeLevel4Text;
+    [SerializeField] TextMeshProUGUI spawnPerText1;
+    [SerializeField] TextMeshProUGUI spawnPerText2;
+    [SerializeField] TextMeshProUGUI spawnPerText3;
 
     private void Update()
     {
@@ -70,6 +74,12 @@ public class GameUI : MonoBehaviour
         upgradeLevel2Text.text = "LV." + GameManager.Instance.UpgradeLevel2.ToString();
         upgradeLevel3Text.text = "LV." + GameManager.Instance.UpgradeLevel3.ToString();
         upgradeLevel4Text.text = "LV." + GameManager.Instance.UpgradeLevel4.ToString();
+        spawnPerText1.text = 
+            $"일반 : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][2]}%";
+        spawnPerText2.text = 
+            $"<color=purple>영웅 : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][1]}%</color>";
+        spawnPerText3.text =
+            $"<color=yellow>전설 : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][0]}%</color>";
     }
 
     private void warning()
