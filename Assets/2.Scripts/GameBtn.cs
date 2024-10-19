@@ -54,12 +54,32 @@ public class GameBtn : MonoBehaviour
         }
     }
 
+    public void clickClostBtn(GameObject perPanel)
+    {
+        closeBtn(perPanel);
+    }
+
     public void spawnBtn()
     {
         if (GameManager.Instance.Gold > GameManager.Instance.SpawnGold)
         {
             GameManager.Instance.spawnUnit();
         }
+    }
+
+    public void randomBtn()
+    {
+        showPanelOpen(randomPanel);
+    }
+
+    public void randomSpwanBtn(int index)
+    {
+        GameManager.Instance.randSpawn(index);
+    }
+
+    public void upgradeBtn()
+    {
+        showPanelOpen(upgradePanel);
     }
 
     public void unitUpgradeBtn(int index)
@@ -71,7 +91,7 @@ public class GameBtn : MonoBehaviour
             if (GameManager.Instance.UpgradeLevel1 < 6)
             {
                 GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost1;
-                GameManager.Instance.UpgradeCost1 += 10f;
+                GameManager.Instance.UpgradeCost1 += 30f;
                 GameManager.Instance.UpgradeLevel1 += 1f;
 
                 for (int i = 0; i < unitList.Count; i++)
@@ -88,7 +108,7 @@ public class GameBtn : MonoBehaviour
             if (GameManager.Instance.UpgradeLevel2 < 6)
             {
                 GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost2;
-                GameManager.Instance.UpgradeCost2 += 10f;
+                GameManager.Instance.UpgradeCost2 += 50f;
                 GameManager.Instance.UpgradeLevel2 += 1f;
 
                 for (int i = 0; i < unitList.Count; i++)
@@ -105,8 +125,8 @@ public class GameBtn : MonoBehaviour
         {
             if (GameManager.Instance.UpgradeLevel3 < 6)
             {
-                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost3;
-                GameManager.Instance.UpgradeCost3 += 10f;
+                GameManager.Instance.Coin -= (int)GameManager.Instance.UpgradeCost3;
+                GameManager.Instance.UpgradeCost3 += 1f;
                 GameManager.Instance.UpgradeLevel3 += 1f;
 
                 for (int i = 0; i < unitList.Count; i++)
@@ -123,23 +143,13 @@ public class GameBtn : MonoBehaviour
             if (GameManager.Instance.UpgradeLevel4 < 6)
             {
                 GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost4;
-                GameManager.Instance.UpgradeCost4 += 10f;
+                GameManager.Instance.UpgradeCost4 += 100f;
                 GameManager.Instance.UpgradeLevel4 += 1f;
             }
         }
     }
 
-    public void randomBtn()
-    {
-        showPanelOpen(randomPanel);
-    }
-
-    public void upgradeBtn()
-    {
-        showPanelOpen(upgradePanel);
-    }
-
-    public void spawnPer()
+    public void upgradeSpawnPer()
     {
         showPanelOpen(spawnperPaenl);
     }

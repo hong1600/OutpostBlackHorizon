@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
-    [Header("메인")]
+    [Header("main")]
     [SerializeField] TextMeshProUGUI roundText;
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] TextMeshProUGUI monsterCountText;
@@ -21,7 +21,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] GameObject GameOverPanel;
     bool checkWarning = true;
 
-    [Header("업그레이드")]
+    [Header("upgrade")]
     [SerializeField] TextMeshProUGUI upgradeGoldText;
     [SerializeField] TextMeshProUGUI upgradeCoinText;
     [SerializeField] TextMeshProUGUI upgradeCost1Text;
@@ -35,11 +35,16 @@ public class GameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI spawnPerText1;
     [SerializeField] TextMeshProUGUI spawnPerText2;
     [SerializeField] TextMeshProUGUI spawnPerText3;
+    [SerializeField] TextMeshProUGUI spawnPerText4;
+
+    [Header("Random")]
+    [SerializeField] TextMeshProUGUI myCoinText;
 
     private void Update()
     {
         main();
         upgradePanel();
+        randomPanel();
         warning();
     }
 
@@ -70,16 +75,51 @@ public class GameUI : MonoBehaviour
         upgradeCost2Text.text = GameManager.Instance.UpgradeCost2.ToString();
         upgradeCost3Text.text = GameManager.Instance.UpgradeCost3.ToString();
         upgradeCost4Text.text = GameManager.Instance.UpgradeCost4.ToString();
-        upgradeLevel1Text.text = "LV." + GameManager.Instance.UpgradeLevel1.ToString();
-        upgradeLevel2Text.text = "LV." + GameManager.Instance.UpgradeLevel2.ToString();
-        upgradeLevel3Text.text = "LV." + GameManager.Instance.UpgradeLevel3.ToString();
-        upgradeLevel4Text.text = "LV." + GameManager.Instance.UpgradeLevel4.ToString();
+        if (GameManager.Instance.UpgradeLevel1 < 6)
+        {
+            upgradeLevel1Text.text = "LV." + GameManager.Instance.UpgradeLevel1.ToString();
+        }
+        else
+        {
+            upgradeLevel1Text.text = "LV.MAX";
+        }
+        if (GameManager.Instance.UpgradeLevel2 < 6)
+        {
+            upgradeLevel2Text.text = "LV." + GameManager.Instance.UpgradeLevel2.ToString();
+        }
+        else
+        {
+            upgradeLevel2Text.text = "LV.MAX";
+        }
+        if (GameManager.Instance.UpgradeLevel3 < 6)
+        {
+            upgradeLevel3Text.text = "LV." + GameManager.Instance.UpgradeLevel3.ToString();
+        }
+        else
+        {
+            upgradeLevel3Text.text = "LV.MAX";
+        }
+        if (GameManager.Instance.UpgradeLevel4 < 6)
+        {
+            upgradeLevel4Text.text = "LV." + GameManager.Instance.UpgradeLevel4.ToString();
+        }
+        else
+        {
+            upgradeLevel4Text.text = "LV.MAX";
+        }
         spawnPerText1.text = 
-            $"일반 : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][2]}%";
+            $"일반 : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][3]}%";
         spawnPerText2.text = 
+            $"<color=blue>희귀 : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][2]}%</color>%";
+        spawnPerText3.text = 
             $"<color=purple>영웅 : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][1]}%</color>";
-        spawnPerText3.text =
+        spawnPerText4.text =
             $"<color=yellow>전설 : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][0]}%</color>";
+    }
+
+    private void randomPanel()
+    {
+        myCoinText.text = GameManager.Instance.Coin.ToString();
     }
 
     private void warning()

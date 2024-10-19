@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
+using UnityEngine.UI;
+using Unity.Mathematics;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,7 +24,7 @@ public class GameManager : MonoBehaviour
     public int SpawnGold
     { get { return spawnGold; } }
     public int Coin
-    { get { return coin; } }
+    { get { return coin; } set { coin = value; } }
     public int UnitCount
     { get { return groundNum; } }
     public float UpgradeCost1 
@@ -56,6 +60,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] int maxMonster;
     [SerializeField] float gold;
+    [SerializeField] Image randomUnitImg1;
+    [SerializeField] Image randomUnitImg2;
+    [SerializeField] Image randomUnitImg3;
+    [SerializeField] Sprite[] randomStar;
+    float fadeTime = 1f;
     public List<Unit> curUnitList = new List<Unit>();
     int min;
     float sec;
@@ -77,19 +86,22 @@ public class GameManager : MonoBehaviour
     float upgradeLevel2;
     float upgradeLevel3;
     float upgradeLevel4;
+    bool randomDelay;
 
     [Header("РЏДж")]
     [SerializeField] List<GameObject> unitSpawnPointList = new List<GameObject>();
-    string[] firstSelectOption = { "A", "B", "C" };
+    string[] firstSelectOption = { "S","A", "B", "C"};
     [SerializeField] float[][] firstSelectWeight = new float[][]
     {
-        new float[] { 0.05f, 0.15f, 0.8f },
-        new float[] { 0.06f, 0.16f, 0.78f },
-        new float[] { 0.07f, 0.17f, 0.76f },
-        new float[] { 0.08f, 0.18f, 0.74f },
-        new float[] { 0.09f, 0.19f, 0.72f },
-        new float[] { 0.10f, 0.20f, 0.70f }
+        new float[] { 0.03f, 0.10f, 0.15f, 0.72f },
+        new float[] { 0.05f, 0.12f, 0.18f, 0.65f },
+        new float[] { 0.07f, 0.14f, 0.21f, 0.58f },
+        new float[] { 0.09f, 0.16f, 0.24f, 0.51f },
+        new float[] { 0.11f, 0.18f, 0.27f, 0.44f },
+        new float[] { 0.13f, 0.20f, 0.30f, 0.37f }
     };
+    [SerializeField] List<GameObject> unitListSS = new List<GameObject>();
+    [SerializeField] List<GameObject> unitListS = new List<GameObject>();
     [SerializeField] List<GameObject> unitListA = new List<GameObject>();
     [SerializeField] List<GameObject> unitListB = new List<GameObject>();
     [SerializeField] List<GameObject> unitListC = new List<GameObject>();
@@ -100,8 +112,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<GameObject> enemy = new List<GameObject>();
     [SerializeField] GameObject enemySpawnPoint;
     [SerializeField] float enemySpawndelay = 0.85f;
-
-
 
     private void Awake()
     {
@@ -130,7 +140,7 @@ public class GameManager : MonoBehaviour
         checkGameOver = false;
         gold = 10000f;
         spawnGold = 20;
-        coin = 0;
+        coin = 50;
         upgradeCost1 = 30;
         upgradeCost2 = 50;
         upgradeCost3 = 1;
@@ -159,12 +169,19 @@ public class GameManager : MonoBehaviour
 
         string firstSelection = FirstSelectRandom(firstSelectOption, firstSelectWeight[(int)upgradeLevel4 - 1]);
 
+        int randS = Random.Range(0, unitListS.Count);
         int randA = Random.Range(0, unitListA.Count);
         int randB = Random.Range(0, unitListB.Count);
         int randC = Random.Range(0, unitListC.Count);
 
         switch ( firstSelection ) 
         {
+            case "S":
+                GameObject spawnUnitS = Instantiate(unitListS[randS],
+                    unitSpawnPointList[groundNum].transform.position,
+                    Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                curUnitList.Add(spawnUnitS.GetComponent<Unit>());
+                break;
             case "A":
                 GameObject spawnUnitA = Instantiate(unitListA[randA],
                     unitSpawnPointList[groundNum].transform.position,
@@ -222,7 +239,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     private void countDown()
     {
         sec -= Time.deltaTime;
@@ -264,6 +280,149 @@ public class GameManager : MonoBehaviour
     private void monsterCount()
     {
         curMonster = monster.transform.childCount;
+    }
+
+    public void randSpawn(int index)
+    {
+        if (randomDelay == false)
+        {
+            StartCoroutine(RandSpawn(index));
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    IEnumerator RandSpawn(int index)
+    {
+        randomDelay = true;
+        int per = Random.Range(0, 10);
+        int randB = Random.Range(0, unitListB.Count);
+        int randA = Random.Range(0, unitListA.Count);
+        int randS = Random.Range(0, unitListS.Count);
+
+        Sprite randomSprite = GetRandomSprite(index, randB, randA, randS);
+
+        switch (index) 
+        {
+            case 0:
+                if (per < 6)
+                {
+                    yield return StartCoroutine(FadeInImage(randomUnitImg1, randomSprite));
+                }
+                else 
+                {
+                    yield return StartCoroutine(FadeInImage(randomUnitImg1, randomStar[3]));
+                }
+                break;
+            case 1:
+                if (per < 2)
+                {
+                    yield return StartCoroutine(FadeInImage(randomUnitImg2, randomSprite));
+                }
+                else
+                {
+                    yield return StartCoroutine(FadeInImage(randomUnitImg2, randomStar[3]));
+                }
+                break;
+            case 2:
+                if (per < 1)
+                {
+                    yield return StartCoroutine(FadeInImage(randomUnitImg3, randomSprite));
+                }
+                else
+                {
+                    yield return StartCoroutine(FadeInImage(randomUnitImg3, randomStar[3]));
+                }
+                break;
+        }
+        yield return new WaitForSeconds(1f);
+
+        instantiateUnit(index, per, randB, randA, randS);
+
+        randomDelay = false;
+    }
+
+    Sprite GetRandomSprite(int index, int randB, int randA, int randS)
+    {
+        switch (index) 
+        {
+            case 0:
+                coin -= 1;
+                return unitListB[randB].GetComponent<SpriteRenderer>().sprite;
+
+            case 1:
+                coin -= 1;
+                return unitListA[randA].GetComponent<SpriteRenderer>().sprite;
+
+            case 2:
+                coin -= 2;
+                return unitListS[randS].GetComponent<SpriteRenderer>().sprite;
+        }
+        return null;
+    }
+
+    private void instantiateUnit(int index, int per, int randB, int randA, int randS)
+    {
+        switch (index) 
+        {
+            case 0:
+                if (per < 6)
+                {
+                    Instantiate(unitListB[randB], unitSpawnPointList[groundNum].transform.position,
+                        Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                    randomUnitImg1.sprite = randomStar[0];
+                }
+                else if (per >= 6)
+                {
+                    randomUnitImg1.sprite = randomStar[0];
+                }
+                break;
+            case 1:
+                if (per < 2)
+                {
+                    Instantiate(unitListA[randA], unitSpawnPointList[groundNum].transform.position,
+                        Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                    randomUnitImg2.sprite = randomStar[1];
+                }
+                else if (per >= 2)
+                {
+                    randomUnitImg2.sprite = randomStar[1];
+                }
+                break;
+            case 2:
+                if (per < 1)
+                {
+                    Instantiate(unitListS[randS], unitSpawnPointList[groundNum].transform.position,
+                        Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                    randomUnitImg3.sprite = randomStar[2];
+                }
+                else if (per >= 1)
+                {
+                    randomUnitImg3.sprite = randomStar[2];
+                }
+                break;
+        }
+    }
+
+    IEnumerator FadeInImage(Image image, Sprite sprite)
+    {
+        float delayTime = 0f;
+        image.sprite = sprite;
+        Color color = image.color;
+        color.a = 0f;
+        image.color = color;
+
+        while(delayTime < fadeTime) 
+        {
+            delayTime += Time.deltaTime;
+            color.a = Mathf.Clamp01(delayTime / fadeTime);
+            image.color = color;
+            yield return null;
+        }
+        color.a = 1;
+        image.color = color;
     }
 
     private void gameOver()

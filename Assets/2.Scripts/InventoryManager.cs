@@ -9,6 +9,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] GameObject heroBtn2Pre;
     [SerializeField] GameObject heroBtn3Pre;
     [SerializeField] GameObject heroBtn4Pre;
+    [SerializeField] GameObject heroBtn5Pre;
     [SerializeField] UnitData[] units;
 
     private void Start()
@@ -41,6 +42,11 @@ public class InventoryManager : MonoBehaviour
                     GameObject newSlot4 = Instantiate(heroBtn4Pre, content);
                     HeroSlot slot4 = newSlot4.GetComponent<HeroSlot>();
                     slot4.setHero(units[i]);
+                    break;
+                case 4:
+                    GameObject newSlot5 = Instantiate(heroBtn5Pre, content);
+                    HeroSlot slot5 = newSlot5.GetComponent<HeroSlot>();
+                    slot5.setHero(units[i]);
                     break;
             }
         }
