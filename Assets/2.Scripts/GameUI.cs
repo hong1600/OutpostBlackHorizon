@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,6 +40,21 @@ public class GameUI : MonoBehaviour
 
     [Header("Random")]
     [SerializeField] TextMeshProUGUI myCoinText;
+
+    [Header("Mix")]
+    [SerializeField] TextMeshProUGUI mixUnitNameText;
+    [SerializeField] Image mixUnitImg1;
+    [SerializeField] Image mixUnitImg2;
+    [SerializeField] UnitData[] mixUnitData;
+    [SerializeField] GameObject canMixBtn;
+
+    private void Start()
+    {
+        UnitData curUnit = mixUnitData[0];
+        mixUnitNameText.text = mixUnitData[0].unitName;
+        mixUnitImg1.sprite = mixUnitData[0].unitImg;
+        mixUnitImg2.sprite = mixUnitData[0].unitImg;
+    }
 
     private void Update()
     {
@@ -120,6 +136,14 @@ public class GameUI : MonoBehaviour
     private void randomPanel()
     {
         myCoinText.text = GameManager.Instance.Coin.ToString();
+    }
+
+    public void mixPanel(int index)
+    {
+        UnitData curUnit = mixUnitData[index];
+        mixUnitNameText.text = mixUnitData[index].unitName;
+        mixUnitImg1.sprite = mixUnitData[index].unitImg;
+        mixUnitImg2.sprite = mixUnitData[index].unitImg;
     }
 
     private void warning()

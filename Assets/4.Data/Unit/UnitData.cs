@@ -20,4 +20,5 @@ public class UnitData : ScriptableObject
     public float unitCurExp;
     public float unitMaxExp;
     public float unitGrade;
+    public UnitData[] mixUnit;
 }

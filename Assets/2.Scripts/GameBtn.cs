@@ -157,6 +157,12 @@ public class GameBtn : MonoBehaviour
     public void mixBtn()
     {
         showPanelOpen(mixPanel);
+        GameManager.Instance.canMixUnit();
+    }
+
+    public void mixUnitSpawnBtn()
+    {
+        GameManager.Instance.MixUnitSpawn();
     }
 
     public void speedUpBtn()

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
 using Unity.Mathematics;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-    [Header("시스템")]
+    [Header("Main")]
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] int maxMonster;
     [SerializeField] float gold;
@@ -64,8 +65,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image randomUnitImg2;
     [SerializeField] Image randomUnitImg3;
     [SerializeField] Sprite[] randomStar;
+    [SerializeField] GameInventory inventory;
+    [SerializeField] GameObject mixPanel;
     float fadeTime = 1f;
-    public List<Unit> curUnitList = new List<Unit>();
     int min;
     float sec;
     bool spawnTime;
@@ -87,8 +89,12 @@ public class GameManager : MonoBehaviour
     float upgradeLevel3;
     float upgradeLevel4;
     bool randomDelay;
+    int groundNum;
 
-    [Header("유닛")]
+    [Header("Unit")]
+    public List<Unit> curUnitList = new List<Unit>();
+    [SerializeField] List<UnitData> needUnitList = new List<UnitData>();
+    [SerializeField] List<Unit> unitToMix = new List<Unit>();
     [SerializeField] List<GameObject> unitSpawnPointList = new List<GameObject>();
     string[] firstSelectOption = { "S","A", "B", "C"};
     [SerializeField] float[][] firstSelectWeight = new float[][]
@@ -105,9 +111,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<GameObject> unitListA = new List<GameObject>();
     [SerializeField] List<GameObject> unitListB = new List<GameObject>();
     [SerializeField] List<GameObject> unitListC = new List<GameObject>();
-    int groundNum;
 
-    [Header("몬스터")]
+    [Header("Enemy")]
     [SerializeField] GameObject monster;
     [SerializeField] List<GameObject> enemy = new List<GameObject>();
     [SerializeField] GameObject enemySpawnPoint;
@@ -370,9 +375,10 @@ public class GameManager : MonoBehaviour
             case 0:
                 if (per < 6)
                 {
-                    Instantiate(unitListB[randB], unitSpawnPointList[groundNum].transform.position,
+                    GameObject spawnUnitB = Instantiate(unitListB[randB], unitSpawnPointList[groundNum].transform.position,
                         Quaternion.identity, unitSpawnPointList[groundNum].transform);
                     randomUnitImg1.sprite = randomStar[0];
+                    curUnitList.Add(spawnUnitB.GetComponent<Unit>());
                 }
                 else if (per >= 6)
                 {
@@ -382,9 +388,10 @@ public class GameManager : MonoBehaviour
             case 1:
                 if (per < 2)
                 {
-                    Instantiate(unitListA[randA], unitSpawnPointList[groundNum].transform.position,
+                    GameObject spawnUnitA = Instantiate(unitListA[randA], unitSpawnPointList[groundNum].transform.position,
                         Quaternion.identity, unitSpawnPointList[groundNum].transform);
                     randomUnitImg2.sprite = randomStar[1];
+                    curUnitList.Add(spawnUnitA.GetComponent<Unit>());
                 }
                 else if (per >= 2)
                 {
@@ -394,9 +401,10 @@ public class GameManager : MonoBehaviour
             case 2:
                 if (per < 1)
                 {
-                    Instantiate(unitListS[randS], unitSpawnPointList[groundNum].transform.position,
+                    GameObject spawnUnitS = Instantiate(unitListS[randS], unitSpawnPointList[groundNum].transform.position,
                         Quaternion.identity, unitSpawnPointList[groundNum].transform);
                     randomUnitImg3.sprite = randomStar[2];
+                    curUnitList.Add(spawnUnitS.GetComponent<Unit>());
                 }
                 else if (per >= 1)
                 {
@@ -423,6 +431,40 @@ public class GameManager : MonoBehaviour
         }
         color.a = 1;
         image.color = color;
+    }
+
+    public bool canMixUnit()
+    {
+        needUnitList = inventory.needUnitList;
+
+        unitToMix.Clear();
+
+        foreach (Unit fieldUnit in curUnitList) 
+        {
+            foreach (UnitData needUnit in needUnitList)
+            {
+                if (fieldUnit.unitName == needUnit.unitName &&
+                    !unitToMix.Any(unit => unit.unitName == fieldUnit.unitName))
+                {
+                    unitToMix.Add(fieldUnit);
+                }
+            }
+        }
+
+        return unitToMix.Count == needUnitList.Count;
+    }
+
+    public void MixUnitSpawn()
+    {
+        if (canMixUnit())
+        {
+            GameObject spawnUnit = Instantiate(unitListSS[inventory.curMixUnit], 
+                unitSpawnPointList[groundNum].transform.position, Quaternion.identity,
+                unitSpawnPointList[groundNum].transform);
+            curUnitList.Add(spawnUnit.GetComponent<Unit>());
+            mixPanel.SetActive(false);
+        }
+        else return;
     }
 
     private void gameOver()

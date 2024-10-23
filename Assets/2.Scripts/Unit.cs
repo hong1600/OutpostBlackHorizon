@@ -6,7 +6,7 @@ public class Unit : MonoBehaviour
 {
     [SerializeField] UnitData unitData;
 
-    string unitName;
+    public string unitName;
     public int attackDamage;
     public int attackSpeed;
     public float attackRange;

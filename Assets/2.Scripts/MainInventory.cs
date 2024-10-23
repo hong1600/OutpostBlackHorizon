@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class MainInventory : MonoBehaviour
 {
     [SerializeField] Transform content;
     [SerializeField] GameObject heroBtn1Pre;

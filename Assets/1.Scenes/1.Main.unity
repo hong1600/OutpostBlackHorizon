@@ -26729,7 +26729,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2057871789}
-  - component: {fileID: 2057871788}
+  - component: {fileID: 2057871790}
   m_Layer: 0
   m_Name: InventoryManager
   m_TagString: Untagged
@@ -26737,30 +26737,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2057871788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057871787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ced0fbce5fc79f149b7e3437de0dfdb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  content: {fileID: 1934942479}
-  heroBtn1Pre: {fileID: 7652227536282677288, guid: b75b77b703ef091449044650d7431fc5, type: 3}
-  heroBtn2Pre: {fileID: 7652227536282677288, guid: 39b857a6fbe77f3458f6a95f87cd8445, type: 3}
-  heroBtn3Pre: {fileID: 7652227536282677288, guid: 74a5d11491a5a604eb02c7e32d455f5f, type: 3}
-  heroBtn4Pre: {fileID: 7652227536282677288, guid: e4aa1effb9b556d449ac3d3fd1e46d7a, type: 3}
-  heroBtn5Pre: {fileID: 7652227536282677288, guid: 5c9fc8dbc016af54c82f55e6223106e1, type: 3}
-  units:
-  - {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
-  - {fileID: 11400000, guid: 6fe336f25d5f7e645a7df9d26d6bda97, type: 2}
-  - {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
-  - {fileID: 11400000, guid: 23f56d5d9bacb36439610d6f61ae65e8, type: 2}
-  - {fileID: 11400000, guid: 8cb58d9b82f4bf642a72d3ec57606e97, type: 2}
 --- !u!4 &2057871789
 Transform:
   m_ObjectHideFlags: 0
@@ -26776,6 +26752,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2057871790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057871787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5f25456cbe45945837fad4050dbe0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 1934942479}
+  heroBtn1Pre: {fileID: 7652227536282677288, guid: b75b77b703ef091449044650d7431fc5, type: 3}
+  heroBtn2Pre: {fileID: 7652227536282677288, guid: 39b857a6fbe77f3458f6a95f87cd8445, type: 3}
+  heroBtn3Pre: {fileID: 7652227536282677288, guid: 74a5d11491a5a604eb02c7e32d455f5f, type: 3}
+  heroBtn4Pre: {fileID: 7652227536282677288, guid: e4aa1effb9b556d449ac3d3fd1e46d7a, type: 3}
+  heroBtn5Pre: {fileID: 7652227536282677288, guid: 5c9fc8dbc016af54c82f55e6223106e1, type: 3}
+  units:
+  - {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
+  - {fileID: 11400000, guid: 6fe336f25d5f7e645a7df9d26d6bda97, type: 2}
+  - {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
+  - {fileID: 11400000, guid: 23f56d5d9bacb36439610d6f61ae65e8, type: 2}
+  - {fileID: 11400000, guid: 8cb58d9b82f4bf642a72d3ec57606e97, type: 2}
 --- !u!1 &2059617285
 GameObject:
   m_ObjectHideFlags: 0

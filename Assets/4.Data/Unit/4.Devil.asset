@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 498da0fc17a2c9b4285047183d60f8e3, type: 3}
-  m_Name: 4.yellow
+  m_Name: 4.Devil
   m_EditorClassIdentifier: 
-  index: 5
-  unitName: "\uB3C4\uC801"
+  index: 4
+  unitName: "\uC545\uB9C8"
   unitDamage: 100
   attackSpeed: 1
   attackRange: 1.5
-  unitImg: {fileID: 21300000, guid: 9d89d61657a9b0243b4afbff6a3b3aaf, type: 2}
+  unitImg: {fileID: 21300000, guid: db4b2ff713a20b345bd1f836c0317164, type: 2}
   unitLevel: 1
-  skill1Name: "\uC2A4\uD2F8"
+  skill1Name: "\uBC88\uAC1C"
   unitUpgradeCost: 10
   unitStoreCost: 3000
   unitCurExp: 0
   unitMaxExp: 1
   unitGrade: 4
   mixUnit:
+  - {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
   - {fileID: 11400000, guid: 6fe336f25d5f7e645a7df9d26d6bda97, type: 2}
   - {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
-  - {fileID: 11400000, guid: 23f56d5d9bacb36439610d6f61ae65e8, type: 2}
