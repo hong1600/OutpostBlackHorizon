@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Sprite[] randomStar;
     [SerializeField] GameInventory inventory;
     [SerializeField] GameObject mixPanel;
+    [SerializeField] GameObject spawnWaveBossBtn;
+    float wavebossDelay = 25;
     float fadeTime = 1f;
     int min;
     float sec;
@@ -117,6 +119,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<GameObject> enemy = new List<GameObject>();
     [SerializeField] GameObject enemySpawnPoint;
     [SerializeField] float enemySpawndelay = 0.85f;
+    [SerializeField] GameObject waveBoss;
 
     private void Awake()
     {
@@ -164,6 +167,7 @@ public class GameManager : MonoBehaviour
         countDown();
         spawnMonster();
         monsterCount();
+        spawnWaveBossTime();
         gameOver();
     }
 
@@ -256,6 +260,10 @@ public class GameManager : MonoBehaviour
             {
                 min -= 1;
             }
+        }
+        if (sec < 3)
+        {
+
         }
     }
 
@@ -465,6 +473,26 @@ public class GameManager : MonoBehaviour
             mixPanel.SetActive(false);
         }
         else return;
+    }
+
+    public void spawnWaveBoss()
+    {
+        spawnWaveBossBtn.SetActive(false);
+        Instantiate(waveBoss, enemySpawnPoint.transform.position,
+                Quaternion.identity, monster.transform);
+        wavebossDelay = 25f;
+    }
+
+    private void spawnWaveBossTime()
+    {
+        if (spawnWaveBossBtn.activeSelf == false)
+        {
+            wavebossDelay -= Time.deltaTime;
+            if (wavebossDelay < 0)
+            {
+                spawnWaveBossBtn.SetActive(true);
+            }
+        }
     }
 
     private void gameOver()

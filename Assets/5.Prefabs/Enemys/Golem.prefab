@@ -152,7 +152,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.64}
+  m_Size: {x: 0.01, y: 0.01}
   m_EdgeRadius: 0
 --- !u!114 &3823827144356928351
 MonoBehaviour:
@@ -171,6 +171,8 @@ MonoBehaviour:
   healthBarBack: {fileID: 4376760610399066423}
   healthBarFill: {fileID: 6572516550327660185}
   isDie: 0
+  enemyHp: 0
+  curhp: 0
 --- !u!1001 &793690583344236129
 PrefabInstance:
   m_ObjectHideFlags: 0

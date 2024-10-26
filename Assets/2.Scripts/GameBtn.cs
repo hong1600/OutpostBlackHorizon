@@ -165,6 +165,11 @@ public class GameBtn : MonoBehaviour
         GameManager.Instance.MixUnitSpawn();
     }
 
+    public void spawnWaveBossBtn()
+    {
+        GameManager.Instance.spawnWaveBoss();
+    }
+
     public void speedUpBtn()
     {
         if (speed1 == true)
