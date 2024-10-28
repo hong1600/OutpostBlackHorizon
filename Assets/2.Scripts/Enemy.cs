@@ -105,7 +105,7 @@ public class Enemy : MonoBehaviour
         GameManager.Instance.Gold += 1;
         anim.SetBool("isDie", true);
         isDie = true;
-        Destroy(gameObject, 0.3f);
+        Destroy(gameObject, 0.5f);
         GameManager.Instance.RewardGold += 50;
         GameManager.Instance.RewardGem += 10;
         GameManager.Instance.RewardPaper += 20;

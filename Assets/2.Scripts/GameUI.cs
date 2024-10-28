@@ -20,6 +20,9 @@ public class GameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI UnitCountText;
     [SerializeField] GameObject warningPanel;
     [SerializeField] GameObject GameOverPanel;
+    [SerializeField] GameObject spawnTimerPanel;
+    [SerializeField] TextMeshProUGUI spawntimerText;
+
     bool checkWarning = true;
 
     [Header("upgrade")]
@@ -81,6 +84,16 @@ public class GameUI : MonoBehaviour
         spawnGoldText.text = GameManager.Instance.SpawnGold.ToString();
         coinText.text = GameManager.Instance.Coin.ToString();
         UnitCountText.text = $"{GameManager.Instance.UnitCount.ToString()} / 20";
+
+        if (sec < 3.4)
+        {
+            spawnTimerPanel.SetActive(true);
+            spawntimerText.text = sec.ToString();
+        }
+        else if (sec < 0)
+        {
+            spawnTimerPanel.SetActive(false);
+        }
     }
 
     private void upgradePanel()
