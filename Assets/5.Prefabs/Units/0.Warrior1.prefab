@@ -99,8 +99,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitData: {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
-  distance: 1
-  attackReady: 0
+  unitName: 
+  attackDamage: 0
+  attackSpeed: 0
+  attackRange: 0
+  unitGrade: 0
+  target: {fileID: 0}
 --- !u!95 &6770960301760855799
 Animator:
   serializedVersion: 5

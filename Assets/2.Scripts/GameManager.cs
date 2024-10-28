@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.UI;
 using Unity.Mathematics;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -93,9 +94,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Unit")]
     public List<Unit> curUnitList = new List<Unit>();
-    [SerializeField] List<UnitData> needUnitList = new List<UnitData>();
-    [SerializeField] List<Unit> unitToMix = new List<Unit>();
+    List<UnitData> needUnitList = new List<UnitData>();
+    List<Unit> unitToMix = new List<Unit>();
     [SerializeField] List<GameObject> unitSpawnPointList = new List<GameObject>();
+    [SerializeField] List<GameObject> fieldUnitList = new List<GameObject>();
+    [SerializeField] GameObject unitDcPanel;
     string[] firstSelectOption = { "S","A", "B", "C"};
     [SerializeField] float[][] firstSelectWeight = new float[][]
     {
@@ -116,7 +119,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject monster;
     [SerializeField] List<GameObject> enemy = new List<GameObject>();
     [SerializeField] GameObject enemySpawnPoint;
-    [SerializeField] float enemySpawndelay = 0.85f;
+    float enemySpawndelay = 0.85f;
 
     private void Awake()
     {
@@ -160,7 +163,6 @@ public class GameManager : MonoBehaviour
     {
         if (checkGameOver) return;
 
-        CheckGround();
         countDown();
         spawnMonster();
         monsterCount();
@@ -178,6 +180,8 @@ public class GameManager : MonoBehaviour
         int randA = Random.Range(0, unitListA.Count);
         int randB = Random.Range(0, unitListB.Count);
         int randC = Random.Range(0, unitListC.Count);
+
+        CheckGround();
 
         switch ( firstSelection ) 
         {
@@ -370,6 +374,7 @@ public class GameManager : MonoBehaviour
 
     private void instantiateUnit(int index, int per, int randB, int randA, int randS)
     {
+        CheckGround();
         switch (index) 
         {
             case 0:
@@ -458,6 +463,15 @@ public class GameManager : MonoBehaviour
     {
         if (canMixUnit())
         {
+            foreach (Unit unit in unitToMix)
+            {
+                curUnitList.Remove(unit);
+                Destroy(unit.gameObject);
+            }
+            unitToMix.Clear();
+
+            CheckGround();
+
             GameObject spawnUnit = Instantiate(unitListSS[inventory.curMixUnit], 
                 unitSpawnPointList[groundNum].transform.position, Quaternion.identity,
                 unitSpawnPointList[groundNum].transform);
@@ -465,6 +479,16 @@ public class GameManager : MonoBehaviour
             mixPanel.SetActive(false);
         }
         else return;
+    }
+
+    public void clickField(BaseEventData eventData)
+    {
+        Debug.Log("Click");
+        foreach (Transform child in transform)
+        {
+            fieldUnitList.Add(child.gameObject);
+        }
+        unitDcPanel.SetActive(true);
     }
 
     private void gameOver()

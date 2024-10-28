@@ -54,9 +54,20 @@ public class GameBtn : MonoBehaviour
         }
     }
 
-    public void clickClostBtn(GameObject perPanel)
+    public void clickPerClostBtn(GameObject perPanel)
     {
-        closeBtn(perPanel);
+        if(perPanel.activeSelf) 
+        {
+            closeBtn(perPanel);
+        }
+    }
+
+    public void clickUnitDcClostBtn(GameObject unitDcPanel)
+    {
+        if (unitDcPanel.activeSelf)
+        {
+            closeBtn(unitDcPanel);
+        }
     }
 
     public void spawnBtn()
