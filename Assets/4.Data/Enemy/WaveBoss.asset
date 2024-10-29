@@ -15,3 +15,4 @@ MonoBehaviour:
   enemyName: "\uC6E8\uC774\uBE0C\uBCF4\uC2A4"
   enemySpeed: 1
   enemyHp: 500
+  level: 1

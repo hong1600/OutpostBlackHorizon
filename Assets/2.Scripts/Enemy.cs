@@ -1,29 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum EnemyType { Nomal, WaveBoss, boss };
+
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] EnemyData enemyData;
+    public EnemyType enemyType;
 
+    [Header("Enemy")]
+    [SerializeField] EnemyData enemyData;
     BoxCollider2D box;
     Animator anim;
-
-    GameObject wayPointTrs;
-    [SerializeField] Transform[] wayPoint;
-    Transform target;
-    int wayPointIndex = 0;
-
-    [SerializeField] GameObject healthBarBack;
-    [SerializeField] Image healthBarFill;
-
-    public bool isDie;
-
-    string enemyName;
     [SerializeField] float enemyHp;
     [SerializeField] float curhp;
+    string enemyName;
     float enemySpeed;
+    [SerializeField] Transform[] wayPoint;
+    GameObject wayPointTrs;
+    Transform target;
+    int wayPointIndex = 0;
+    [SerializeField] GameObject healthBarBack;
+    [SerializeField] Image healthBarFill;
+    public bool isDie;
+
+    [Header("WaveBoss")]
+    [SerializeField] TextMeshProUGUI timeText;
+    [SerializeField] float time;
 
     public float EnemyHp 
     { get { return enemyHp; } set { value = enemyHp; } }
@@ -41,6 +46,7 @@ public class Enemy : MonoBehaviour
         enemyHp = enemyData.enemyHp;
         enemySpeed = enemyData.enemySpeed;
         curhp = enemyHp;
+        time = 60f;
 
         healthBarFill.fillAmount = 1;
 
@@ -58,6 +64,10 @@ public class Enemy : MonoBehaviour
         if (isDie) return;
         move();
         hpBar();
+        if (enemyType == EnemyType.WaveBoss)
+        {
+            waveBossTimer();
+        }
     }
 
     private void move()
@@ -102,7 +112,6 @@ public class Enemy : MonoBehaviour
 
     private void die()
     {
-        GameManager.Instance.Gold += 1;
         anim.SetBool("isDie", true);
         isDie = true;
         Destroy(gameObject, 0.5f);
@@ -110,5 +119,27 @@ public class Enemy : MonoBehaviour
         GameManager.Instance.RewardGem += 10;
         GameManager.Instance.RewardPaper += 20;
         GameManager.Instance.RewardExp += 1;
+        switch (enemyType) 
+        {
+            case EnemyType.Nomal:
+                GameManager.Instance.Gold += 1;
+                break;
+            case EnemyType.WaveBoss:
+                GameManager.Instance.Coin += 2;
+                GameManager.Instance.wavebossDelay = 25f;
+                break;
+        }
+    }
+
+    private void waveBossTimer()
+    {
+        time -= Time.deltaTime;
+        timeText.text = time.ToString("F1")+"s";
+
+        if (time <= 0)
+        {
+            Destroy(this.gameObject);
+            GameManager.Instance.waveBossTime = 25f;
+        }
     }
 }

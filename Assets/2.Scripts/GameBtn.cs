@@ -27,7 +27,7 @@ public class GameBtn : MonoBehaviour
         sfx = false;
     }
 
-    private void showPanelOpen(GameObject targetPanel)
+    public void showPanelOpen(GameObject targetPanel)
     {
         if (targetPanel.activeSelf == false)
         {

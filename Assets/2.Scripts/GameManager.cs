@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.UI;
 using Unity.Mathematics;
 using System.Linq;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -68,7 +69,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameInventory inventory;
     [SerializeField] GameObject mixPanel;
     [SerializeField] GameObject spawnWaveBossBtn;
-    float wavebossDelay = 25;
+    [SerializeField] GameObject spawnPointTimerPanel;
+    [SerializeField] TextMeshProUGUI spawnPointTimerText;
+    public float wavebossDelay;
     float fadeTime = 1f;
     int min;
     float sec;
@@ -120,6 +123,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject enemySpawnPoint;
     [SerializeField] float enemySpawndelay = 0.85f;
     [SerializeField] GameObject waveBoss;
+    public int waveBossLevel;
+    public float waveBossTime;
 
     private void Awake()
     {
@@ -136,6 +141,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         enemySpawnPoint = GameObject.Find("SpawnPoint");
+        waveBossLevel = 1;
+        wavebossDelay = 25f;
         min = 0;
         sec = 5;
         spawnTime = false;
@@ -163,16 +170,24 @@ public class GameManager : MonoBehaviour
     {
         if (checkGameOver) return;
 
-        CheckGround();
-        countDown();
+        checkGround();
+        timer();
         spawnMonster();
         monsterCount();
         spawnWaveBossTime();
         gameOver();
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(waveBoss, enemySpawnPoint.transform.position,
+                Quaternion.identity, monster.transform);
+        }
     }
 
     public void spawnUnit()
     {
+        if(!checkGround()) return;
+
         gold -= spawnGold;
         spawnGold += 2;
 
@@ -237,22 +252,30 @@ public class GameManager : MonoBehaviour
         return options[options.Length - 1];
     }
 
-    private void CheckGround()  
+    private bool checkGround()  
     {
         for (groundNum = 0; groundNum < unitSpawnPointList.Count; groundNum++)
         {
             if (unitSpawnPointList[groundNum].transform.childCount <= 0)
             {
-                return;
+                return true;
             }
         }
+        return false;
     }
 
-    private void countDown()
+    private void timer()
     {
         sec -= Time.deltaTime;
+        int intsec = (int)sec;
 
-        if(sec <= 0) 
+        if (sec < 4)
+        {
+            spawnPointTimerPanel.SetActive(true);
+            spawnPointTimerText.text = intsec.ToString();
+        }
+
+        if(sec < 0f) 
         {
             StartCoroutine(spawn());
 
@@ -261,10 +284,6 @@ public class GameManager : MonoBehaviour
                 min -= 1;
             }
         }
-        if (sec < 3)
-        {
-
-        }
     }
 
     IEnumerator spawn()
@@ -272,6 +291,7 @@ public class GameManager : MonoBehaviour
         curRound++;
         sec = 20f;
         spawnTime = true;
+        spawnPointTimerPanel.SetActive(false);
 
         yield return new WaitForSeconds(17);
 
@@ -478,9 +498,10 @@ public class GameManager : MonoBehaviour
     public void spawnWaveBoss()
     {
         spawnWaveBossBtn.SetActive(false);
+
         Instantiate(waveBoss, enemySpawnPoint.transform.position,
                 Quaternion.identity, monster.transform);
-        wavebossDelay = 25f;
+        wavebossDelay = 1000f;
     }
 
     private void spawnWaveBossTime()
@@ -488,6 +509,7 @@ public class GameManager : MonoBehaviour
         if (spawnWaveBossBtn.activeSelf == false)
         {
             wavebossDelay -= Time.deltaTime;
+
             if (wavebossDelay < 0)
             {
                 spawnWaveBossBtn.SetActive(true);

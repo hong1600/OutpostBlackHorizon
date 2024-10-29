@@ -20,9 +20,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI UnitCountText;
     [SerializeField] GameObject warningPanel;
     [SerializeField] GameObject GameOverPanel;
-    [SerializeField] GameObject spawnTimerPanel;
-    [SerializeField] TextMeshProUGUI spawntimerText;
-
+    [SerializeField] TextMeshProUGUI waveBossLevelNameText;
     bool checkWarning = true;
 
     [Header("upgrade")]
@@ -85,15 +83,7 @@ public class GameUI : MonoBehaviour
         coinText.text = GameManager.Instance.Coin.ToString();
         UnitCountText.text = $"{GameManager.Instance.UnitCount.ToString()} / 20";
 
-        if (sec < 3.4)
-        {
-            spawnTimerPanel.SetActive(true);
-            spawntimerText.text = sec.ToString();
-        }
-        else if (sec < 0)
-        {
-            spawnTimerPanel.SetActive(false);
-        }
+        waveBossLevelNameText.text = $"LV.{GameManager.Instance.waveBossLevel} µ¹ °ñ·½";
     }
 
     private void upgradePanel()
