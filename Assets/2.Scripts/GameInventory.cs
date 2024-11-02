@@ -73,6 +73,5 @@ public class GameInventory : MonoBehaviour
                     break;
             }
         }
-
     }
 }

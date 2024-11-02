@@ -63,11 +63,11 @@ public class Unit : MonoBehaviour
         targetEnemy(transform);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, attackRange);
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawSphere(transform.position, attackRange);
+    //}
 
     private GameObject targetEnemy(Transform playerPos)
     {

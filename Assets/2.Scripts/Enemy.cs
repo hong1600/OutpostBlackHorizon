@@ -26,9 +26,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] Image healthBarFill;
     public bool isDie;
 
-    [Header("WaveBoss")]
-    [SerializeField] TextMeshProUGUI timeText;
-    [SerializeField] float time;
+    [Header("Boss")]
+    [SerializeField] TextMeshProUGUI bossTimeText;
+    [SerializeField] float bosstime;
 
     public float EnemyHp 
     { get { return enemyHp; } set { value = enemyHp; } }
@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
         enemyHp = enemyData.enemyHp;
         enemySpeed = enemyData.enemySpeed;
         curhp = enemyHp;
-        time = 60f;
+        bosstime = 60f;
 
         healthBarFill.fillAmount = 1;
 
@@ -67,6 +67,10 @@ public class Enemy : MonoBehaviour
         if (enemyType == EnemyType.WaveBoss)
         {
             waveBossTimer();
+        }
+        if (enemyType == EnemyType.boss)
+        {
+            bossTimer();
         }
     }
 
@@ -112,13 +116,6 @@ public class Enemy : MonoBehaviour
 
     private void die()
     {
-        anim.SetBool("isDie", true);
-        isDie = true;
-        Destroy(gameObject, 0.5f);
-        GameManager.Instance.RewardGold += 50;
-        GameManager.Instance.RewardGem += 10;
-        GameManager.Instance.RewardPaper += 20;
-        GameManager.Instance.RewardExp += 1;
         switch (enemyType) 
         {
             case EnemyType.Nomal:
@@ -128,18 +125,44 @@ public class Enemy : MonoBehaviour
                 GameManager.Instance.Coin += 2;
                 GameManager.Instance.wavebossDelay = 25f;
                 break;
+            case EnemyType.boss:
+                GameManager.Instance.Gold += 300f;
+                GameManager.Instance.Coin += 4;
+                GameManager.Instance.BossRound = false;
+                GameManager.Instance.Sec = 15f;
+                GameManager.Instance.EnemySpawnDelay = 0.85f;
+                break;
         }
+
+        anim.SetBool("isDie", true);
+        isDie = true;
+        Destroy(gameObject, 0.5f);
+        GameManager.Instance.RewardGold += 50;
+        GameManager.Instance.RewardGem += 10;
+        GameManager.Instance.RewardPaper += 20;
+        GameManager.Instance.RewardExp += 1;
     }
 
     private void waveBossTimer()
     {
-        time -= Time.deltaTime;
-        timeText.text = time.ToString("F1")+"s";
+        bosstime -= Time.deltaTime;
+        bossTimeText.text = bosstime.ToString("F1")+"s";
 
-        if (time <= 0)
+        if (bosstime <= 0)
         {
             Destroy(this.gameObject);
             GameManager.Instance.waveBossTime = 25f;
+        }
+    }
+
+    private void bossTimer()
+    {
+        bosstime -= Time.deltaTime;
+        bossTimeText.text = bosstime.ToString("F1") + "s";
+
+        if (bosstime <= 0)
+        {
+            GameManager.Instance.bGameOver = true;
         }
     }
 }

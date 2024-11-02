@@ -21,6 +21,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] GameObject warningPanel;
     [SerializeField] GameObject GameOverPanel;
     [SerializeField] TextMeshProUGUI waveBossLevelNameText;
+    [SerializeField] TextMeshProUGUI bossTimer;
     bool checkWarning = true;
 
     [Header("upgrade")]

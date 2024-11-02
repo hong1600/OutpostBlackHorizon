@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public int Min 
     { get { return min; } }
     public float Sec 
-    { get { return sec; } }
+    { get { return sec; } set { sec = value; } }
     public int CurMonster
     { get { return curMonster; } }
     public int MaxMonster
@@ -55,6 +55,12 @@ public class GameManager : MonoBehaviour
     { get { return rewardExp; } set { rewardExp = value; } }
     public float[][] FirstSelectWeight
     { get { return firstSelectWeight; } set { firstSelectWeight = value; } }
+    public bool bGameOver 
+    { get { return bgameOver; } set { bgameOver = value; } }
+    public float EnemySpawnDelay
+    { get { return enemySpawndelay; } set { enemySpawndelay = value; } }
+    public bool BossRound
+    { get { return bossRound; }set { bossRound = value; } }
 
     public static GameManager Instance;
 
@@ -71,12 +77,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject spawnWaveBossBtn;
     [SerializeField] GameObject spawnPointTimerPanel;
     [SerializeField] TextMeshProUGUI spawnPointTimerText;
+    [SerializeField] int curRound;
     public float wavebossDelay;
     float fadeTime = 1f;
     int min;
     float sec;
     bool spawnTime;
-    int curRound;
     int curMonster;
     float rewardGold;
     float rewardGem;
@@ -95,6 +101,8 @@ public class GameManager : MonoBehaviour
     float upgradeLevel4;
     bool randomDelay;
     int groundNum;
+    bool bgameOver;
+    [SerializeField] bool bossRound;
 
     [Header("Unit")]
     public List<Unit> curUnitList = new List<Unit>();
@@ -121,7 +129,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject monster;
     [SerializeField] List<GameObject> enemy = new List<GameObject>();
     [SerializeField] GameObject enemySpawnPoint;
-    [SerializeField] float enemySpawndelay = 0.85f;
+    [SerializeField] float enemySpawndelay;
     [SerializeField] GameObject waveBoss;
     public int waveBossLevel;
     public float waveBossTime;
@@ -141,6 +149,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         enemySpawnPoint = GameObject.Find("SpawnPoint");
+        enemySpawndelay = 0.85f;
         waveBossLevel = 1;
         wavebossDelay = 25f;
         min = 0;
@@ -164,6 +173,7 @@ public class GameManager : MonoBehaviour
         upgradeLevel2 = 1;
         upgradeLevel3 = 1;
         upgradeLevel4 = 1;
+        bgameOver = false;
     }
 
     private void Update()
@@ -176,12 +186,6 @@ public class GameManager : MonoBehaviour
         monsterCount();
         spawnWaveBossTime();
         gameOver();
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            Instantiate(waveBoss, enemySpawnPoint.transform.position,
-                Quaternion.identity, monster.transform);
-        }
     }
 
     public void spawnUnit()
@@ -266,20 +270,28 @@ public class GameManager : MonoBehaviour
 
     private void timer()
     {
-        sec -= Time.deltaTime;
+        if (bossRound)
+        {
+            sec = 0f;
+            spawnPointTimerPanel.SetActive(false);
+        }
+        else
+        {
+            sec -= Time.deltaTime;
+        }
         int intsec = (int)sec;
 
-        if (sec < 4)
+        if (sec < 4 && !spawnPointTimerPanel.activeSelf && !bossRound)
         {
             spawnPointTimerPanel.SetActive(true);
-            spawnPointTimerText.text = intsec.ToString();
         }
+        spawnPointTimerText.text = intsec.ToString();
 
-        if(sec < 0f) 
+        if (sec < 0f) 
         {
             StartCoroutine(spawn());
 
-            if (min < 0)
+            if (min > 0)
             {
                 min -= 1;
             }
@@ -289,6 +301,7 @@ public class GameManager : MonoBehaviour
     IEnumerator spawn()
     {
         curRound++;
+        roundCheck();
         sec = 20f;
         spawnTime = true;
         spawnPointTimerPanel.SetActive(false);
@@ -298,15 +311,33 @@ public class GameManager : MonoBehaviour
         spawnTime = false;
     }
 
+    private void roundCheck()
+    {
+        if (curRound == 5 || curRound == 10 )
+        {
+            bossRound = true;
+        }
+        else
+        {
+            bossRound = false;
+        }
+    }
+
     private void spawnMonster()
     {
-        if (enemySpawndelay <= 0 && spawnTime == true)
+        if (enemySpawndelay < 0 && spawnTime == true && !bossRound)
         {
             Instantiate(enemy[curRound], enemySpawnPoint.transform.position,
-                Quaternion.identity, monster.transform);
+            Quaternion.identity, monster.transform);
             enemySpawndelay = 0.85f;
         }
-
+        if (bossRound && enemySpawndelay < 0)
+        {
+            Instantiate(enemy[curRound], enemySpawnPoint.transform.position,
+            Quaternion.identity, monster.transform);
+            enemySpawndelay = 100f;
+            spawnTime = false;
+        }
         enemySpawndelay -= Time.deltaTime;
     }
 
@@ -517,9 +548,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     private void gameOver()
     {
-        if (curMonster >= maxMonster)
+        if (curMonster >= maxMonster || bgameOver == true)
         {
             StartCoroutine(GameOver());
         }
