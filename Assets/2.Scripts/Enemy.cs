@@ -119,28 +119,28 @@ public class Enemy : MonoBehaviour
         switch (enemyType) 
         {
             case EnemyType.Nomal:
-                GameManager.Instance.Gold += 1;
+                GameManager.Instance.myGold += 1;
                 break;
             case EnemyType.WaveBoss:
-                GameManager.Instance.Coin += 2;
-                GameManager.Instance.wavebossDelay = 25f;
+                GameManager.Instance.myCoin += 2;
+                GameManager.Instance.gameFlow.wavebossDelay = 25f;
                 break;
             case EnemyType.boss:
-                GameManager.Instance.Gold += 300f;
-                GameManager.Instance.Coin += 4;
-                GameManager.Instance.BossRound = false;
-                GameManager.Instance.Sec = 15f;
-                GameManager.Instance.EnemySpawnDelay = 0.85f;
+                GameManager.Instance.myGold += 300;
+                GameManager.Instance.myCoin += 4;
+                GameManager.Instance.gameFlow.bossRound = false;
+                GameManager.Instance.gameFlow.sec = 15f;
+                GameManager.Instance.enemyMng.enemySpawndelay = 0.85f;
                 break;
         }
 
         anim.SetBool("isDie", true);
         isDie = true;
         Destroy(gameObject, 0.5f);
-        GameManager.Instance.RewardGold += 50;
-        GameManager.Instance.RewardGem += 10;
-        GameManager.Instance.RewardPaper += 20;
-        GameManager.Instance.RewardExp += 1;
+        GameManager.Instance.rewardGameOverMng.rewardGold += 50;
+        GameManager.Instance.rewardGameOverMng.rewardGem += 10;
+        GameManager.Instance.rewardGameOverMng.rewardPaper += 20;
+        GameManager.Instance.rewardGameOverMng.rewardExp += 1;
     }
 
     private void waveBossTimer()
@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour
         if (bosstime <= 0)
         {
             Destroy(this.gameObject);
-            GameManager.Instance.waveBossTime = 25f;
+            GameManager.Instance.gameFlow.wavebossDelay = 25;
         }
     }
 
@@ -162,7 +162,7 @@ public class Enemy : MonoBehaviour
 
         if (bosstime <= 0)
         {
-            GameManager.Instance.bGameOver = true;
+            GameManager.Instance.rewardGameOverMng.gameOver = true;
         }
     }
 }

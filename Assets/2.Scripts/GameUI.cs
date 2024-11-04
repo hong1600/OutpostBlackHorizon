@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
+    public static GameUI instance;
+
     [Header("main")]
     [SerializeField] TextMeshProUGUI roundText;
     [SerializeField] TextMeshProUGUI timerText;
@@ -50,6 +52,12 @@ public class GameUI : MonoBehaviour
     [SerializeField] UnitData[] mixUnitData;
     [SerializeField] GameObject canMixBtn;
 
+    public GameObject spawnPointTimerPanel;
+    public Text spawnPointTimerText;
+    public GameObject spawnWaveBossBtn;
+    public GameObject mixPanel;
+    public GameObject gameOverPaenl;
+
     private void Start()
     {
         UnitData curUnit = mixUnitData[0];
@@ -68,81 +76,94 @@ public class GameUI : MonoBehaviour
 
     private void main()
     {
-        roundText.text = $"WAVE {GameManager.Instance.CurRound.ToString()}";
+        roundText.text = $"WAVE {GameManager.Instance.gameFlow.curRound.ToString()}";
 
-        int min = GameManager.Instance.Min;
-        float sec = GameManager.Instance.Sec;
+        int min = (int)GameManager.Instance.gameFlow.min;
+        float sec = GameManager.Instance.gameFlow.sec;
         timerText.text = string.Format("{0:00}:{1:00}", min, (int)sec);
 
-        monsterCountSlider.value = (float)GameManager.Instance.CurMonster / (float)GameManager.Instance.MaxMonster;
-        monsterCountText.text = $"{GameManager.Instance.CurMonster} / {GameManager.Instance.MaxMonster}";
+        monsterCountSlider.value = (float)GameManager.Instance.enemyMng.curEnemyCount / (float)GameManager.Instance.enemyMng.maxEnemyCount;
+        monsterCountText.text = $"{GameManager.Instance.enemyMng.curEnemyCount} / {GameManager.Instance.enemyMng.maxEnemyCount}";
 
-        warningText.text = $"{GameManager.Instance.CurMonster} / {GameManager.Instance.MaxMonster}";
+        warningText.text = $"{GameManager.Instance.enemyMng.curEnemyCount} / {GameManager.Instance.enemyMng.maxEnemyCount}";
 
-        mainGold.text = GameManager.Instance.Gold.ToString();
-        spawnGoldText.text = GameManager.Instance.SpawnGold.ToString();
-        coinText.text = GameManager.Instance.Coin.ToString();
-        UnitCountText.text = $"{GameManager.Instance.UnitCount.ToString()} / 20";
+        mainGold.text = GameManager.Instance.myGold.ToString();
+        spawnGoldText.text = GameManager.Instance.unitMng.spawnGold.ToString();
+        coinText.text = GameManager.Instance.myCoin.ToString();
+        UnitCountText.text = $"{GameManager.Instance.unitMng.curUnitList.Count.ToString()} / 20";
 
-        waveBossLevelNameText.text = $"LV.{GameManager.Instance.waveBossLevel} µ¹ °ñ·½";
+        waveBossLevelNameText.text = $"LV.{GameManager.Instance.gameFlow.waveBossLevel} µ¹ °ñ·½";
+
+        if (GameManager.Instance.gameFlow.bossRound)
+        {
+            spawnPointTimerPanel.SetActive(false);
+        }
+        if (GameManager.Instance.gameFlow.sec < 4 && spawnPointTimerPanel.activeSelf 
+            && !GameManager.Instance.gameFlow.bossRound)
+        {
+            spawnPointTimerPanel.SetActive(true);
+        }
+
+        int intsec = (int)GameManager.Instance.gameFlow.sec;
+        spawnPointTimerText.text = intsec.ToString();
     }
 
     private void upgradePanel()
     {
-        upgradeGoldText.text = GameManager.Instance.Gold.ToString();
-        upgradeCoinText.text = GameManager.Instance.Coin.ToString();
-        upgradeCost1Text.text = GameManager.Instance.UpgradeCost1.ToString();
-        upgradeCost2Text.text = GameManager.Instance.UpgradeCost2.ToString();
-        upgradeCost3Text.text = GameManager.Instance.UpgradeCost3.ToString();
-        upgradeCost4Text.text = GameManager.Instance.UpgradeCost4.ToString();
-        if (GameManager.Instance.UpgradeLevel1 < 6)
+        upgradeGoldText.text = GameManager.Instance.myGold.ToString();
+        upgradeCoinText.text = GameManager.Instance.myCoin.ToString();
+        upgradeCost1Text.text = GameManager.Instance.upgradeMng.upgradeCost1.ToString();
+        upgradeCost2Text.text = GameManager.Instance.upgradeMng.upgradeCost2.ToString();
+        upgradeCost3Text.text = GameManager.Instance.upgradeMng.upgradeCost3.ToString();
+        upgradeCost4Text.text = GameManager.Instance.upgradeMng.upgradeCost4.ToString();
+        if (GameManager.Instance.upgradeMng.upgradeLevel1 < 6)
         {
-            upgradeLevel1Text.text = "LV." + GameManager.Instance.UpgradeLevel1.ToString();
+            upgradeLevel1Text.text = "LV." + GameManager.Instance.upgradeMng.upgradeLevel1.ToString();
         }
         else
         {
             upgradeLevel1Text.text = "LV.MAX";
         }
-        if (GameManager.Instance.UpgradeLevel2 < 6)
+        if (GameManager.Instance.upgradeMng.upgradeLevel2 < 6)
         {
-            upgradeLevel2Text.text = "LV." + GameManager.Instance.UpgradeLevel2.ToString();
+            upgradeLevel2Text.text = "LV." + GameManager.Instance.upgradeMng.upgradeLevel2.ToString();
         }
         else
         {
             upgradeLevel2Text.text = "LV.MAX";
         }
-        if (GameManager.Instance.UpgradeLevel3 < 6)
+        if (GameManager.Instance.upgradeMng.upgradeLevel3 < 6)
         {
-            upgradeLevel3Text.text = "LV." + GameManager.Instance.UpgradeLevel3.ToString();
+            upgradeLevel3Text.text = "LV." + GameManager.Instance.upgradeMng.upgradeLevel3.ToString();
         }
         else
         {
             upgradeLevel3Text.text = "LV.MAX";
         }
-        if (GameManager.Instance.UpgradeLevel4 < 6)
+        if (GameManager.Instance.upgradeMng.upgradeLevel4 < 6)
         {
-            upgradeLevel4Text.text = "LV." + GameManager.Instance.UpgradeLevel4.ToString();
+            upgradeLevel4Text.text = "LV." + GameManager.Instance.upgradeMng.upgradeLevel4.ToString();
         }
         else
         {
             upgradeLevel4Text.text = "LV.MAX";
         }
         spawnPerText1.text = 
-            $"ÀÏ¹Ý : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][3]}%";
+            $"ÀÏ¹Ý : {GameManager.Instance.unitMng.firstSelectWeight[(int)GameManager.Instance.upgradeMng.upgradeLevel4 - 1][3]}%";
         spawnPerText2.text = 
-            $"<color=blue>Èñ±Í : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][2]}%</color>%";
+            $"<color=blue>Èñ±Í : {GameManager.Instance.unitMng.firstSelectWeight[(int)GameManager.Instance.upgradeMng.upgradeLevel4 - 1][2]}%</color>%";
         spawnPerText3.text = 
-            $"<color=purple>¿µ¿õ : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][1]}%</color>";
+            $"<color=purple>¿µ¿õ : {GameManager.Instance.unitMng.firstSelectWeight[(int)GameManager.Instance.upgradeMng.upgradeLevel4 - 1][1]}%</color>";
         spawnPerText4.text =
-            $"<color=yellow>Àü¼³ : {GameManager.Instance.FirstSelectWeight[(int)GameManager.Instance.UpgradeLevel4 - 1][0]}%</color>";
+            $"<color=yellow>Àü¼³ : {GameManager.Instance.unitMng.firstSelectWeight[(int)GameManager.Instance.upgradeMng.upgradeLevel4 - 1][0]}%</color>";
     }
 
     private void randomPanel()
     {
-        myCoinText.text = GameManager.Instance.Coin.ToString();
+        myCoinText.text = GameManager.Instance.myCoin.ToString();
     }
 
-    public void mixPanel(int index)
+    public void curMixPanel(int index)
     {
         UnitData curUnit = mixUnitData[index];
         mixUnitNameText.text = mixUnitData[index].unitName;
@@ -152,12 +173,12 @@ public class GameUI : MonoBehaviour
 
     private void warning()
     {
-        if (GameManager.Instance.CurMonster >= GameManager.Instance.MaxMonster * 0.8f && checkWarning == true)
+        if (GameManager.Instance.enemyMng.curEnemyCount >= GameManager.Instance.enemyMng.maxEnemyCount * 0.8f && checkWarning == true)
         {
             StartCoroutine(Warning());
             checkWarning = false;
         }
-        if (GameManager.Instance.CurMonster < GameManager.Instance.MaxMonster * 0.8f)
+        if (GameManager.Instance.enemyMng.curEnemyCount < GameManager.Instance.enemyMng.maxEnemyCount * 0.8f)
         {
             checkWarning = true;
         }

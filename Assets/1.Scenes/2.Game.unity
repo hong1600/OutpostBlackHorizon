@@ -2544,7 +2544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 243551109}
   m_Layer: 0
-  m_Name: Monster
+  m_Name: EnemyParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13183,6 +13183,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7de7b8bd96bf39545a0f9e5bd441e9b9, type: 2}
   - {fileID: 11400000, guid: 8cb58d9b82f4bf642a72d3ec57606e97, type: 2}
   canMixBtn: {fileID: 559703331}
+  spawnPointTimerPanel: {fileID: 0}
+  spawnPointTimerText: {fileID: 0}
+  spawnWaveBossBtn: {fileID: 0}
+  mixPanel: {fileID: 0}
+  gameOverPaenl: {fileID: 0}
 --- !u!4 &1004812087
 Transform:
   m_ObjectHideFlags: 0
@@ -20568,7 +20573,7 @@ GameObject:
   - component: {fileID: 1573742515}
   - component: {fileID: 1573742516}
   m_Layer: 0
-  m_Name: SpawnPoint
+  m_Name: EnemySpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

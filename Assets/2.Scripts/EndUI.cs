@@ -12,17 +12,12 @@ public class EndUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI finalGem;
     [SerializeField] TextMeshProUGUI finalPaper;
 
-    private void Update()
-    {
-        
-    }
-
     private void main()
     {
-        finalWave.text = GameManager.Instance.CurRound.ToString();
-        finalExp.text = GameManager.Instance.RewardExp.ToString();
-        finalGold.text = GameManager.Instance.RewardGold.ToString();
-        finalGem.text = GameManager.Instance.RewardGem.ToString();
-        finalPaper.text = GameManager.Instance.RewardPaper.ToString();
+        finalWave.text = GameManager.Instance.gameFlow.curRound.ToString();
+        finalExp.text = GameManager.Instance.rewardGameOverMng.rewardExp.ToString();
+        finalGold.text = GameManager.Instance.rewardGameOverMng.rewardGold.ToString();
+        finalGem.text = GameManager.Instance.rewardGameOverMng.rewardGem.ToString();
+        finalPaper.text = GameManager.Instance.rewardGameOverMng.rewardPaper.ToString();
     }
 }

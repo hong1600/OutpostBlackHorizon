@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameInventory : MonoBehaviour
+public class GameInventoryManager : MonoBehaviour
 {
+    public static GameInventoryManager Instance;
+
     [SerializeField] Transform mixLeftContent;
     [SerializeField] GameObject MixBtnPre;
     [SerializeField] UnitData[] mixUnitData;

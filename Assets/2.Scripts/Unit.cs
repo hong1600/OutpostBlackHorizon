@@ -48,10 +48,10 @@ public class Unit : MonoBehaviour
 
         switch (unitGrade)
         {
-            case 0: lastUpgrade = GameManager.Instance.UpgradeLevel1; break;
-            case 1: lastUpgrade = GameManager.Instance.UpgradeLevel1; break;
-            case 2: lastUpgrade = GameManager.Instance.UpgradeLevel2; break;
-            case 3: lastUpgrade = GameManager.Instance.UpgradeLevel3; break;
+            case 0: lastUpgrade = GameManager.Instance.upgradeMng.upgradeLevel1; break;
+            case 1: lastUpgrade = GameManager.Instance.upgradeMng.upgradeLevel1; break;
+            case 2: lastUpgrade = GameManager.Instance.upgradeMng.upgradeLevel2; break;
+            case 3: lastUpgrade = GameManager.Instance.upgradeMng.upgradeLevel3; break;
         }
         missUpgrade(lastUpgrade);
     }
@@ -160,10 +160,10 @@ public class Unit : MonoBehaviour
 
         switch(unitGrade) 
         {
-            case 0: upgradeLevel = GameManager.Instance.UpgradeLevel1; break;
-            case 1: upgradeLevel = GameManager.Instance.UpgradeLevel1; break;
-            case 2: upgradeLevel = GameManager.Instance.UpgradeLevel2; break;
-            case 3: upgradeLevel = GameManager.Instance.UpgradeLevel3; break;
+            case 0: upgradeLevel = GameManager.Instance.upgradeMng.upgradeLevel1; break;
+            case 1: upgradeLevel = GameManager.Instance.upgradeMng.upgradeLevel1; break;
+            case 2: upgradeLevel = GameManager.Instance.upgradeMng.upgradeLevel2; break;
+            case 3: upgradeLevel = GameManager.Instance.upgradeMng.upgradeLevel3; break;
         }
 
         switch (upgradeLevel)

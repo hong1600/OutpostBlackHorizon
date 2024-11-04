@@ -8,21 +8,8 @@ public class MixSlot : MonoBehaviour
 {
     [SerializeField] Image unitImg;
     [SerializeField] TextMeshProUGUI unitNameText;
-    GameUI gameUI;
-    GameInventory inventory;
     int num;
 
-    private void Start()
-    {
-        if (gameUI == null)
-        {
-            gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
-        }
-        if (inventory == null)
-        {
-            inventory = GameObject.Find("GameInventory").GetComponent<GameInventory>();
-        }
-    }
 
     public void setUnit(UnitData unitdata, int index)
     {
@@ -33,8 +20,8 @@ public class MixSlot : MonoBehaviour
 
     public void MixBtn()
     {
-        gameUI.mixPanel(num);
-        inventory.loadRightUnit(num);
-        GameManager.Instance.canMixUnit();
+        GameUI.instance.curMixPanel(num);
+        GameInventoryManager.Instance.loadRightUnit(num);
+        GameManager.Instance.unitMng.canMixUnit();
     }
 }

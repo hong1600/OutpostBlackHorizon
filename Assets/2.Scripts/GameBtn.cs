@@ -72,9 +72,9 @@ public class GameBtn : MonoBehaviour
 
     public void spawnBtn()
     {
-        if (GameManager.Instance.Gold > GameManager.Instance.SpawnGold)
+        if (GameManager.Instance.myGold > GameManager.Instance.unitMng.spawnGold)
         {
-            GameManager.Instance.spawnUnit();
+            GameManager.Instance.unitMng.spawnUnit();
         }
     }
 
@@ -85,7 +85,7 @@ public class GameBtn : MonoBehaviour
 
     public void randomSpwanBtn(int index)
     {
-        GameManager.Instance.randSpawn(index);
+        GameManager.Instance.unitMng.randSpawn(index);
     }
 
     public void upgradeBtn()
@@ -93,71 +93,10 @@ public class GameBtn : MonoBehaviour
         showPanelOpen(upgradePanel);
     }
 
+
     public void unitUpgradeBtn(int index)
     {
-        List<Unit> unitList = GameManager.Instance.curUnitList;
-
-        if (index == 0)
-        {
-            if (GameManager.Instance.UpgradeLevel1 < 6)
-            {
-                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost1;
-                GameManager.Instance.UpgradeCost1 += 30f;
-                GameManager.Instance.UpgradeLevel1 += 1f;
-
-                for (int i = 0; i < unitList.Count; i++)
-                {
-                    if (unitList[i].unitGrade == 0)
-                    {
-                        unitList[i].upgrade();
-                    }
-                }
-            }
-        }
-        if (index == 1)
-        {
-            if (GameManager.Instance.UpgradeLevel2 < 6)
-            {
-                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost2;
-                GameManager.Instance.UpgradeCost2 += 50f;
-                GameManager.Instance.UpgradeLevel2 += 1f;
-
-                for (int i = 0; i < unitList.Count; i++)
-                {
-                    if (unitList[i].unitGrade == 1)
-                    {
-                        unitList[i].upgrade();
-                    }
-                }
-
-            }
-        }
-        if (index == 2)
-        {
-            if (GameManager.Instance.UpgradeLevel3 < 6)
-            {
-                GameManager.Instance.Coin -= (int)GameManager.Instance.UpgradeCost3;
-                GameManager.Instance.UpgradeCost3 += 1f;
-                GameManager.Instance.UpgradeLevel3 += 1f;
-
-                for (int i = 0; i < unitList.Count; i++)
-                {
-                    {
-                        unitList[i].upgrade();
-                    }
-                }
-
-            }
-        }
-        if (index == 3)
-        {
-            if (GameManager.Instance.UpgradeLevel4 < 6)
-            {
-                GameManager.Instance.Gold -= GameManager.Instance.UpgradeCost4;
-                GameManager.Instance.UpgradeCost4 += 100f;
-                GameManager.Instance.UpgradeLevel4 += 1f;
-            }
-        }
+        GameManager.Instance.upgradeMng.unitUpgradeBtn(index);
     }
 
     public void upgradeSpawnPer()
@@ -168,17 +107,17 @@ public class GameBtn : MonoBehaviour
     public void mixBtn()
     {
         showPanelOpen(mixPanel);
-        GameManager.Instance.canMixUnit();
+        GameManager.Instance.unitMng.canMixUnit();
     }
 
     public void mixUnitSpawnBtn()
     {
-        GameManager.Instance.MixUnitSpawn();
+        GameManager.Instance.unitMng.MixUnitSpawn();
     }
 
     public void spawnWaveBossBtn()
     {
-        GameManager.Instance.spawnWaveBoss();
+        GameManager.Instance.gameFlow.spawnWaveBoss();
     }
 
     public void speedUpBtn()
