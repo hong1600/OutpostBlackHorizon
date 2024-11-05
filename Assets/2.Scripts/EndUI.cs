@@ -14,10 +14,10 @@ public class EndUI : MonoBehaviour
 
     private void main()
     {
-        finalWave.text = GameManager.Instance.gameFlow.curRound.ToString();
-        finalExp.text = GameManager.Instance.rewardGameOverMng.rewardExp.ToString();
-        finalGold.text = GameManager.Instance.rewardGameOverMng.rewardGold.ToString();
-        finalGem.text = GameManager.Instance.rewardGameOverMng.rewardGem.ToString();
-        finalPaper.text = GameManager.Instance.rewardGameOverMng.rewardPaper.ToString();
+        finalWave.text = GameManager.Instance.gameFlow.roundTimer.curRound.ToString();
+        finalExp.text = GameManager.Instance.gameFlow.rewarder.rewardExp.ToString();
+        finalGold.text = GameManager.Instance.gameFlow.rewarder.rewardGold.ToString();
+        finalGem.text = GameManager.Instance.gameFlow.rewarder.rewardGem.ToString();
+        finalPaper.text = GameManager.Instance.gameFlow.rewarder.rewardPaper.ToString();
     }
 }

@@ -1,10 +1,11 @@
+using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeMng : MonoBehaviour
+public class UnitUpgrader : MonoBehaviour
 {
-    GameManager gameManager;
+    public UnitMng unitMng;
 
     public int upgradeCost1;
     public int upgradeCost2;
@@ -15,18 +16,9 @@ public class UpgradeMng : MonoBehaviour
     public int upgradeLevel3;
     public int upgradeLevel4;
 
-    public UpgradeMng(GameManager manager)
+    public void initialize(UnitMng manager)
     {
-        gameManager = manager;
-
-        upgradeCost1 = 100;
-        upgradeCost2 = 100;
-        upgradeCost3 = 100;
-        upgradeCost4 = 100;
-        upgradeLevel1 = 1;
-        upgradeLevel2 = 1;
-        upgradeLevel3 = 1;
-        upgradeLevel4 = 1;
+        unitMng = manager;
     }
 
     public void upgradeBtn(int index)
@@ -107,4 +99,5 @@ public class UpgradeMng : MonoBehaviour
             }
         }
     }
+
 }

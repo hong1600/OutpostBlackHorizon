@@ -74,7 +74,7 @@ public class GameBtn : MonoBehaviour
     {
         if (GameManager.Instance.myGold > GameManager.Instance.unitMng.spawnGold)
         {
-            GameManager.Instance.unitMng.spawnUnit();
+            GameManager.Instance.unitMng.unitSpawner.spawnUnit();
         }
     }
 
@@ -85,7 +85,7 @@ public class GameBtn : MonoBehaviour
 
     public void randomSpwanBtn(int index)
     {
-        GameManager.Instance.unitMng.randSpawn(index);
+        GameManager.Instance.unitMng.unitRandomSpawner.randSpawn(index);
     }
 
     public void upgradeBtn()
@@ -96,7 +96,7 @@ public class GameBtn : MonoBehaviour
 
     public void unitUpgradeBtn(int index)
     {
-        GameManager.Instance.upgradeMng.unitUpgradeBtn(index);
+        GameManager.Instance.unitMng.unitUpgrader.unitUpgradeBtn(index);
     }
 
     public void upgradeSpawnPer()
@@ -107,17 +107,17 @@ public class GameBtn : MonoBehaviour
     public void mixBtn()
     {
         showPanelOpen(mixPanel);
-        GameManager.Instance.unitMng.canMixUnit();
+        GameManager.Instance.unitMng.unitMixer.unitCanMix();
     }
 
     public void mixUnitSpawnBtn()
     {
-        GameManager.Instance.unitMng.MixUnitSpawn();
+        GameManager.Instance.unitMng.unitMixer.unitMixSpawn();
     }
 
     public void spawnWaveBossBtn()
     {
-        GameManager.Instance.gameFlow.spawnWaveBoss();
+        GameManager.Instance.enemyMng.waveBossSpawner.spawnWaveBoss();
     }
 
     public void speedUpBtn()

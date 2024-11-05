@@ -123,24 +123,24 @@ public class Enemy : MonoBehaviour
                 break;
             case EnemyType.WaveBoss:
                 GameManager.Instance.myCoin += 2;
-                GameManager.Instance.gameFlow.wavebossDelay = 25f;
+                GameManager.Instance.enemyMng.waveBossSpawner.wavebossDelay = 25f;
                 break;
             case EnemyType.boss:
                 GameManager.Instance.myGold += 300;
                 GameManager.Instance.myCoin += 4;
-                GameManager.Instance.gameFlow.bossRound = false;
-                GameManager.Instance.gameFlow.sec = 15f;
-                GameManager.Instance.enemyMng.enemySpawndelay = 0.85f;
+                GameManager.Instance.gameFlow.roundTimer.bossRound = false;
+                GameManager.Instance.gameFlow.roundTimer.sec = 15f;
+                GameManager.Instance.enemyMng.enemySpawner.enemySpawndelay = 0.85f;
                 break;
         }
 
         anim.SetBool("isDie", true);
         isDie = true;
         Destroy(gameObject, 0.5f);
-        GameManager.Instance.rewardGameOverMng.rewardGold += 50;
-        GameManager.Instance.rewardGameOverMng.rewardGem += 10;
-        GameManager.Instance.rewardGameOverMng.rewardPaper += 20;
-        GameManager.Instance.rewardGameOverMng.rewardExp += 1;
+        GameManager.Instance.gameFlow.rewarder.rewardGold += 50;
+        GameManager.Instance.gameFlow.rewarder.rewardGem += 10;
+        GameManager.Instance.gameFlow.rewarder.rewardPaper += 20;
+        GameManager.Instance.gameFlow.rewarder.rewardExp += 1;
     }
 
     private void waveBossTimer()
@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour
         if (bosstime <= 0)
         {
             Destroy(this.gameObject);
-            GameManager.Instance.gameFlow.wavebossDelay = 25;
+            GameManager.Instance.enemyMng.waveBossSpawner.wavebossDelay = 25;
         }
     }
 
@@ -162,7 +162,7 @@ public class Enemy : MonoBehaviour
 
         if (bosstime <= 0)
         {
-            GameManager.Instance.rewardGameOverMng.gameOver = true;
+            GameManager.Instance.gameFlow.gameStateCheck.gameOver = true;
         }
     }
 }

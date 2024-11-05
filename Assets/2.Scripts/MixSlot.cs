@@ -22,6 +22,6 @@ public class MixSlot : MonoBehaviour
     {
         GameUI.instance.curMixPanel(num);
         GameInventoryManager.Instance.loadRightUnit(num);
-        GameManager.Instance.unitMng.canMixUnit();
+        GameManager.Instance.unitMng.unitMixer.unitCanMix();
     }
 }
