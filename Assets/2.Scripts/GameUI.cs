@@ -29,18 +29,18 @@ public class GameUI : MonoBehaviour
     [Header("upgrade")]
     [SerializeField] TextMeshProUGUI upgradeGoldText;
     [SerializeField] TextMeshProUGUI upgradeCoinText;
+    [SerializeField] TextMeshProUGUI upgradeCost0Text;
     [SerializeField] TextMeshProUGUI upgradeCost1Text;
     [SerializeField] TextMeshProUGUI upgradeCost2Text;
     [SerializeField] TextMeshProUGUI upgradeCost3Text;
-    [SerializeField] TextMeshProUGUI upgradeCost4Text;
+    [SerializeField] TextMeshProUGUI upgradeLevel0Text;
     [SerializeField] TextMeshProUGUI upgradeLevel1Text;
     [SerializeField] TextMeshProUGUI upgradeLevel2Text;
     [SerializeField] TextMeshProUGUI upgradeLevel3Text;
-    [SerializeField] TextMeshProUGUI upgradeLevel4Text;
+    [SerializeField] TextMeshProUGUI spawnPerText0;
     [SerializeField] TextMeshProUGUI spawnPerText1;
     [SerializeField] TextMeshProUGUI spawnPerText2;
     [SerializeField] TextMeshProUGUI spawnPerText3;
-    [SerializeField] TextMeshProUGUI spawnPerText4;
 
     [Header("Random")]
     [SerializeField] TextMeshProUGUI myCoinText;
@@ -88,7 +88,7 @@ public class GameUI : MonoBehaviour
         warningText.text = $"{GameManager.Instance.enemyMng.curEnemyCount} / {GameManager.Instance.enemyMng.maxEnemyCount}";
 
         mainGold.text = GameManager.Instance.myGold.ToString();
-        spawnGoldText.text = GameManager.Instance.unitMng.spawnGold.ToString();
+        spawnGoldText.text = GameManager.Instance.unitMng.unitSpawner.spawnGold.ToString();
         coinText.text = GameManager.Instance.myCoin.ToString();
         UnitCountText.text = $"{GameManager.Instance.unitMng.curUnitList.Count.ToString()} / 20";
 
@@ -112,10 +112,18 @@ public class GameUI : MonoBehaviour
     {
         upgradeGoldText.text = GameManager.Instance.myGold.ToString();
         upgradeCoinText.text = GameManager.Instance.myCoin.ToString();
+        upgradeCost0Text.text = GameManager.Instance.unitMng.unitUpgrader.upgradeCost0.ToString();
         upgradeCost1Text.text = GameManager.Instance.unitMng.unitUpgrader.upgradeCost1.ToString();
         upgradeCost2Text.text = GameManager.Instance.unitMng.unitUpgrader.upgradeCost2.ToString();
         upgradeCost3Text.text = GameManager.Instance.unitMng.unitUpgrader.upgradeCost3.ToString();
-        upgradeCost4Text.text = GameManager.Instance.unitMng.unitUpgrader.upgradeCost4.ToString();
+        if (GameManager.Instance.unitMng.unitUpgrader.upgradeLevel0 < 6)
+        {
+            upgradeLevel0Text.text = "LV." + GameManager.Instance.unitMng.unitUpgrader.upgradeLevel0.ToString();
+        }
+        else
+        {
+            upgradeLevel0Text.text = "LV.MAX";
+        }
         if (GameManager.Instance.unitMng.unitUpgrader.upgradeLevel1 < 6)
         {
             upgradeLevel1Text.text = "LV." + GameManager.Instance.unitMng.unitUpgrader.upgradeLevel1.ToString();
@@ -140,22 +148,14 @@ public class GameUI : MonoBehaviour
         {
             upgradeLevel3Text.text = "LV.MAX";
         }
-        if (GameManager.Instance.unitMng.unitUpgrader.upgradeLevel4 < 6)
-        {
-            upgradeLevel4Text.text = "LV." + GameManager.Instance.unitMng.unitUpgrader.upgradeLevel4.ToString();
-        }
-        else
-        {
-            upgradeLevel4Text.text = "LV.MAX";
-        }
+        spawnPerText0.text = 
+            $"ÀÏ¹Ý : {GameManager.Instance.unitMng.unitSpawner.selectWeight[(int)GameManager.Instance.unitMng.unitUpgrader.upgradeLevel3 - 1][3]}%";
         spawnPerText1.text = 
-            $"ÀÏ¹Ý : {GameManager.Instance.unitMng.unitSpawner.firstSelectWeight[(int)GameManager.Instance.unitMng.unitUpgrader.upgradeLevel4 - 1][3]}%";
+            $"<color=blue>Èñ±Í : {GameManager.Instance.unitMng.unitSpawner.selectWeight[(int)GameManager.Instance.unitMng.unitUpgrader.upgradeLevel3 - 1][2]}%</color>%";
         spawnPerText2.text = 
-            $"<color=blue>Èñ±Í : {GameManager.Instance.unitMng.unitSpawner.firstSelectWeight[(int)GameManager.Instance.unitMng.unitUpgrader.upgradeLevel4 - 1][2]}%</color>%";
-        spawnPerText3.text = 
-            $"<color=purple>¿µ¿õ : {GameManager.Instance.unitMng.unitSpawner.firstSelectWeight[(int)GameManager.Instance.unitMng.unitUpgrader.upgradeLevel4 - 1][1]}%</color>";
-        spawnPerText4.text =
-            $"<color=yellow>Àü¼³ : {GameManager.Instance.unitMng.unitSpawner.firstSelectWeight[(int)GameManager.Instance.unitMng.unitUpgrader.upgradeLevel4 - 1][0]}%</color>";
+            $"<color=purple>¿µ¿õ : {GameManager.Instance.unitMng.unitSpawner.selectWeight[(int)GameManager.Instance.unitMng.unitUpgrader.upgradeLevel3 - 1][1]}%</color>";
+        spawnPerText3.text =
+            $"<color=yellow>Àü¼³ : {GameManager.Instance.unitMng.unitSpawner.selectWeight[(int)GameManager.Instance.unitMng.unitUpgrader.upgradeLevel3 - 1][0]}%</color>";
     }
 
     private void randomPanel()

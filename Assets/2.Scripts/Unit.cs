@@ -63,12 +63,6 @@ public class Unit : MonoBehaviour
         targetEnemy(transform);
     }
 
-    //private void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawSphere(transform.position, attackRange);
-    //}
-
     private GameObject targetEnemy(Transform playerPos)
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(playerPos.position, attackRange,
@@ -160,10 +154,10 @@ public class Unit : MonoBehaviour
 
         switch(unitGrade) 
         {
-            case 0: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel1; break;
-            case 1: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel1; break;
-            case 2: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel2; break;
-            case 3: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel3; break;
+            case 0: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel0; break;
+            case 1: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel0; break;
+            case 2: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel1; break;
+            case 3: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel2; break;
         }
 
         switch (upgradeLevel)

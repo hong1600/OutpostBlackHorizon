@@ -16,16 +16,21 @@ public class UnitRandomSpawner : MonoBehaviour
     public Image randomUnitImg3;
     public Sprite[] randomStar;
     public float fadeTime;
+    public int spawnCoin;
 
     public void initialize(UnitMng manager)
     {
         unitMng = manager;
     }
 
+    public bool canSpawn()
+    {
+        return spawnCoin <= GameManager.Instance.myCoin;
+    }
 
     public void randSpawn(int index)
     {
-        if (randomDelay == false)
+        if (randomDelay == false && canSpawn())
         {
             StartCoroutine(RandSpawn(index));
         }
@@ -90,15 +95,15 @@ public class UnitRandomSpawner : MonoBehaviour
         switch (index)
         {
             case 0:
-                unitMng.coin -= 1;
+                GameManager.Instance.myCoin -= 1;
                 return unitMng.unitListB[randB].GetComponent<SpriteRenderer>().sprite;
 
             case 1:
-                unitMng.coin -= 1;
+                GameManager.Instance.myCoin -= 1;
                 return unitMng.unitListA[randA].GetComponent<SpriteRenderer>().sprite;
 
             case 2:
-                unitMng.coin -= 2;
+                GameManager.Instance.myCoin -= 2;
                 return unitMng.unitListS[randS].GetComponent<SpriteRenderer>().sprite;
         }
         return null;

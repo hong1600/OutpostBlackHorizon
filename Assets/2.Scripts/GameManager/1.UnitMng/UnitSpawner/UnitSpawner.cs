@@ -6,7 +6,7 @@ public class UnitSpawner : MonoBehaviour
 {
     public UnitMng unitMng;
 
-    public float[][] firstSelectWeight = new float[][]
+    public float[][] selectWeight = new float[][]
 {
         new float[] { 0.03f, 0.10f, 0.15f, 0.72f },
         new float[] { 0.05f, 0.12f, 0.18f, 0.65f },
@@ -15,7 +15,7 @@ public class UnitSpawner : MonoBehaviour
         new float[] { 0.11f, 0.18f, 0.27f, 0.44f },
         new float[] { 0.13f, 0.20f, 0.30f, 0.37f }
 };
-    public string[] firstSelectOption = { "S", "A", "B", "C" };
+    public string[] selectOption = { "S", "A", "B", "C" };
     public int spawnGold;
 
     public void initialize(UnitMng manager)
@@ -23,22 +23,32 @@ public class UnitSpawner : MonoBehaviour
         unitMng = manager;
     }
 
-    public void spawnUnit()
+    public bool canSpawn()
     {
-        if (!unitMng.checkGround()) return;
+        return spawnGold <= GameManager.Instance.myGold;
+    }
 
+    public void useGold()
+    {
         GameManager.Instance.myGold -= spawnGold;
         spawnGold += 2;
+    }
 
-        string firstSelection = FirstSelectRandom(firstSelectOption,
-            firstSelectWeight[(int)GameManager.Instance.unitMng.unitUpgrader.upgradeLevel4 - 1]);
+    public void spawnUnit()
+    {
+        if (!unitMng.checkGround() || !canSpawn()) return;
+
+        useGold();
+
+        string Selection = SelectRandom(selectOption,
+            selectWeight[(int)GameManager.Instance.unitMng.unitUpgrader.upgradeLevel3 - 1]);
 
         int randS = Random.Range(0, unitMng.unitListS.Count);
         int randA = Random.Range(0, unitMng.unitListA.Count);
         int randB = Random.Range(0, unitMng.unitListB.Count);
         int randC = Random.Range(0, unitMng.unitListC.Count);
 
-        switch (firstSelection)
+        switch (Selection)
         {
             case "S":
                 GameObject spawnUnitS = Instantiate(unitMng.unitListS[randS],
@@ -67,7 +77,7 @@ public class UnitSpawner : MonoBehaviour
         }
     }
 
-    public string FirstSelectRandom(string[] options, float[] weights)
+    public string SelectRandom(string[] options, float[] weights)
     {
         float totalWeight = 0f;
 

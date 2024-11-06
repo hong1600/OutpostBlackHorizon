@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8814965819994999900}
   - component: {fileID: 1402695267540412932}
   m_Layer: 0
-  m_Name: 3.Wizard2
+  m_Name: 2.Wizard2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

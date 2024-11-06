@@ -7,97 +7,92 @@ public class UnitUpgrader : MonoBehaviour
 {
     public UnitMng unitMng;
 
+    public int upgradeCost0;
     public int upgradeCost1;
     public int upgradeCost2;
     public int upgradeCost3;
-    public int upgradeCost4;
+    public int upgradeLevel0;
     public int upgradeLevel1;
     public int upgradeLevel2;
     public int upgradeLevel3;
-    public int upgradeLevel4;
 
     public void initialize(UnitMng manager)
     {
         unitMng = manager;
     }
 
-    public void upgradeBtn(int index)
+    public void unitUpgradeCost(ref int cost, int amount, string type = "Gold")
     {
-        if (upgradeCost1 < GameManager.Instance.myGold && index == 1)
+        if (type == "Gold")
+            GameManager.Instance.myGold -= cost;
+        else if (type == "Coin")
+            GameManager.Instance.myCoin -= cost;
+
+        cost += amount;
+    }
+
+    public void unitUpgradeApply(int grade)
+    {
+        foreach (var unit in GameManager.Instance.unitMng.curUnitList)
         {
-            GameManager.Instance.myGold -= upgradeCost1;
-            upgradeCost1 *= 2;
+            if (unit.unitGrade == grade)
+            {
+                unit.upgrade();
+            }
+        }
+    }
+
+    public void upgradeGrade0()
+    {
+        if (upgradeLevel0 < 6)
+        {
+            unitUpgradeCost(ref upgradeCost0, 30);
+            upgradeLevel0++;
+            unitUpgradeApply(0);
+        }
+    }
+    public void upgradeGrade1()
+    {
+        if (upgradeLevel1 < 6)
+        {
+            unitUpgradeCost(ref upgradeCost1, 50);
             upgradeLevel1++;
+            unitUpgradeApply(1);
         }
     }
-
-    public void unitUpgradeBtn(int index)
+    public void upgradeGrade2()
     {
-        int grade = index;
-
-        List<Unit> unitList = GameManager.Instance.unitMng.curUnitList;
-
-        if (grade == 0)
+        if (upgradeLevel2 < 6)
         {
-            if (upgradeLevel1 < 6)
-            {
-                GameManager.Instance.myGold -= upgradeCost1;
-                upgradeCost1 += 30;
-                upgradeLevel1 += 1;
-
-                for (int i = 0; i < unitList.Count; i++)
-                {
-                    if (unitList[i].unitGrade == 0)
-                    {
-                        unitList[i].upgrade();
-                    }
-                }
-            }
+            unitUpgradeCost(ref upgradeCost2, 1, "Coin");
+            upgradeLevel2++;
+            unitUpgradeApply(2);
         }
-        if (grade == 1)
+    }
+    public void upgradeGrade3()
+    {
+        if (upgradeLevel3 < 6)
         {
-            if (upgradeLevel2 < 6)
-            {
-                GameManager.Instance.myGold -= upgradeCost2;
-                upgradeCost2 += 50;
-                upgradeLevel2 += 1;
-
-                for (int i = 0; i < unitList.Count; i++)
-                {
-                    if (unitList[i].unitGrade == 1)
-                    {
-                        unitList[i].upgrade();
-                    }
-                }
-
-            }
-        }
-        if (grade == 2)
-        {
-            if (upgradeLevel3 < 6)
-            {
-                GameManager.Instance.myCoin -= upgradeCost3;
-                upgradeCost3 += 1;
-                upgradeLevel3 += 1;
-
-                for (int i = 0; i < unitList.Count; i++)
-                {
-                    {
-                        unitList[i].upgrade();
-                    }
-                }
-
-            }
-        }
-        if (grade == 3)
-        {
-            if (upgradeLevel4 < 6)
-            {
-                GameManager.Instance.myGold -= upgradeCost4;
-                upgradeCost4 += 100;
-                upgradeLevel4 += 1;
-            }
+            unitUpgradeCost(ref upgradeCost3, 100);
+            upgradeLevel3++;
+            unitUpgradeApply(3);
         }
     }
 
+
+    public void unitUpgrade(int index)
+    {
+        switch (index) 
+        {
+            case 0:
+                upgradeGrade0(); break;
+            case 1:
+                upgradeGrade1(); break;
+            case 2:
+                upgradeGrade2(); break;
+            case 3:
+                upgradeGrade3(); break;
+
+        }
+    }
 }

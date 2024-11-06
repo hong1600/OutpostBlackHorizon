@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curUnitList: []
   unitSpawnPointList: []
-  unitListSS: []
-  unitListS: []
-  unitListA: []
-  unitListB: []
-  unitListC: []
-  groundNum: 0
-  spawnGold: 0
-  coin: 0
+  unitListSS:
+  - {fileID: 563973152605902710, guid: 23faa01820d00444086460bc1b3d9af6, type: 3}
+  - {fileID: 1821150211701724, guid: 145c07d78e4332a40bbf42389a7172e5, type: 3}
+  unitListS:
+  - {fileID: 1582679196788840441, guid: 68807bb5be3bf8a44904d8912b7e2a78, type: 3}
+  unitListA:
+  - {fileID: 108908867050425898, guid: 8cdc2a63f0562eb47a94a92456f6de34, type: 3}
+  unitListB:
+  - {fileID: 8542601979106673295, guid: 78abc5df83a4f6b43a138de8a440e611, type: 3}
+  unitListC:
+  - {fileID: 5003890506298207457, guid: c99af1bf15fe081478a682afad125306, type: 3}

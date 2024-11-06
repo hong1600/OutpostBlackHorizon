@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class UnitMng : MonoBehaviour
 {
-    private GameManager gameManager;
+    public UnitMngData mngData;
 
     public UnitSpawner unitSpawner;
     public UnitMixer unitMixer;
@@ -18,17 +18,18 @@ public class UnitMng : MonoBehaviour
     public List<GameObject> unitSpawnPointList = new List<GameObject>();
     public List<GameObject> unitListSS, unitListS, unitListA, unitListB, unitListC;
     public int groundNum;
-    public int spawnGold;
-    public int coin;
 
-    public UnitMng(GameManager manager)
+    private void Start()
     {
-        gameManager = manager;
+        unitSpawnPointList = mngData.unitSpawnPointList;
+    }
 
+    public UnitMng()
+    {
         unitSpawner.initialize(this);
         unitMixer.initialize(this);
-        unitRandomSpawner.initialize(this);
         unitUpgrader.initialize(this);
+        unitRandomSpawner.initialize(this);
     }
 
     public bool checkGround()

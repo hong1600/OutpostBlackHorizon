@@ -72,7 +72,7 @@ public class GameBtn : MonoBehaviour
 
     public void spawnBtn()
     {
-        if (GameManager.Instance.myGold > GameManager.Instance.unitMng.spawnGold)
+        if (GameManager.Instance.myGold > GameManager.Instance.unitMng.unitSpawner.spawnGold)
         {
             GameManager.Instance.unitMng.unitSpawner.spawnUnit();
         }
@@ -96,7 +96,7 @@ public class GameBtn : MonoBehaviour
 
     public void unitUpgradeBtn(int index)
     {
-        GameManager.Instance.unitMng.unitUpgrader.unitUpgradeBtn(index);
+        GameManager.Instance.unitMng.unitUpgrader.unitUpgrade(index);
     }
 
     public void upgradeSpawnPer()

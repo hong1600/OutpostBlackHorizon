@@ -24,9 +24,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        DontDestroyOnLoad(this.gameObject);
 
+        unitMng = new UnitMng();
         gameFlow = new GameFlow(this);
-        unitMng = new UnitMng(this);
         enemyMng = new EnemyMng(this);
     }
 
@@ -37,5 +38,15 @@ public class GameManager : MonoBehaviour
         gameFlow.roundTimer.timer();
         enemyMng.enemySpawner.spawnEnemy();
         gameFlow.gameStateCheck.checkGameState();
+    }
+
+    public void adGold(int amount)
+    {
+        myGold += amount;
+    }
+
+    public void adCoin(int amount)
+    {
+        myCoin += amount;
     }
 }
