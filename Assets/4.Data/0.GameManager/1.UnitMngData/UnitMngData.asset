@@ -13,7 +13,22 @@ MonoBehaviour:
   m_Name: UnitMngData
   m_EditorClassIdentifier: 
   curUnitList: []
-  unitSpawnPointList: []
+  unitSpawnPointList:
+  - {fileID: 7309115519821218060, guid: ce8b5cbca6f7cc14ebed8b01ff119d36, type: 3}
+  - {fileID: 5747852989298344326, guid: bcd4cca7ccc3b6e4091ed06c11bc0967, type: 3}
+  - {fileID: 6614434284915891257, guid: ceb19e687dc8862488dffd0445379f1d, type: 3}
+  - {fileID: 2394820815206371984, guid: 0e413275318e6264a962c01a1a8ebe90, type: 3}
+  - {fileID: 3717220719666285953, guid: fd59acff81a01d74eb0d3215a97b93f6, type: 3}
+  - {fileID: 5493289400685103818, guid: 99b42b19d3593aa4ea33ba875833d9c4, type: 3}
+  - {fileID: 2345809962234006846, guid: d18847fff62543a46a7598b32cb64633, type: 3}
+  - {fileID: 5724402292472740979, guid: 9274cbd908a79934085b55bf3e12f645, type: 3}
+  - {fileID: 7198757705860661324, guid: 02ec5d6910f54c742a08075435958b01, type: 3}
+  - {fileID: 3608281609177513481, guid: f81e6334d1a1ec64bb05333d9b253e8d, type: 3}
+  - {fileID: 9184055559828643465, guid: 17e2bf74481902f469f22d382b68d1ae, type: 3}
+  - {fileID: 8570719746856282987, guid: bb5e284be895f5f43a7ab0b480702594, type: 3}
+  - {fileID: 4101332577689945266, guid: 2f53c3e09dabe2f4e8acee0a6e85944e, type: 3}
+  - {fileID: 790815745679275524, guid: 9f6772dbbea98b84386476ae42e6cc38, type: 3}
+  - {fileID: 2845314208737662809, guid: f222079e65c282e4fb01b41b5fccd854, type: 3}
   unitListSS:
   - {fileID: 563973152605902710, guid: 23faa01820d00444086460bc1b3d9af6, type: 3}
   - {fileID: 1821150211701724, guid: 145c07d78e4332a40bbf42389a7172e5, type: 3}

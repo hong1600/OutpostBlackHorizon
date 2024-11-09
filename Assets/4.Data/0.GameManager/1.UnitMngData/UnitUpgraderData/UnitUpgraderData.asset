@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e2d174fa1265a4b83dae205754a11f, type: 3}
   m_Name: UnitUpgraderData
   m_EditorClassIdentifier: 
-  upgradeCost1: 0
-  upgradeCost2: 0
-  upgradeCost3: 0
-  upgradeCost4: 0
-  upgradeLevel1: 0
-  upgradeLevel2: 0
-  upgradeLevel3: 0
-  upgradeLevel4: 0
+  upgradeCost0: 30
+  upgradeCost1: 50
+  upgradeCost2: 2
+  upgradeCost3: 100
+  upgradeLevel0: 1
+  upgradeLevel1: 1
+  upgradeLevel2: 1
+  upgradeLevel3: 1

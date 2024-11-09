@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "UnitMngData", menuName = "UnitManager/UnitMngData", order = 0)]
+
+[CreateAssetMenu(fileName = "UnitMngData", menuName = "UnitManager/UnitMngData")]
 public class UnitMngData : ScriptableObject
 {
     public List<Unit> curUnitList = new List<Unit>();

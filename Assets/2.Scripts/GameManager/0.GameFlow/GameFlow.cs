@@ -14,15 +14,18 @@ public class GameFlow : MonoBehaviour
     public GameStateCheck gameStateCheck;
     public GameOver gameOver;
 
-
-    public GameFlow(GameManager manager)
+    private void Awake()
     {
-        gameManager = manager;
-
         roundTimer.initialized(this);
         gameClear.initialized(this);
         gameOver.initialized(this);
         gameStateCheck.initialized(this);
         rewarder.initialized(this);
+    }
+
+
+    public GameFlow(GameManager manager)
+    {
+        gameManager = manager;
     }
 }

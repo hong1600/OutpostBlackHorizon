@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public UnitMng unitMng;
     public EnemyMng enemyMng;
 
+    public UnitMngData unitMngData;
+
     public int myGold;
     public int myCoin;
 
@@ -26,9 +28,17 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
 
-        unitMng = new UnitMng();
+        unitMng = gameObject.AddComponent<UnitMng>();
+        unitMng.Initialize(this, unitMngData);
+
         gameFlow = new GameFlow(this);
         enemyMng = new EnemyMng(this);
+    }
+
+    private void Start()
+    {
+        myGold = 2000;
+        myCoin = 50;
     }
 
     private void Update()
@@ -38,6 +48,7 @@ public class GameManager : MonoBehaviour
         gameFlow.roundTimer.timer();
         enemyMng.enemySpawner.spawnEnemy();
         gameFlow.gameStateCheck.checkGameState();
+        unitMng.checkGround();
     }
 
     public void adGold(int amount)

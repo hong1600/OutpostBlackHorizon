@@ -11,7 +11,6 @@ public class GameStateCheck : MonoBehaviour
     public bool gameOver;
     public bool gameClear;
 
-
     public void initialized(GameFlow manager)
     {
         gameFlow = manager;

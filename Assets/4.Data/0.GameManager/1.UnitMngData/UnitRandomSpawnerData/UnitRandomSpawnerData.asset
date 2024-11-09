@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4305c468bc7ddaa4ea0a1243615ab10d, type: 3}
   m_Name: UnitRandomSpawnerData
   m_EditorClassIdentifier: 
-  randomDelay: 0
-  randomUnitImg1: {fileID: 0}
-  randomUnitImg2: {fileID: 0}
-  randomUnitImg3: {fileID: 0}
-  randomStar: []
-  fadeTime: 1
+  randomUnitImg1: {fileID: 3779372779893230385, guid: 7840f0953b7a00348973227fe97176ba, type: 3}
+  randomUnitImg2: {fileID: 5569450862968965969, guid: e4dc5816876a5d14883ab726c3526293, type: 3}
+  randomUnitImg3: {fileID: 8746478230831513798, guid: 087bced1f1cc6664a9fdadb6f81c5607, type: 3}
+  randomStar:
+  - {fileID: 21300000, guid: 872421930802dc548ac07bbd39994053, type: 3}
+  - {fileID: 21300000, guid: fae9ab90d086ddd47a5a6070a0278820, type: 3}
+  - {fileID: 21300000, guid: 5890ea633e8823d4395a18cf82cdd29c, type: 3}

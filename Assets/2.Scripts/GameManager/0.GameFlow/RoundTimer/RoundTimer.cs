@@ -11,6 +11,13 @@ public class RoundTimer : MonoBehaviour
     public bool spawnTime;
     public int curRound;
 
+    private void Start()
+    {
+        bossRound = false;
+        spawnTime = false;
+        curRound = 0;
+    }
+
     public void initialized(GameFlow manager)
     {
         gameFlow = manager;

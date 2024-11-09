@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class UnitRandomSpawner : MonoBehaviour
 {
     public UnitMng unitMng;
+    public UnitRandomSpawnerData data;
 
     public bool randomDelay;
     public Image randomUnitImg1;
@@ -16,21 +17,48 @@ public class UnitRandomSpawner : MonoBehaviour
     public Image randomUnitImg3;
     public Sprite[] randomStar;
     public float fadeTime;
-    public int spawnCoin;
+    public int spawnCoin0;
+    public int spawnCoin1;
+    public int spawnCoin2;
+
+    private void Awake()
+    {
+        randomDelay = false;
+        randomUnitImg1 = data.randomUnitImg1;
+        randomUnitImg2 = data.randomUnitImg2;
+        randomUnitImg3 = data.randomUnitImg3;
+        randomStar = data.randomStar;
+        fadeTime = 1;
+        spawnCoin0 = 1;
+        spawnCoin1 = 1;
+        spawnCoin2 = 2;
+    }
 
     public void initialize(UnitMng manager)
     {
         unitMng = manager;
     }
 
-    public bool canSpawn()
+    public bool canSpawn(int index)
     {
-        return spawnCoin <= GameManager.Instance.myCoin;
+        if (index == 0)
+        {
+            return spawnCoin0 <= GameManager.Instance.myCoin;
+        }
+        if (index == 1)
+        {
+            return spawnCoin1 <= GameManager.Instance.myCoin;
+        }
+        if (index == 2)
+        {
+            return spawnCoin2 <= GameManager.Instance.myCoin;
+        }
+        return false;
     }
 
     public void randSpawn(int index)
     {
-        if (randomDelay == false && canSpawn())
+        if (randomDelay == false && canSpawn(index))
         {
             StartCoroutine(RandSpawn(index));
         }

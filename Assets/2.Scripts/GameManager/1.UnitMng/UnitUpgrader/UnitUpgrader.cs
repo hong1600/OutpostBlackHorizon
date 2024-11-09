@@ -6,6 +6,7 @@ using UnityEngine;
 public class UnitUpgrader : MonoBehaviour
 {
     public UnitMng unitMng;
+    public UnitUpgraderData data;
 
     public int upgradeCost0;
     public int upgradeCost1;
@@ -16,6 +17,18 @@ public class UnitUpgrader : MonoBehaviour
     public int upgradeLevel2;
     public int upgradeLevel3;
 
+
+    private void Start()
+    {
+        upgradeCost0 = data.upgradeCost0;
+        upgradeCost1 = data.upgradeCost1;
+        upgradeCost2 = data.upgradeCost2;
+        upgradeCost3 = data.upgradeCost3;
+        upgradeLevel0 = data.upgradeLevel0;
+        upgradeLevel1 = data.upgradeLevel1;
+        upgradeLevel2 = data.upgradeLevel2;
+        upgradeLevel3 = data.upgradeLevel3;
+    }
     public void initialize(UnitMng manager)
     {
         unitMng = manager;

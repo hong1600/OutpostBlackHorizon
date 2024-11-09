@@ -18,6 +18,11 @@ public class UnitSpawner : MonoBehaviour
     public string[] selectOption = { "S", "A", "B", "C" };
     public int spawnGold;
 
+    private void Start()
+    {
+        spawnGold = 20;
+    }
+
     public void initialize(UnitMng manager)
     {
         unitMng = manager;

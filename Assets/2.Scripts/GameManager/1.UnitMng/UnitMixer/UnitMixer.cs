@@ -7,8 +7,8 @@ public class UnitMixer : MonoBehaviour
 {
     public UnitMng unitMng;
 
-    public List<UnitData> needUnitList;
-    public List<Unit> unitToMix;
+    public List<UnitData> needUnitList = new List<UnitData>();
+    public List<Unit> unitToMix = new List<Unit>();
 
     public void initialize(UnitMng manager)
     {
