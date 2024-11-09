@@ -3,46 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using DG.Tweening;
 
-public class MainBtn : MonoBehaviour
+public class MainBtn : BtnManager
 {
-    [SerializeField] GameObject heroPanel;
-    [SerializeField] GameObject storePanel;
-    [SerializeField] GameObject treasurePanel;
-    [SerializeField] GameObject optionPanel;
-    [SerializeField] GameObject settingPanel;
-    [SerializeField] Image bgmImg;
-    [SerializeField] Image sfxImg;
-    [SerializeField] MainUI mainUI;
+    public GameObject heroPanel;
+    public GameObject storePanel;
+    public GameObject treasurePanel;
+    public GameObject optionPanel;
+    public GameObject settingPanel;
+    public MainUI mainUI;
 
-    bool option;
-    bool bgm;
-    bool sfx;
-
-    private void Start()
-    {
-        option = false;
-        bgm = false;
-        sfx = false;
-    }
+    bool option = false;
 
     public void StartBtn()
     {
         LoadScene.loadScene(2);
-    }
-
-    public void closeBtn(GameObject button)
-    {
-        Transform buttonParent = button.transform.parent;
-
-        if (buttonParent != null)
-        {
-            buttonParent.gameObject.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() =>
-            {
-                buttonParent.gameObject.SetActive(false);
-            });
-        }
     }
 
     public void mainBtn()
@@ -101,34 +76,6 @@ public class MainBtn : MonoBehaviour
     {
         settingPanel.SetActive(true);
         optionPanel.SetActive(false);
-    }
-
-    public void bgmBtn()
-    {
-        if (bgm == false)
-        {
-            bgmImg.color = new Color(1, 0, 0, 1);
-            bgm = true;
-        }
-        else
-        {
-            bgmImg.color = new Color(1, 0, 0, 0);
-            bgm = false;
-        }
-    }
-
-    public void sfxBtn()
-    {
-        if (sfx == false)
-        {
-            sfxImg.color = new Color(1, 0, 0, 1);
-            sfx = true;
-        }
-        else
-        {
-            sfxImg.color = new Color(1, 0, 0, 0);
-            sfx = false;
-        }
     }
 
     public void heroUpgradeBtn()

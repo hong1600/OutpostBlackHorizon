@@ -20,8 +20,6 @@ public class StartScene : MonoBehaviour
 
     private void Start()
     {
-        DataManager.instance.loadData();
-
         bAnykey = false;
         Invoke("anykey", 2.5f);
 

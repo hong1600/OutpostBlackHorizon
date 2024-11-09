@@ -66,7 +66,7 @@ public class MainUI : MonoBehaviour
 
         treasureUpdate1();
 
-        DataManager.instance.saveData();
+        DataManager.instance.saveLoadMng.saveData();
     }
 
     private void Update()
@@ -105,7 +105,7 @@ public class MainUI : MonoBehaviour
 
     public void treasureDc(int index)
     {
-        curItems = DataManager.instance.curItem(index);
+        curItems = DataManager.instance.playerDataMng.getItem(index);
 
         treasureUpdate2();
 
@@ -116,7 +116,7 @@ public class MainUI : MonoBehaviour
     {
         for (int i = 0; i < treasureSlider.Count; i++)
         {
-            curItems = DataManager.instance.curItem(i);
+            curItems = DataManager.instance.playerDataMng.getItem(i);
 
             treasureSlider[i].fillAmount = curItems.treasureCurExp / curItems.treasureMaxExp;
             treasureLevel[i].text = "LV." + curItems.treasureLevel.ToString();
@@ -173,7 +173,7 @@ public class MainUI : MonoBehaviour
 
     public void heroDc(int index)
     {
-        curHero = DataManager.instance.curUnit(index);
+        curHero = DataManager.instance.playerDataMng.getUnit(index);
 
         heroUpdate2();
 
@@ -326,7 +326,7 @@ public class MainUI : MonoBehaviour
     {
         if (Name == "Unit")
         {
-            curUnit = DataManager.instance.curUnit(index);
+            curUnit = DataManager.instance.playerDataMng.getUnit(index);
             clickUnit = true;
 
             storeUnitsDcImg.sprite = curUnit.unitImg;
@@ -337,7 +337,7 @@ public class MainUI : MonoBehaviour
         }
         else if (Name == "Treasure")
         {
-            curItem = DataManager.instance.curItem(index);
+            curItem = DataManager.instance.playerDataMng.getItem(index);
             clickUnit = false;
 
             storeUnitsDcImg.sprite = curItem.treasureImg;
