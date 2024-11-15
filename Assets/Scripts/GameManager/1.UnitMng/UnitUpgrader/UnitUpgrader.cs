@@ -17,19 +17,19 @@ public class UnitUpgrader : MonoBehaviour
     public int upgradeLevel2;
     public int upgradeLevel3;
 
-
-    private void Start()
+    private void Awake()
     {
-        unitMng = GetComponent<UnitMng>();
+        data = Resources.Load<UnitUpgraderData>("GameManager/UnitMngData/UnitUpgraderData/UnitUpgraderData");
 
-        upgradeCost0 = data.upgradeCost0;
-        upgradeCost1 = data.upgradeCost1;
-        upgradeCost2 = data.upgradeCost2;
-        upgradeCost3 = data.upgradeCost3;
-        upgradeLevel0 = data.upgradeLevel0;
-        upgradeLevel1 = data.upgradeLevel1;
-        upgradeLevel2 = data.upgradeLevel2;
-        upgradeLevel3 = data.upgradeLevel3;
+        upgradeCost0 = 30;
+        upgradeCost1 = 50;
+        upgradeCost2 = 2;
+        upgradeCost3 = 100;
+        upgradeLevel0 = 1;
+        upgradeLevel1 = 1;
+        upgradeLevel2 = 1;
+        upgradeLevel3 = 1;
+
     }
 
     public void unitUpgradeCost(ref int cost, int amount, string type = "Gold")
@@ -44,7 +44,7 @@ public class UnitUpgrader : MonoBehaviour
 
     public void unitUpgradeApply(int grade)
     {
-        foreach (var unit in GameManager.Instance.unitMng.curUnitList)
+        foreach (var unit in unitMng.curUnitList)
         {
             if (unit.unitGrade == grade)
             {
@@ -62,6 +62,7 @@ public class UnitUpgrader : MonoBehaviour
             unitUpgradeApply(0);
         }
     }
+
     public void upgradeGrade1()
     {
         if (upgradeLevel1 < 6)
@@ -71,6 +72,7 @@ public class UnitUpgrader : MonoBehaviour
             unitUpgradeApply(1);
         }
     }
+
     public void upgradeGrade2()
     {
         if (upgradeLevel2 < 6)
@@ -80,6 +82,7 @@ public class UnitUpgrader : MonoBehaviour
             unitUpgradeApply(2);
         }
     }
+
     public void upgradeGrade3()
     {
         if (upgradeLevel3 < 6)
@@ -89,7 +92,6 @@ public class UnitUpgrader : MonoBehaviour
             unitUpgradeApply(3);
         }
     }
-
 
     public void unitUpgrade(int index)
     {

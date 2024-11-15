@@ -5,6 +5,4 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UnitMixerData", menuName = "UnitManager/UnitMixerData", order = 1)]
 public class UnitMixerData : ScriptableObject
 {
-    public List<UnitData> needUnitList;
-    public List<Unit> unitToMix;
 }

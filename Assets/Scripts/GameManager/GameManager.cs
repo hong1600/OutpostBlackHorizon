@@ -3,13 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public interface IGameManager 
+{
+    int goldAmount();
+    int coinAmount();
+    void addGold(int amount);
+    void addCoin(int amount);
+}
+
+public class GameManager : MonoBehaviour, IGameManager
 {
     public static GameManager Instance;
 
-    public GameFlow gameFlow;
-    public UnitMng unitMng;
-    public EnemyMng enemyMng;
+    public GameStateCheck gameStateCheck;
 
     public int myGold;
     public int myCoin;
@@ -25,34 +31,26 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         DontDestroyOnLoad(this.gameObject);
-    }
 
-    private void Start()
-    {
         myGold = 2000;
         myCoin = 50;
-
-        unitMng = FindObjectOfType<UnitMng>();
-        gameFlow = FindObjectOfType<GameFlow>();
-        enemyMng = FindObjectOfType<EnemyMng>();
     }
 
-    private void Update()
+    public int goldAmount()
     {
-        if (gameFlow.gameStateCheck.gameOver) return;
-
-        gameFlow.roundTimer.timer();
-        enemyMng.enemySpawner.spawnEnemy();
-        gameFlow.gameStateCheck.checkGameState();
-        unitMng.checkGround();
+        return myGold;
+    }
+    public int coinAmount()
+    {
+        return myCoin;
     }
 
-    public void adGold(int amount)
+    public void addGold(int amount)
     {
         myGold += amount;
     }
 
-    public void adCoin(int amount)
+    public void addCoin(int amount)
     {
         myCoin += amount;
     }

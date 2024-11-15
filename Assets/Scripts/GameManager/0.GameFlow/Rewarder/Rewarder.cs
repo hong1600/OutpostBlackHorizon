@@ -6,13 +6,16 @@ public class Rewarder : MonoBehaviour
 {
     public GameFlow gameFlow;
 
-    public float rewardGold;
-    public float rewardGem;
-    public float rewardPaper;
-    public float rewardExp;
+    public int rewardGold;
+    public int rewardGem;
+    public int rewardPaper;
+    public int rewardExp;
 
-    public void initialized(GameFlow manager)
+    private void Awake()
     {
-        gameFlow = manager;
+        rewardGold = 0;
+        rewardGem = 0;
+        rewardPaper = 0;
+        rewardExp = 0;
     }
 }

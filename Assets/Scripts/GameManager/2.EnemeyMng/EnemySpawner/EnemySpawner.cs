@@ -4,32 +4,39 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public RoundTimer roundTimer;
     public EnemyMng enemyMng;
+    public GameStateCheck gameStateCheck;
 
     public Transform enemySpawnPoint;
     public List<GameObject> enemy;
     public float enemySpawndelay;
+    public bool canSpawn;
 
-    public void initialize(EnemyMng manager)
+    private void Update()
     {
-        enemyMng = manager;
+        if (canSpawn)
+        {
+            spawnEnemy();
+        }
+
     }
 
     public void spawnEnemy()
     {
-        if (enemySpawndelay < 0 && GameManager.Instance.gameFlow.roundTimer.spawnTime == true
-            && !GameManager.Instance.gameFlow.roundTimer.bossRound)
+        if (enemySpawndelay < 0 && roundTimer.spawnTime == true
+            && !roundTimer.bossRound)
         {
-            Instantiate(enemy[GameManager.Instance.gameFlow.roundTimer.curRound], enemySpawnPoint.transform.position,
+            Instantiate(enemy[roundTimer.curRound], enemySpawnPoint.transform.position,
             Quaternion.identity, enemyMng.enemyParent.transform);
             enemySpawndelay = 0.85f;
         }
-        if (GameManager.Instance.gameFlow.roundTimer.bossRound && enemySpawndelay < 0)
+        if (roundTimer.bossRound && enemySpawndelay < 0)
         {
-            Instantiate(enemy[GameManager.Instance.gameFlow.roundTimer.curRound], enemySpawnPoint.transform.position,
+            Instantiate(enemy[roundTimer.curRound], enemySpawnPoint.transform.position,
             Quaternion.identity, enemyMng.enemyParent.transform);
             enemySpawndelay = 100f;
-            GameManager.Instance.gameFlow.roundTimer.spawnTime = false;
+            roundTimer.spawnTime = false;
         }
         enemySpawndelay -= Time.deltaTime;
     }

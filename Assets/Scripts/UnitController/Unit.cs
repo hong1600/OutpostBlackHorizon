@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField] UnitData unitData;
+    public UnitType unitType;
+
+    public UnitData unitData;
+    public UnitUpgrader unitUpgrader;
+
 
     public string unitName;
     public int attackDamage;
@@ -12,19 +16,19 @@ public class Unit : MonoBehaviour
     public float attackRange;
     public float unitGrade;
 
-    Animator anim;
-    SpriteRenderer sprite;
+    public Animator anim;
+    public SpriteRenderer sprite;
 
-    [SerializeField] GameObject target;
+    public GameObject target;
 
-    Coroutine attackCoroutine;
+    public Coroutine attackCoroutine;
 
-    float lastUpgrade;
-    bool upgrade2;
-    bool upgrade3;
-    bool upgrade4;
-    bool upgrade5;
-    bool upgrade6;
+    public float lastUpgrade;
+    public bool upgrade2;
+    public bool upgrade3;
+    public bool upgrade4;
+    public bool upgrade5;
+    public bool upgrade6;
 
     private void Awake()
     {
@@ -48,10 +52,10 @@ public class Unit : MonoBehaviour
 
         switch (unitGrade)
         {
-            case 0: lastUpgrade = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel1; break;
-            case 1: lastUpgrade = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel1; break;
-            case 2: lastUpgrade = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel2; break;
-            case 3: lastUpgrade = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel3; break;
+            case 0: lastUpgrade = unitUpgrader.upgradeLevel1; break;
+            case 1: lastUpgrade = unitUpgrader.upgradeLevel1; break;
+            case 2: lastUpgrade = unitUpgrader.upgradeLevel2; break;
+            case 3: lastUpgrade = unitUpgrader.upgradeLevel3; break;
         }
         missUpgrade(lastUpgrade);
     }
@@ -154,10 +158,10 @@ public class Unit : MonoBehaviour
 
         switch(unitGrade) 
         {
-            case 0: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel0; break;
-            case 1: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel0; break;
-            case 2: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel1; break;
-            case 3: upgradeLevel = GameManager.Instance.unitMng.unitUpgrader.upgradeLevel2; break;
+            case 0: upgradeLevel = unitUpgrader.upgradeLevel0; break;
+            case 1: upgradeLevel = unitUpgrader.upgradeLevel0; break;
+            case 2: upgradeLevel = unitUpgrader.upgradeLevel1; break;
+            case 3: upgradeLevel = unitUpgrader.upgradeLevel2; break;
         }
 
         switch (upgradeLevel)

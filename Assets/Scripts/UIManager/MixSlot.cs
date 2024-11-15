@@ -6,8 +6,11 @@ using UnityEngine.UI;
 
 public class MixSlot : MonoBehaviour
 {
-    [SerializeField] Image unitImg;
-    [SerializeField] TextMeshProUGUI unitNameText;
+    public MixUI mixUI;
+    public UnitMixer unitMixer;
+
+    public Image unitImg;
+    public TextMeshProUGUI unitNameText;
     int num;
 
 
@@ -20,8 +23,8 @@ public class MixSlot : MonoBehaviour
 
     public void MixBtn()
     {
-        GameUI.instance.curMixPanel(num);
+        mixUI.curMixPanel(num);
         GameInventoryManager.Instance.loadRightUnit(num);
-        GameManager.Instance.unitMng.unitMixer.unitCanMix();
+        unitMixer.unitCanMix();
     }
 }

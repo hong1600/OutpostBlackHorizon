@@ -4,35 +4,37 @@ using UnityEngine;
 
 public class WaveBossSpawner : MonoBehaviour
 {
+    public EnemySpawner enemySpawner;
+    public BossUI bossUI;
     public EnemyMng enemyMng;
 
     public GameObject waveBoss;
     public int waveBossLevel;
-    public int curRound;
     public float wavebossDelay;
 
-    public void initialized(EnemyMng manager)
+    private void Awake()
     {
-        enemyMng = manager;   
+        waveBossLevel = 1;
+        wavebossDelay = 25f;
     }
 
     public void spawnWaveBoss()
     {
-        GameUI.instance.spawnWaveBossBtn.SetActive(false);
+        bossUI.spawnWaveBossBtn.SetActive(false);
 
-        Instantiate(waveBoss, GameManager.Instance.enemyMng.enemySpawner.enemySpawnPoint.position,
-                Quaternion.identity, GameManager.Instance.enemyMng.enemyParent.transform);
+        Instantiate(waveBoss, enemySpawner.enemySpawnPoint.position,
+                Quaternion.identity, enemyMng.enemyParent.transform);
         wavebossDelay = 1000f;
     }
     public void spawnWaveBossTime()
     {
-        if (GameUI.instance.spawnWaveBossBtn.activeSelf == false)
+        if (bossUI.spawnWaveBossBtn.activeSelf == false)
         {
             wavebossDelay -= Time.deltaTime;
 
             if (wavebossDelay < 0)
             {
-                GameUI.instance.spawnWaveBossBtn.SetActive(true);
+                bossUI.spawnWaveBossBtn.SetActive(true);
             }
         }
     }

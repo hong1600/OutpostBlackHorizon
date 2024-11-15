@@ -98,13 +98,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef18008d45ffcd46be83da1775c891b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 3
   unitData: {fileID: 11400000, guid: 6fe336f25d5f7e645a7df9d26d6bda97, type: 2}
+  unitUpgrader: {fileID: 0}
   unitName: 
   attackDamage: 0
   attackSpeed: 0
   attackRange: 0
   unitGrade: 0
+  anim: {fileID: 0}
+  sprite: {fileID: 0}
   target: {fileID: 0}
+  lastUpgrade: 0
+  upgrade2: 0
+  upgrade3: 0
+  upgrade4: 0
+  upgrade5: 0
+  upgrade6: 0
 --- !u!95 &1390094573406955670
 Animator:
   serializedVersion: 5

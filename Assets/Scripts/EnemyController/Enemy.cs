@@ -10,25 +10,31 @@ public class Enemy : MonoBehaviour
 {
     public EnemyType enemyType;
 
+    public RoundTimer roundTimer;
+    public WaveBossSpawner waveBossSpawner;
+    public EnemySpawner enemySpawner;
+    public Rewarder rewarder;
+    public GameStateCheck gameStateCheck;
+
     [Header("Enemy")]
-    [SerializeField] EnemyData enemyData;
-    BoxCollider2D box;
-    Animator anim;
-    [SerializeField] float enemyHp;
-    [SerializeField] float curhp;
-    string enemyName;
-    float enemySpeed;
-    [SerializeField] Transform[] wayPoint;
-    GameObject wayPointTrs;
-    Transform target;
-    int wayPointIndex = 0;
-    [SerializeField] GameObject healthBarBack;
-    [SerializeField] Image healthBarFill;
+    public EnemyData enemyData;
+    public BoxCollider2D box;
+    public Animator anim;
+    public float enemyHp;
+    public float curhp;
+    public string enemyName;
+    public float enemySpeed;
+    public Transform[] wayPoint;
+    public GameObject wayPointTrs;
+    public Transform target;
+    public int wayPointIndex = 0;
+    public GameObject healthBarBack;
+    public Image healthBarFill;
     public bool isDie;
 
     [Header("Boss")]
-    [SerializeField] TextMeshProUGUI bossTimeText;
-    [SerializeField] float bosstime;
+    public TextMeshProUGUI bossTimeText;
+    public float bosstime;
 
     public float EnemyHp 
     { get { return enemyHp; } set { value = enemyHp; } }
@@ -123,24 +129,24 @@ public class Enemy : MonoBehaviour
                 break;
             case EnemyType.WaveBoss:
                 GameManager.Instance.myCoin += 2;
-                GameManager.Instance.enemyMng.waveBossSpawner.wavebossDelay = 25f;
+                waveBossSpawner.wavebossDelay = 25f;
                 break;
             case EnemyType.boss:
                 GameManager.Instance.myGold += 300;
                 GameManager.Instance.myCoin += 4;
-                GameManager.Instance.gameFlow.roundTimer.bossRound = false;
-                GameManager.Instance.gameFlow.roundTimer.sec = 15f;
-                GameManager.Instance.enemyMng.enemySpawner.enemySpawndelay = 0.85f;
+                roundTimer.bossRound = false;
+                roundTimer.sec = 15f;
+                enemySpawner.enemySpawndelay = 0.85f;
                 break;
         }
 
         anim.SetBool("isDie", true);
         isDie = true;
         Destroy(gameObject, 0.5f);
-        GameManager.Instance.gameFlow.rewarder.rewardGold += 50;
-        GameManager.Instance.gameFlow.rewarder.rewardGem += 10;
-        GameManager.Instance.gameFlow.rewarder.rewardPaper += 20;
-        GameManager.Instance.gameFlow.rewarder.rewardExp += 1;
+        rewarder.rewardGold += 50;
+        rewarder.rewardGem += 10;
+        rewarder.rewardPaper += 20;
+        rewarder.rewardExp += 1;
     }
 
     private void waveBossTimer()
@@ -151,7 +157,7 @@ public class Enemy : MonoBehaviour
         if (bosstime <= 0)
         {
             Destroy(this.gameObject);
-            GameManager.Instance.enemyMng.waveBossSpawner.wavebossDelay = 25;
+            waveBossSpawner.wavebossDelay = 25;
         }
     }
 
@@ -162,7 +168,7 @@ public class Enemy : MonoBehaviour
 
         if (bosstime <= 0)
         {
-            GameManager.Instance.gameFlow.gameStateCheck.gameOver = true;
+            gameStateCheck.gameOver = true;
         }
     }
 }

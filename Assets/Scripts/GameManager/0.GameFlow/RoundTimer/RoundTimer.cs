@@ -5,22 +5,28 @@ using UnityEngine;
 public class RoundTimer : MonoBehaviour
 {
     public GameFlow gameFlow;
+    public GameMainUI gameMainUI;
+    public GameStateCheck gameStateCheck;
 
     public bool bossRound;
     public float min, sec;
     public bool spawnTime;
     public int curRound;
+    public bool timerRunning;
 
-    private void Start()
+    private void Awake()
     {
         bossRound = false;
         spawnTime = false;
         curRound = 0;
     }
 
-    public void initialized(GameFlow manager)
+    private void Update()
     {
-        gameFlow = manager;
+        if (timerRunning)
+        {
+            timer();
+        }
     }
 
     public void timer()
@@ -52,7 +58,7 @@ public class RoundTimer : MonoBehaviour
         roundCheck();
         sec = 20f;
         spawnTime = true;
-        GameUI.instance.spawnPointTimerPanel.SetActive(false);
+        gameMainUI.spawnPointTimerPanel.SetActive(false);
 
         yield return new WaitForSeconds(17);
 

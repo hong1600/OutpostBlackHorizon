@@ -7,13 +7,19 @@ using UnityEngine.UI;
 
 public class GameBtn : BtnManager
 {
-    [SerializeField] GameObject randomPanel;
-    [SerializeField] GameObject upgradePanel;
-    [SerializeField] GameObject mixPanel;
-    [SerializeField] GameObject settingPanel;
-    [SerializeField] GameObject spawnperPaenl;
-    [SerializeField] TextMeshProUGUI speedText;
-    bool speed1;
+    public UnitSpawner unitSpawner;
+    public UnitUpgrader unitUpgrader;
+    public UnitMixer unitMixer;
+    public UnitRandomSpawner unitRandomSpawner;
+    public WaveBossSpawner waveBossSpawner;
+
+    public GameObject randomPanel;
+    public GameObject upgradePanel;
+    public GameObject mixPanel;
+    public GameObject settingPanel;
+    public GameObject spawnperPaenl;
+    public TextMeshProUGUI speedText;
+    public bool speed1;
 
     private void Start()
     {
@@ -39,9 +45,9 @@ public class GameBtn : BtnManager
 
     public void spawnBtn()
     {
-        if (GameManager.Instance.myGold > GameManager.Instance.unitMng.unitSpawner.spawnGold)
+        if (GameManager.Instance.myGold > unitSpawner.spawnGold)
         {
-            GameManager.Instance.unitMng.unitSpawner.spawnUnit();
+            unitSpawner.spawnUnit();
         }
     }
 
@@ -52,7 +58,7 @@ public class GameBtn : BtnManager
 
     public void randomSpwanBtn(int index)
     {
-        GameManager.Instance.unitMng.unitRandomSpawner.randSpawn(index);
+        unitRandomSpawner.randSpawn(index);
     }
 
     public void upgradeBtn()
@@ -63,7 +69,7 @@ public class GameBtn : BtnManager
 
     public void unitUpgradeBtn(int index)
     {
-        GameManager.Instance.unitMng.unitUpgrader.unitUpgrade(index);
+        unitUpgrader.unitUpgrade(index);
     }
 
     public void upgradeSpawnPer()
@@ -74,17 +80,17 @@ public class GameBtn : BtnManager
     public void mixBtn()
     {
         showPanelOpen(mixPanel);
-        GameManager.Instance.unitMng.unitMixer.unitCanMix();
+        unitMixer.unitCanMix();
     }
 
     public void mixUnitSpawnBtn()
     {
-        GameManager.Instance.unitMng.unitMixer.unitMixSpawn();
+        unitMixer.unitMixSpawn();
     }
 
     public void spawnWaveBossBtn()
     {
-        GameManager.Instance.enemyMng.waveBossSpawner.spawnWaveBoss();
+        waveBossSpawner.spawnWaveBoss();
     }
 
     public void speedUpBtn()

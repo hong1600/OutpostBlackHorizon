@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EndUI : MonoBehaviour
 {
+    public RoundTimer roundTimer;
+    public Rewarder rewarder;
 
     [SerializeField] TextMeshProUGUI finalWave;
     [SerializeField] TextMeshProUGUI finalExp;
@@ -14,10 +16,10 @@ public class EndUI : MonoBehaviour
 
     private void main()
     {
-        finalWave.text = GameManager.Instance.gameFlow.roundTimer.curRound.ToString();
-        finalExp.text = GameManager.Instance.gameFlow.rewarder.rewardExp.ToString();
-        finalGold.text = GameManager.Instance.gameFlow.rewarder.rewardGold.ToString();
-        finalGem.text = GameManager.Instance.gameFlow.rewarder.rewardGem.ToString();
-        finalPaper.text = GameManager.Instance.gameFlow.rewarder.rewardPaper.ToString();
+        finalWave.text = roundTimer.curRound.ToString();
+        finalExp.text = rewarder.rewardExp.ToString();
+        finalGold.text = rewarder.rewardGold.ToString();
+        finalGem.text = rewarder.rewardGem.ToString();
+        finalPaper.text = rewarder.rewardPaper.ToString();
     }
 }

@@ -6,14 +6,10 @@ using UnityEngine;
 public class UnitMixer : MonoBehaviour
 {
     public UnitMng unitMng;
+    public MixUI mixUI;
 
     public List<UnitData> needUnitList = new List<UnitData>();
     public List<Unit> unitToMix = new List<Unit>();
-
-    private void Start()
-    {
-        unitMng = GetComponent<UnitMng>();
-    }
 
     public bool unitCanMix()
     {
@@ -42,7 +38,7 @@ public class UnitMixer : MonoBehaviour
                 unitMng.unitSpawnPointList[unitMng.groundNum].transform.position, Quaternion.identity,
                 unitMng.unitSpawnPointList[unitMng.groundNum].transform);
             unitMng.curUnitList.Add(spawnUnit.GetComponent<Unit>());
-            GameUI.instance.mixPanel.SetActive(false);
+            mixUI.mixPanel.SetActive(false);
         }
         else return;
     }

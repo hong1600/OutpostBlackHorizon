@@ -5,24 +5,23 @@ using UnityEngine;
 public class UnitSpawner : MonoBehaviour
 {
     public UnitMng unitMng;
+    public UnitUpgrader upgrader;
 
     public float[][] selectWeight = new float[][]
-{
+    {
         new float[] { 0.03f, 0.10f, 0.15f, 0.72f },
         new float[] { 0.05f, 0.12f, 0.18f, 0.65f },
         new float[] { 0.07f, 0.14f, 0.21f, 0.58f },
         new float[] { 0.09f, 0.16f, 0.24f, 0.51f },
         new float[] { 0.11f, 0.18f, 0.27f, 0.44f },
         new float[] { 0.13f, 0.20f, 0.30f, 0.37f }
-};
+    };
     public string[] selectOption = { "S", "A", "B", "C" };
     public int spawnGold;
 
-    private void Start()
+    private void Awake()
     {
         spawnGold = 20;
-
-        unitMng = GetComponent<UnitMng>();
     }
 
     public bool canSpawn()
@@ -43,7 +42,7 @@ public class UnitSpawner : MonoBehaviour
         useGold();
 
         string Selection = SelectRandom(selectOption,
-            selectWeight[(int)GameManager.Instance.unitMng.unitUpgrader.upgradeLevel3 - 1]);
+            selectWeight[(int)upgrader.upgradeLevel3 - 1]);
 
         int randS = Random.Range(0, unitMng.unitListS.Count);
         int randA = Random.Range(0, unitMng.unitListA.Count);

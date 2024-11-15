@@ -2,24 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class EnemyMng : MonoBehaviour
+public class EnemyMng : GameManager
 {
-    private GameManager gameManager;
-
-    public EnemySpawner enemySpawner;
-    public WaveBossSpawner waveBossSpawner;
+    public EnemyMngData enemyMngData;
 
     public GameObject enemyParent;
     public int maxEnemyCount;
     public int curEnemyCount;
 
-    public EnemyMng(GameManager manager)
+    private void Awake()
     {
-        gameManager = manager;
-
-        enemySpawner.initialize(this);
-        waveBossSpawner.initialized(this);
+        maxEnemyCount = 0;
+        curEnemyCount = 0;
+        enemyMngData = Resources.Load<EnemyMngData>("GameManager/EnemyMngData/EnemyMngData");
+        enemyParent = enemyMngData.enemyParent;
     }
 
     public int enemyCount()

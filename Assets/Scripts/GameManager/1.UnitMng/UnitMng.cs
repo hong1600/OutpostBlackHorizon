@@ -4,29 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UnitMng : MonoBehaviour
+public interface IUnitMng 
 {
-    public GameManager gameManager;
-    public UnitMngData unitMngData;
+    List<GameObject> getUnitList(UnitType unitType);
+    List<GameObject> getUnitSpawnPointList();
+    int getGroundNum();
+    List<Unit> getCurUnitList(); 
+}
 
-    public UnitSpawner unitSpawner;
-    public UnitMixer unitMixer;
-    public UnitUpgrader unitUpgrader;
-    public UnitRandomSpawner unitRandomSpawner;
+public class UnitMng : MonoBehaviour, IUnitMng
+{
+    public UnitMngData unitMngData;
 
     public List<Unit> curUnitList = new List<Unit>();
     public List<GameObject> unitSpawnPointList = new List<GameObject>();
-    public List<GameObject> unitListSS, unitListS, unitListA, unitListB, unitListC;
+    public List<GameObject> unitListSS, unitListS, unitListA, unitListB, unitListC = new List<GameObject>();
     public int groundNum;
 
-    private void Start()
+    private void Awake()
     {
         unitMngData = Resources.Load<UnitMngData>("GameManager/UnitMngData/UnitMngData");
-
-        unitSpawner = FindObjectOfType<UnitSpawner>();
-        unitMixer = FindObjectOfType<UnitMixer>();
-        unitUpgrader = FindObjectOfType<UnitUpgrader>();
-        unitRandomSpawner = FindObjectOfType<UnitRandomSpawner>();
 
         unitSpawnPointList = unitMngData.unitSpawnPointList;
         unitListSS = unitMngData.unitListSS;
@@ -47,4 +44,22 @@ public class UnitMng : MonoBehaviour
         }
         return false;
     }
+
+    public List<GameObject> getUnitList(UnitType unitType)
+    {
+        switch (unitType)
+        {
+            case UnitType.SS: return unitListSS;
+            case UnitType.S: return unitListS;
+            case UnitType.A: return unitListA;
+            case UnitType.B: return unitListB;
+            case UnitType.C: return unitListC;
+                default: return null;
+        }
+    }
+
+    public List<GameObject> getUnitSpawnPointList() { return unitSpawnPointList; }
+    public int getGroundNum() { return groundNum; }
+
+    public List<Unit> getCurUnitList() { return curUnitList; }
 }
