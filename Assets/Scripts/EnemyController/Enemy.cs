@@ -18,7 +18,8 @@ public class Enemy : MonoBehaviour
 
     [Header("Enemy")]
     public EnemyData enemyData;
-    public BoxCollider2D box;
+    public BoxCollider box;
+    public Rigidbody rigid;
     public Animator anim;
     public float enemyHp;
     public float curhp;
@@ -41,9 +42,9 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        box = GetComponent<BoxCollider2D>();
+        box = GetComponent<BoxCollider>();
+        rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        wayPointTrs = GameObject.Find("WayPoints");
     }
 
     private void Start()
@@ -56,6 +57,7 @@ public class Enemy : MonoBehaviour
 
         healthBarFill.fillAmount = 1;
 
+        wayPointTrs = GameObject.Find("EnemyWayPoint");
         wayPoint = new Transform[wayPointTrs.transform.childCount];
         for (int i = 0; i < wayPoint.Length; i++)
         {
@@ -72,11 +74,11 @@ public class Enemy : MonoBehaviour
         hpBar();
         if (enemyType == EnemyType.WaveBoss)
         {
-            waveBossTimer();
+            //waveBossTimer();
         }
         if (enemyType == EnemyType.boss)
         {
-            bossTimer();
+            //bossTimer();
         }
     }
 
@@ -85,17 +87,11 @@ public class Enemy : MonoBehaviour
         Vector3 dir = target.position - transform.position;
         transform.Translate(dir.normalized * enemySpeed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, target.position) <= 0.05f)
+        if (Vector3.Distance(transform.position, target.position) <= 0.1f)
         {
             nextMove();
         }
     }
-
-    private void hpBar()
-    {
-        healthBarFill.fillAmount = curhp / enemyHp;
-    }
-
     private void nextMove()
     {
         if (wayPointIndex >= wayPoint.Length -1)
@@ -109,6 +105,14 @@ public class Enemy : MonoBehaviour
 
         target = wayPoint[wayPointIndex];
     }
+
+    private void hpBar()
+    {
+        healthBarFill.fillAmount = curhp / enemyHp;
+
+        healthBarBack.transform.LookAt(Camera.main.transform);
+    }
+
 
     public void takeDamage(int damage)
     {
@@ -149,26 +153,26 @@ public class Enemy : MonoBehaviour
         rewarder.rewardExp += 1;
     }
 
-    private void waveBossTimer()
-    {
-        bosstime -= Time.deltaTime;
-        bossTimeText.text = bosstime.ToString("F1")+"s";
+    //private void waveBossTimer()
+    //{
+    //    bosstime -= Time.deltaTime;
+    //    bossTimeText.text = bosstime.ToString("F1")+"s";
 
-        if (bosstime <= 0)
-        {
-            Destroy(this.gameObject);
-            waveBossSpawner.wavebossDelay = 25;
-        }
-    }
+    //    if (bosstime <= 0)
+    //    {
+    //        Destroy(this.gameObject);
+    //        waveBossSpawner.wavebossDelay = 25;
+    //    }
+    //}
 
-    private void bossTimer()
-    {
-        bosstime -= Time.deltaTime;
-        bossTimeText.text = bosstime.ToString("F1") + "s";
+    //private void bossTimer()
+    //{
+    //    bosstime -= Time.deltaTime;
+    //    bossTimeText.text = bosstime.ToString("F1") + "s";
 
-        if (bosstime <= 0)
-        {
-            gameStateCheck.gameOver = true;
-        }
-    }
+    //    if (bosstime <= 0)
+    //    {
+    //        gameStateCheck.gameOver = true;
+    //    }
+    //}
 }

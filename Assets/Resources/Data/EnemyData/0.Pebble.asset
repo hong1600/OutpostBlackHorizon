@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: 0.Pebble
   m_EditorClassIdentifier: 
   enemyName: Pebble
-  enemySpeed: 1.5
+  enemySpeed: 3
   enemyHp: 50
