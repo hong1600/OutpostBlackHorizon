@@ -10,11 +10,13 @@ public class Enemy : MonoBehaviour
 {
     public EnemyType enemyType;
 
-    public RoundTimer roundTimer;
-    public WaveBossSpawner waveBossSpawner;
-    public EnemySpawner enemySpawner;
+    public INormalEnemy iNormalEnemy;
+    public IWaveBoss iWaveBoss;
     public Rewarder rewarder;
-    public GameStateCheck gameStateCheck;
+
+    public IGoldCoin iGoldCoin;
+    public ITimer iTimer;
+    public IRound iRound;
 
     [Header("Enemy")]
     public EnemyData enemyData;
@@ -129,18 +131,18 @@ public class Enemy : MonoBehaviour
         switch (enemyType) 
         {
             case EnemyType.Nomal:
-                GameManager.Instance.myGold += 1;
+                iGoldCoin.setGold(1);
                 break;
             case EnemyType.WaveBoss:
-                GameManager.Instance.myCoin += 2;
-                waveBossSpawner.wavebossDelay = 25f;
+                iGoldCoin.setCoin(2);
+                iWaveBoss.setWaveBossDelay(25f);
                 break;
             case EnemyType.boss:
-                GameManager.Instance.myGold += 300;
-                GameManager.Instance.myCoin += 4;
-                roundTimer.bossRound = false;
-                roundTimer.sec = 15f;
-                enemySpawner.enemySpawndelay = 0.85f;
+                iGoldCoin.setGold(300);
+                iGoldCoin.setCoin(4);
+                iRound.setBossRound(false);
+                iTimer.setSec(15f);
+                iNormalEnemy.setEnemySpawnDelay(0.85f);
                 break;
         }
 

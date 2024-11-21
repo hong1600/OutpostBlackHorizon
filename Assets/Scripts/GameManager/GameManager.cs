@@ -1,24 +1,12 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGameManager 
-{
-    int goldAmount();
-    int coinAmount();
-    void addGold(int amount);
-    void addCoin(int amount);
-}
-
-public class GameManager : MonoBehaviour, IGameManager
+public partial class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
-    public GameStateCheck gameStateCheck;
-
-    public int myGold;
-    public int myCoin;
 
     private void Awake()
     {
@@ -31,27 +19,5 @@ public class GameManager : MonoBehaviour, IGameManager
             Destroy(this.gameObject);
         }
         DontDestroyOnLoad(this.gameObject);
-
-        myGold = 2000;
-        myCoin = 50;
-    }
-
-    public int goldAmount()
-    {
-        return myGold;
-    }
-    public int coinAmount()
-    {
-        return myCoin;
-    }
-
-    public void addGold(int amount)
-    {
-        myGold += amount;
-    }
-
-    public void addCoin(int amount)
-    {
-        myCoin += amount;
     }
 }

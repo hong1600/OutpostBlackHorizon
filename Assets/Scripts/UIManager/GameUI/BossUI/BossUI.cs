@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BossUI : MonoBehaviour
 {
-    public WaveBossSpawner waveBossSpawner;
+    public IWaveBoss iWaveBoss;
 
     public TextMeshProUGUI bossTimer;
     public TextMeshProUGUI waveBossLevelNameText;
@@ -13,6 +13,6 @@ public class BossUI : MonoBehaviour
 
     public void waveBoss()
     {
-        waveBossLevelNameText.text = $"LV.{waveBossSpawner.waveBossLevel} µ¹ °ñ·½";
+        waveBossLevelNameText.text = $"LV.{iWaveBoss.getWaveBossLevel()} µ¹ °ñ·½";
     }
 }

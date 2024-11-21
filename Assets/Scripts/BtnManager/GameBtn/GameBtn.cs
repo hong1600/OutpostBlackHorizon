@@ -7,11 +7,13 @@ using UnityEngine.UI;
 
 public class GameBtn : BtnManager
 {
+    public IGoldCoin iGoldCoin;
+    public IWaveBoss iWaveBoss;
+
     public UnitSpawner unitSpawner;
     public UnitUpgrader unitUpgrader;
     public UnitMixer unitMixer;
     public UnitRandomSpawner unitRandomSpawner;
-    public WaveBossSpawner waveBossSpawner;
 
     public GameObject randomPanel;
     public GameObject upgradePanel;
@@ -45,7 +47,7 @@ public class GameBtn : BtnManager
 
     public void spawnBtn()
     {
-        if (GameManager.Instance.myGold > unitSpawner.spawnGold)
+        if (iGoldCoin.getGold() > unitSpawner.spawnGold)
         {
             unitSpawner.spawnUnit();
         }
@@ -90,7 +92,7 @@ public class GameBtn : BtnManager
 
     public void spawnWaveBossBtn()
     {
-        waveBossSpawner.spawnWaveBoss();
+        iWaveBoss.spawnWaveBoss();
     }
 
     public void speedUpBtn()

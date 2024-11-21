@@ -8,6 +8,8 @@ public class UpgraderUI : MonoBehaviour
     public UnitUpgrader unitUpgrader;
     public UnitSpawner unitSpawner;
 
+    public IGoldCoin iGoldCoin;
+
     public TextMeshProUGUI upgradeGoldText;
     public TextMeshProUGUI upgradeCoinText;
     public TextMeshProUGUI upgradeCost0Text;
@@ -25,8 +27,8 @@ public class UpgraderUI : MonoBehaviour
 
     private void upgradePanel()
     {
-        upgradeGoldText.text = GameManager.Instance.myGold.ToString();
-        upgradeCoinText.text = GameManager.Instance.myCoin.ToString();
+        upgradeGoldText.text = iGoldCoin.getGold().ToString();
+        upgradeCoinText.text = iGoldCoin.getCoin().ToString();
         upgradeCost0Text.text = unitUpgrader.upgradeCost0.ToString();
         upgradeCost1Text.text = unitUpgrader.upgradeCost1.ToString();
         upgradeCost2Text.text = unitUpgrader.upgradeCost2.ToString();
