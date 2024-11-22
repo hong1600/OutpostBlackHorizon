@@ -8,8 +8,6 @@ public interface IEnemyMng
 }
 public class EnemyMng : MonoBehaviour, IEnemyMng
 {
-    public EnemyMngData enemyMngData;
-
     public GameObject enemyParent;
     public int maxEnemyCount;
     public int curEnemyCount;
@@ -18,8 +16,6 @@ public class EnemyMng : MonoBehaviour, IEnemyMng
     {
         maxEnemyCount = 0;
         curEnemyCount = 0;
-        enemyMngData = Resources.Load<EnemyMngData>("GameManager/EnemyMngData/EnemyMngData");
-        enemyParent = enemyMngData.enemyParent;
     }
 
     public int enemyCount()

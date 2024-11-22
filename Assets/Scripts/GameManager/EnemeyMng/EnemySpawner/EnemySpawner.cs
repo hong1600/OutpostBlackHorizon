@@ -2,33 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface INormalEnemy
+public interface IEnemySpawner
 {
-    void spawnNormalEnemy();
     void setEnemySpawnDelay(float value);
     Transform getEnemySpawnPoint();
 }
 
-public class NormalEnemy : MonoBehaviour, INormalEnemy
+public class EnemySpawner : MonoBehaviour, IEnemySpawner
 {
+    public Timer timer;
     public ISpawnTime iSpawnTime;
+    public Round round;
     public IRound iRound;
+    public EnemyMng enemyMng;
     public IEnemyMng iEnemyMng;
 
     public Transform enemySpawnPoint;
     public List<GameObject> enemy;
     public float enemySpawnDelay;
-    public bool canSpawn;
 
-    private void Update()
-    {
-        if (canSpawn)
-        {
-            spawnNormalEnemy();
-        }
-    }
-
-    public void spawnNormalEnemy()
+    public void spawnEnemy()
     {
         if (enemySpawnDelay < 0 && iSpawnTime.isSpawnTime()
             && !iRound.isBossRound())
@@ -48,5 +41,6 @@ public class NormalEnemy : MonoBehaviour, INormalEnemy
     }
 
     public void setEnemySpawnDelay(float value) { enemySpawnDelay = value; }
-    public Transform getEnemySpawnPoint() {  return enemySpawnPoint; }
+    public Transform getEnemySpawnPoint() { return enemySpawnPoint; }
+
 }

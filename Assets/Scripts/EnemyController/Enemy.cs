@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 {
     public EnemyType enemyType;
 
-    public INormalEnemy iNormalEnemy;
+    public IEnemySpawner iEnemySpawner;
     public IWaveBoss iWaveBoss;
     public Rewarder rewarder;
 
@@ -142,7 +142,7 @@ public class Enemy : MonoBehaviour
                 iGoldCoin.setCoin(4);
                 iRound.setBossRound(false);
                 iTimer.setSec(15f);
-                iNormalEnemy.setEnemySpawnDelay(0.85f);
+                iEnemySpawner.setEnemySpawnDelay(0.85f);
                 break;
         }
 
