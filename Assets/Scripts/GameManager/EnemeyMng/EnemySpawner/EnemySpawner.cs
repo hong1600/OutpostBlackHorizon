@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IEnemySpawner
 {
+    void spawnEnemy();
     void setEnemySpawnDelay(float value);
     Transform getEnemySpawnPoint();
 }
@@ -21,21 +22,21 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     public List<GameObject> enemy;
     public float enemySpawnDelay;
 
+    private void Awake()
+    {
+        iSpawnTime = timer;
+        iRound = round;
+        iEnemyMng = enemyMng;
+        enemySpawnDelay = 0;
+    }
+
     public void spawnEnemy()
     {
-        if (enemySpawnDelay < 0 && iSpawnTime.isSpawnTime()
-            && !iRound.isBossRound())
+        if (enemySpawnDelay <= 0)
         {
             Instantiate(enemy[iRound.getCurRound()], enemySpawnPoint.transform.position,
             Quaternion.identity, iEnemyMng.getEnemyParent().transform);
             enemySpawnDelay = 0.85f;
-        }
-        if (iRound.isBossRound() && enemySpawnDelay < 0)
-        {
-            Instantiate(enemy[iRound.getCurRound()], enemySpawnPoint.transform.position,
-            Quaternion.identity, iEnemyMng.getEnemyParent().transform);
-            enemySpawnDelay = 100f;
-            iSpawnTime.setSpawnTime(false);
         }
         enemySpawnDelay -= Time.deltaTime;
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface ITimer
 {
+    void timer();
     float getMin();
     float getSec();
     void setSec(float value);
@@ -29,6 +30,8 @@ public class Timer : MonoBehaviour, ITimer, ISpawnTime
     {
         iRound = round;
         spawnTime = false;
+        min = 0.0f;
+        sec = 4f;
     }
 
     public void timer()
