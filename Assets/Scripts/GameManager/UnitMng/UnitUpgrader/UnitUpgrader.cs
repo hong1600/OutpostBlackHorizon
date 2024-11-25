@@ -5,7 +5,9 @@ using UnityEngine;
 
 public interface IUnitUpgrader 
 {
+    int[] getUpgradeLevel();
     int getUpgradeCost3();
+    int getUpgradeMaxLevel();
 }
 
 public class UnitUpgrader : MonoBehaviour, IUnitUpgrader
@@ -15,28 +17,24 @@ public class UnitUpgrader : MonoBehaviour, IUnitUpgrader
     public GoldCoin goldCoin;
     public IGoldCoin iGoldCoin;
 
-    public int upgradeCost0;
-    public int upgradeCost1;
-    public int upgradeCost2;
-    public int upgradeCost3;
-    public int upgradeLevel0;
-    public int upgradeLevel1;
-    public int upgradeLevel2;
-    public int upgradeLevel3;
+    public int[] upgradeCost;
+    public int[] upgradeLevel;
+    public int upgradeMaxLevel;
 
     private void Awake()
     {
         iUnitMng = unitMng;
         iGoldCoin = goldCoin;
 
-        upgradeCost0 = 30;
-        upgradeCost1 = 50;
-        upgradeCost2 = 2;
-        upgradeCost3 = 100;
-        upgradeLevel0 = 1;
-        upgradeLevel1 = 1;
-        upgradeLevel2 = 1;
-        upgradeLevel3 = 1;
+        upgradeCost[0] = 30;
+        upgradeCost[1] = 50;
+        upgradeCost[2] = 2;
+        upgradeCost[3] = 100;
+        upgradeLevel[0] = 1;
+        upgradeLevel[1] = 1;
+        upgradeLevel[2] = 1;
+        upgradeLevel[3] = 1;
+        upgradeMaxLevel = 6;
     }
 
     public void unitUpgradeCost(ref int cost, int amount, string type = "Gold")
@@ -62,40 +60,40 @@ public class UnitUpgrader : MonoBehaviour, IUnitUpgrader
 
     public void upgradeGrade0()
     {
-        if (upgradeLevel0 < 6)
+        if (upgradeLevel[0] < upgradeMaxLevel)
         {
-            unitUpgradeCost(ref upgradeCost0, 30);
-            upgradeLevel0++;
+            unitUpgradeCost(ref upgradeCost[0], 30);
+            upgradeLevel[0]++;
             unitUpgradeApply(0);
         }
     }
 
     public void upgradeGrade1()
     {
-        if (upgradeLevel1 < 6)
+        if (upgradeLevel[1] < upgradeMaxLevel)
         {
-            unitUpgradeCost(ref upgradeCost1, 50);
-            upgradeLevel1++;
+            unitUpgradeCost(ref upgradeCost[1], 50);
+            upgradeLevel[1]++;
             unitUpgradeApply(1);
         }
     }
 
     public void upgradeGrade2()
     {
-        if (upgradeLevel2 < 6)
+        if (upgradeLevel[2] < upgradeMaxLevel)
         {
-            unitUpgradeCost(ref upgradeCost2, 1, "Coin");
-            upgradeLevel2++;
+            unitUpgradeCost(ref upgradeCost[2], 1, "Coin");
+            upgradeLevel[2]++;
             unitUpgradeApply(2);
         }
     }
 
     public void upgradeGrade3()
     {
-        if (upgradeLevel3 < 6)
+        if (upgradeLevel[3] < upgradeMaxLevel)
         {
-            unitUpgradeCost(ref upgradeCost3, 100);
-            upgradeLevel3++;
+            unitUpgradeCost(ref upgradeCost[3], 100);
+            upgradeLevel[3]++;
             unitUpgradeApply(3);
         }
     }
@@ -115,5 +113,7 @@ public class UnitUpgrader : MonoBehaviour, IUnitUpgrader
         }
     }
 
-    public int getUpgradeCost3() { return upgradeCost3; }
+    public int getUpgradeCost3() { return upgradeCost[3]; }
+    public int getUpgradeMaxLevel() { return upgradeMaxLevel; }
+    public int[] getUpgradeLevel() { return upgradeLevel; }
 }

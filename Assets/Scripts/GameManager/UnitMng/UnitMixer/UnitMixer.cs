@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class UnitMixer : MonoBehaviour
+public interface IUnitMixer
+{
+    void unitMixSpawn();
+}
+
+public class UnitMixer : MonoBehaviour, IUnitMixer
 {
     public UnitMng unitMng;
     public IUnitMng iUnitMng;
+    public GameUIMixRightSlot rightSlot;
+    public iGameUIMixRightSlot iRightSlot;
 
     public List<UnitData> needUnitList = new List<UnitData>();
     public List<Unit> unitToMix = new List<Unit>();
@@ -14,6 +21,7 @@ public class UnitMixer : MonoBehaviour
     private void Awake()
     {
         iUnitMng = unitMng;
+        iRightSlot = rightSlot;
     }
 
     public bool unitCanMix()
@@ -22,7 +30,7 @@ public class UnitMixer : MonoBehaviour
 
         foreach (Unit fieldUnit in iUnitMng.getCurUnitList())
         {
-            foreach (UnitData needUnit in GameInventoryManager.Instance.needUnitList)
+            foreach (UnitData needUnit in iRightSlot.getNeedUnitList())
             {
                 if (fieldUnit.unitName == needUnit.unitName &&
                     !unitToMix.Any(unit => unit.unitName == fieldUnit.unitName))
@@ -37,9 +45,11 @@ public class UnitMixer : MonoBehaviour
 
     public void unitMixSpawn()
     {
+        unitCanMix();
+
         if (unitCanMix())
         {
-            GameObject spawnUnit = Instantiate(iUnitMng.getUnitList(UnitType.SS)[GameInventoryManager.Instance.curMixUnit],
+            GameObject spawnUnit = Instantiate(iUnitMng.getUnitList(UnitType.SS)[iRightSlot.getCurMixUnit()],
                 iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position, Quaternion.identity,
                 iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
             iUnitMng.getCurUnitList().Add(spawnUnit.GetComponent<Unit>());

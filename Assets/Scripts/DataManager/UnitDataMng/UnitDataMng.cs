@@ -2,13 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitDataMng
+public interface IUnitDataMng
+{
+    List<UnitData> getUnitData(float grade);
+}
+
+public class UnitDataMng : IUnitDataMng
 {
     public List<UnitData> unit = new List<UnitData>();
+
+    public Dictionary<float, List<UnitData>> unitGradeDataDic = new Dictionary<float, List<UnitData>>();
 
     public UnitDataMng()
     {
         unit = DataManager.instance.unit;
+        unitGradeData();
+    }
+
+    public void unitGradeData()
+    {
+        unitGradeDataDic.Clear();
+
+        foreach(var unitData in unit) 
+        {
+            if (!unitGradeDataDic.ContainsKey(unitData.unitGrade))
+            {
+                unitGradeDataDic[unitData.unitGrade] = new List<UnitData>();
+            }
+            unitGradeDataDic[unitData.unitGrade].Add(unitData);
+        }
     }
 
     public void loadUnitState(PlayerData playerdata)
@@ -51,5 +73,14 @@ public class UnitDataMng
             UnitState unitState = new UnitState(unitData);
             playerData.units.Add(unitState);
         }
+    }
+
+    public List<UnitData> getUnitData(float grade) 
+    {
+        if (unitGradeDataDic.ContainsKey(grade))
+        {
+            return unitGradeDataDic[grade];
+        }
+        return null;
     }
 }
