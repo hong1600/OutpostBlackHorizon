@@ -6,18 +6,23 @@ using UnityEngine.UI;
 
 public class BtnManager : MonoBehaviour
 {
-    public Image bgmImg;
-    public Image sfxImg;
-    public bool bgm;
-    public bool sfx;
+    public static BtnManager instance;
 
-    private void Start()
+    private void Awake()
     {
-        bgm = false;
-        sfx = false;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
-    public void showPanelOpen(GameObject targetPanel)
+    public void openPanel(GameObject targetPanel)
     {
         if (targetPanel.activeSelf == false)
         {
@@ -27,43 +32,20 @@ public class BtnManager : MonoBehaviour
         }
     }
 
-    public void closeBtn(GameObject button)
-    {
-        Transform buttonParent = button.transform.parent;
+    //public void clickPerClostBtn(GameObject perPanel)
+    //{
+    //    if (perPanel.activeSelf)
+    //    {
+    //        closeBtn(perPanel);
+    //    }
+    //}
 
-        if (buttonParent != null)
-        {
-            buttonParent.gameObject.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() =>
-            {
-                buttonParent.gameObject.SetActive(false);
-            });
-        }
-    }
-    public void bgmBtn()
-    {
-        if (bgm == false)
-        {
-            bgmImg.color = new Color(1, 0, 0, 1);
-            bgm = true;
-        }
-        else
-        {
-            bgmImg.color = new Color(1, 0, 0, 0);
-            bgm = false;
-        }
-    }
+    //public void clickUnitDcClostBtn(GameObject unitDcPanel)
+    //{
+    //    if (unitDcPanel.activeSelf)
+    //    {
+    //        closeBtn(unitDcPanel);
+    //    }
+    //}
 
-    public void sfxBtn()
-    {
-        if (sfx == false)
-        {
-            sfxImg.color = new Color(1, 0, 0, 1);
-            sfx = true;
-        }
-        else
-        {
-            sfxImg.color = new Color(1, 0, 0, 0);
-            sfx = false;
-        }
-    }
 }

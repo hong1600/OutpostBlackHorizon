@@ -12,6 +12,7 @@ public interface IWaveBoss
 public class WaveBoss : EnemySpawner, IWaveBoss
 {
     public GameObject waveBoss;
+    public GameObject waveBossBtn;
     public int waveBossLevel;
     public float wavebossDelay;
 
@@ -23,25 +24,25 @@ public class WaveBoss : EnemySpawner, IWaveBoss
 
     public  void spawnWaveBoss()
     {
-        //bossUI.spawnWaveBossBtn.SetActive(false);
+        waveBossBtn.SetActive(false);
 
         Instantiate(waveBoss, enemySpawnPoint.position,
         Quaternion.identity, iEnemyMng.getEnemyParent().transform);
         wavebossDelay = 1000f;
     }
 
-    //public void spawnWaveBossTime()
-    //{
-    //    if (bossUI.spawnWaveBossBtn.activeSelf == false)
-    //    {
-    //        wavebossDelay -= Time.deltaTime;
+    public void spawnWaveBossTime()
+    {
+        if (waveBossBtn.activeSelf == false)
+        {
+            wavebossDelay -= Time.deltaTime;
 
-    //        if (wavebossDelay < 0)
-    //        {
-    //            bossUI.spawnWaveBossBtn.SetActive(true);
-    //        }
-    //    }
-    //}
+            if (wavebossDelay < 0)
+            {
+                waveBossBtn.SetActive(true);
+            }
+        }
+    }
 
     public int getWaveBossLevel() { return waveBossLevel; }
     public void setWaveBossDelay(float value) { wavebossDelay = value; }

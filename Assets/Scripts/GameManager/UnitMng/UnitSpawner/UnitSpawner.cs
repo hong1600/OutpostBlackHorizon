@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public interface IUnitSpawner 
 {
     void spawnUnit();
+    float[][] getSelectWeight();
+    int getSpawnGold();
 }
 
 public class UnitSpawner : MonoBehaviour, IUnitSpawner
@@ -115,4 +118,7 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
 
         return options[options.Length - 1];
     }
+
+    public float[][] getSelectWeight() { return selectWeight; }
+    public int getSpawnGold() { return spawnGold; }
 }

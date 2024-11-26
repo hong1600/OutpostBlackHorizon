@@ -8,7 +8,7 @@ public class Unit : MonoBehaviour
 
     public UnitData unitData;
     public UnitUpgrader unitUpgrader;
-
+    public IUnitUpgrader iUnitUpgrader;
 
     public string unitName;
     public int attackDamage;
@@ -32,6 +32,7 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
+        iUnitUpgrader = unitUpgrader;
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
     }
@@ -52,10 +53,10 @@ public class Unit : MonoBehaviour
 
         switch (unitGrade)
         {
-            case 0: lastUpgrade = unitUpgrader.upgradeLevel1; break;
-            case 1: lastUpgrade = unitUpgrader.upgradeLevel1; break;
-            case 2: lastUpgrade = unitUpgrader.upgradeLevel2; break;
-            case 3: lastUpgrade = unitUpgrader.upgradeLevel3; break;
+            case 0: lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1]; break;
+            case 1: lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1]; break;
+            case 2: lastUpgrade = iUnitUpgrader.getUpgradeLevel()[2]; break;
+            case 3: lastUpgrade = iUnitUpgrader.getUpgradeLevel()[3]; break;
         }
         missUpgrade(lastUpgrade);
     }
@@ -158,10 +159,10 @@ public class Unit : MonoBehaviour
 
         switch(unitGrade) 
         {
-            case 0: upgradeLevel = unitUpgrader.upgradeLevel0; break;
-            case 1: upgradeLevel = unitUpgrader.upgradeLevel0; break;
-            case 2: upgradeLevel = unitUpgrader.upgradeLevel1; break;
-            case 3: upgradeLevel = unitUpgrader.upgradeLevel2; break;
+            case 0: upgradeLevel = iUnitUpgrader.getUpgradeLevel()[0]; break;
+            case 1: upgradeLevel = iUnitUpgrader.getUpgradeLevel()[0]; break;
+            case 2: upgradeLevel = iUnitUpgrader.getUpgradeLevel()[1]; break;
+            case 3: upgradeLevel = iUnitUpgrader.getUpgradeLevel()[2]; break;
         }
 
         switch (upgradeLevel)

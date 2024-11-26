@@ -5,7 +5,12 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
 
-public class UnitRandomSpawner : MonoBehaviour
+public interface IUnitRandomSpawner
+{
+    void randSpawn(int index);
+}
+
+public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
 {
     public GoldCoin goldCoin;
     public IGoldCoin iGoldCoin;

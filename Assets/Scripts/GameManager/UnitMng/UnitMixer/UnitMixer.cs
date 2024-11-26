@@ -12,8 +12,8 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
 {
     public UnitMng unitMng;
     public IUnitMng iUnitMng;
-    public GameUIMixRightSlot rightSlot;
-    public iGameUIMixRightSlot iRightSlot;
+    public UIMixRightSlot rightSlot;
+    public iUIMixRightSlot iRightSlot;
 
     public List<UnitData> needUnitList = new List<UnitData>();
     public List<Unit> unitToMix = new List<Unit>();

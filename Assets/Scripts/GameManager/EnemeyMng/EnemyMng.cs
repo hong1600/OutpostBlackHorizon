@@ -4,6 +4,8 @@ using UnityEngine;
 
 public interface IEnemyMng 
 {
+    int enemyCount();
+    int getMaxEnemyCount();
     GameObject getEnemyParent();
 }
 public class EnemyMng : MonoBehaviour, IEnemyMng
@@ -23,6 +25,8 @@ public class EnemyMng : MonoBehaviour, IEnemyMng
         curEnemyCount = enemyParent.transform.childCount;
         return curEnemyCount;
     }
+
+    public int getMaxEnemyCount() { return maxEnemyCount; }
 
     public GameObject getEnemyParent() { return enemyParent; }
 }

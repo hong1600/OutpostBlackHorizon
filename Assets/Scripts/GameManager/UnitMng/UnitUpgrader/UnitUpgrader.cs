@@ -5,6 +5,7 @@ using UnityEngine;
 
 public interface IUnitUpgrader 
 {
+    void unitUpgrade(int index);
     int[] getUpgradeLevel();
     int getUpgradeCost3();
     int getUpgradeMaxLevel();
@@ -17,8 +18,8 @@ public class UnitUpgrader : MonoBehaviour, IUnitUpgrader
     public GoldCoin goldCoin;
     public IGoldCoin iGoldCoin;
 
-    public int[] upgradeCost;
-    public int[] upgradeLevel;
+    public int[] upgradeCost = new int[4];
+    public int[] upgradeLevel = new int[4];
     public int upgradeMaxLevel;
 
     private void Awake()
@@ -35,6 +36,21 @@ public class UnitUpgrader : MonoBehaviour, IUnitUpgrader
         upgradeLevel[2] = 1;
         upgradeLevel[3] = 1;
         upgradeMaxLevel = 6;
+    }
+
+    public void unitUpgrade(int index)
+    {
+        switch (index) 
+        {
+            case 0:
+                upgradeGrade0(); break;
+            case 1:
+                upgradeGrade1(); break;
+            case 2:
+                upgradeGrade2(); break;
+            case 3:
+                upgradeGrade3(); break;
+        }
     }
 
     public void unitUpgradeCost(ref int cost, int amount, string type = "Gold")
@@ -98,20 +114,6 @@ public class UnitUpgrader : MonoBehaviour, IUnitUpgrader
         }
     }
 
-    public void unitUpgrade(int index)
-    {
-        switch (index) 
-        {
-            case 0:
-                upgradeGrade0(); break;
-            case 1:
-                upgradeGrade1(); break;
-            case 2:
-                upgradeGrade2(); break;
-            case 3:
-                upgradeGrade3(); break;
-        }
-    }
 
     public int getUpgradeCost3() { return upgradeCost[3]; }
     public int getUpgradeMaxLevel() { return upgradeMaxLevel; }

@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
             {
                 iEnemySpawner.spawnEnemy();
             }
-            Debug.Log($"{iTimer.getSec()}");
         }
         else if(iRound.isBossRound())
         {
