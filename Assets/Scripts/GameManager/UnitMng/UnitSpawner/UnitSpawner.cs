@@ -58,7 +58,7 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
         useGold();
 
         string Selection = SelectRandom(selectOption,
-            selectWeight[(int)iUnitUpgrader.getUpgradeCost3() - 1]);
+            selectWeight[(int)iUnitUpgrader.getUpgradeLevel()[3] - 1]);
 
         int randS = Random.Range(0, iUnitMng.getUnitList(UnitType.S).Count);
         int randA = Random.Range(0, iUnitMng.getUnitList(UnitType.A).Count);

@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour
     public GameObject healthBarBack;
     public Image healthBarFill;
     public bool isDie;
+    public float rotationSpeed;
 
     [Header("Boss")]
     public TextMeshProUGUI bossTimeText;
@@ -47,10 +48,7 @@ public class Enemy : MonoBehaviour
         box = GetComponent<BoxCollider>();
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-    }
 
-    private void Start()
-    {
         enemyName = enemyData.enemyName;
         enemyHp = enemyData.enemyHp;
         enemySpeed = enemyData.enemySpeed;
@@ -67,6 +65,7 @@ public class Enemy : MonoBehaviour
         }
 
         target = wayPoint[wayPointIndex];
+
     }
 
     private void Update()
@@ -86,14 +85,21 @@ public class Enemy : MonoBehaviour
 
     private void move()
     {
-        Vector3 dir = target.position - transform.position;
-        transform.Translate(dir.normalized * enemySpeed * Time.deltaTime);
+        Vector3 dir = (target.position - transform.position).normalized;
+
+        Quaternion targetRotation = Quaternion.LookRotation(dir.normalized);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation,
+            rotationSpeed * Time.deltaTime);
+
+
+        transform.Translate(dir * enemySpeed * Time.deltaTime, Space.World);
 
         if (Vector3.Distance(transform.position, target.position) <= 0.1f)
         {
             nextMove();
         }
     }
+
     private void nextMove()
     {
         if (wayPointIndex >= wayPoint.Length -1)

@@ -6,12 +6,14 @@ using UnityEngine;
 public interface IUnitUpgrader 
 {
     void unitUpgrade(int index);
+    void missUpgrade(int lastUpgrade, Unit unit);
     int[] getUpgradeLevel();
     int getUpgradeCost3();
+
     int getUpgradeMaxLevel();
 }
 
-public class UnitUpgrader : MonoBehaviour, IUnitUpgrader
+public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
 {
     public UnitMng unitMng;
     public IUnitMng iUnitMng;
@@ -22,20 +24,28 @@ public class UnitUpgrader : MonoBehaviour, IUnitUpgrader
     public int[] upgradeLevel = new int[4];
     public int upgradeMaxLevel;
 
+    public bool upgrade2;
+    public bool upgrade3;
+    public bool upgrade4;
+    public bool upgrade5;
+    public bool upgrade6;
+
     private void Awake()
     {
         iUnitMng = unitMng;
         iGoldCoin = goldCoin;
 
-        upgradeCost[0] = 30;
-        upgradeCost[1] = 50;
-        upgradeCost[2] = 2;
-        upgradeCost[3] = 100;
         upgradeLevel[0] = 1;
         upgradeLevel[1] = 1;
         upgradeLevel[2] = 1;
         upgradeLevel[3] = 1;
         upgradeMaxLevel = 6;
+
+        upgrade2 = false;
+        upgrade3 = false;
+        upgrade4 = false;
+        upgrade5 = false;
+        upgrade6 = false;
     }
 
     public void unitUpgrade(int index)
@@ -50,27 +60,6 @@ public class UnitUpgrader : MonoBehaviour, IUnitUpgrader
                 upgradeGrade2(); break;
             case 3:
                 upgradeGrade3(); break;
-        }
-    }
-
-    public void unitUpgradeCost(ref int cost, int amount, string type = "Gold")
-    {
-        if (type == "Gold")
-            iGoldCoin.setGold(-cost);
-        else if (type == "Coin")
-            iGoldCoin.setCoin(-cost);
-
-        cost += amount;
-    }
-
-    public void unitUpgradeApply(int grade)
-    {
-        foreach (var unit in iUnitMng.getCurUnitList())
-        {
-            if (unit.unitGrade == grade)
-            {
-                unit.upgrade();
-            }
         }
     }
 
@@ -114,8 +103,8 @@ public class UnitUpgrader : MonoBehaviour, IUnitUpgrader
         }
     }
 
-
     public int getUpgradeCost3() { return upgradeCost[3]; }
+
     public int getUpgradeMaxLevel() { return upgradeMaxLevel; }
     public int[] getUpgradeLevel() { return upgradeLevel; }
 }
