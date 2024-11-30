@@ -2,15 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UnitType
-{
-    SS,
-    S,
-    A,
-    B,
-    C
-}
-
 public abstract class Unit : MonoBehaviour
 {
     public UnitType unitType;
@@ -25,19 +16,18 @@ public abstract class Unit : MonoBehaviour
     public float unitGrade;
     public int lastUpgrade;
 
+    public UnitAI unitAI;
     public Animator anim;
-    public SpriteRenderer sprite;
 
     public GameObject target;
     public Coroutine attackCoroutine;
 
-    public AIBase aiBase;
-
     public virtual void Init(UnitData unitData)
     {
+        unitAI = new UnitAI();
+        unitAI.Init(this);
+
         iUnitUpgrader = unitUpgrader;
-        anim = GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
 
         unitName = unitData.unitName;
         attackDamage = unitData.unitDamage;
@@ -58,12 +48,15 @@ public abstract class Unit : MonoBehaviour
 
     private void Update()
     {
+        unitAI.State();
+        changeAnim(unitAI.AIState);
         attack();
         turn();
         targetEnemy(transform);
     }
 
-    public GameObject targetEnemy(Transform playerPos)
+
+    public virtual GameObject targetEnemy(Transform playerPos)
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(playerPos.position, attackRange,
             Vector2.zero, 0, LayerMask.GetMask("Enemy"));
@@ -93,7 +86,7 @@ public abstract class Unit : MonoBehaviour
         return target;
     }
 
-    public void attack()
+    public virtual void attack()
     {
         if (target != null)
         {
@@ -137,14 +130,24 @@ public abstract class Unit : MonoBehaviour
     public void turn()
     {
         if (target == null) return;
+    }
 
-        if (target.transform.position.x < transform.position.x)
+    public void changeAnim(eUnitAI curState)
+    {
+        switch(curState) 
         {
-            sprite.flipX = true;
-        }
-        else if (target.transform.position.x > transform.position.x)
-        {
-            sprite.flipX = false;
+            case eUnitAI.eAI_CREATE:
+                anim.SetBool("isAttack", false);
+                break;
+
+            case eUnitAI.eAI_SEARCH:
+                anim.SetBool("isAttack", false);
+                break;
+            case eUnitAI.eAI_ATTACK:
+                anim.SetBool("isAttack", true);
+                break;
+            case eUnitAI.eAI_RESET:
+                break;
         }
     }
 }

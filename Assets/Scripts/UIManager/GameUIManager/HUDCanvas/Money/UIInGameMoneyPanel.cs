@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UIInGameMoneyPanel : MonoBehaviour
+public interface IUIInGameMoneyPanel
+{
+    void inGameMoneyPanel();
+}
+
+public class UIInGameMoneyPanel : MonoBehaviour, IUIInGameMoneyPanel
 {
     public GoldCoin goldCoin;
     public IGoldCoin iGoldCoin;
@@ -21,7 +26,7 @@ public class UIInGameMoneyPanel : MonoBehaviour
         iUnitMng = unitMng;
     }
 
-    private void main()
+    public void inGameMoneyPanel()
     {
         myGoldText.text = iGoldCoin.getGold().ToString();
         myCoinText.text = iGoldCoin.getCoin().ToString();

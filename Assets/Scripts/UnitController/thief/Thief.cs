@@ -6,6 +6,11 @@ public class Thief : Unit
 {
     public UnitData unitData;
 
+    private void Awake()
+    {
+        Init(unitData);
+    }
+
     public override void Init(UnitData unitData)
     {
         base.Init(unitData);

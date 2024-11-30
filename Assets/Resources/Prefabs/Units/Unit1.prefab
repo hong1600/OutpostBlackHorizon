@@ -1934,7 +1934,7 @@ GameObject:
   - component: {fileID: 364802905602536464}
   - component: {fileID: -3629408833005528287}
   m_Layer: 0
-  m_Name: Armature (1)
+  m_Name: Unit1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1999,7 +1999,6 @@ MonoBehaviour:
   unitGrade: 0
   lastUpgrade: 0
   anim: {fileID: 0}
-  sprite: {fileID: 0}
   target: {fileID: 0}
   unitData: {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
 --- !u!1 &6415875916798487454

@@ -4,7 +4,12 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class UIRoundPanel : MonoBehaviour
+public interface IUIRoundPanel 
+{
+    void roundPanel();
+}
+
+public class UIRoundPanel : MonoBehaviour, IUIRoundPanel
 {
     public Round round;
     public IRound iRound;
@@ -15,6 +20,8 @@ public class UIRoundPanel : MonoBehaviour
     private void Awake()
     {
         iRound = round;
+
+        roundPanel();
     }
 
     public void roundPanel()

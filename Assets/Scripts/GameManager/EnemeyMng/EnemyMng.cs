@@ -16,7 +16,7 @@ public class EnemyMng : MonoBehaviour, IEnemyMng
 
     private void Awake()
     {
-        maxEnemyCount = 0;
+        maxEnemyCount = 100;
         curEnemyCount = 0;
     }
 

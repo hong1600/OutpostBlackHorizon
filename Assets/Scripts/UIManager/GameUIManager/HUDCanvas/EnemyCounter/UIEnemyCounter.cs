@@ -4,7 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIEnemyCounter : MonoBehaviour
+public interface IUIEnemyCounter
+{
+    void enemyCounterPanel();
+}
+
+public class UIEnemyCounter : MonoBehaviour, IUIEnemyCounter
 {
     public EnemyMng enemyMng;
     public IEnemyMng iEnemyMng;

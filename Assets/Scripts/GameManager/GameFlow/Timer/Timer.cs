@@ -21,6 +21,8 @@ public class Timer : MonoBehaviour, ITimer, ISpawnTime
 {
     public Round round;
     public IRound iRound;
+    public UIRoundPanel uiRoundPanel;
+    public IUIRoundPanel iUIRoundPanel;
 
     public bool timerRunning;
     public float min, sec;
@@ -29,6 +31,7 @@ public class Timer : MonoBehaviour, ITimer, ISpawnTime
     private void Awake()
     {
         iRound = round;
+        iUIRoundPanel = uiRoundPanel;
         spawnTime = false;
         min = 0.0f;
         sec = 4f;
@@ -49,6 +52,7 @@ public class Timer : MonoBehaviour, ITimer, ISpawnTime
         if (sec < 0f)
         {
             StartCoroutine(spawn());
+            uiRoundPanel.roundPanel();
 
             if (min > 0)
             {

@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UITimePanel : MonoBehaviour
+public interface IUITimePanel 
+{
+    void timePanel();
+}
+
+public class UITimePanel : MonoBehaviour, IUITimePanel
 {
     public Timer timer;
     public ITimer iTimer;
