@@ -69,7 +69,7 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
         {
             unitUpgradeCost(ref upgradeCost[0], 30);
             upgradeLevel[0]++;
-            unitUpgradeApply(eUnitGrade.C);
+            unitUpgradeApply(EUnitGrade.C);
         }
     }
 
@@ -79,7 +79,7 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
         {
             unitUpgradeCost(ref upgradeCost[1], 50);
             upgradeLevel[1]++;
-            unitUpgradeApply(eUnitGrade.B);
+            unitUpgradeApply(EUnitGrade.B);
         }
     }
 
@@ -89,7 +89,7 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
         {
             unitUpgradeCost(ref upgradeCost[2], 1, "Coin");
             upgradeLevel[2]++;
-            unitUpgradeApply(eUnitGrade.A);
+            unitUpgradeApply(EUnitGrade.A);
         }
     }
 
@@ -99,7 +99,7 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
         {
             unitUpgradeCost(ref upgradeCost[3], 100);
             upgradeLevel[3]++;
-            unitUpgradeApply(eUnitGrade.S);
+            unitUpgradeApply(EUnitGrade.S);
         }
     }
 

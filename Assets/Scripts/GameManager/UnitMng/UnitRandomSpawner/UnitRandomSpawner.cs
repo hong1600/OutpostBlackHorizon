@@ -76,9 +76,9 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
     {
         randomDelay = true;
         int per = Random.Range(0, 10);
-        int randB = Random.Range(0, iUnitMng.getUnitList(UnitType.B).Count);
-        int randA = Random.Range(0, iUnitMng.getUnitList(UnitType.A).Count);
-        int randS = Random.Range(0, iUnitMng.getUnitList(UnitType.S).Count);
+        int randB = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.B).Count);
+        int randA = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.A).Count);
+        int randS = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.S).Count);
 
         Sprite randomSprite = GetRandomSprite(index, randB, randA, randS);
 
@@ -128,15 +128,15 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
         {
             case 0:
                 iGoldCoin.setCoin(-1);
-                return iUnitMng.getUnitList(UnitType.B)[randB].GetComponent<SpriteRenderer>().sprite;
+                return iUnitMng.getUnitList(EUnitGrade.B)[randB].GetComponent<SpriteRenderer>().sprite;
 
             case 1:
                 iGoldCoin.setCoin(-1);
-                return iUnitMng.getUnitList(UnitType.A)[randA].GetComponent<SpriteRenderer>().sprite;
+                return iUnitMng.getUnitList(EUnitGrade.A)[randA].GetComponent<SpriteRenderer>().sprite;
 
             case 2:
                 iGoldCoin.setCoin(-2);
-                return iUnitMng.getUnitList(UnitType.S)[randS].GetComponent<SpriteRenderer>().sprite;
+                return iUnitMng.getUnitList(EUnitGrade.S)[randS].GetComponent<SpriteRenderer>().sprite;
         }
         return null;
     }
@@ -152,7 +152,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
             case 0:
                 if (per < 6)
                 {
-                    GameObject spawnUnitB = Instantiate(iUnitMng.getUnitList(UnitType.B)[randB],
+                    GameObject spawnUnitB = Instantiate(iUnitMng.getUnitList(EUnitGrade.B)[randB],
                         unitSpawnPointList[groundNum].transform.position,
                         Quaternion.identity, unitSpawnPointList[groundNum].transform);
                     randomUnitImg[0].sprite = randomStar[0];
@@ -166,7 +166,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
             case 1:
                 if (per < 2)
                 {
-                    GameObject spawnUnitA = Instantiate(iUnitMng.getUnitList(UnitType.A)[randA],
+                    GameObject spawnUnitA = Instantiate(iUnitMng.getUnitList(EUnitGrade.A)[randA],
                         unitSpawnPointList[groundNum].transform.position,
                         Quaternion.identity, unitSpawnPointList[groundNum].transform);
                     randomUnitImg[1].sprite = randomStar[1];
@@ -180,7 +180,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
             case 2:
                 if (per < 1)
                 {
-                    GameObject spawnUnitS = Instantiate(iUnitMng.getUnitList(UnitType.S)[randS],
+                    GameObject spawnUnitS = Instantiate(iUnitMng.getUnitList(EUnitGrade.S)[randS],
                         unitSpawnPointList[groundNum].transform.position,
                         Quaternion.identity, unitSpawnPointList[groundNum].transform);
                     randomUnitImg[2].sprite = randomStar[2];

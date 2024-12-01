@@ -14,7 +14,7 @@ public class DataManager : MonoBehaviour
     public ItemDataMng itemDataMng;
 
     public PlayerData playerdata = new PlayerData();
-    public List<TreasureData> item = new List<TreasureData>();
+    public List<ItemData> item = new List<ItemData>();
     public List<UnitData> unit = new List<UnitData>();
 
     private void Awake()

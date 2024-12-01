@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
-    public UnitType unitType;
-
     public UnitUpgrader unitUpgrader;
     public IUnitUpgrader iUnitUpgrader;
 
@@ -14,10 +13,12 @@ public abstract class Unit : MonoBehaviour
     public int attackSpeed;
     public float attackRange;
     public int lastUpgrade;
-    public eUnitGrade unitGrade;
+    public EUnitGrade eUnitGrade;
 
     public UnitAI unitAI;
+    public UnitSkill unitSkill;
     public Animator anim;
+    public BoxCollider box;
 
     public GameObject target;
     public Coroutine attackCoroutine;
@@ -25,31 +26,34 @@ public abstract class Unit : MonoBehaviour
     public virtual void Init(UnitData unitData)
     {
         unitAI = new UnitAI();
-        unitAI.Init(this);
+        unitAI.init(this);
+        unitSkill = new UnitSkill();
+        unitSkill.init();
 
         anim = this.GetComponent<Animator>();
+        box = this.GetComponent<BoxCollider>();
 
-        unitUpgrader = GetComponent<UnitUpgrader>();
+        unitUpgrader = GameObject.Find("UnitUpgrader").GetComponent<UnitUpgrader>();
         iUnitUpgrader = unitUpgrader;
 
         unitName = unitData.unitName;
         attackDamage = unitData.unitDamage;
         attackSpeed = unitData.attackSpeed;
         attackRange = unitData.attackRange;
-        unitGrade = unitData.unitGrade;
+        eUnitGrade = unitData.unitGrade;
 
-        switch (unitGrade)
+        switch (eUnitGrade)
         {
-            case eUnitGrade.C
+            case EUnitGrade.C
             : lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1]; 
                 break;
-            case eUnitGrade.B: 
+            case EUnitGrade.B: 
                 lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1]; 
                 break;
-            case eUnitGrade.S: 
+            case EUnitGrade.S: 
                 lastUpgrade = iUnitUpgrader.getUpgradeLevel()[2]; 
                 break;
-            case eUnitGrade.SS: 
+            case EUnitGrade.SS: 
                 lastUpgrade = iUnitUpgrader.getUpgradeLevel()[3];
                 break;
         }
@@ -63,19 +67,25 @@ public abstract class Unit : MonoBehaviour
         changeAnim(unitAI.AIState);
         attack();
         turn();
-        targetEnemy(transform);
+        targetEnemy();
+
     }
 
-
-    public virtual GameObject targetEnemy(Transform playerPos)
+    private void OnDrawGizmos()
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(playerPos.position, attackRange,
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    public GameObject targetEnemy()
+    {
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, attackRange,
             Vector2.zero, 0, LayerMask.GetMask("Enemy"));
 
         target = null;
         float minDistance = Mathf.Infinity;
 
-        foreach (RaycastHit2D hit in hits)
+        foreach (RaycastHit hit in hits)
         {
             if (hit.collider.CompareTag("Enemy"))
             {
@@ -84,7 +94,7 @@ public abstract class Unit : MonoBehaviour
                 if(enemy == null || enemy.isDie == true)
                     continue;
 
-                float distance = Vector3.Distance(playerPos.position, hit.transform.position);
+                float distance = Vector3.Distance(transform.position, hit.transform.position);
 
                 if (distance < minDistance)
                 {
@@ -97,7 +107,7 @@ public abstract class Unit : MonoBehaviour
         return target;
     }
 
-    public virtual void attack()
+    public void attack()
     {
         if (target != null)
         {
@@ -112,14 +122,12 @@ public abstract class Unit : MonoBehaviour
             {
                 StopCoroutine(attackCoroutine);
                 attackCoroutine = null;
-                anim.SetBool("isAttack", false);
             }
         }
     }
 
     IEnumerator Attack()
     {
-        anim.SetBool("isAttack", true);
         while (true) 
         {
             if (target == null)

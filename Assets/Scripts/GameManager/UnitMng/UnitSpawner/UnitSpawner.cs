@@ -60,33 +60,33 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
         string Selection = SelectRandom(selectOption,
             selectWeight[(int)iUnitUpgrader.getUpgradeLevel()[3] - 1]);
 
-        int randS = Random.Range(0, iUnitMng.getUnitList(UnitType.S).Count);
-        int randA = Random.Range(0, iUnitMng.getUnitList(UnitType.A).Count);
-        int randB = Random.Range(0, iUnitMng.getUnitList(UnitType.B).Count);
-        int randC = Random.Range(0, iUnitMng.getUnitList(UnitType.C).Count);
+        int randS = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.S).Count);
+        int randA = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.A).Count);
+        int randB = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.B).Count);
+        int randC = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.C).Count);
 
         switch (Selection)
         {
             case "S":
-                GameObject spawnUnitS = Instantiate(iUnitMng.getUnitList(UnitType.S)[randS],
+                GameObject spawnUnitS = Instantiate(iUnitMng.getUnitList(EUnitGrade.S)[randS],
                     iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
                     Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
                 iUnitMng.getCurUnitList().Add(spawnUnitS.GetComponent<Unit>());
                 break;
             case "A":
-                GameObject spawnUnitA = Instantiate(iUnitMng.getUnitList(UnitType.A)[randA],
+                GameObject spawnUnitA = Instantiate(iUnitMng.getUnitList(EUnitGrade.A)[randA],
                     iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
                     Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
                 iUnitMng.getCurUnitList().Add(spawnUnitA.GetComponent<Unit>());
                 break;
             case "B":
-                GameObject spawnUnitB = Instantiate(iUnitMng.getUnitList(UnitType.B)[randB],
+                GameObject spawnUnitB = Instantiate(iUnitMng.getUnitList(EUnitGrade.B)[randB],
                     iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
                     Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
                 iUnitMng.getCurUnitList().Add(spawnUnitB.GetComponent<Unit>());
                 break;
             case "C":
-                GameObject spawnUnitC = Instantiate(iUnitMng.getUnitList(UnitType.C)[randC],
+                GameObject spawnUnitC = Instantiate(iUnitMng.getUnitList(EUnitGrade.C)[randC],
                     iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
                     Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
                 iUnitMng.getCurUnitList().Add(spawnUnitC.GetComponent<Unit>());

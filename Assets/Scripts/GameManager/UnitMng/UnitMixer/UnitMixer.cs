@@ -49,7 +49,7 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
 
         if (unitCanMix())
         {
-            GameObject spawnUnit = Instantiate(iUnitMng.getUnitList(UnitType.SS)[iRightSlot.getCurMixUnit()],
+            GameObject spawnUnit = Instantiate(iUnitMng.getUnitList(EUnitGrade.SS)[iRightSlot.getCurMixUnit()],
                 iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position, Quaternion.identity,
                 iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
             iUnitMng.getCurUnitList().Add(spawnUnit.GetComponent<Unit>());

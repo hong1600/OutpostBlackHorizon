@@ -53,12 +53,12 @@ public class MainBtn : BtnManager
 
     public void treasureDcBtn(int index)
     {
-        treasureUI.treasureDc(index);
+        treasureUI.itemDc(index);
     }
 
     public void treasureUpgradeBtn()
     {
-        treasureUI.treasureUpgrade();
+        treasureUI.itemUpgrade();
     }
 
     public void optionBtn() 

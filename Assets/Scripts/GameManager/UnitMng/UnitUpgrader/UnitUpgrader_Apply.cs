@@ -4,27 +4,27 @@ using UnityEngine;
 
 public partial class UnitUpgrader : MonoBehaviour
 {
-    public void unitUpgradeApply(eUnitGrade grade)
+    public void unitUpgradeApply(EUnitGrade grade)
     {
         foreach (var unit in iUnitMng.getCurUnitList())
         {
-            if (unit.unitGrade == grade)
+            if (unit.eUnitGrade == grade)
             {
                 upgrade(grade, unit);
             }
         }
     }
 
-    public void upgrade(eUnitGrade grade, Unit unit)
+    public void upgrade(EUnitGrade grade, Unit unit)
     {
         int curUpgradeLevel = 0;
 
         switch (grade)
         {
-            case eUnitGrade.C: curUpgradeLevel = upgradeLevel[0]; break;
-            case eUnitGrade.B: curUpgradeLevel = upgradeLevel[0]; break;
-            case eUnitGrade.S: curUpgradeLevel = upgradeLevel[1]; break;
-            case eUnitGrade.SS: curUpgradeLevel = upgradeLevel[2]; break;
+            case EUnitGrade.C: curUpgradeLevel = upgradeLevel[0]; break;
+            case EUnitGrade.B: curUpgradeLevel = upgradeLevel[0]; break;
+            case EUnitGrade.S: curUpgradeLevel = upgradeLevel[1]; break;
+            case EUnitGrade.SS: curUpgradeLevel = upgradeLevel[2]; break;
         }
 
         switch (curUpgradeLevel)

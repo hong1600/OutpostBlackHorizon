@@ -4,14 +4,14 @@ using UnityEngine;
 
 public interface IUnitDataMng
 {
-    List<UnitData> getUnitData(eUnitGrade grade);
+    List<UnitData> getUnitData(EUnitGrade grade);
 }
 
 public class UnitDataMng : IUnitDataMng
 {
     public List<UnitData> unit = new List<UnitData>();
 
-    public Dictionary<eUnitGrade, List<UnitData>> unitGradeDataDic = new Dictionary<eUnitGrade, List<UnitData>>();
+    public Dictionary<EUnitGrade, List<UnitData>> unitGradeDataDic = new Dictionary<EUnitGrade, List<UnitData>>();
 
     public UnitDataMng()
     {
@@ -75,7 +75,7 @@ public class UnitDataMng : IUnitDataMng
         }
     }
 
-    public List<UnitData> getUnitData(eUnitGrade grade) 
+    public List<UnitData> getUnitData(EUnitGrade grade) 
     {
         if (unitGradeDataDic.ContainsKey(grade))
         {

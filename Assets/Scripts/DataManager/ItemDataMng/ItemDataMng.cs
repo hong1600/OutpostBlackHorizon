@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemDataMng
 {
-    public List<TreasureData> item;
+    public List<ItemData> item;
 
     public ItemDataMng()
     {
@@ -16,22 +16,22 @@ public class ItemDataMng
         for (int i = 0; i < playerData.items.Count; i++)
         {
             ItemState saveItem = playerData.items[i];
-            TreasureData baseItem = item.Find(i => i.index == saveItem.index);
+            ItemData baseItem = item.Find(i => i.index == saveItem.index);
 
             if (baseItem != null)
             {
                 ItemState loadItem = playerData.items[i];
                 loadItem.index = saveItem.index;
-                loadItem.treasureName = saveItem.treasureName;
-                loadItem.treasureLevel = saveItem.treasureLevel;
-                loadItem.treasureCurExp = saveItem.treasureCurExp;
-                loadItem.treasureMaxExp = saveItem.treasureMaxExp;
-                loadItem.treasureCost = saveItem.treasureCost;
-                loadItem.treasureBase = saveItem.treasureBase;
-                loadItem.treasureUpgrade = saveItem.treasureUpgrade;
-                loadItem.treasureDc = saveItem.treasureDc;
-                loadItem.storeCost = saveItem.storeCost;
-                loadItem.treasureImg = Resources.Load<Sprite>("Items/" + saveItem.index.ToString());
+                loadItem.itemName = saveItem.itemName;
+                loadItem.itemLevel = saveItem.itemLevel;
+                loadItem.itemCurExp = saveItem.itemCurExp;
+                loadItem.itemMaxExp = saveItem.itemMaxExp;
+                loadItem.itemCost = saveItem.itemCost;
+                loadItem.itemBase = saveItem.itemBase;
+                loadItem.itemUpgrade = saveItem.itemUpgrade;
+                loadItem.itemDc = saveItem.itemDc;
+                loadItem.itemStoreCost = saveItem.itemStoreCost;
+                loadItem.itemImg = Resources.Load<Sprite>("Items/" + saveItem.index.ToString());
                 playerData.items[i] = loadItem;
             }
         }

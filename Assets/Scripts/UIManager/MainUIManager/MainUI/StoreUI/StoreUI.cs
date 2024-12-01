@@ -13,7 +13,7 @@ public class StoreUI : MonoBehaviour
     public ItemState curItem;
     public Button[] storeUnitBtn;
     public UnitData[] storeUnits;
-    public TreasureData[] storeItems;
+    public ItemData[] storeItems;
     public Image[] storeUnitsImg;
     public TextMeshProUGUI[] storeUnitsNameText;
     public TextMeshProUGUI[] storeUnitsCostText;
@@ -45,8 +45,8 @@ public class StoreUI : MonoBehaviour
             curItem = DataManager.instance.playerDataMng.getItem(index);
             clickUnit = false;
 
-            storeUnitsDcImg.sprite = curItem.treasureImg;
-            storeUnitsDcCost.text = curItem.storeCost.ToString();
+            storeUnitsDcImg.sprite = curItem.itemImg;
+            storeUnitsDcCost.text = curItem.itemStoreCost.ToString();
 
             mainUI.showPanelOpen(storeUnitDcPanel);
         }
@@ -77,12 +77,12 @@ public class StoreUI : MonoBehaviour
             }
             else if (or == 1)
             {
-                int slotRand = UnityEngine.Random.Range(0, treasureUI.treasureSlider.Count);
+                int slotRand = UnityEngine.Random.Range(0, treasureUI.itemSlider.Count);
                 int curItemIndex = storeItems[slotRand].index;
 
-                storeUnitsImg[i].sprite = storeItems[slotRand].treasureImg;
-                storeUnitsNameText[i].text = storeItems[slotRand].treasureName;
-                storeUnitsCostText[i].text = storeItems[slotRand].storeCost.ToString();
+                storeUnitsImg[i].sprite = storeItems[slotRand].itemImg;
+                storeUnitsNameText[i].text = storeItems[slotRand].itemName;
+                storeUnitsCostText[i].text = storeItems[slotRand].itemStoreCost.ToString();
 
                 storeUnitBtn[i].GetComponent<Button>().onClick.RemoveAllListeners();
 
@@ -108,11 +108,11 @@ public class StoreUI : MonoBehaviour
 
         else
         {
-            if (DataManager.instance.playerdata.gold >= curItem.storeCost)
+            if (DataManager.instance.playerdata.gold >= curItem.itemStoreCost)
             {
-                DataManager.instance.playerdata.gold -= (int)curItem.storeCost;
-                curItem.treasureCurExp += 1;
-                treasureUI.treasureUpdate1();
+                DataManager.instance.playerdata.gold -= (int)curItem.itemStoreCost;
+                curItem.itemCurExp += 1;
+                treasureUI.itemUpdate1();
                 storeUnitDcPanel.SetActive(false);
 
             }

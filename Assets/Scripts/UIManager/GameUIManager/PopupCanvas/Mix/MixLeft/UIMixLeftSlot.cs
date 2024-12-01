@@ -19,11 +19,11 @@ public class UIMixLeftSlot : MonoBehaviour
 
     private void loadLeftUnit()
     {
-        for (int i = 0; i < iUnitDataMng.getUnitData(eUnitGrade.SS).Count; i++)
+        for (int i = 0; i < iUnitDataMng.getUnitData(EUnitGrade.SS).Count; i++)
         {
             GameObject newslot = Instantiate(MixBtnPre, mixLeftContent);
             UIMixSlot mixslot = newslot.GetComponent<UIMixSlot>();
-            mixslot.setUnit(iUnitDataMng.getUnitData(eUnitGrade.SS)[i], i);
+            mixslot.setUnit(iUnitDataMng.getUnitData(EUnitGrade.SS)[i], i);
         }
     }
 }

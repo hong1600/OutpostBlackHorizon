@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public interface IUnitMng 
 {
     bool checkGround();
-    List<GameObject> getUnitList(UnitType unitType);
+    List<GameObject> getUnitList(EUnitGrade unitType);
     List<GameObject> getUnitSpawnPointList();
     int getGroundNum();
     List<Unit> getCurUnitList(); 
@@ -32,16 +32,22 @@ public class UnitMng : MonoBehaviour, IUnitMng
         return false;
     }
 
-    public List<GameObject> getUnitList(UnitType unitType)
+    public List<GameObject> getUnitList(EUnitGrade unitType)
     {
         switch (unitType)
         {
-            case UnitType.SS: return unitListSS;
-            case UnitType.S: return unitListS;
-            case UnitType.A: return unitListA;
-            case UnitType.B: return unitListB;
-            case UnitType.C: return unitListC;
-                default: return null;
+            case EUnitGrade.SS:
+                return unitListSS;
+            case EUnitGrade.S:
+                return unitListS;
+            case EUnitGrade.A:
+                return unitListA;
+            case EUnitGrade.B:
+                return unitListB;
+            case EUnitGrade.C:
+                return unitListC;
+                default: 
+                return null;
         }
     }
 
