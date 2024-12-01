@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum eUnitGrade
+{
+    SS,
+    S,
+    A,
+    B,
+    C
+}
+
 [CreateAssetMenu(fileName = "Unit", menuName = "Scriptble Object/UnitData")]
 
 public class UnitData : ScriptableObject
 {
+    public eUnitGrade unitGrade;
     public int index;
     public string unitName;
     public int unitDamage;
@@ -19,6 +29,5 @@ public class UnitData : ScriptableObject
     public float unitStoreCost;
     public float unitCurExp;
     public float unitMaxExp;
-    public float unitGrade;
     public UnitData[] mixUnit;
 }

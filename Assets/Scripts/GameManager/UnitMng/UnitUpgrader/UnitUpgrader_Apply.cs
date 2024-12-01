@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class UnitUpgrader : MonoBehaviour
 {
-    public void unitUpgradeApply(int grade)
+    public void unitUpgradeApply(eUnitGrade grade)
     {
         foreach (var unit in iUnitMng.getCurUnitList())
         {
@@ -15,16 +15,16 @@ public partial class UnitUpgrader : MonoBehaviour
         }
     }
 
-    public void upgrade(int grade, Unit unit)
+    public void upgrade(eUnitGrade grade, Unit unit)
     {
         int curUpgradeLevel = 0;
 
         switch (grade)
         {
-            case 0: curUpgradeLevel = upgradeLevel[0]; break;
-            case 1: curUpgradeLevel = upgradeLevel[0]; break;
-            case 2: curUpgradeLevel = upgradeLevel[1]; break;
-            case 3: curUpgradeLevel = upgradeLevel[2]; break;
+            case eUnitGrade.C: curUpgradeLevel = upgradeLevel[0]; break;
+            case eUnitGrade.B: curUpgradeLevel = upgradeLevel[0]; break;
+            case eUnitGrade.S: curUpgradeLevel = upgradeLevel[1]; break;
+            case eUnitGrade.SS: curUpgradeLevel = upgradeLevel[2]; break;
         }
 
         switch (curUpgradeLevel)

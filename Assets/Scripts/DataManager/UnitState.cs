@@ -15,7 +15,7 @@ public class UnitState
     public float unitStoreCost;
     public float unitCurExp;
     public float unitMaxExp;
-    public float unitGrade;
+    public eUnitGrade unitGrade;
     public Sprite unitImg;
 
     public UnitState(UnitData unitData)

@@ -13,8 +13,8 @@ public abstract class Unit : MonoBehaviour
     public int attackDamage;
     public int attackSpeed;
     public float attackRange;
-    public float unitGrade;
     public int lastUpgrade;
+    public eUnitGrade unitGrade;
 
     public UnitAI unitAI;
     public Animator anim;
@@ -27,6 +27,9 @@ public abstract class Unit : MonoBehaviour
         unitAI = new UnitAI();
         unitAI.Init(this);
 
+        anim = this.GetComponent<Animator>();
+
+        unitUpgrader = GetComponent<UnitUpgrader>();
         iUnitUpgrader = unitUpgrader;
 
         unitName = unitData.unitName;
@@ -37,10 +40,18 @@ public abstract class Unit : MonoBehaviour
 
         switch (unitGrade)
         {
-            case 0: lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1]; break;
-            case 1: lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1]; break;
-            case 2: lastUpgrade = iUnitUpgrader.getUpgradeLevel()[2]; break;
-            case 3: lastUpgrade = iUnitUpgrader.getUpgradeLevel()[3]; break;
+            case eUnitGrade.C
+            : lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1]; 
+                break;
+            case eUnitGrade.B: 
+                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1]; 
+                break;
+            case eUnitGrade.S: 
+                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[2]; 
+                break;
+            case eUnitGrade.SS: 
+                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[3];
+                break;
         }
 
         iUnitUpgrader.missUpgrade(lastUpgrade, this);

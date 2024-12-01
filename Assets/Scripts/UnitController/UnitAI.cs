@@ -44,7 +44,6 @@ public class UnitAI
     public virtual void Create()
     {
         AIState = eUnitAI.eAI_SEARCH;
-        unit.changeAnim(eUnitAI.eAI_SEARCH);
     }
 
     public virtual void Search()

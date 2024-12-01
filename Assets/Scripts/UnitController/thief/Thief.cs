@@ -10,9 +10,4 @@ public class Thief : Unit
     {
         Init(unitData);
     }
-
-    public override void Init(UnitData unitData)
-    {
-        base.Init(unitData);
-    }
 }
