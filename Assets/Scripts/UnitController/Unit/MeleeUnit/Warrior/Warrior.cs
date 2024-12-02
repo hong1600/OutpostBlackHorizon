@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Thief : Unit
+public class Warrior : Unit
 {
     public UnitData unitData;
 

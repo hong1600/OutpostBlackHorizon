@@ -21,14 +21,14 @@ public abstract class Unit : MonoBehaviour
     public BoxCollider box;
 
     public GameObject target;
+    public List<Collider> targets = new List<Collider>();
+    public float rotationSpeed;
     public Coroutine attackCoroutine;
 
     public virtual void Init(UnitData unitData)
     {
         unitAI = new UnitAI();
         unitAI.init(this);
-        unitSkill = new UnitSkill();
-        unitSkill.init();
 
         anim = this.GetComponent<Animator>();
         box = this.GetComponent<BoxCollider>();
@@ -64,43 +64,30 @@ public abstract class Unit : MonoBehaviour
     private void Update()
     {
         unitAI.State();
-        changeAnim(unitAI.AIState);
-        attack();
-        turn();
-        targetEnemy();
-
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
     public GameObject targetEnemy()
     {
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position, attackRange,
-            Vector2.zero, 0, LayerMask.GetMask("Enemy"));
+        Collider[] colls = Physics.OverlapSphere(transform.position, attackRange,
+             LayerMask.GetMask("Enemy"));
 
         target = null;
+
         float minDistance = Mathf.Infinity;
 
-        foreach (RaycastHit hit in hits)
+        foreach (Collider coll in colls)
         {
-            if (hit.collider.CompareTag("Enemy"))
+            Enemy enemy = coll.GetComponent<Enemy>();
+
+            if (enemy == null || enemy.isDie == true)
+                continue;
+
+            float distance = Vector3.Distance(transform.position, coll.transform.position);
+
+            if (distance < minDistance)
             {
-                Enemy enemy = hit.collider.GetComponent<Enemy>();
-
-                if(enemy == null || enemy.isDie == true)
-                    continue;
-
-                float distance = Vector3.Distance(transform.position, hit.transform.position);
-
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    target = hit.collider.gameObject;
-                }
+                minDistance = distance;
+                target = coll.gameObject;
             }
         }
 
@@ -146,9 +133,14 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    public void turn()
+    public void lookEnemy()
     {
         if (target == null) return;
+
+        Vector3 dir = (target.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
     public void changeAnim(eUnitAI curState)
@@ -158,7 +150,6 @@ public abstract class Unit : MonoBehaviour
             case eUnitAI.eAI_CREATE:
                 anim.SetBool("isAttack", false);
                 break;
-
             case eUnitAI.eAI_SEARCH:
                 anim.SetBool("isAttack", false);
                 break;
@@ -168,5 +159,11 @@ public abstract class Unit : MonoBehaviour
             case eUnitAI.eAI_RESET:
                 break;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }

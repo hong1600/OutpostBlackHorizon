@@ -63,6 +63,7 @@ public class UnitAI
         if(unit.target != null)
         {
             unit.attack();
+            unit.lookEnemy();
             unit.changeAnim(eUnitAI.eAI_ATTACK);
         }
         else
@@ -73,7 +74,6 @@ public class UnitAI
 
     public virtual void Reset()
     {
-        unit.target = null;
         AIState = eUnitAI.eAI_SEARCH;
     }
 }
