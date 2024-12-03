@@ -7,6 +7,7 @@ public interface IEnemySpawner
     void spawnEnemy();
     void setEnemySpawnDelay(float value);
     Transform getEnemySpawnPoint();
+    Transform[] getWayPoint();
 }
 
 public class EnemySpawner : MonoBehaviour, IEnemySpawner
@@ -18,6 +19,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     public EnemyMng enemyMng;
     public IEnemyMng iEnemyMng;
 
+    public Transform[] wayPoint;
     public Transform enemySpawnPoint;
     public List<GameObject> enemy;
     public float enemySpawnDelay;
@@ -43,5 +45,5 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
     public void setEnemySpawnDelay(float value) { enemySpawnDelay = value; }
     public Transform getEnemySpawnPoint() { return enemySpawnPoint; }
-
+    public Transform[] getWayPoint() { return wayPoint; }
 }

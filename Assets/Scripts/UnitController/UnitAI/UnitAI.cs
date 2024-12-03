@@ -74,6 +74,5 @@ public class UnitAI
 
     public virtual void Reset()
     {
-        AIState = eUnitAI.eAI_SEARCH;
     }
 }

@@ -15972,6 +15972,7 @@ MonoBehaviour:
   timer: {fileID: 0}
   round: {fileID: 0}
   enemyMng: {fileID: 1666893690}
+  wayPoint: []
   enemySpawnPoint: {fileID: 0}
   enemy: []
   enemySpawnDelay: 0
@@ -19990,6 +19991,7 @@ MonoBehaviour:
   timer: {fileID: 0}
   round: {fileID: 0}
   enemyMng: {fileID: 0}
+  wayPoint: []
   enemySpawnPoint: {fileID: 0}
   enemy: []
   enemySpawnDelay: 0
@@ -24310,6 +24312,11 @@ MonoBehaviour:
   timer: {fileID: 200285177}
   round: {fileID: 1198892671}
   enemyMng: {fileID: 1666893690}
+  wayPoint:
+  - {fileID: 2079895262}
+  - {fileID: 450474529}
+  - {fileID: 1915524540}
+  - {fileID: 982826244}
   enemySpawnPoint: {fileID: 630414515}
   enemy:
   - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}

@@ -62,19 +62,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2575349749694787979, guid: 7866c545d9433f34f92e58e696884704, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.4
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 2575349749694787979, guid: 7866c545d9433f34f92e58e696884704, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0.07
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6355210112406822649, guid: 7866c545d9433f34f92e58e696884704, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.37
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6355210112406822649, guid: 7866c545d9433f34f92e58e696884704, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0.04
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -314,6 +314,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b96483bad95afb5469743561c4bdaace, type: 2}
+    - target: {fileID: 5866666021909216657, guid: c0e8ec4be6a4d554881a5c8bb6d0c0cf, type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6608632893917367558, guid: c0e8ec4be6a4d554881a5c8bb6d0c0cf, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -371,7 +375,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c0e8ec4be6a4d554881a5c8bb6d0c0cf, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3029378569913903348}
+      addedObject: {fileID: 6617955078085992798}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c0e8ec4be6a4d554881a5c8bb6d0c0cf, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6591386073899526816}
@@ -386,7 +390,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c0e8ec4be6a4d554881a5c8bb6d0c0cf, type: 3}
   m_PrefabInstance: {fileID: 8516156209441235525}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3029378569913903348
+--- !u!114 &6617955078085992798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -395,29 +399,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 8858051749441068820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 333527f6c0b66854398af9275a6a5dcd, type: 3}
+  m_Script: {fileID: 11500000, guid: ffb1e9fcb7d2be54bbaa07fbc62c9d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
+  enemySpawner: {fileID: 0}
+  waveBoss: {fileID: 0}
   rewarder: {fileID: 0}
-  enemyData: {fileID: 11400000, guid: 18d796079e837a7469e638e4f7639990, type: 2}
+  goldCoin: {fileID: 0}
+  timer: {fileID: 0}
+  round: {fileID: 0}
   box: {fileID: 0}
-  rigid: {fileID: 0}
   anim: {fileID: 0}
   enemyHp: 0
   curhp: 0
   enemyName: 
   enemySpeed: 0
   wayPoint: []
-  wayPointTrs: {fileID: 0}
   target: {fileID: 0}
   wayPointIndex: 0
   healthBarBack: {fileID: 6182486286023050391}
   healthBarFill: {fileID: 3623074335398638393}
   isDie: 0
-  rotationSpeed: 180
+  rotationSpeed: 0
   bossTimeText: {fileID: 0}
   bosstime: 0
+  enemyData: {fileID: 11400000, guid: 18d796079e837a7469e638e4f7639990, type: 2}
 --- !u!65 &-6591386073899526816
 BoxCollider:
   m_ObjectHideFlags: 0

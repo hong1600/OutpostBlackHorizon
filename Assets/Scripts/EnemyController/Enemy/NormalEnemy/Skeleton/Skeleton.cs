@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Skeleton : NormalEnemy
 {
+    public EnemyData enemyData;
 
-
+    private void Awake()
+    {
+        init(enemyData);
+    }
 }

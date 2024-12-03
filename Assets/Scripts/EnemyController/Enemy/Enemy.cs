@@ -10,30 +10,34 @@ public class Enemy : MonoBehaviour
 {
     public EnemyType enemyType;
 
+    public EnemyAI enemyAI;
+    public EnemyHpBar enemyHpBar;
+
+    public EnemySpawner enemySpawner;
     public IEnemySpawner iEnemySpawner;
+    public WaveBoss waveBoss;
     public IWaveBoss iWaveBoss;
     public Rewarder rewarder;
-
+    public IRewarder iRewarder;
+    public GoldCoin goldCoin;
     public IGoldCoin iGoldCoin;
+    public Timer timer;
     public ITimer iTimer;
+    public Round round;
     public IRound iRound;
 
     [Header("Enemy")]
-    public EnemyData enemyData;
     public BoxCollider box;
-    public Rigidbody rigid;
     public Animator anim;
     public float enemyHp;
     public float curhp;
     public string enemyName;
     public float enemySpeed;
     public Transform[] wayPoint;
-    public GameObject wayPointTrs;
     public Transform target;
-    public int wayPointIndex = 0;
-    public GameObject healthBarBack;
-    public Image healthBarFill;
+    public int wayPointIndex;
     public bool isDie;
+    public Vector3 wayPointdir;
     public float rotationSpeed;
 
     [Header("Boss")]
@@ -45,54 +49,59 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        box = GetComponent<BoxCollider>();
-        rigid = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
+        bosstime = 60f;
+    }
+
+    public void init(EnemyData enemyData)
+    {
+        enemyAI = new EnemyAI();
+        enemyAI.init(this);
+
+        enemyHpBar = new EnemyHpBar();
+
+        enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
+        iEnemySpawner = enemySpawner;
+
+        waveBoss = GameObject.Find("WaveBoss").GetComponent<WaveBoss>();
+        iWaveBoss = waveBoss;
+
+        rewarder = GameObject.Find("Rewarder").GetComponent<Rewarder>();
+        iRewarder = rewarder;
+
+        goldCoin = GameObject.Find("GoldCoin").GetComponent<GoldCoin>();
+        iGoldCoin = goldCoin;
+
+        timer = GameObject.Find("Timer").GetComponent<Timer>();
+        iTimer = timer;
+
+        round = GameObject.Find("Round").GetComponent<Round>();
+        iRound = round;
+
+        box = this.GetComponent<BoxCollider>();
+        anim = this.GetComponent<Animator>();
 
         enemyName = enemyData.enemyName;
         enemyHp = enemyData.enemyHp;
         enemySpeed = enemyData.enemySpeed;
         curhp = enemyHp;
-        bosstime = 60f;
 
-        healthBarFill.fillAmount = 1;
-
-        wayPointTrs = GameObject.Find("EnemyWayPoint");
-        wayPoint = new Transform[wayPointTrs.transform.childCount];
-        for (int i = 0; i < wayPoint.Length; i++)
-        {
-            wayPoint[i] = wayPointTrs.transform.GetChild(i);
-        }
-
+        wayPoint = iEnemySpawner.getWayPoint();
+        wayPointIndex = 1;
         target = wayPoint[wayPointIndex];
 
+        rotationSpeed = 5;
     }
 
     private void Update()
     {
-        if (isDie) return;
-        move();
-        hpBar();
-        if (enemyType == EnemyType.WaveBoss)
-        {
-            //waveBossTimer();
-        }
-        if (enemyType == EnemyType.boss)
-        {
-            //bossTimer();
-        }
+        enemyAI.State();
     }
 
-    private void move()
+    public void move()
     {
-        Vector3 dir = (target.position - transform.position).normalized;
+        wayPointdir = (target.transform.position - transform.position).normalized;
 
-        Quaternion targetRotation = Quaternion.LookRotation(dir.normalized);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation,
-            rotationSpeed * Time.deltaTime);
-
-
-        transform.Translate(dir * enemySpeed * Time.deltaTime, Space.World);
+        transform.Translate(wayPointdir * enemySpeed * Time.deltaTime, Space.World);
 
         if (Vector3.Distance(transform.position, target.position) <= 0.1f)
         {
@@ -100,7 +109,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void nextMove()
+    public void turn()
+    {
+        Quaternion rotation = Quaternion.LookRotation(new Vector3(wayPointdir.x, 0, wayPointdir.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
+            rotationSpeed * Time.deltaTime);
+    }
+
+    public void nextMove()
     {
         if (wayPointIndex >= wayPoint.Length -1)
         {
@@ -114,25 +130,18 @@ public class Enemy : MonoBehaviour
         target = wayPoint[wayPointIndex];
     }
 
-    private void hpBar()
-    {
-        healthBarFill.fillAmount = curhp / enemyHp;
-
-        healthBarBack.transform.LookAt(Camera.main.transform);
-    }
-
-
     public void takeDamage(int damage)
     {
         curhp -= damage;
 
         if (curhp <= 0)
         {
+            isDie = true;
             die();
         }
     }
 
-    private void die()
+    public void die()
     {
         switch (enemyType) 
         {
@@ -152,14 +161,27 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
-        anim.SetBool("isDie", true);
-        isDie = true;
         Destroy(gameObject, 0.5f);
         rewarder.rewardGold += 50;
         rewarder.rewardGem += 10;
         rewarder.rewardPaper += 20;
         rewarder.rewardExp += 1;
     }
+
+    public void changeAnim(eEnemyAI curState)
+    {
+        switch (curState)
+        {
+            case eEnemyAI.eAI_CREATE:
+                break;
+            case eEnemyAI.eAI_MOVE:
+                break;
+            case eEnemyAI.eAI_RESET:
+                anim.SetBool("isDie", true);
+                break;
+        }
+    }
+
 
     //private void waveBossTimer()
     //{
