@@ -15,8 +15,8 @@ public class Enemy : MonoBehaviour
 
     public EnemySpawner enemySpawner;
     public IEnemySpawner iEnemySpawner;
-    public WaveBoss waveBoss;
-    public IWaveBoss iWaveBoss;
+    public WaveBossSpawner waveBossSpawner;
+    public IWaveBossSpawner iWaveBossSpawner;
     public Rewarder rewarder;
     public IRewarder iRewarder;
     public GoldCoin goldCoin;
@@ -39,13 +39,11 @@ public class Enemy : MonoBehaviour
     public bool isDie;
     public Vector3 wayPointdir;
     public float rotationSpeed;
+    public bool isStay;
 
     [Header("Boss")]
     public TextMeshProUGUI bossTimeText;
     public float bosstime;
-
-    public float EnemyHp 
-    { get { return enemyHp; } set { value = enemyHp; } }
 
     private void Awake()
     {
@@ -57,13 +55,11 @@ public class Enemy : MonoBehaviour
         enemyAI = new EnemyAI();
         enemyAI.init(this);
 
-        enemyHpBar = new EnemyHpBar();
-
         enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
         iEnemySpawner = enemySpawner;
 
-        waveBoss = GameObject.Find("WaveBoss").GetComponent<WaveBoss>();
-        iWaveBoss = waveBoss;
+        waveBossSpawner = GameObject.Find("WaveBossSpawner").GetComponent<WaveBossSpawner>();
+        iWaveBossSpawner = waveBossSpawner;
 
         rewarder = GameObject.Find("Rewarder").GetComponent<Rewarder>();
         iRewarder = rewarder;
@@ -150,7 +146,7 @@ public class Enemy : MonoBehaviour
                 break;
             case EnemyType.WaveBoss:
                 iGoldCoin.setCoin(2);
-                iWaveBoss.setWaveBossDelay(25f);
+                iWaveBossSpawner.setWaveBossDelay(25f);
                 break;
             case EnemyType.boss:
                 iGoldCoin.setGold(300);
@@ -172,12 +168,11 @@ public class Enemy : MonoBehaviour
     {
         switch (curState)
         {
-            case eEnemyAI.eAI_CREATE:
+            case eEnemyAI.CREATE:
+                anim.SetInteger("enemyAnim", (int)EEnemyAnim.RUN);
                 break;
-            case eEnemyAI.eAI_MOVE:
-                break;
-            case eEnemyAI.eAI_RESET:
-                anim.SetBool("isDie", true);
+            case eEnemyAI.MOVE:
+                anim.SetInteger("enemyAnim", (int)EEnemyAnim.RUN);
                 break;
         }
     }

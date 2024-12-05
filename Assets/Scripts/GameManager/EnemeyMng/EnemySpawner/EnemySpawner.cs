@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IEnemySpawner
 {
     void spawnEnemy();
+    float getEnemySpawnDelay();
     void setEnemySpawnDelay(float value);
     Transform getEnemySpawnPoint();
     Transform[] getWayPoint();
@@ -43,6 +44,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
         enemySpawnDelay -= Time.deltaTime;
     }
 
+    public float getEnemySpawnDelay() {  return enemySpawnDelay; }
     public void setEnemySpawnDelay(float value) { enemySpawnDelay = value; }
     public Transform getEnemySpawnPoint() { return enemySpawnPoint; }
     public Transform[] getWayPoint() { return wayPoint; }

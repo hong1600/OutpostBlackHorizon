@@ -1,19 +1,21 @@
+using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum eEnemyAI
 {
-    eAI_CREATE,
-    eAI_MOVE,
-    eAI_RESET,
+    CREATE,
+    MOVE,
+    STAY,
+    DIE,
 }
 
 public class EnemyAI
 {
     public Enemy enemy;
 
-    public eEnemyAI AIState = eEnemyAI.eAI_CREATE;
+    public eEnemyAI AIState = eEnemyAI.CREATE;
 
     public void init(Enemy _enemy)
     {
@@ -24,21 +26,24 @@ public class EnemyAI
     {
         switch (AIState)
         {
-            case eEnemyAI.eAI_CREATE:
+            case eEnemyAI.CREATE:
                 Create();
                 break;
-            case eEnemyAI.eAI_MOVE:
+            case eEnemyAI.MOVE:
                 Move();
                 break;
-            case eEnemyAI.eAI_RESET:
-                Reset();
+            case eEnemyAI.STAY:
+                Stay();
+                break;
+            case eEnemyAI.DIE:
+                Die();
                 break;
         }
     }
 
     public virtual void Create()
     {
-        AIState = eEnemyAI.eAI_MOVE;
+        AIState = eEnemyAI.MOVE;
     }
 
     public virtual void Move()
@@ -47,17 +52,32 @@ public class EnemyAI
         {
             enemy.move();
             enemy.turn();
-            enemy.enemyHpBar.hpBar(enemy.curhp, enemy.curhp);
+            enemy.enemyHpBar.hpBar();
         }
-        else
+        else if (enemy.isStay == true)
         {
-            AIState = eEnemyAI.eAI_RESET;
+            AIState = eEnemyAI.STAY;
+        }
+        else if (enemy.isDie == true) 
+        {
+            AIState = eEnemyAI.DIE;
         }
     }
 
-    public virtual void Reset()
+    public virtual void Stay()
     {
-        enemy.changeAnim(eEnemyAI.eAI_RESET);
+        if (enemy.isStay == false && enemy.isDie == false)
+        {
+            AIState = eEnemyAI.MOVE;
+        }
+        else if (enemy.isStay == false && enemy.isDie == true) 
+        {
+            AIState = eEnemyAI.DIE;
+        }
+    }
+
+    public virtual void Die()
+    {
     }
 
 }

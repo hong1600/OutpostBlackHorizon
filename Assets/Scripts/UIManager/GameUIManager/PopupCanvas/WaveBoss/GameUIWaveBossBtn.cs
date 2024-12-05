@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class GameUIWaveBossBtn : MonoBehaviour
 {
-    public WaveBoss waveBoss;
-    public IWaveBoss iWaveBoss;
+    public WaveBossSpawner waveBossSpawner;
+    public IWaveBossSpawner iWaveBossSpawner;
 
     public GameObject waveBossPanel;
 
     private void Awake()
     {
-        iWaveBoss = waveBoss;
+        iWaveBossSpawner = waveBossSpawner;
     }
 
     public void clickWaveBossPanelBtn()
@@ -21,7 +21,7 @@ public class GameUIWaveBossBtn : MonoBehaviour
 
     public void clickWaveBossSpawnBtn()
     {
-        iWaveBoss.spawnWaveBoss();
+        iWaveBossSpawner.spawnWaveBoss();
         waveBossPanel.SetActive(false);
     }
 }

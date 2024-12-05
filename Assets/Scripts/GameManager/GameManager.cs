@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
     public IRound iRound;
     public EnemySpawner enemySpawner;
     public IEnemySpawner iEnemySpawner;
-    public Boss boss;
-    public IBoss iBoss;
+    public BossSpawner bossSpawner;
+    public IBossSpawner iBossSpawner;
 
     private void Awake()
     {
@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
         iSpawnTime = timer;
         iRound = round;
         iEnemySpawner = enemySpawner;
+        iBossSpawner = bossSpawner;
     }
 
     private void Update()
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
         }
         else if(iRound.isBossRound())
         {
-            iBoss.spawnBoss();
+            iBossSpawner.spawnBoss();
         }
     }
 }

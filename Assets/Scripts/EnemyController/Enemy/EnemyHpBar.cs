@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHpBar
+public class EnemyHpBar : MonoBehaviour
 {
+    public Enemy enemy;
+
     public GameObject hpBarBack;
     public Image hpBarFill;
 
@@ -13,9 +15,14 @@ public class EnemyHpBar
         hpBarFill.fillAmount = 1;
     }
 
-    public void hpBar(float curHp, float maxHp)
+    public void init(Enemy _enemy)
     {
-        hpBarFill.fillAmount = curHp / maxHp;
+        enemy = _enemy;
+    }
+
+    public void hpBar()
+    {
+        hpBarFill.fillAmount = enemy.curhp / enemy.enemyHp;
 
         hpBarBack.transform.LookAt(Camera.main.transform);
         hpBarBack.transform.Rotate(0, 180, 0);

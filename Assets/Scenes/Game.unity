@@ -7332,7 +7332,7 @@ MonoBehaviour:
   timer: {fileID: 200285177}
   round: {fileID: 1198892671}
   enemySpawner: {fileID: 2133943882}
-  boss: {fileID: 1732316955}
+  bossSpawner: {fileID: 0}
 --- !u!4 &680829026
 Transform:
   m_ObjectHideFlags: 0
@@ -15936,7 +15936,7 @@ GameObject:
   - component: {fileID: 1451534690}
   - component: {fileID: 1451534691}
   m_Layer: 0
-  m_Name: WaveBoss
+  m_Name: WaveBossSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15969,13 +15969,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45fe059c08a4af54795bc9e6c071d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: {fileID: 0}
-  round: {fileID: 0}
+  enemySpawner: {fileID: 2133943882}
   enemyMng: {fileID: 1666893690}
-  wayPoint: []
-  enemySpawnPoint: {fileID: 0}
-  enemy: []
-  enemySpawnDelay: 0
   waveBoss: {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
   waveBossBtn: {fileID: 1606077563}
   waveBossLevel: 0
@@ -17891,7 +17886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6222f386b96b09e47b477c548c5de780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveBoss: {fileID: 1451534691}
+  waveBossSpawner: {fileID: 0}
   waveBossPanel: {fileID: 1633475753}
 --- !u!1 &1607401790
 GameObject:
@@ -18289,7 +18284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c06d67842da7aff4bbe8e1847fcce576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveBoss: {fileID: 1451534691}
+  waveBossSpawner: {fileID: 0}
   waveBossLevelNameText: {fileID: 876138358}
 --- !u!1 &1634106654
 GameObject:
@@ -19970,7 +19965,7 @@ GameObject:
   - component: {fileID: 1732316956}
   - component: {fileID: 1732316955}
   m_Layer: 0
-  m_Name: Boss
+  m_Name: BossSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19988,13 +19983,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad948bc072f4d4343ba17dd50f8dcbfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: {fileID: 0}
-  round: {fileID: 0}
-  enemyMng: {fileID: 0}
-  wayPoint: []
-  enemySpawnPoint: {fileID: 0}
-  enemy: []
-  enemySpawnDelay: 0
+  enemySpawner: {fileID: 2133943882}
+  enemyMng: {fileID: 1666893690}
+  timer: {fileID: 200285177}
+  boss: {fileID: 0}
 --- !u!4 &1732316956
 Transform:
   m_ObjectHideFlags: 0
@@ -22239,7 +22231,7 @@ MonoBehaviour:
   unitListB:
   - {fileID: 6393974813386716368, guid: 459f79a004eb51144840e79b6950c697, type: 3}
   unitListC:
-  - {fileID: 6393974813386716368, guid: 459f79a004eb51144840e79b6950c697, type: 3}
+  - {fileID: 4132312772176831909, guid: 64b182395c0b6744a920c74bce3ece13, type: 3}
   groundNum: 0
 --- !u!1 &1980817090
 GameObject:

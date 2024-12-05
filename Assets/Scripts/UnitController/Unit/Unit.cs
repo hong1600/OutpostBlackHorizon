@@ -147,16 +147,16 @@ public abstract class Unit : MonoBehaviour
     {
         switch(curState) 
         {
-            case eUnitAI.eAI_CREATE:
-                anim.SetBool("isAttack", false);
+            case eUnitAI.CREATE:
+                anim.SetInteger("isAttack", (int)EUnitAnim.IDLE);
                 break;
-            case eUnitAI.eAI_SEARCH:
-                anim.SetBool("isAttack", false);
+            case eUnitAI.SEARCH:
+                anim.SetInteger("isAttack", (int)EUnitAnim.IDLE);
                 break;
-            case eUnitAI.eAI_ATTACK:
-                anim.SetBool("isAttack", true);
+            case eUnitAI.ATTACK:
+                anim.SetInteger("isAttack", (int)EUnitAnim.ATTACK);
                 break;
-            case eUnitAI.eAI_RESET:
+            case eUnitAI.RESET:
                 break;
         }
     }
