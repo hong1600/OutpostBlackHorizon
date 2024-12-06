@@ -59,6 +59,8 @@ public abstract class Unit : MonoBehaviour
         }
 
         iUnitUpgrader.missUpgrade(lastUpgrade, this);
+
+        rotationSpeed = 5f;
     }
 
     private void Update()

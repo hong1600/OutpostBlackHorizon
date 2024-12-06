@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour
     public EnemyType enemyType;
 
     public EnemyAI enemyAI;
-    public EnemyHpBar enemyHpBar;
 
     public EnemySpawner enemySpawner;
     public IEnemySpawner iEnemySpawner;

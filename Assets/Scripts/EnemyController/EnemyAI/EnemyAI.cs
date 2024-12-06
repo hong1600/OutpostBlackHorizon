@@ -52,7 +52,6 @@ public class EnemyAI
         {
             enemy.move();
             enemy.turn();
-            enemy.enemyHpBar.hpBar();
         }
         else if (enemy.isStay == true)
         {
