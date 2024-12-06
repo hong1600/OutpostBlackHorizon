@@ -4,12 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum EnemyType { Nomal, WaveBoss, boss };
-
 public class Enemy : MonoBehaviour
 {
-    public EnemyType enemyType;
-
     public EnemyAI enemyAI;
 
     public EnemySpawner enemySpawner;
@@ -40,16 +36,7 @@ public class Enemy : MonoBehaviour
     public float rotationSpeed;
     public bool isStay;
 
-    [Header("Boss")]
-    public TextMeshProUGUI bossTimeText;
-    public float bosstime;
-
-    private void Awake()
-    {
-        bosstime = 60f;
-    }
-
-    public void init(EnemyData enemyData)
+    public void initEnemy(EnemyData enemyData)
     {
         enemyAI = new EnemyAI();
         enemyAI.init(this);
@@ -136,26 +123,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void die()
+    public virtual void die()
     {
-        switch (enemyType) 
-        {
-            case EnemyType.Nomal:
-                iGoldCoin.setGold(1);
-                break;
-            case EnemyType.WaveBoss:
-                iGoldCoin.setCoin(2);
-                iWaveBossSpawner.setWaveBossDelay(25f);
-                break;
-            case EnemyType.boss:
-                iGoldCoin.setGold(300);
-                iGoldCoin.setCoin(4);
-                iRound.setBossRound(false);
-                iTimer.setSec(15f);
-                iEnemySpawner.setEnemySpawnDelay(0.85f);
-                break;
-        }
-
         Destroy(gameObject, 0.5f);
         rewarder.rewardGold += 50;
         rewarder.rewardGem += 10;
@@ -173,30 +142,10 @@ public class Enemy : MonoBehaviour
             case eEnemyAI.MOVE:
                 anim.SetInteger("enemyAnim", (int)EEnemyAnim.RUN);
                 break;
+            case eEnemyAI.DIE:
+                anim.SetInteger("enemyAnim", (int)EEnemyAnim.DIE);
+                break;
+
         }
     }
-
-
-    //private void waveBossTimer()
-    //{
-    //    bosstime -= Time.deltaTime;
-    //    bossTimeText.text = bosstime.ToString("F1")+"s";
-
-    //    if (bosstime <= 0)
-    //    {
-    //        Destroy(this.gameObject);
-    //        waveBossSpawner.wavebossDelay = 25;
-    //    }
-    //}
-
-    //private void bossTimer()
-    //{
-    //    bosstime -= Time.deltaTime;
-    //    bossTimeText.text = bosstime.ToString("F1") + "s";
-
-    //    if (bosstime <= 0)
-    //    {
-    //        gameStateCheck.gameOver = true;
-    //    }
-    //}
 }

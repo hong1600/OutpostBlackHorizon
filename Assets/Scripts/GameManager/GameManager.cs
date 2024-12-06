@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public IRound iRound;
     public EnemySpawner enemySpawner;
     public IEnemySpawner iEnemySpawner;
+    public WaveBossSpawner waveBossSpawner;
+    public IWaveBossSpawner iWaveBossSpawner;
     public BossSpawner bossSpawner;
     public IBossSpawner iBossSpawner;
 
@@ -34,11 +36,13 @@ public class GameManager : MonoBehaviour
         iSpawnTime = timer;
         iRound = round;
         iEnemySpawner = enemySpawner;
+        iWaveBossSpawner = waveBossSpawner;
         iBossSpawner = bossSpawner;
     }
 
     private void Update()
     {
+        iWaveBossSpawner.spawnWaveBossTime();
         if (!iRound.isBossRound())
         {
             iTimer.timer();

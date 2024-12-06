@@ -24,7 +24,7 @@ public class Round : MonoBehaviour, IRound
 
     public void roundCheck()
     {
-        if (curRound == 5 || curRound == 10)
+        if (curRound == 10)
         {
             bossRound = true;
         }

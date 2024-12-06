@@ -7,6 +7,7 @@ public interface IWaveBossSpawner
     int getWaveBossLevel();
     void setWaveBossDelay(float value);
     void spawnWaveBoss();
+    void spawnWaveBossTime();
 }
 
 public class WaveBossSpawner : MonoBehaviour, IWaveBossSpawner
@@ -18,22 +19,26 @@ public class WaveBossSpawner : MonoBehaviour, IWaveBossSpawner
 
     public GameObject waveBoss;
     public GameObject waveBossBtn;
+    public GameObject waveBossPanel;
     public int waveBossLevel;
     public float wavebossDelay;
 
     private void Awake()
     {
+        iEnemySpawner = enemySpawner;
+        iEnemyMng = enemyMng;
+
         waveBossLevel = 1;
         wavebossDelay = 25f;
     }
 
     public  void spawnWaveBoss()
     {
-        waveBossBtn.SetActive(false);
+        waveBossPanel.SetActive(false);
 
         Instantiate(waveBoss, iEnemySpawner.getEnemySpawnPoint().position,
         Quaternion.identity, iEnemyMng.getEnemyParent().transform);
-        wavebossDelay = 1000f;
+        wavebossDelay = 25f;
     }
 
     public void spawnWaveBossTime()

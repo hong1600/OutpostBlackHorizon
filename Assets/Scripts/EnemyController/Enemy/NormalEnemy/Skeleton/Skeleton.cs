@@ -8,6 +8,6 @@ public class Skeleton : NormalEnemy
 
     private void Awake()
     {
-        init(enemyData);
+        initEnemy(enemyData);
     }
 }

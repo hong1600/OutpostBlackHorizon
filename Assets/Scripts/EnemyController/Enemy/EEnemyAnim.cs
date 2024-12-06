@@ -6,4 +6,5 @@ public enum EEnemyAnim
 {
     RUN,
     IDLE,
+    DIE,
 }
