@@ -15971,7 +15971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawner: {fileID: 2133943882}
   enemyMng: {fileID: 1666893690}
-  waveBoss: {fileID: 8858051749441068820, guid: 40f8affac94e74e4bb4cc0137e24dde0, type: 3}
+  waveBoss: {fileID: 8264352169878920943, guid: 7005ecdff0bdb1245a38892efaf4a2b7, type: 3}
   waveBossBtn: {fileID: 1606077563}
   waveBossPanel: {fileID: 1633475753}
   waveBossLevel: 0
@@ -17773,7 +17773,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1606077564
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20004,7 +20004,7 @@ MonoBehaviour:
   enemySpawner: {fileID: 2133943882}
   enemyMng: {fileID: 1666893690}
   timer: {fileID: 200285177}
-  boss: {fileID: 0}
+  boss: {fileID: 8060669045897238937, guid: 007ddaf2c46d0d04e8ef3a9998824d15, type: 3}
 --- !u!4 &1732316956
 Transform:
   m_ObjectHideFlags: 0
@@ -24307,27 +24307,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 455fd8466de28c54cbe370fd2425e582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyMng: {fileID: 1666893690}
   timer: {fileID: 200285177}
   round: {fileID: 1198892671}
-  enemyMng: {fileID: 1666893690}
+  rewarder: {fileID: 906175363}
+  goldCoin: {fileID: 983633152}
+  waveBossSpawner: {fileID: 1451534691}
+  bossSpawner: {fileID: 1732316955}
+  enemyList:
+  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
+  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
+  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
+  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
+  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
+  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
+  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
+  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
+  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
+  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
+  enemySpawnPoint: {fileID: 630414515}
   wayPoint:
   - {fileID: 2079895262}
   - {fileID: 450474529}
   - {fileID: 1915524540}
   - {fileID: 982826244}
-  enemySpawnPoint: {fileID: 630414515}
-  enemy:
-  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
-  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
-  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
-  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
-  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
-  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
-  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
-  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
-  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
-  - {fileID: 8858051749441068820, guid: 4c67ed6c086451b4db54ac4d24b626bb, type: 3}
   enemySpawnDelay: 0
+  curEnemy: 0
 --- !u!1001 &2998220381457422405
 PrefabInstance:
   m_ObjectHideFlags: 0

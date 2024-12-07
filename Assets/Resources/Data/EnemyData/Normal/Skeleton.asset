@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d6fd142b39069b46aec3245bdf56a3c, type: 3}
-  m_Name: WaveBoss
+  m_Name: Skeleton
   m_EditorClassIdentifier: 
-  enemyName: WaveBoss
-  enemySpeed: 1
-  enemyHp: 500
+  enemyName: Skeleton
+  enemySpeed: 3
+  enemyHp: 50
+  rotationSpeed: 5
+  hpBar: {fileID: 1202207135065193927, guid: 7866c545d9433f34f92e58e696884704, type: 3}

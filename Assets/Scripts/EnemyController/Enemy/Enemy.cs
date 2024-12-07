@@ -4,79 +4,67 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     public EnemyAI enemyAI;
 
-    public EnemySpawner enemySpawner;
     public IEnemySpawner iEnemySpawner;
-    public WaveBossSpawner waveBossSpawner;
-    public IWaveBossSpawner iWaveBossSpawner;
-    public Rewarder rewarder;
     public IRewarder iRewarder;
-    public GoldCoin goldCoin;
     public IGoldCoin iGoldCoin;
-    public Timer timer;
     public ITimer iTimer;
-    public Round round;
     public IRound iRound;
+    public IWaveBossSpawner iWaveBossSpawner;
+    public IBossSpawner iBossSpawner;
 
-    [Header("Enemy")]
     public BoxCollider box;
     public Animator anim;
+
+    public string enemyName;
     public float enemyHp;
     public float curhp;
-    public string enemyName;
     public float enemySpeed;
     public Transform[] wayPoint;
-    public Transform target;
-    public int wayPointIndex;
-    public bool isDie;
     public Vector3 wayPointdir;
+    public int wayPointIndex;
+    public Transform target;
     public float rotationSpeed;
+    public bool isDie;
     public bool isStay;
 
-    public void initEnemy(EnemyData enemyData)
+    public void initEnemyData(EnemyData enemyData)
     {
-        enemyAI = new EnemyAI();
-        enemyAI.init(this);
+        if(iBossSpawner != null) 
+        {
+            box = this.GetComponent<BoxCollider>();
+            anim = this.GetComponent<Animator>();
 
-        enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
-        iEnemySpawner = enemySpawner;
+            enemyName = enemyData.enemyName;
+            enemyHp = enemyData.enemyHp;
+            curhp = enemyHp;
+            enemySpeed = enemyData.enemySpeed;
+            rotationSpeed = enemyData.rotationSpeed;
 
-        waveBossSpawner = GameObject.Find("WaveBossSpawner").GetComponent<WaveBossSpawner>();
-        iWaveBossSpawner = waveBossSpawner;
+            wayPoint = iEnemySpawner.getWayPoint();
+            wayPointIndex = 1;
+            target = wayPoint[wayPointIndex];
 
-        rewarder = GameObject.Find("Rewarder").GetComponent<Rewarder>();
-        iRewarder = rewarder;
+            if (enemyData.hpBar != null)
+            {
+                Instantiate(enemyData.hpBar, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+                    Quaternion.identity, transform);
+            }
 
-        goldCoin = GameObject.Find("GoldCoin").GetComponent<GoldCoin>();
-        iGoldCoin = goldCoin;
-
-        timer = GameObject.Find("Timer").GetComponent<Timer>();
-        iTimer = timer;
-
-        round = GameObject.Find("Round").GetComponent<Round>();
-        iRound = round;
-
-        box = this.GetComponent<BoxCollider>();
-        anim = this.GetComponent<Animator>();
-
-        enemyName = enemyData.enemyName;
-        enemyHp = enemyData.enemyHp;
-        enemySpeed = enemyData.enemySpeed;
-        curhp = enemyHp;
-
-        wayPoint = iEnemySpawner.getWayPoint();
-        wayPointIndex = 1;
-        target = wayPoint[wayPointIndex];
-
-        rotationSpeed = 5;
+            enemyAI = new EnemyAI();
+            enemyAI.init(this);
+        }
     }
 
     private void Update()
     {
-        enemyAI.State();
+        if (enemyAI != null)
+        {
+            enemyAI.State();
+        }
     }
 
     public void move()
@@ -89,13 +77,6 @@ public class Enemy : MonoBehaviour
         {
             nextMove();
         }
-    }
-
-    public void turn()
-    {
-        Quaternion rotation = Quaternion.LookRotation(new Vector3(wayPointdir.x, 0, wayPointdir.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
-            rotationSpeed * Time.deltaTime);
     }
 
     public void nextMove()
@@ -112,6 +93,13 @@ public class Enemy : MonoBehaviour
         target = wayPoint[wayPointIndex];
     }
 
+    public void turn()
+    {
+        Quaternion rotation = Quaternion.LookRotation(new Vector3(wayPointdir.x, 0, wayPointdir.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
+            rotationSpeed * Time.deltaTime);
+    }
+
     public void takeDamage(int damage)
     {
         curhp -= damage;
@@ -126,10 +114,10 @@ public class Enemy : MonoBehaviour
     public virtual void die()
     {
         Destroy(gameObject, 0.5f);
-        rewarder.rewardGold += 50;
-        rewarder.rewardGem += 10;
-        rewarder.rewardPaper += 20;
-        rewarder.rewardExp += 1;
+        iRewarder.addRewardGold(50);
+        iRewarder.addRewardGem(10);
+        iRewarder.addRewardPaper(20);
+        iRewarder.addRewardExp(1);
     }
 
     public void changeAnim(eEnemyAI curState)

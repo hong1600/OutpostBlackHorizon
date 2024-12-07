@@ -9,4 +9,6 @@ public class EnemyData : ScriptableObject
     public string enemyName;
     public float enemySpeed;
     public float enemyHp;
+    public float rotationSpeed;
+    public GameObject hpBar;
 }

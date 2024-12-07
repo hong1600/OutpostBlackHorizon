@@ -23,9 +23,15 @@ public class BossSpawner : MonoBehaviour, IBossSpawner
     {
         if (iEnemySpawner.getEnemySpawnDelay() < 0)
         {
-            Instantiate(boss, iEnemySpawner.getEnemySpawnPoint().transform.position,
+            GameObject obj = Instantiate(boss, iEnemySpawner.getEnemySpawnPoint().transform.position,
             Quaternion.identity, iEnemyMng.getEnemyParent().transform);
+
+            Enemy enemy = obj.GetComponent<Enemy>();
+
+            iEnemySpawner.initEnemy(enemy);
+
             iEnemySpawner.setEnemySpawnDelay(100f);
+
             iSpawnTime.setSpawnTime(false);
         }
     }

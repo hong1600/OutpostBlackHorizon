@@ -28,12 +28,12 @@ public class WaveBoss : Enemy
     public void waveBossTimer()
     {
         waveBossTime -= Time.deltaTime;
-        waveBossText.text = waveBossTime.ToString("F1") + "s";
+        //waveBossText.text = waveBossTime.ToString("F1") + "s";
 
         if (waveBossTime <= 0)
         {
             Destroy(this.gameObject);
-            waveBossSpawner.wavebossDelay = 25f;
+            iWaveBossSpawner.setWaveBossDelay(25f);
         }
     }
 }

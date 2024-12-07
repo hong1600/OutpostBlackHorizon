@@ -36,8 +36,13 @@ public class WaveBossSpawner : MonoBehaviour, IWaveBossSpawner
     {
         waveBossPanel.SetActive(false);
 
-        Instantiate(waveBoss, iEnemySpawner.getEnemySpawnPoint().position,
+        GameObject obj = Instantiate(waveBoss, iEnemySpawner.getEnemySpawnPoint().position,
         Quaternion.identity, iEnemyMng.getEnemyParent().transform);
+
+        Enemy enemy = obj.GetComponent<Enemy>();
+
+        iEnemySpawner.initEnemy(enemy);
+
         wavebossDelay = 25f;
     }
 

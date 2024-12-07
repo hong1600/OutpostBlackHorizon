@@ -4,10 +4,10 @@ using UnityEngine;
 
 public interface IRewarder
 {
-    public void setRewardGold(int value);
-    public void setRewardGem(int value);
-    public void setRewardPaper(int value);
-    public void setRewardExp(int value);
+    public void addRewardGold(int value);
+    public void addRewardGem(int value);
+    public void addRewardPaper(int value);
+    public void addRewardExp(int value);
 }
 
 public class Rewarder : MonoBehaviour, IRewarder
@@ -24,8 +24,8 @@ public class Rewarder : MonoBehaviour, IRewarder
         rewardPaper = 0;
         rewardExp = 0;
     }
-    public void setRewardGold(int value) { rewardGold += value; }
-    public void setRewardGem(int value) { rewardGem += value; }
-    public void setRewardPaper(int value) { rewardPaper += value; }
-    public void setRewardExp(int value) { rewardExp += value; }
+    public void addRewardGold(int value) { rewardGold += value; }
+    public void addRewardGem(int value) { rewardGem += value; }
+    public void addRewardPaper(int value) { rewardPaper += value; }
+    public void addRewardExp(int value) { rewardExp += value; }
 }

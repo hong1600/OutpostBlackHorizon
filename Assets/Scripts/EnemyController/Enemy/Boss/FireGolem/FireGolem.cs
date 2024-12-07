@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skeleton : NormalEnemy
+public class FireGolem : Boss
 {
     public EnemyData enemyData;
 
-    public void Start()
+    private void Start()
     {
         initEnemyData(enemyData);
     }

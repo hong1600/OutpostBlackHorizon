@@ -6,9 +6,9 @@ public class Golem : WaveBoss
 {
     public EnemyData enemyData;
 
-    private void Awake()
+    private void Start()
     {
         initWaveBoss();
-        initEnemy(enemyData);
+        initEnemyData(enemyData);
     }
 }
