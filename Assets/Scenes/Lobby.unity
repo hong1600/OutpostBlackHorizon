@@ -186,7 +186,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3468597}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -200,7 +200,7 @@ RectTransform:
   - {fileID: 206799273}
   - {fileID: 1380540232}
   - {fileID: 1539918004}
-  m_Father: {fileID: 549483765}
+  m_Father: {fileID: 2045072786}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1085,7 +1085,7 @@ SpriteRenderer:
   m_Size: {x: 6, y: 12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &77973477
@@ -1169,9 +1169,42 @@ SpriteRenderer:
   m_Size: {x: 6, y: 12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &79880480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 79880481}
+  m_Layer: 0
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &79880481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79880480}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 549483765}
+  - {fileID: 2045072786}
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &80414560
 GameObject:
   m_ObjectHideFlags: 0
@@ -4227,7 +4260,7 @@ SpriteRenderer:
   m_Size: {x: 6, y: 12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &327866902
@@ -7283,7 +7316,7 @@ GameObject:
   - component: {fileID: 549483767}
   - component: {fileID: 549483766}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: HUDCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7301,18 +7334,13 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1660108012}
-  - {fileID: 1184464882}
-  - {fileID: 1847498323}
-  - {fileID: 3468600}
-  - {fileID: 719556422}
   - {fileID: 629529480}
   - {fileID: 1164849943}
   - {fileID: 1770096869}
   - {fileID: 2069938609}
   - {fileID: 833014502}
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 79880481}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9100,7 +9128,7 @@ RectTransform:
   - {fileID: 1789860629}
   - {fileID: 977406121}
   - {fileID: 1684315410}
-  m_Father: {fileID: 549483765}
+  m_Father: {fileID: 2045072786}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -12712,7 +12740,7 @@ SpriteRenderer:
   m_Size: {x: 6, y: 12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &929562928
@@ -13610,7 +13638,7 @@ SpriteRenderer:
   m_Size: {x: 5.986111, y: 12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &963194225
@@ -13821,7 +13849,7 @@ SpriteRenderer:
   m_Size: {x: 5.986111, y: 12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &977406120
@@ -15141,7 +15169,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1114444516
 MonoBehaviour:
@@ -15156,154 +15184,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btn: {fileID: 1907127530}
-  levelText: {fileID: 502107543}
-  goldText: {fileID: 1928580627}
-  gemText: {fileID: 200044872}
-  nameText: {fileID: 1077290181}
-  expSlider: {fileID: 1826118710}
-  curItems:
-    index: 0
-    treasureName: 
-    treasureLevel: 0
-    treasureCurExp: 0
-    treasureMaxExp: 0
-    treasureCost: 0
-    treasureBase: 0
-    treasureUpgrade: 0
-    treasureDc: 
-    storeCost: 0
-    treasureImg: {fileID: 0}
-  treasureDcPanel: {fileID: 1539918003}
-  treasureNameText: {fileID: 894119469}
-  treasureLevelText: {fileID: 450337035}
-  treasureExpText: {fileID: 1977167025}
-  treasureUpgradeText: {fileID: 1691492775}
-  treasureCostText: {fileID: 246785716}
-  treasureImg: {fileID: 408401638}
-  treasureFill: {fileID: 1106280977}
-  treasureSlider:
-  - {fileID: 422511767}
-  - {fileID: 257642470}
-  - {fileID: 340141188}
-  - {fileID: 942671574}
-  - {fileID: 1267708072}
-  - {fileID: 377817755}
-  - {fileID: 339861829}
-  - {fileID: 381170609}
-  treasureLevel:
-  - {fileID: 1760751213}
-  - {fileID: 2007378569}
-  - {fileID: 493092988}
-  - {fileID: 556068977}
-  - {fileID: 946786292}
-  - {fileID: 947604196}
-  - {fileID: 736933175}
-  - {fileID: 794949665}
-  treasureExp:
-  - {fileID: 1949266570}
-  - {fileID: 706483215}
-  - {fileID: 754493781}
-  - {fileID: 235705649}
-  - {fileID: 1977660749}
-  - {fileID: 232104339}
-  - {fileID: 1801818149}
-  - {fileID: 1763950909}
-  curHero:
-    index: 0
-    unitName: 
-    unitDamage: 0
-    attackSpeed: 0
-    attackRange: 0
-    unitLevel: 0
-    skill1Name: 
-    unitUpgradeCost: 0
-    unitStoreCost: 0
-    unitCurExp: 0
-    unitMaxExp: 0
-    unitGrade: 0
-    unitImg: {fileID: 0}
-  heroDcPanel: {fileID: 1913660361}
-  heroNameText: {fileID: 407873315}
-  heroLevelText: {fileID: 1747830288}
-  heroDamageText: {fileID: 1505412583}
-  heroAttackSpeedText: {fileID: 327866903}
-  heroSkillNameText1: {fileID: 168121837}
-  heroSkillNameText2: {fileID: 652464343}
-  heroUpgradeCost: {fileID: 2126078663}
-  heroImg: {fileID: 2035270449}
-  heroSlider: {fileID: 1795991111}
-  heroSliderText: {fileID: 858756222}
-  curUnit:
-    index: 0
-    unitName: 
-    unitDamage: 0
-    attackSpeed: 0
-    attackRange: 0
-    unitLevel: 0
-    skill1Name: 
-    unitUpgradeCost: 0
-    unitStoreCost: 0
-    unitCurExp: 0
-    unitMaxExp: 0
-    unitGrade: 0
-    unitImg: {fileID: 0}
-  curItem:
-    index: 0
-    treasureName: 
-    treasureLevel: 0
-    treasureCurExp: 0
-    treasureMaxExp: 0
-    treasureCost: 0
-    treasureBase: 0
-    treasureUpgrade: 0
-    treasureDc: 
-    storeCost: 0
-    treasureImg: {fileID: 0}
-  storeUnitBtn:
-  - {fileID: 443880799}
-  - {fileID: 127153453}
-  - {fileID: 1664005870}
-  - {fileID: 888253446}
-  - {fileID: 2073467272}
-  - {fileID: 793056520}
-  storeUnits:
-  - {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
-  - {fileID: 11400000, guid: 23f56d5d9bacb36439610d6f61ae65e8, type: 2}
-  - {fileID: 11400000, guid: 6fe336f25d5f7e645a7df9d26d6bda97, type: 2}
-  - {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
-  storeItems:
-  - {fileID: 11400000, guid: 3c987688cd443c543bef7873426eefbe, type: 2}
-  - {fileID: 11400000, guid: 52e90990357f3454b970605f2b548503, type: 2}
-  - {fileID: 11400000, guid: 631fcc07e83eee042a1ad29d210e3157, type: 2}
-  - {fileID: 11400000, guid: d7261f93391faa1438692694bae10e39, type: 2}
-  - {fileID: 11400000, guid: 3436f53bb57a7324caf99d3484358838, type: 2}
-  - {fileID: 11400000, guid: 4d59f16b98fa2b84f8026f5e1247eb88, type: 2}
-  - {fileID: 11400000, guid: c8f188bb44a133e4e9467683f82e93dc, type: 2}
-  - {fileID: 11400000, guid: d8aada2e95c2a534985ff2fa2b481adf, type: 2}
-  storeUnitsImg:
-  - {fileID: 764028516}
-  - {fileID: 53294569}
-  - {fileID: 1139235374}
-  - {fileID: 1394954214}
-  - {fileID: 457696016}
-  - {fileID: 784884201}
-  storeUnitsNameText:
-  - {fileID: 1722844896}
-  - {fileID: 1845274497}
-  - {fileID: 450996643}
-  - {fileID: 1305641012}
-  - {fileID: 1609391847}
-  - {fileID: 1122993128}
-  storeUnitsCostText:
-  - {fileID: 1222920106}
-  - {fileID: 1816711071}
-  - {fileID: 2059617287}
-  - {fileID: 929562930}
-  - {fileID: 1724500563}
-  - {fileID: 1268774184}
-  storeUnitDcPanel: {fileID: 1532771425}
-  storeUnitsDcImg: {fileID: 1399845819}
-  storeUnitsDcCost: {fileID: 34235488}
 --- !u!1 &1122993126
 GameObject:
   m_ObjectHideFlags: 0
@@ -16171,7 +16051,7 @@ SpriteRenderer:
   m_Size: {x: 6, y: 12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1183135836
@@ -16314,14 +16194,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184464879}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 583314661}
   - {fileID: 1913660366}
-  m_Father: {fileID: 549483765}
+  m_Father: {fileID: 2045072786}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -19539,7 +19419,7 @@ SpriteRenderer:
   m_Size: {x: 0.55, y: 0.44}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1497542007
@@ -21087,7 +20967,7 @@ RectTransform:
   m_Children:
   - {fileID: 804622371}
   - {fileID: 338733491}
-  m_Father: {fileID: 549483765}
+  m_Father: {fileID: 2045072786}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -24182,7 +24062,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847498322}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24195,7 +24075,7 @@ RectTransform:
   - {fileID: 793056518}
   - {fileID: 1020053680}
   - {fileID: 1532771426}
-  m_Father: {fileID: 549483765}
+  m_Father: {fileID: 2045072786}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -24398,7 +24278,7 @@ SpriteRenderer:
   m_Size: {x: 5.986111, y: 12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1880784983
@@ -24715,14 +24595,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1535592c486a3f4458b8a739c77dd8b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  treasureUI: {fileID: 0}
+  unitUI: {fileID: 0}
+  storeUI: {fileID: 0}
   heroPanel: {fileID: 1184464879}
   storePanel: {fileID: 1847498322}
   treasurePanel: {fileID: 3468597}
   optionPanel: {fileID: 12578478}
   settingPanel: {fileID: 719556421}
-  bgmImg: {fileID: 1762129407}
-  sfxImg: {fileID: 477223671}
-  mainUI: {fileID: 1114444516}
 --- !u!4 &1907127531
 Transform:
   m_ObjectHideFlags: 0
@@ -24736,7 +24616,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1911789303
 GameObject:
@@ -26522,7 +26402,7 @@ SpriteRenderer:
   m_Size: {x: 6, y: 12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2035270447
@@ -26601,6 +26481,113 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035270447}
   m_CullTransparentMesh: 1
+--- !u!1 &2045072785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2045072786}
+  - component: {fileID: 2045072789}
+  - component: {fileID: 2045072788}
+  - component: {fileID: 2045072787}
+  m_Layer: 0
+  m_Name: PopUpCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2045072786
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045072785}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1184464882}
+  - {fileID: 1847498323}
+  - {fileID: 3468600}
+  - {fileID: 719556422}
+  - {fileID: 1660108012}
+  m_Father: {fileID: 79880481}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &2045072787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045072785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &2045072788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045072785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &2045072789
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045072785}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &2051990727
 GameObject:
   m_ObjectHideFlags: 0
@@ -26766,7 +26753,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2057871790
 MonoBehaviour:
@@ -27964,7 +27951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5609326875289353199, guid: 33b0339096b651746b0a9244bf933086, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5609326875289353199, guid: 33b0339096b651746b0a9244bf933086, type: 3}
       propertyPath: m_LocalPosition.x
