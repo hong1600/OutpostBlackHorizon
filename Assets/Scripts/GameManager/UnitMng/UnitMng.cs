@@ -6,15 +6,20 @@ using UnityEngine.UI;
 
 public interface IUnitMng 
 {
+    event Action onUnitCountChange;
+    void addUnit(Unit unit);
+    void removeUnit(Unit unit);
     bool checkGround();
     List<GameObject> getUnitList(EUnitGrade unitType);
     List<GameObject> getUnitSpawnPointList();
     int getGroundNum();
-    List<Unit> getCurUnitList(); 
+    List<Unit> getCurUnitList();
 }
 
 public class UnitMng : MonoBehaviour, IUnitMng
 {
+    public event Action onUnitCountChange;
+
     public List<Unit> curUnitList = new List<Unit>();
     public List<GameObject> unitSpawnPointList = new List<GameObject>();
     public List<GameObject> unitListSS, unitListS, unitListA, unitListB, unitListC = new List<GameObject>();
@@ -49,6 +54,17 @@ public class UnitMng : MonoBehaviour, IUnitMng
                 default: 
                 return null;
         }
+    }
+    public void addUnit(Unit unit)
+    {
+        curUnitList.Add(unit);
+        onUnitCountChange?.Invoke();
+    }
+
+    public void removeUnit(Unit unit) 
+    {
+        curUnitList.Remove(unit);
+        onUnitCountChange?.Invoke();
     }
 
     public List<GameObject> getUnitSpawnPointList() { return unitSpawnPointList; }

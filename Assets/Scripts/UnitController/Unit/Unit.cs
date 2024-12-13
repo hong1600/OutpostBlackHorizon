@@ -12,8 +12,9 @@ public abstract class Unit : MonoBehaviour
     public int attackDamage;
     public int attackSpeed;
     public float attackRange;
-    public int lastUpgrade;
     public EUnitGrade eUnitGrade;
+    public Sprite UnitImg;
+    public int lastUpgrade;
 
     public UnitAI unitAI;
     public UnitSkill unitSkill;
@@ -41,20 +42,25 @@ public abstract class Unit : MonoBehaviour
         attackSpeed = unitData.attackSpeed;
         attackRange = unitData.attackRange;
         eUnitGrade = unitData.unitGrade;
+        UnitImg = unitData.unitImg;
+
 
         switch (eUnitGrade)
         {
             case EUnitGrade.C
-            : lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1]; 
+            : lastUpgrade = iUnitUpgrader.getUpgradeLevel()[0]; 
                 break;
             case EUnitGrade.B: 
-                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1]; 
+                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[0]; 
+                break;
+            case EUnitGrade.A:
+                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1];
                 break;
             case EUnitGrade.S: 
                 lastUpgrade = iUnitUpgrader.getUpgradeLevel()[2]; 
                 break;
             case EUnitGrade.SS: 
-                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[3];
+                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[2];
                 break;
         }
 
@@ -163,9 +169,9 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position, attackRange);
+    //}
 }

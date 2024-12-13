@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        iWaveBossSpawner.spawnWaveBossTime();
         if (!iRound.isBossRound())
         {
             iTimer.timer();

@@ -71,25 +71,25 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
                 GameObject spawnUnitS = Instantiate(iUnitMng.getUnitList(EUnitGrade.S)[randS],
                     iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
                     Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
-                iUnitMng.getCurUnitList().Add(spawnUnitS.GetComponent<Unit>());
+                iUnitMng.addUnit(spawnUnitS.GetComponent<Unit>());
                 break;
             case "A":
                 GameObject spawnUnitA = Instantiate(iUnitMng.getUnitList(EUnitGrade.A)[randA],
                     iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
                     Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
-                iUnitMng.getCurUnitList().Add(spawnUnitA.GetComponent<Unit>());
+                iUnitMng.addUnit(spawnUnitA.GetComponent<Unit>());
                 break;
             case "B":
                 GameObject spawnUnitB = Instantiate(iUnitMng.getUnitList(EUnitGrade.B)[randB],
                     iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
                     Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
-                iUnitMng.getCurUnitList().Add(spawnUnitB.GetComponent<Unit>());
+                iUnitMng.addUnit(spawnUnitB.GetComponent<Unit>());
                 break;
             case "C":
                 GameObject spawnUnitC = Instantiate(iUnitMng.getUnitList(EUnitGrade.C)[randC],
                     iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
                     Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
-                iUnitMng.getCurUnitList().Add(spawnUnitC.GetComponent<Unit>());
+                iUnitMng.addUnit(spawnUnitC.GetComponent<Unit>());
                 break;
         }
     }

@@ -23,49 +23,53 @@ public class UIUpgradePanel : MonoBehaviour
         iUnitUpgrader = unitUpgrader;
         iGoldCoin = goldCoin;
         iUnitSpawner = unitSpawner;
+
+        iGoldCoin.onGoldChanged += GoldCoinPanel;
+        iGoldCoin.onCoinChanged += GoldCoinPanel;
+        iUnitUpgrader.onUpgradeCostChange += upgradeCostPanel;
+        iUnitUpgrader.onUpgradeLevelChange += upgradeLevelPanel;
+        iUnitUpgrader.onUpgradePerChange += upgradePerPanel;
     }
 
-    private void upgradePanel()
+    private void Start()
+    {
+        GoldCoinPanel();
+        upgradeCostPanel();
+        upgradeLevelPanel();
+        upgradePerPanel();
+    }
+
+    private void GoldCoinPanel()
     {
         upgradeGoldText.text = iGoldCoin.getGold().ToString();
         upgradeCoinText.text = iGoldCoin.getCoin().ToString();
-        upgradeCostText[0].text = unitUpgrader.upgradeCost[0].ToString();
-        upgradeCostText[1].text = unitUpgrader.upgradeCost[1].ToString();
-        upgradeCostText[2].text = unitUpgrader.upgradeCost[2].ToString();
-        upgradeCostText[3].text = unitUpgrader.upgradeCost[3].ToString();
+    }
 
-        if (iUnitUpgrader.getUpgradeLevel()[0] < iUnitUpgrader.getUpgradeMaxLevel())
+    public void upgradeCostPanel()
+    {
+        for (int i = 0; i < upgradeCostText.Length; i++) 
         {
-            upgradeLevelText[0].text = "LV." + iUnitUpgrader.getUpgradeLevel()[0].ToString();
+            upgradeCostText[i].text = iUnitUpgrader.getUpgradeCost()[i].ToString();
         }
-        else
+    }
+
+    public void upgradeLevelPanel()
+    {
+        for (int i = 0; i < upgradeLevelText.Length; i++)
         {
-            upgradeLevelText[0].text = "LV.MAX";
+            if (iUnitUpgrader.getUpgradeLevel()[i] < iUnitUpgrader.getUpgradeMaxLevel())
+            {
+                upgradeLevelText[i].text = $"LV.{iUnitUpgrader.getUpgradeLevel()[i]}";
+            }
+            else if (iUnitUpgrader.getUpgradeLevel()[i] >= iUnitUpgrader.getUpgradeMaxLevel())
+            {
+                upgradeLevelText[i].text = "LV.MAX";
+            }
         }
-        if (iUnitUpgrader.getUpgradeLevel()[1] < iUnitUpgrader.getUpgradeMaxLevel())
-        {
-            upgradeLevelText[1].text = "LV." + iUnitUpgrader.getUpgradeLevel()[1].ToString();
-        }
-        else
-        {
-            upgradeLevelText[1].text = "LV.MAX";
-        }
-        if (iUnitUpgrader.getUpgradeLevel()[2] < iUnitUpgrader.getUpgradeMaxLevel())
-        {
-            upgradeLevelText[2].text = "LV." + iUnitUpgrader.getUpgradeLevel()[2].ToString();
-        }
-        else
-        {
-            upgradeLevelText[2].text = "LV.MAX";
-        }
-        if (iUnitUpgrader.getUpgradeLevel()[3] < iUnitUpgrader.getUpgradeMaxLevel())
-        {
-            upgradeLevelText[3].text = "LV." + iUnitUpgrader.getUpgradeLevel()[3].ToString();
-        }
-        else
-        {
-            upgradeLevelText[3].text = "LV.MAX";
-        }
+    }
+
+    public void upgradePerPanel()
+    {
         spawnPerText[0].text =
             $"일반 : {iUnitSpawner.getSelectWeight()[(int)iUnitUpgrader.getUpgradeLevel()[3] - 1][3]}%";
         spawnPerText[1].text =
@@ -73,7 +77,6 @@ public class UIUpgradePanel : MonoBehaviour
         spawnPerText[2].text =
             $"<color=purple>영웅 : {iUnitSpawner.getSelectWeight()[(int)iUnitUpgrader.getUpgradeLevel()[3] - 1][1]}%</color>";
         spawnPerText[3].text =
-            $"<color=yellow>전설 : {iUnitSpawner.getSelectWeight()[(int)unitUpgrader.upgradeCost[2] - 1][0]}%</color>";
+            $"<color=yellow>전설 : {iUnitSpawner.getSelectWeight()[(int)iUnitUpgrader.getUpgradeCost()[2] - 1][0]}%</color>";
     }
-
 }

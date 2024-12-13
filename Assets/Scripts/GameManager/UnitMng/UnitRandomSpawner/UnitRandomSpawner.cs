@@ -43,6 +43,18 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
         this.iUnitMng = iUnitMng;
     }
 
+    public void randSpawn(int index)
+    {
+        if (randomDelay == false && canSpawn(index))
+        {
+            StartCoroutine(RandSpawn(index));
+        }
+        else
+        {
+            return;
+        }
+    }
+
     public bool canSpawn(int index)
     {
         if (index == 0)
@@ -58,18 +70,6 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
             return spawnCoin2 <= iGoldCoin.getCoin();
         }
         return false;
-    }
-
-    public void randSpawn(int index)
-    {
-        if (randomDelay == false && canSpawn(index))
-        {
-            StartCoroutine(RandSpawn(index));
-        }
-        else
-        {
-            return;
-        }
     }
 
     IEnumerator RandSpawn(int index)
@@ -128,15 +128,15 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
         {
             case 0:
                 iGoldCoin.setCoin(-1);
-                return iUnitMng.getUnitList(EUnitGrade.B)[randB].GetComponent<SpriteRenderer>().sprite;
+                return iUnitMng.getUnitList(EUnitGrade.B)[randB].GetComponent<Unit>().UnitImg;
 
             case 1:
                 iGoldCoin.setCoin(-1);
-                return iUnitMng.getUnitList(EUnitGrade.A)[randA].GetComponent<SpriteRenderer>().sprite;
+                return iUnitMng.getUnitList(EUnitGrade.A)[randA].GetComponent<Unit>().UnitImg;
 
             case 2:
                 iGoldCoin.setCoin(-2);
-                return iUnitMng.getUnitList(EUnitGrade.S)[randS].GetComponent<SpriteRenderer>().sprite;
+                return iUnitMng.getUnitList(EUnitGrade.S)[randS].GetComponent<Unit>().UnitImg;
         }
         return null;
     }

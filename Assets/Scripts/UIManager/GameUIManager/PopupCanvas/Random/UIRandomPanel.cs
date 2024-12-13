@@ -13,9 +13,16 @@ public class UIRandomPanel : MonoBehaviour
     private void Awake()
     {
         iGoldCoin = goldCoin;
+
+        iGoldCoin.onCoinChanged += randomPanel;
     }
 
-    private void randomPanel()
+    private void Start()
+    {
+        myCoinText.text = iGoldCoin.getCoin().ToString();
+    }
+
+    public void randomPanel()
     {
         myCoinText.text = iGoldCoin.getCoin().ToString();
     }

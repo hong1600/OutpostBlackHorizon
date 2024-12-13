@@ -1864,9 +1864,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1136994913350202544}
   - component: {fileID: 7033455320432561726}
+  - component: {fileID: 1722044579429321578}
   - component: {fileID: -6818219973087777856}
   - component: {fileID: -6707017342592895480}
-  - component: {fileID: 1722044579429321578}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -1912,6 +1912,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1722044579429321578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596748220834623885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7675113a02aba3c4f91341f9e17d1ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitUpgrader: {fileID: 0}
+  unitName: 
+  attackDamage: 0
+  attackSpeed: 0
+  attackRange: 0
+  eUnitGrade: 4
+  UnitImg: {fileID: 21300000, guid: deb333aaa4acecd4199189f8bd17a504, type: 3}
+  lastUpgrade: 0
+  anim: {fileID: 0}
+  box: {fileID: 0}
+  target: {fileID: 0}
+  targets: []
+  rotationSpeed: 0
+  unitData: {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
 --- !u!65 &-6818219973087777856
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1960,31 +1986,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 10
   m_CollisionDetection: 0
---- !u!114 &1722044579429321578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3596748220834623885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7675113a02aba3c4f91341f9e17d1ced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitUpgrader: {fileID: 0}
-  unitName: 
-  attackDamage: 0
-  attackSpeed: 0
-  attackRange: 0
-  lastUpgrade: 0
-  eUnitGrade: 4
-  anim: {fileID: 0}
-  box: {fileID: 0}
-  target: {fileID: 0}
-  targets: []
-  rotationSpeed: 0
-  unitData: {fileID: 11400000, guid: 4d891f8b5c76e5e46a302beff550fad6, type: 2}
 --- !u!1 &4126164719873952329
 GameObject:
   m_ObjectHideFlags: 0

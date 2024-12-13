@@ -23,6 +23,8 @@ public class Timer : MonoBehaviour, ITimer, ISpawnTime
     public IRound iRound;
     public UIRoundPanel uiRoundPanel;
     public IUIRoundPanel iUIRoundPanel;
+    public UISpawnPointTimerPanel uiSpawnPointTimerPanel;
+    public IUISpawnPointTimerPanel iUISpawnPointTimerPanel;
 
     public bool timerRunning;
     public float min, sec;
@@ -32,6 +34,8 @@ public class Timer : MonoBehaviour, ITimer, ISpawnTime
     {
         iRound = round;
         iUIRoundPanel = uiRoundPanel;
+        iUISpawnPointTimerPanel = uiSpawnPointTimerPanel;
+
         spawnTime = false;
         min = 0.0f;
         sec = 4f;
@@ -46,7 +50,16 @@ public class Timer : MonoBehaviour, ITimer, ISpawnTime
         else
         {
             sec -= Time.deltaTime;
+
+            if(sec < 4) 
+            {
+                int intSec = (int)sec;
+
+                iUISpawnPointTimerPanel.getSpawnPointTimerPanel().SetActive(true);
+                iUISpawnPointTimerPanel.getSpawnPointTimerText().text = intSec.ToString();
+            }
         }
+
         int intsec = (int)sec;
 
         if (sec < 0f)
@@ -67,7 +80,7 @@ public class Timer : MonoBehaviour, ITimer, ISpawnTime
         iRound.roundCheck();
         sec = 20f;
         spawnTime = true;
-        //gameMainUI.spawnPointTimerPanel.SetActive(false);
+        iUISpawnPointTimerPanel.getSpawnPointTimerPanel().SetActive(false);
 
         yield return new WaitForSeconds(17);
 

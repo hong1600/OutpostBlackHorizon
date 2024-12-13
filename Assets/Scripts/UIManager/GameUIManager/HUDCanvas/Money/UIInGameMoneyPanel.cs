@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public interface IUIInGameMoneyPanel
-{
-    void inGameMoneyPanel();
-}
-
-public class UIInGameMoneyPanel : MonoBehaviour, IUIInGameMoneyPanel
+public class UIInGameMoneyPanel : MonoBehaviour
 {
     public GoldCoin goldCoin;
     public IGoldCoin iGoldCoin;
@@ -24,12 +19,26 @@ public class UIInGameMoneyPanel : MonoBehaviour, IUIInGameMoneyPanel
     {
         iGoldCoin = goldCoin;
         iUnitMng = unitMng;
+
+        iGoldCoin.onGoldChanged += inGameMoneyPanel;
+        iGoldCoin.onCoinChanged += inGameMoneyPanel;
+        iUnitMng.onUnitCountChange += unitCounterPanel;
+    }
+
+    private void Start()
+    {
+        inGameMoneyPanel();
+        unitCounterPanel();
     }
 
     public void inGameMoneyPanel()
     {
         myGoldText.text = iGoldCoin.getGold().ToString();
         myCoinText.text = iGoldCoin.getCoin().ToString();
-        unitCountText.text = $"{unitMng.curUnitList.Count.ToString()} / 20";
+    }
+
+    public void unitCounterPanel()
+    {
+        unitCountText.text = $"{iUnitMng.getCurUnitList().Count.ToString()} / 20";
     }
 }

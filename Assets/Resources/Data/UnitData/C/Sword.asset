@@ -18,7 +18,7 @@ MonoBehaviour:
   unitDamage: 20
   attackSpeed: 1
   attackRange: 5
-  unitImg: {fileID: 21300000, guid: 55f5648cfb0975146afb756790c1735f, type: 2}
+  unitImg: {fileID: 21300000, guid: deb333aaa4acecd4199189f8bd17a504, type: 3}
   unitLevel: 1
   skill1Name: "\uB178\uD68D"
   unitUpgradeCost: 1000

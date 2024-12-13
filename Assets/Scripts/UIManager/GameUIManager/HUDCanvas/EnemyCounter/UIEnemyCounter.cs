@@ -24,7 +24,7 @@ public class UIEnemyCounter : MonoBehaviour, IUIEnemyCounter
 
     public void enemyCounterPanel()
     {
-        monsterCountSlider.value = (float)enemyMng.enemyCount() / (float)enemyMng.maxEnemyCount;
-        monsterCountText.text = $"{enemyMng.curEnemyCount}  /  {enemyMng.maxEnemyCount}";
+        monsterCountSlider.value = iEnemyMng.enemyCount() / enemyMng.maxEnemyCount;
+        monsterCountText.text = $"{iEnemyMng.enemyCount()}  /  {enemyMng.maxEnemyCount}";
     }
 }
