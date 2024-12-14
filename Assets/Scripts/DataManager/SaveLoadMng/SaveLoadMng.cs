@@ -7,7 +7,7 @@ public class SaveLoadMng
 {
     public string path;
 
-    public SaveLoadMng()
+    public SaveLoadMng() 
     {
         path = Application.persistentDataPath + "/save.json";
     }
@@ -17,6 +17,7 @@ public class SaveLoadMng
         string data = JsonUtility.ToJson(DataManager.instance.playerdata, true);
         File.WriteAllText(path, data);
     }
+
     public void loadData()
     {
         if (File.Exists(path))

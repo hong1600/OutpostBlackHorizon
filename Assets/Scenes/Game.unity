@@ -1170,90 +1170,14 @@ MonoBehaviour:
     m_Left: 0
     m_Right: 0
     m_Top: 0
-    m_Bottom: -15
+    m_Bottom: -60
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 50, y: 70}
-  m_Spacing: {x: 3, y: 0}
+  m_CellSize: {x: 130, y: 170}
+  m_Spacing: {x: 25, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!1 &109148031
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 109148032}
-  - component: {fileID: 109148034}
-  - component: {fileID: 109148033}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &109148032
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109148031}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 431448999}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -169, y: 5}
-  m_SizeDelta: {x: 170, y: 110}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &109148033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109148031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: -3318188226485093758, guid: ae72133dacba6ec4eb33ecde48f50e56, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &109148034
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109148031}
-  m_CullTransparentMesh: 1
 --- !u!1 &119240613
 GameObject:
   m_ObjectHideFlags: 0
@@ -4527,7 +4451,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 109148032}
   - {fileID: 1580757497}
   m_Father: {fileID: 1273721604}
   m_RootOrder: -1
@@ -6075,9 +5998,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameBtn, Assembly-CSharp
-        m_MethodName: mixUnitSpawnBtn
+      - m_Target: {fileID: 1528861934}
+        m_TargetAssemblyTypeName: UIMixSpawnBtn, Assembly-CSharp
+        m_MethodName: onMixSpawn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7358,7 +7281,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680829024}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.0953965, y: 3.8948607, z: -8.864283}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8112,11 +8035,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 307376960}
   - {fileID: 719734489}
   - {fileID: 1528861929}
   - {fileID: 1654902938}
   - {fileID: 1018448852}
-  - {fileID: 307376960}
   - {fileID: 78625078}
   - {fileID: 86618403}
   - {fileID: 1606077564}
@@ -11486,7 +11409,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000864537}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9145021, y: 42.52366, z: -16.148005}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11960,10 +11883,10 @@ RectTransform:
   m_Father: {fileID: 884748071}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 183, y: 90}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1078571774
 MonoBehaviour:
@@ -14496,6 +14419,7 @@ GameObject:
   - component: {fileID: 1273721606}
   - component: {fileID: 1273721605}
   - component: {fileID: 1273721608}
+  - component: {fileID: 1273721609}
   m_Layer: 5
   m_Name: RightPanel
   m_TagString: Untagged
@@ -14594,9 +14518,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixUnitNameText: {fileID: 1580757498}
-  mixUnitImg1: {fileID: 109148033}
-  mixUnitImg2: {fileID: 1599385855}
+  mixUnitImg: {fileID: 1599385855}
   mixUnitData: []
+--- !u!114 &1273721609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273721603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa463c211be5eb418116870fd5abdfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixRightContent: {fileID: 96735053}
+  mixPanelPre:
+  - {fileID: 8606331769887594813, guid: f68c55b93e2292a468398487857b50ef, type: 3}
+  - {fileID: 8606331769887594813, guid: 18af238d581174d4c88deb6f12c52df6, type: 3}
+  - {fileID: 8606331769887594813, guid: fb4ce1d37e6e6e6418a24ac283412f69, type: 3}
+  - {fileID: 8606331769887594813, guid: 467c4832f5665d643b5b82773abdf358, type: 3}
+  curMixUnit: 0
+  needUnitList: []
 --- !u!1 &1274028189
 GameObject:
   m_ObjectHideFlags: 0
@@ -14719,7 +14662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitMng: {fileID: 1965737092}
-  rightSlot: {fileID: 0}
+  rightSlot: {fileID: 1273721609}
   needUnitList: []
   unitToMix: []
 --- !u!1 &1297151682
@@ -16631,18 +16574,18 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1518727240}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000042013486}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 521544491}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 300}
-  m_Pivot: {x: 0, y: 1}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1518727242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16658,13 +16601,13 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 10
+    m_Top: 30
     m_Bottom: 0
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 90, y: 90}
-  m_Spacing: {x: 0, y: 0}
+  m_CellSize: {x: 180, y: 180}
+  m_Spacing: {x: 0, y: 30}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1528861928
@@ -16679,6 +16622,7 @@ GameObject:
   - component: {fileID: 1528861933}
   - component: {fileID: 1528861932}
   - component: {fileID: 1528861931}
+  - component: {fileID: 1528861934}
   m_Layer: 5
   m_Name: MixPanel
   m_TagString: Untagged
@@ -16763,6 +16707,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1528861928}
   m_CullTransparentMesh: 1
+--- !u!114 &1528861934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528861928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff31c1521a970194ca75294630f23029, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitMixer: {fileID: 1291535300}
 --- !u!1 &1529450982
 GameObject:
   m_ObjectHideFlags: 0
@@ -20438,6 +20395,7 @@ GameObject:
   - component: {fileID: 1763518150}
   - component: {fileID: 1763518149}
   - component: {fileID: 1763518151}
+  - component: {fileID: 1763518152}
   m_Layer: 5
   m_Name: LeftPanel
   m_TagString: Untagged
@@ -20519,6 +20477,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 5, y: 5}
   m_UseGraphicAlpha: 1
+--- !u!114 &1763518152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763518147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e51de6541bb27e4993277a73c4bb59d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixLeftContent: {fileID: 1518727241}
+  MixBtnPre: {fileID: 4099380390002610551, guid: 4dfeeb089b16ab34c8f1e212d5ac2e80, type: 3}
 --- !u!1 &1776128796
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitGrade: 0
   index: 4
-  unitName: "\uC545\uB9C8"
+  unitName: "\uB300\uB9C8\uBC95\uC0AC"
   unitDamage: 100
   attackSpeed: 1
-  attackRange: 5
+  attackRange: 10
   unitImg: {fileID: 21300000, guid: 5de5f4f4defe03342b215c663b712f56, type: 3}
   unitLevel: 1
-  skill1Name: "\uBC88\uAC1C"
+  skill1Name: "\uB3C5\uAD6C\uB984"
   unitUpgradeCost: 10
   unitStoreCost: 3000
   unitCurExp: 0

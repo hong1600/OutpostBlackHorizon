@@ -10,7 +10,6 @@ public interface iUIMixRightSlot
 
 public class UIMixRightSlot : MonoBehaviour, iUIMixRightSlot
 {
-    public UnitDataMng unitDataMng;
     public IUnitDataMng iUnitDataMng;
 
     public Transform mixRightContent;
@@ -18,9 +17,10 @@ public class UIMixRightSlot : MonoBehaviour, iUIMixRightSlot
     public int curMixUnit;
     public List<UnitData> needUnitList = new List<UnitData>();
 
-    private void Awake()
+    private void Start()
     {
-        iUnitDataMng = unitDataMng;
+        iUnitDataMng = DataManager.instance.unitDataMng;
+
         loadRightUnit(0);
     }
 
@@ -41,26 +41,26 @@ public class UIMixRightSlot : MonoBehaviour, iUIMixRightSlot
             {
                 case EUnitGrade.C:
                     GameObject newslot0 = Instantiate(mixPanelPre[0], mixRightContent);
-                    UIMixSlot mNeed0 = newslot0.GetComponent<UIMixSlot>();
-                    mNeed0.setUnit(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i], i);
+                    UISetRightSlot mNeed0 = newslot0.GetComponent<UISetRightSlot>();
+                    mNeed0.setUnit(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i]);
                     needUnitList.Add(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i]);
                     break;
                 case EUnitGrade.B:
                     GameObject newslot1 = Instantiate(mixPanelPre[1], mixRightContent);
-                    UIMixSlot mNeed1 = newslot1.GetComponent<UIMixSlot>();
-                    mNeed1.setUnit(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i], i);
+                    UISetRightSlot mNeed1 = newslot1.GetComponent<UISetRightSlot>();
+                    mNeed1.setUnit(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i]);
                     needUnitList.Add(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i]);
                     break;
                 case EUnitGrade.A:
                     GameObject newslot2 = Instantiate(mixPanelPre[2], mixRightContent);
-                    UIMixSlot mNeed2 = newslot2.GetComponent<UIMixSlot>();
-                    mNeed2.setUnit(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i], i);
+                    UISetRightSlot mNeed2 = newslot2.GetComponent<UISetRightSlot>();
+                    mNeed2.setUnit(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i]);
                     needUnitList.Add(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i]);
                     break;
                 case EUnitGrade.S:
                     GameObject newslot3 = Instantiate(mixPanelPre[3], mixRightContent);
-                    UIMixSlot mNeed3 = newslot3.GetComponent<UIMixSlot>();
-                    mNeed3.setUnit(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i], i);
+                    UISetRightSlot mNeed3 = newslot3.GetComponent<UISetRightSlot>();
+                    mNeed3.setUnit(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i]);
                     needUnitList.Add(iUnitDataMng.getUnitData(EUnitGrade.SS)[num].mixUnit[i]);
                     break;
             }

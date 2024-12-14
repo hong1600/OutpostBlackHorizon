@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIMixLeftSlot : MonoBehaviour
+public class UIMixLeftPanel : MonoBehaviour
 {
-    public UnitDataMng unitDataMng;
     public IUnitDataMng iUnitDataMng;
 
     public Transform mixLeftContent;
@@ -13,16 +12,16 @@ public class UIMixLeftSlot : MonoBehaviour
 
     private void Awake()
     {
-        iUnitDataMng = unitDataMng;
-        loadLeftUnit();
+        iUnitDataMng = DataManager.instance.unitDataMng;
+        loadLeftPanel();
     }
 
-    private void loadLeftUnit()
+    private void loadLeftPanel()
     {
         for (int i = 0; i < iUnitDataMng.getUnitData(EUnitGrade.SS).Count; i++)
         {
-            GameObject newslot = Instantiate(MixBtnPre, mixLeftContent);
-            UIMixSlot mixslot = newslot.GetComponent<UIMixSlot>();
+            GameObject newBtn = Instantiate(MixBtnPre, mixLeftContent);
+            UISetLeftSlot mixslot = newBtn.GetComponent<UISetLeftSlot>();
             mixslot.setUnit(iUnitDataMng.getUnitData(EUnitGrade.SS)[i], i);
         }
     }

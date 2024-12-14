@@ -7,23 +7,22 @@ using UnityEngine.UI;
 public class UIMixRightPanel : MonoBehaviour
 {
     public TextMeshProUGUI mixUnitNameText;
-    public Image mixUnitImg1;
-    public Image mixUnitImg2;
-    public UnitData[] mixUnitData;
+    public Image mixUnitImg;
+    public List<UnitData> mixUnitData = new List<UnitData>();
 
     private void Start()
     {
+        mixUnitData = DataManager.instance.unitDataMng.getUnitData(EUnitGrade.SS);
+
         UnitData curUnit = mixUnitData[0];
         mixUnitNameText.text = mixUnitData[0].unitName;
-        mixUnitImg1.sprite = mixUnitData[0].unitImg;
-        mixUnitImg2.sprite = mixUnitData[0].unitImg;
+        mixUnitImg.sprite = mixUnitData[0].unitImg;
     }
 
     public void curMixPanel(int index)
     {
         UnitData curUnit = mixUnitData[index];
         mixUnitNameText.text = mixUnitData[index].unitName;
-        mixUnitImg1.sprite = mixUnitData[index].unitImg;
-        mixUnitImg2.sprite = mixUnitData[index].unitImg;
+        mixUnitImg.sprite = mixUnitData[index].unitImg;
     }
 }

@@ -27,12 +27,13 @@ public class DataManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
         DontDestroyOnLoad(this.gameObject);
 
         playerDataMng = new PlayerDataMng();
+        saveLoadMng = new SaveLoadMng();
         unitDataMng = new UnitDataMng();
         itemDataMng = new ItemDataMng();
-        saveLoadMng = new SaveLoadMng();
 
         saveLoadMng.loadData();
         playerDataMng.initialized();

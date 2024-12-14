@@ -13,7 +13,7 @@ public class UnitDataMng : IUnitDataMng
 
     public Dictionary<EUnitGrade, List<UnitData>> unitGradeDataDic = new Dictionary<EUnitGrade, List<UnitData>>();
 
-    public UnitDataMng()
+    public UnitDataMng() 
     {
         unit = DataManager.instance.unit;
         unitGradeData();

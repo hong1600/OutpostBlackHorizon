@@ -6,6 +6,7 @@ using UnityEngine;
 public interface IUnitMixer
 {
     void unitMixSpawn();
+    bool unitCanMix();
 }
 
 public class UnitMixer : MonoBehaviour, IUnitMixer
@@ -28,6 +29,20 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
     {
         unitToMix.Clear();
 
+        List<UnitData> needUnitList = iRightSlot.getNeedUnitList();
+
+        for (int i = 0; i < iUnitMng.getCurUnitList().Count; i++)
+        {
+            Unit fieldUnit = iUnitMng.getCurUnitList()[i];
+
+            for (int j = 0; j < needUnitList.Count; j++)
+            {
+                UnitData needUnit = needUnitList[j];
+
+                if(fieldUnit.unitName == needUnit.unitName && )
+            }
+        }
+
         foreach (Unit fieldUnit in iUnitMng.getCurUnitList())
         {
             foreach (UnitData needUnit in iRightSlot.getNeedUnitList())
@@ -40,7 +55,12 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
             }
         }
 
-        return unitToMix.Count == needUnitList.Count;
+        if( unitToMix.Count > 0 && unitToMix.Count == needUnitList.Count) 
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public void unitMixSpawn()
@@ -56,4 +76,6 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
         }
         else return;
     }
+
+
 }

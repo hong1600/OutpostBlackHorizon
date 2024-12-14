@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class PlayerDataMng
 {
-    public PlayerData playerData => DataManager.instance.playerdata;
+    public PlayerData playerData;
+
+    public PlayerDataMng()
+    {
+        playerData = DataManager.instance.playerdata;
+    }
 
     public void initialized()
     {
