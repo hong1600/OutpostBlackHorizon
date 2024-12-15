@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         if (!iRound.isBossRound())
         {
             iTimer.timer();
+
             if (iSpawnTime.isSpawnTime())
             {
                 iEnemySpawner.spawnEnemy();
@@ -54,5 +55,7 @@ public class GameManager : MonoBehaviour
         {
             iBossSpawner.spawnBoss();
         }
+
+        iWaveBossSpawner.spawnWaveBossTime();
     }
 }

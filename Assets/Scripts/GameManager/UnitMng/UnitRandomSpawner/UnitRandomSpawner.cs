@@ -47,6 +47,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
     {
         if (randomDelay == false && canSpawn(index))
         {
+            iUnitMng.checkGround();
             StartCoroutine(RandSpawn(index));
         }
         else

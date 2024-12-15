@@ -48,11 +48,11 @@ public abstract class Enemy : MonoBehaviour
             wayPointIndex = 1;
             target = wayPoint[wayPointIndex];
 
-            if (enemyData.hpBar != null)
-            {
-                Instantiate(enemyData.hpBar, new Vector3(transform.position.x, transform.position.y, transform.position.z),
-                    Quaternion.identity, transform);
-            }
+            //if (enemyData.hpBar != null)
+            //{
+            //    Instantiate(enemyData.hpBar, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+            //        Quaternion.identity, transform);
+            //}
 
             enemyAI = new EnemyAI();
             enemyAI.init(this);

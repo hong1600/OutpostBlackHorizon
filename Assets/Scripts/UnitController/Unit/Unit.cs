@@ -22,7 +22,6 @@ public abstract class Unit : MonoBehaviour
     public BoxCollider box;
 
     public GameObject target;
-    public List<Collider> targets = new List<Collider>();
     public float rotationSpeed;
     public Coroutine attackCoroutine;
 
@@ -169,9 +168,9 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(transform.position, attackRange);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 }

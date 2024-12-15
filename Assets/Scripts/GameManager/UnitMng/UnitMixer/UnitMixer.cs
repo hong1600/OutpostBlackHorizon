@@ -19,6 +19,8 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
     public List<UnitData> needUnitList = new List<UnitData>();
     public List<Unit> unitToMix = new List<Unit>();
 
+    public GameObject mixPanel;
+
     private void Awake()
     {
         iUnitMng = unitMng;
@@ -27,21 +29,23 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
 
     public bool unitCanMix()
     {
+        //List<UnitData> needUnitList = iRightSlot.getNeedUnitList();
+
+        //for (int i = 0; i < iUnitMng.getCurUnitList().Count; i++)
+        //{
+        //    Unit fieldUnit = iUnitMng.getCurUnitList()[i];
+
+        //    for (int j = 0; j < needUnitList.Count; j++)
+        //    {
+        //        UnitData needUnit = needUnitList[j];
+
+        //        if(fieldUnit.unitName == needUnit.unitName && )
+        //    }
+        //}
+
         unitToMix.Clear();
 
-        List<UnitData> needUnitList = iRightSlot.getNeedUnitList();
-
-        for (int i = 0; i < iUnitMng.getCurUnitList().Count; i++)
-        {
-            Unit fieldUnit = iUnitMng.getCurUnitList()[i];
-
-            for (int j = 0; j < needUnitList.Count; j++)
-            {
-                UnitData needUnit = needUnitList[j];
-
-                if(fieldUnit.unitName == needUnit.unitName && )
-            }
-        }
+        needUnitList = iRightSlot.getNeedUnitList();
 
         foreach (Unit fieldUnit in iUnitMng.getCurUnitList())
         {
@@ -69,13 +73,14 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
 
         if (unitCanMix())
         {
+            iUnitMng.checkGround();
             GameObject spawnUnit = Instantiate(iUnitMng.getUnitList(EUnitGrade.SS)[iRightSlot.getCurMixUnit()],
                 iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position, Quaternion.identity,
                 iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
-            iUnitMng.getCurUnitList().Add(spawnUnit.GetComponent<Unit>());
+                iUnitMng.getCurUnitList().Add(spawnUnit.GetComponent<Unit>());
+
+            mixPanel.SetActive(false);
         }
         else return;
     }
-
-
 }
