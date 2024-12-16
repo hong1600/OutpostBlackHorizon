@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface IUnitMixer
 {
-    void unitMixSpawn();
+    IEnumerator unitMixSpawn();
     bool unitCanMix();
 }
 
@@ -16,7 +16,6 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
     public UIMixRightSlot rightSlot;
     public iUIMixRightSlot iRightSlot;
 
-    public List<UnitData> needUnitList = new List<UnitData>();
     public List<Unit> unitToMix = new List<Unit>();
 
     public GameObject mixPanel;
@@ -29,23 +28,8 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
 
     public bool unitCanMix()
     {
-        //List<UnitData> needUnitList = iRightSlot.getNeedUnitList();
-
-        //for (int i = 0; i < iUnitMng.getCurUnitList().Count; i++)
-        //{
-        //    Unit fieldUnit = iUnitMng.getCurUnitList()[i];
-
-        //    for (int j = 0; j < needUnitList.Count; j++)
-        //    {
-        //        UnitData needUnit = needUnitList[j];
-
-        //        if(fieldUnit.unitName == needUnit.unitName && )
-        //    }
-        //}
-
         unitToMix.Clear();
 
-        needUnitList = iRightSlot.getNeedUnitList();
 
         foreach (Unit fieldUnit in iUnitMng.getCurUnitList())
         {
@@ -59,7 +43,7 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
             }
         }
 
-        if( unitToMix.Count > 0 && unitToMix.Count == needUnitList.Count) 
+        if( unitToMix.Count > 0 && unitToMix.Count == iRightSlot.getNeedUnitList().Count) 
         {
             return true;
         }
@@ -67,13 +51,19 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
         return false;
     }
 
-    public void unitMixSpawn()
+    public IEnumerator unitMixSpawn()
     {
-        unitCanMix();
-
         if (unitCanMix())
         {
+            for (int i = 0; i < unitToMix.Count; i++)
+            {
+                Destroy(unitToMix[i].gameObject);
+            }
+
+            yield return new WaitForEndOfFrame();
+
             iUnitMng.checkGround();
+
             GameObject spawnUnit = Instantiate(iUnitMng.getUnitList(EUnitGrade.SS)[iRightSlot.getCurMixUnit()],
                 iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position, Quaternion.identity,
                 iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
@@ -81,6 +71,6 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
 
             mixPanel.SetActive(false);
         }
-        else return;
+        else yield break;
     }
 }

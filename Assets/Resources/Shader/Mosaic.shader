@@ -1,4 +1,4 @@
-Shader "CS_Mosaic/Mosaic"
+Shader "Custom/Mosaic"
 {
 	Properties
 	{

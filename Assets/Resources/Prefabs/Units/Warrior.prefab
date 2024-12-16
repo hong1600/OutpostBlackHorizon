@@ -1994,6 +1994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitUpgrader: {fileID: 0}
   unitName: 
+  unitIndex: 0
   attackDamage: 0
   attackSpeed: 0
   attackRange: 0
@@ -2003,7 +2004,6 @@ MonoBehaviour:
   anim: {fileID: 0}
   box: {fileID: 0}
   target: {fileID: 0}
-  targets: []
   rotationSpeed: 0
   unitData: {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
 --- !u!65 &5291409770100758350

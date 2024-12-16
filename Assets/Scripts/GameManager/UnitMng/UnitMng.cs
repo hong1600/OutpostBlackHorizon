@@ -9,10 +9,10 @@ public interface IUnitMng
     event Action onUnitCountChange;
     void addUnit(Unit unit);
     void removeUnit(Unit unit);
+    int getGroundNum();
     bool checkGround();
     List<GameObject> getUnitList(EUnitGrade unitType);
     List<GameObject> getUnitSpawnPointList();
-    int getGroundNum();
     List<Unit> getCurUnitList();
 }
 
@@ -20,18 +20,34 @@ public class UnitMng : MonoBehaviour, IUnitMng
 {
     public event Action onUnitCountChange;
 
+    public UnitSpawner unitSpawner;
+    public IUnitSpawner iUnitSpawner;
+
     public List<Unit> curUnitList = new List<Unit>();
     public List<GameObject> unitSpawnPointList = new List<GameObject>();
     public List<GameObject> unitListSS, unitListS, unitListA, unitListB, unitListC = new List<GameObject>();
     public int groundNum;
 
+    private void Awake()
+    {
+        iUnitSpawner = unitSpawner;
+    }
+
     public bool checkGround()
     {
+        GameObject spawnUnit = iUnitSpawner.getSelectSpawnUnit();
+
         for (groundNum = 0; groundNum < unitSpawnPointList.Count; groundNum++)
         {
-            if (unitSpawnPointList[groundNum].transform.childCount <= 0)
+            if (unitSpawnPointList[groundNum].transform.childCount < 3)
             {
-                return true;
+                if (unitSpawnPointList[groundNum].transform.childCount == 0) return true;
+
+                if ($"{spawnUnit.name}(Clone)" == unitSpawnPointList[groundNum].transform.GetChild(0).name)
+                {
+                    return true;
+                }
+
             }
         }
         return false;

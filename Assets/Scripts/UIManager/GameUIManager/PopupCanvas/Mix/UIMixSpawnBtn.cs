@@ -14,6 +14,6 @@ public class UIMixSpawnBtn : MonoBehaviour
 
     public void onMixSpawn()
     {
-        iUnitMixer.unitMixSpawn();
+        StartCoroutine(iUnitMixer.unitMixSpawn());
     }
 }

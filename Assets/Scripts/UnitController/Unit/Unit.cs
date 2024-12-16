@@ -9,6 +9,7 @@ public abstract class Unit : MonoBehaviour
     public IUnitUpgrader iUnitUpgrader;
 
     public string unitName;
+    public int unitIndex;
     public int attackDamage;
     public int attackSpeed;
     public float attackRange;
@@ -37,6 +38,7 @@ public abstract class Unit : MonoBehaviour
         iUnitUpgrader = unitUpgrader;
 
         unitName = unitData.unitName;
+        unitIndex = unitData.index;
         attackDamage = unitData.unitDamage;
         attackSpeed = unitData.attackSpeed;
         attackRange = unitData.attackRange;

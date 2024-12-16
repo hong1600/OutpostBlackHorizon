@@ -8,6 +8,7 @@ public interface IUnitSpawner
     void spawnUnit();
     float[][] getSelectWeight();
     int getSpawnGold();
+    GameObject getSelectSpawnUnit();
 }
 
 public class UnitSpawner : MonoBehaviour, IUnitSpawner
@@ -30,6 +31,7 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
     };
     public string[] selectOption = { "S", "A", "B", "C" };
     public int spawnGold;
+    public GameObject selectSpawnUnit;
 
     private void Awake()
     {
@@ -53,44 +55,35 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
 
     public void spawnUnit()
     {
+        string Selection = SelectRandom(selectOption, selectWeight[(int)iUnitUpgrader.getUpgradeLevel()[3] - 1]);
+        selectSpawnUnit = getSelectSpawnUnit(Selection);
+
         if (!iUnitMng.checkGround() || !canSpawn()) return;
 
         useGold();
 
-        string Selection = SelectRandom(selectOption,
-            selectWeight[(int)iUnitUpgrader.getUpgradeLevel()[3] - 1]);
+        GameObject spawnUnit = Instantiate(selectSpawnUnit,
+            iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
+            Quaternion.identity,
+            iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
 
-        int randS = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.S).Count);
-        int randA = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.A).Count);
-        int randB = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.B).Count);
-        int randC = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.C).Count);
+        iUnitMng.addUnit(selectSpawnUnit.GetComponent<Unit>());
+    }
 
-        switch (Selection)
+    public GameObject getSelectSpawnUnit(string grade)
+    {
+        switch (grade) 
         {
             case "S":
-                GameObject spawnUnitS = Instantiate(iUnitMng.getUnitList(EUnitGrade.S)[randS],
-                    iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
-                    Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
-                iUnitMng.addUnit(spawnUnitS.GetComponent<Unit>());
-                break;
+                return iUnitMng.getUnitList(EUnitGrade.S)[Random.Range(0, iUnitMng.getUnitList(EUnitGrade.S).Count)];
             case "A":
-                GameObject spawnUnitA = Instantiate(iUnitMng.getUnitList(EUnitGrade.A)[randA],
-                    iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
-                    Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
-                iUnitMng.addUnit(spawnUnitA.GetComponent<Unit>());
-                break;
+                return iUnitMng.getUnitList(EUnitGrade.A)[Random.Range(0, iUnitMng.getUnitList(EUnitGrade.A).Count)];
             case "B":
-                GameObject spawnUnitB = Instantiate(iUnitMng.getUnitList(EUnitGrade.B)[randB],
-                    iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
-                    Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
-                iUnitMng.addUnit(spawnUnitB.GetComponent<Unit>());
-                break;
+                return iUnitMng.getUnitList(EUnitGrade.B)[Random.Range(0, iUnitMng.getUnitList(EUnitGrade.B).Count)];
             case "C":
-                GameObject spawnUnitC = Instantiate(iUnitMng.getUnitList(EUnitGrade.C)[randC],
-                    iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
-                    Quaternion.identity, iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
-                iUnitMng.addUnit(spawnUnitC.GetComponent<Unit>());
-                break;
+                return iUnitMng.getUnitList(EUnitGrade.C)[Random.Range(0, iUnitMng.getUnitList(EUnitGrade.C).Count)];
+            default:
+                return null;
         }
     }
 
@@ -121,4 +114,5 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
 
     public float[][] getSelectWeight() { return selectWeight; }
     public int getSpawnGold() { return spawnGold; }
+    public GameObject getSelectSpawnUnit() { return selectSpawnUnit; }
 }
