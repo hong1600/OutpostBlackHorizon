@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
+using static UnityEngine.UI.Image;
 
 public interface IUnitRandomSpawner
 {
@@ -17,6 +18,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
     public UnitMng unitMng;
     public IUnitMng iUnitMng;
 
+    public GameObject randomUnit;
     public bool randomDelay;
     public Image[] randomUnitImg;
     public Sprite[] randomStar;
@@ -47,7 +49,6 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
     {
         if (randomDelay == false && canSpawn(index))
         {
-            iUnitMng.checkGround();
             StartCoroutine(RandSpawn(index));
         }
         else
@@ -58,17 +59,25 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
 
     public bool canSpawn(int index)
     {
-        if (index == 0)
+        for (int i = 0; i < iUnitMng.getUnitSpawnPointList().Count; i++)
         {
-            return spawnCoin0 <= iGoldCoin.getCoin();
-        }
-        if (index == 1)
-        {
-            return spawnCoin1 <= iGoldCoin.getCoin();
-        }
-        if (index == 2)
-        {
-            return spawnCoin2 <= iGoldCoin.getCoin();
+            if (iUnitMng.getUnitSpawnPointList()[i].transform.childCount == 0)
+            {
+                switch (index)
+                {
+                    case 0:
+                        return spawnCoin0 <= iGoldCoin.getCoin();
+
+                    case 1:
+                        return spawnCoin1 <= iGoldCoin.getCoin();
+
+                    case 2:
+                        return spawnCoin2 <= iGoldCoin.getCoin();
+
+                    default:
+                        return false;
+                }
+            }
         }
         return false;
     }
@@ -83,12 +92,16 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
 
         Sprite randomSprite = GetRandomSprite(index, randB, randA, randS);
 
+        iUnitMng.checkGround(randomUnit);
+
         switch (index)
         {
             case 0:
                 if (per < 6)
                 {
+                    randomUnit = iUnitMng.getUnitList(EUnitGrade.B)[randB];
                     yield return StartCoroutine(FadeInImage(randomUnitImg[0], randomSprite));
+                    iUnitMng.unitInstantiate(randomUnit);
                 }
                 else
                 {
@@ -98,7 +111,9 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
             case 1:
                 if (per < 2)
                 {
+                    randomUnit = iUnitMng.getUnitList(EUnitGrade.A)[randA];
                     yield return StartCoroutine(FadeInImage(randomUnitImg[1], randomSprite));
+                    iUnitMng.unitInstantiate(randomUnit);
                 }
                 else
                 {
@@ -108,7 +123,9 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
             case 2:
                 if (per < 1)
                 {
+                    randomUnit = iUnitMng.getUnitList(EUnitGrade.S)[randS];
                     yield return StartCoroutine(FadeInImage(randomUnitImg[2], randomSprite));
+                    iUnitMng.unitInstantiate(randomUnit);
                 }
                 else
                 {
@@ -116,9 +133,8 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
                 }
                 break;
         }
-        yield return new WaitForSeconds(1f);
 
-        instantiateUnit(index, per, randB, randA, randS);
+        yield return new WaitForSeconds(1f);
 
         randomDelay = false;
     }
@@ -128,76 +144,22 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
         switch (index)
         {
             case 0:
-                iGoldCoin.setCoin(-1);
                 return iUnitMng.getUnitList(EUnitGrade.B)[randB].GetComponent<Unit>().UnitImg;
 
             case 1:
-                iGoldCoin.setCoin(-1);
                 return iUnitMng.getUnitList(EUnitGrade.A)[randA].GetComponent<Unit>().UnitImg;
 
             case 2:
-                iGoldCoin.setCoin(-2);
                 return iUnitMng.getUnitList(EUnitGrade.S)[randS].GetComponent<Unit>().UnitImg;
         }
         return null;
     }
 
-    public void instantiateUnit(int index, int per, int randB, int randA, int randS)
-    {
-        List<GameObject> unitSpawnPointList = iUnitMng.getUnitSpawnPointList();
-        int groundNum = iUnitMng.getGroundNum();
-        List<Unit> curUnitList = iUnitMng.getCurUnitList();
-
-        switch (index)
-        {
-            case 0:
-                if (per < 6)
-                {
-                    GameObject spawnUnitB = Instantiate(iUnitMng.getUnitList(EUnitGrade.B)[randB],
-                        unitSpawnPointList[groundNum].transform.position,
-                        Quaternion.identity, unitSpawnPointList[groundNum].transform);
-                    randomUnitImg[0].sprite = randomStar[0];
-                    curUnitList.Add(spawnUnitB.GetComponent<Unit>());
-                }
-                else if (per >= 6)
-                {
-                    randomUnitImg[0].sprite = randomStar[0];
-                }
-                break;
-            case 1:
-                if (per < 2)
-                {
-                    GameObject spawnUnitA = Instantiate(iUnitMng.getUnitList(EUnitGrade.A)[randA],
-                        unitSpawnPointList[groundNum].transform.position,
-                        Quaternion.identity, unitSpawnPointList[groundNum].transform);
-                    randomUnitImg[1].sprite = randomStar[1];
-                    curUnitList.Add(spawnUnitA.GetComponent<Unit>());
-                }
-                else if (per >= 2)
-                {
-                    randomUnitImg[1].sprite = randomStar[1];
-                }
-                break;
-            case 2:
-                if (per < 1)
-                {
-                    GameObject spawnUnitS = Instantiate(iUnitMng.getUnitList(EUnitGrade.S)[randS],
-                        unitSpawnPointList[groundNum].transform.position,
-                        Quaternion.identity, unitSpawnPointList[groundNum].transform);
-                    randomUnitImg[2].sprite = randomStar[2];
-                    curUnitList.Add(spawnUnitS.GetComponent<Unit>());
-                }
-                else if (per >= 1)
-                {
-                    randomUnitImg[2].sprite = randomStar[2];
-                }
-                break;
-        }
-    }
 
     IEnumerator FadeInImage(Image image, Sprite sprite)
     {
         float delayTime = 0f;
+        Sprite origin = image.sprite;
         image.sprite = sprite;
         Color color = image.color;
         color.a = 0f;
@@ -210,7 +172,10 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
             image.color = color;
             yield return null;
         }
+
         color.a = 1;
         image.color = color;
+        image.sprite = origin;
+
     }
 }

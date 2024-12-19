@@ -8,7 +8,6 @@ public interface IUnitSpawner
     void spawnUnit();
     float[][] getSelectWeight();
     int getSpawnGold();
-    GameObject getSelectSpawnUnit();
 }
 
 public class UnitSpawner : MonoBehaviour, IUnitSpawner
@@ -58,14 +57,11 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
         string Selection = SelectRandom(selectOption, selectWeight[(int)iUnitUpgrader.getUpgradeLevel()[3] - 1]);
         selectSpawnUnit = getSelectSpawnUnit(Selection);
 
-        if (!iUnitMng.checkGround() || !canSpawn()) return;
+        if (!iUnitMng.checkGround(selectSpawnUnit) || !canSpawn()) return;
 
         useGold();
 
-        GameObject spawnUnit = Instantiate(selectSpawnUnit,
-            iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position,
-            Quaternion.identity,
-            iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
+        iUnitMng.unitInstantiate(selectSpawnUnit);
 
         iUnitMng.addUnit(selectSpawnUnit.GetComponent<Unit>());
     }
@@ -114,5 +110,4 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
 
     public float[][] getSelectWeight() { return selectWeight; }
     public int getSpawnGold() { return spawnGold; }
-    public GameObject getSelectSpawnUnit() { return selectSpawnUnit; }
 }

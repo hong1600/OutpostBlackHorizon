@@ -62,12 +62,11 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
 
             yield return new WaitForEndOfFrame();
 
-            iUnitMng.checkGround();
+            GameObject spawnUnit = iUnitMng.getUnitList(EUnitGrade.SS)[iRightSlot.getCurMixUnit()];
 
-            GameObject spawnUnit = Instantiate(iUnitMng.getUnitList(EUnitGrade.SS)[iRightSlot.getCurMixUnit()],
-                iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform.position, Quaternion.identity,
-                iUnitMng.getUnitSpawnPointList()[iUnitMng.getGroundNum()].transform);
-                iUnitMng.getCurUnitList().Add(spawnUnit.GetComponent<Unit>());
+            iUnitMng.checkGround(spawnUnit);
+
+            iUnitMng.unitInstantiate(spawnUnit);
 
             mixPanel.SetActive(false);
         }
