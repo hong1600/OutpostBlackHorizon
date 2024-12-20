@@ -42,7 +42,7 @@ public abstract class Enemy : MonoBehaviour
             enemyHp = enemyData.enemyHp;
             curhp = enemyHp;
             enemySpeed = enemyData.enemySpeed;
-            rotationSpeed = enemyData.rotationSpeed;
+            rotationSpeed = 5;
 
             wayPoint = iEnemySpawner.getWayPoint();
             wayPointIndex = 1;

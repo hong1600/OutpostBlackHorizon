@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public class Table_Character : Table_Base
+public class Table_Unit : Table_Base
 {
     [Serializable]
     public class Info
