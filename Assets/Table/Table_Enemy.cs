@@ -1,19 +1,19 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class Table_Unit : Table_Base
+public class Table_Enemy : Table_Base
 {
     [Serializable]
     public class Info
     {
-        public int Id;
-        public byte Type;
-        public int Skill;
-        public int Stat;
-        public string Prefabs;
-        public string Img;
-        public int Name;
-        public int Dec;
+        public int ID;
+        public string Name;
+        public int Speed;
+        public int MaxHp;
+        public string HpBarPrefab;
+        public string Desc;
     }
 
     public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
@@ -38,7 +38,7 @@ public class Table_Unit : Table_Base
         Save_Binary(_Name, Dictionary);
     }
 
-    public void Init_Csv(string _Name, int _StartRow, int _StartCol)
+    public void Init_Csv(ETable _Name, int _StartRow, int _StartCol)
     {
         CSVReader reader = GetCSVReader(_Name);
 
@@ -47,7 +47,7 @@ public class Table_Unit : Table_Base
             Info info = new Info();
 
             if (Read(reader, info, row, _StartCol) == false)
-                break ;
+                break;
 
             Dictionary.Add(row, info);
         }
@@ -58,14 +58,12 @@ public class Table_Unit : Table_Base
         if (_Reader.reset_row(_Row, _Col) == false)
             return false;
 
-        _Reader.get(_Row, ref _Info.Id);
-        _Reader.get(_Row, ref _Info.Type);
-        _Reader.get(_Row, ref _Info.Skill);
-        _Reader.get(_Row, ref _Info.Stat);
-        _Reader.get(_Row, ref _Info.Prefabs);
-        _Reader.get(_Row, ref _Info.Img);
-        _Reader.get(_Row, ref _Info.Name);
-        _Reader.get(_Row, ref _Info.Dec);
+        _Reader.getInt(_Row, ref _Info.ID);
+        _Reader.getString(_Row, ref _Info.Name);
+        _Reader.getInt(_Row, ref _Info.Speed);
+        _Reader.getInt(_Row, ref _Info.MaxHp);
+        _Reader.getString(_Row, ref _Info.HpBarPrefab);
+        _Reader.getString(_Row, ref _Info.Desc);
 
         return true;
     }

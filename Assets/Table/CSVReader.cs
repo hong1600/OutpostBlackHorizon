@@ -118,7 +118,7 @@ public class CSVReader
         val = ((int)System.Convert.ToInt32(s) != 0);
     }
 
-    public void get(int row, ref int val)
+    public void getInt(int row, ref int val)
     {
         string s = _arr_grid[cur_col, row];
         ++cur_col;
@@ -208,7 +208,7 @@ public class CSVReader
         }
     }
 
-    public void get(int row, ref string val)
+    public void getString(int row, ref string val)
     {
         string s = _arr_grid[cur_col, row];
         ++cur_col;
