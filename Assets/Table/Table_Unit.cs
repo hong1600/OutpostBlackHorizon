@@ -61,7 +61,7 @@ public class Table_Unit : Table_Base
 
             if (Read(reader, info, row, _StartCol) == false)
                 break ;
-
+             
             Dictionary.Add(row, info);
         }
     }
@@ -92,6 +92,4 @@ public class Table_Unit : Table_Base
 
         return true;
     }
-
-
 }
