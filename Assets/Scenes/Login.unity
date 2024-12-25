@@ -789,7 +789,7 @@ SpriteRenderer:
   m_Size: {x: 3.125, y: 1.71875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &557991747
@@ -1088,7 +1088,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
       propertyPath: unit.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1510499681353039824, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
       propertyPath: allItem.Array.size
@@ -2301,7 +2301,7 @@ SpriteRenderer:
   m_Size: {x: 0.55, y: 0.44}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &1660989351
@@ -3385,7 +3385,7 @@ SpriteRenderer:
   m_Size: {x: 1.4, y: 1.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &2094303732

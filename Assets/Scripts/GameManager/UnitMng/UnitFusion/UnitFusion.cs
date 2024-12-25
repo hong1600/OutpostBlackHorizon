@@ -22,20 +22,25 @@ public class UnitFusion : MonoBehaviour, IUnitFusion
 
     public IEnumerator unitFusion()
     {
-        GameObject selectGround = iObjectSelector.getSelectObject();
-        GameObject selectUnit = selectGround.transform.GetChild(0).transform.GetChild(0).gameObject;
+        GameObject selectGround = iObjectSelector.getSelectObject().transform.GetChild(0).gameObject;
+        GameObject selectUnit = selectGround.transform.GetChild(0).gameObject;
         EUnitGrade grade = selectUnit.GetComponent<Unit>().eUnitGrade;
         GameObject spawnUnit = instantiateUnit(grade);
+        GameObject[] removeUnit = new GameObject[3];
+        removeUnit[0] = selectGround.transform.GetChild(2).gameObject;
+        removeUnit[1] = selectGround.transform.GetChild(1).gameObject;
+        removeUnit[2] = selectGround.transform.GetChild(0).gameObject;
 
-        if (selectGround.transform.GetChild(0).transform.childCount == 3)
+        if (selectGround.transform.childCount == 3)
         {
-            destroyUnit(selectGround);
+            iUnitMng.removeUnitData(removeUnit, selectGround, iUnitMng.getGroundNum(), 3);
 
             yield return new WaitForEndOfFrame();
 
             iUnitMng.checkGround(spawnUnit);
             iUnitMng.unitInstantiate(spawnUnit);
         }
+
         else yield return null;
     }
 
@@ -48,30 +53,22 @@ public class UnitFusion : MonoBehaviour, IUnitFusion
         switch (grade)
         {
             case EUnitGrade.C:
-                rand = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.B).Count);
-                unit = iUnitMng.getUnitList(EUnitGrade.B)[rand];
+                rand = Random.Range(0, iUnitMng.getUnitByGradeList(EUnitGrade.B).Count);
+                unit = iUnitMng.getUnitByGradeList(EUnitGrade.B)[rand];
                 return unit;
 
             case EUnitGrade.B:
-                rand = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.A).Count);
-                unit = iUnitMng.getUnitList(EUnitGrade.A)[rand];
+                rand = Random.Range(0, iUnitMng.getUnitByGradeList(EUnitGrade.A).Count);
+                unit = iUnitMng.getUnitByGradeList(EUnitGrade.A)[rand];
                 return unit;
 
             case EUnitGrade.A:
-                rand = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.S).Count);
-                unit = iUnitMng.getUnitList(EUnitGrade.S)[rand];
+                rand = Random.Range(0, iUnitMng.getUnitByGradeList(EUnitGrade.S).Count);
+                unit = iUnitMng.getUnitByGradeList(EUnitGrade.S)[rand];
                 return unit;
 
             default:
                 return null;
-        }
-    }
-
-    public void destroyUnit(GameObject ground)
-    {
-        for (int i = ground.transform.GetChild(0).transform.childCount - 1; i >= 0 ; i--) 
-        {
-            Destroy(ground.transform.GetChild(0).transform.GetChild(i).gameObject);
         }
     }
 }

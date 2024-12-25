@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public interface IUnitMng 
 {
     event Action onUnitCountChange;
-    void addUnit(Unit unit);
-    void removeUnit(Unit unit);
     int getGroundNum();
     bool checkGround(GameObject spawnUnit);
     GameObject unitInstantiate(GameObject unit);
-    List<GameObject> getUnitList(EUnitGrade unitType);
+    List<GameObject> getUnitByGradeList(EUnitGrade unitType);
+    List<GameObject> getUnitByGroundList(int groundNum);
     List<GameObject> getUnitSpawnPointList();
-    List<Unit> getCurUnitList();
+    List<GameObject> getAllUnitList();
+    void removeUnitData(GameObject[] unit, GameObject ground, int groundNum, int repeat);
 }
 
 public class UnitMng : MonoBehaviour, IUnitMng
@@ -24,9 +24,10 @@ public class UnitMng : MonoBehaviour, IUnitMng
     public UnitSpawner unitSpawner;
     public IUnitSpawner iUnitSpawner;
 
-    public List<Unit> curUnitList = new List<Unit>();
+    public List<GameObject> allUnitList = new List<GameObject>();
+    public List<GameObject> unitC, unitB, unitA, unitS, unitSS = new List<GameObject>();
+    public Dictionary<int, List<GameObject>> unitByGround = new Dictionary<int, List<GameObject>>();
     public List<GameObject> unitSpawnPointList = new List<GameObject>();
-    public List<GameObject> unitListSS, unitListS, unitListA, unitListB, unitListC = new List<GameObject>();
     public int groundNum;
 
     private void Awake()
@@ -68,49 +69,101 @@ public class UnitMng : MonoBehaviour, IUnitMng
     {
         if (groundNum < 0 || groundNum > unitSpawnPointList.Count || unit == null) return null;
 
-        Instantiate(unit, unitSpawnPointList[groundNum].transform.position,
-            Quaternion.identity,
-            unitSpawnPointList[groundNum].transform);
+        addUnitData(unit);
 
-        curUnitList.Add(unit.GetComponent<Unit>());
+        Vector3 twoUnit1Pos = new Vector3(-0.5f, 0, 0);
+        Vector3 twoUnit2Pos = new Vector3(0.5f, 0, 0);
+
+        Vector3 threeUnit1Pos = new Vector3 (0, 0, 0.4f);
+        Vector3 threeUnit2Pos = new Vector3 (-0.6f, 0, -0.4f);
+        Vector3 threeUnit3Pos = new Vector3 (0.6f, 0, -0.4f);
+
+        List<GameObject> curGroundUnit = unitByGround[groundNum];
+        int unitCount = curGroundUnit.Count;
+
+        switch (unitCount) 
+        {
+            case 1:
+                Instantiate(unit, unitSpawnPointList[groundNum].transform.position,
+                    Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                break;
+
+            case 2:
+                curGroundUnit[0].transform.position = unitSpawnPointList[groundNum].transform.position + twoUnit1Pos;
+
+                Instantiate(unit, unitSpawnPointList[groundNum].transform.position + twoUnit2Pos,
+                    Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                break;
+
+            case 3:
+                curGroundUnit[0].transform.position = unitSpawnPointList[groundNum].transform.position + threeUnit1Pos;
+                curGroundUnit[1].transform.position = unitSpawnPointList[groundNum].transform.position + threeUnit2Pos;
+
+                Instantiate(unit, unitSpawnPointList[groundNum].transform.position + threeUnit3Pos,
+                    Quaternion.identity, unitSpawnPointList[groundNum].transform);
+                break;
+
+            default:
+                return null;
+        }
 
         return unit;
     }
 
-    public List<GameObject> getUnitList(EUnitGrade unitType)
+    public void addUnitData(GameObject unit)
+    {
+        allUnitList.Add(unit);
+
+        if (!unitByGround.ContainsKey(groundNum))
+        {
+            unitByGround[groundNum] = new List<GameObject>();
+        }
+
+        unitByGround[groundNum].Add(unit);
+
+        onUnitCountChange?.Invoke();
+    }
+
+    public void removeUnitData(GameObject[] unit, GameObject ground, int groundNum, int repeat)
+    {
+        for (int i = repeat - 1; i >= 0; i--)
+        {
+            allUnitList.Remove(unit[i]);
+            Destroy(ground.transform.GetChild(i).gameObject);
+        }
+
+        unitByGround[groundNum].Clear();
+
+        onUnitCountChange?.Invoke();
+    }
+
+    public List<GameObject> getUnitByGroundList(int groundNum)
+    {
+        if (!unitByGround.ContainsKey(groundNum)) return null;
+
+        return unitByGround[groundNum];
+    }
+
+    public List<GameObject> getUnitByGradeList(EUnitGrade unitType)
     {
         switch (unitType)
         {
             case EUnitGrade.SS:
-                return unitListSS;
+                return unitSS;
             case EUnitGrade.S:
-                return unitListS;
+                return unitS;
             case EUnitGrade.A:
-                return unitListA;
+                return unitA;
             case EUnitGrade.B:
-                return unitListB;
+                return unitB;
             case EUnitGrade.C:
-                return unitListC;
+                return unitC;
                 default: 
                 return null;
         }
     }
 
-    public void addUnit(Unit unit)
-    {
-        curUnitList.Add(unit);
-        onUnitCountChange?.Invoke();
-    }
-
-    public void removeUnit(Unit unit) 
-    {
-        curUnitList.Remove(unit);
-        onUnitCountChange?.Invoke();
-    }
-
     public List<GameObject> getUnitSpawnPointList() { return unitSpawnPointList; }
-
     public int getGroundNum() { return groundNum; }
-
-    public List<Unit> getCurUnitList() { return curUnitList; }
+    public List<GameObject> getAllUnitList() { return allUnitList; }
 }

@@ -30,15 +30,16 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
     {
         unitToMix.Clear();
 
-
-        foreach (Unit fieldUnit in iUnitMng.getCurUnitList())
+        foreach (var fieldUnit in iUnitMng.getAllUnitList())
         {
+            Unit field = fieldUnit.GetComponent<Unit>();
+
             foreach (UnitData needUnit in iRightSlot.getNeedUnitList())
             {
-                if (fieldUnit.unitName == needUnit.unitName &&
-                    !unitToMix.Any(unit => unit.unitName == fieldUnit.unitName))
+                if (field.unitName == needUnit.unitName &&
+                    !unitToMix.Any(unit => unit.unitName == field.unitName))
                 {
-                    unitToMix.Add(fieldUnit);
+                    unitToMix.Add(field);
                 }
             }
         }
@@ -62,7 +63,7 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
 
             yield return new WaitForEndOfFrame();
 
-            GameObject spawnUnit = iUnitMng.getUnitList(EUnitGrade.SS)[iRightSlot.getCurMixUnit()];
+            GameObject spawnUnit = iUnitMng.getUnitByGradeList(EUnitGrade.SS)[iRightSlot.getCurMixUnit()];
 
             iUnitMng.checkGround(spawnUnit);
 

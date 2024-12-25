@@ -128,13 +128,13 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
 
     public void unitUpgradeApply(EUnitGrade grade)
     {
-        List<Unit> unitList = iUnitMng.getCurUnitList();
+        List<GameObject> unitList = iUnitMng.getAllUnitList();
 
         for (int i = 0; i < unitList.Count; i++)
         {
-            if (unitList[i].eUnitGrade == grade)
+            if (unitList[i].GetComponent<Unit>().eUnitGrade == grade)
             {
-                upgrade(unitList[i], grade);
+                upgrade(unitList[i].GetComponent<Unit>(), grade);
             }
         }
     }

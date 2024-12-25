@@ -39,6 +39,6 @@ public class UIInGameMoneyPanel : MonoBehaviour
 
     public void unitCounterPanel()
     {
-        unitCountText.text = $"{iUnitMng.getCurUnitList().Count.ToString()} / 20";
+        unitCountText.text = $"{iUnitMng.getAllUnitList().Count.ToString()} / 20";
     }
 }

@@ -86,9 +86,9 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
     {
         randomDelay = true;
         int per = Random.Range(0, 10);
-        int randB = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.B).Count);
-        int randA = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.A).Count);
-        int randS = Random.Range(0, iUnitMng.getUnitList(EUnitGrade.S).Count);
+        int randB = Random.Range(0, iUnitMng.getUnitByGradeList(EUnitGrade.B).Count);
+        int randA = Random.Range(0, iUnitMng.getUnitByGradeList(EUnitGrade.A).Count);
+        int randS = Random.Range(0, iUnitMng.getUnitByGradeList(EUnitGrade.S).Count);
 
         Sprite randomSprite = GetRandomSprite(index, randB, randA, randS);
 
@@ -99,7 +99,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
             case 0:
                 if (per < 6)
                 {
-                    randomUnit = iUnitMng.getUnitList(EUnitGrade.B)[randB];
+                    randomUnit = iUnitMng.getUnitByGradeList(EUnitGrade.B)[randB];
                     yield return StartCoroutine(FadeInImage(randomUnitImg[0], randomSprite));
                     iUnitMng.unitInstantiate(randomUnit);
                 }
@@ -111,7 +111,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
             case 1:
                 if (per < 2)
                 {
-                    randomUnit = iUnitMng.getUnitList(EUnitGrade.A)[randA];
+                    randomUnit = iUnitMng.getUnitByGradeList(EUnitGrade.A)[randA];
                     yield return StartCoroutine(FadeInImage(randomUnitImg[1], randomSprite));
                     iUnitMng.unitInstantiate(randomUnit);
                 }
@@ -123,7 +123,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
             case 2:
                 if (per < 1)
                 {
-                    randomUnit = iUnitMng.getUnitList(EUnitGrade.S)[randS];
+                    randomUnit = iUnitMng.getUnitByGradeList(EUnitGrade.S)[randS];
                     yield return StartCoroutine(FadeInImage(randomUnitImg[2], randomSprite));
                     iUnitMng.unitInstantiate(randomUnit);
                 }
@@ -144,13 +144,13 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
         switch (index)
         {
             case 0:
-                return iUnitMng.getUnitList(EUnitGrade.B)[randB].GetComponent<Unit>().UnitImg;
+                return iUnitMng.getUnitByGradeList(EUnitGrade.B)[randB].GetComponent<Unit>().UnitImg;
 
             case 1:
-                return iUnitMng.getUnitList(EUnitGrade.A)[randA].GetComponent<Unit>().UnitImg;
+                return iUnitMng.getUnitByGradeList(EUnitGrade.A)[randA].GetComponent<Unit>().UnitImg;
 
             case 2:
-                return iUnitMng.getUnitList(EUnitGrade.S)[randS].GetComponent<Unit>().UnitImg;
+                return iUnitMng.getUnitByGradeList(EUnitGrade.S)[randS].GetComponent<Unit>().UnitImg;
         }
         return null;
     }

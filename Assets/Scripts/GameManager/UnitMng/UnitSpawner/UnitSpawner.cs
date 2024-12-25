@@ -62,8 +62,6 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
         useGold();
 
         iUnitMng.unitInstantiate(selectSpawnUnit);
-
-        iUnitMng.addUnit(selectSpawnUnit.GetComponent<Unit>());
     }
 
     public GameObject getSelectSpawnUnit(string grade)
@@ -71,13 +69,13 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
         switch (grade) 
         {
             case "S":
-                return iUnitMng.getUnitList(EUnitGrade.S)[Random.Range(0, iUnitMng.getUnitList(EUnitGrade.S).Count)];
+                return iUnitMng.getUnitByGradeList(EUnitGrade.S)[Random.Range(0, iUnitMng.getUnitByGradeList(EUnitGrade.S).Count)];
             case "A":
-                return iUnitMng.getUnitList(EUnitGrade.A)[Random.Range(0, iUnitMng.getUnitList(EUnitGrade.A).Count)];
+                return iUnitMng.getUnitByGradeList(EUnitGrade.A)[Random.Range(0, iUnitMng.getUnitByGradeList(EUnitGrade.A).Count)];
             case "B":
-                return iUnitMng.getUnitList(EUnitGrade.B)[Random.Range(0, iUnitMng.getUnitList(EUnitGrade.B).Count)];
+                return iUnitMng.getUnitByGradeList(EUnitGrade.B)[Random.Range(0, iUnitMng.getUnitByGradeList(EUnitGrade.B).Count)];
             case "C":
-                return iUnitMng.getUnitList(EUnitGrade.C)[Random.Range(0, iUnitMng.getUnitList(EUnitGrade.C).Count)];
+                return iUnitMng.getUnitByGradeList(EUnitGrade.C)[Random.Range(0, iUnitMng.getUnitByGradeList(EUnitGrade.C).Count)];
             default:
                 return null;
         }
