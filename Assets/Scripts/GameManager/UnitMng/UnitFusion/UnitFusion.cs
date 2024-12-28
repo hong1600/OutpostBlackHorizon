@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public interface IUnitFusion
 {
@@ -9,39 +11,33 @@ public interface IUnitFusion
 
 public class UnitFusion : MonoBehaviour, IUnitFusion
 {
-    public ObjectSelector objectSelector;
-    public IObjectSelector iObjectSelector;
+    public FieldSelector fieldSelector;
+    public IFieldSelector iFieldSelector;
     public UnitMng unitMng;
     public IUnitMng iUnitMng;
 
     private void Awake()
     {
-        iObjectSelector = objectSelector;
+        iFieldSelector = fieldSelector;
         iUnitMng = unitMng;
     }
 
     public IEnumerator unitFusion()
     {
-        GameObject selectGround = iObjectSelector.getSelectObject().transform.GetChild(0).gameObject;
+        GameObject selectGround = iFieldSelector.getSelectField().transform.GetChild(0).gameObject;
         GameObject selectUnit = selectGround.transform.GetChild(0).gameObject;
         EUnitGrade grade = selectUnit.GetComponent<Unit>().eUnitGrade;
         GameObject spawnUnit = instantiateUnit(grade);
-        GameObject[] removeUnit = new GameObject[3];
-        removeUnit[0] = selectGround.transform.GetChild(2).gameObject;
-        removeUnit[1] = selectGround.transform.GetChild(1).gameObject;
-        removeUnit[2] = selectGround.transform.GetChild(0).gameObject;
 
-        if (selectGround.transform.childCount == 3)
+        for (int i = 2; i >= 0; i--)
         {
-            iUnitMng.removeUnitData(removeUnit, selectGround, iUnitMng.getGroundNum(), 3);
-
-            yield return new WaitForEndOfFrame();
-
-            iUnitMng.checkGround(spawnUnit);
-            iUnitMng.unitInstantiate(spawnUnit);
+            iUnitMng.removeUnitData(selectGround.transform.GetChild(i).gameObject);
         }
 
-        else yield return null;
+        iUnitMng.checkGround(spawnUnit);
+        iUnitMng.unitInstantiate(spawnUnit);
+
+        yield return null;
     }
 
     public GameObject instantiateUnit(EUnitGrade grade)

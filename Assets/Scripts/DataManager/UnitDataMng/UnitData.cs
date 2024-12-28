@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public enum EUnitGrade
 {
-    SS,
-    S,
-    A,
+    C,
     B,
-    C
+    A,
+    S,
+    SS
 }
 
 [CreateAssetMenu(fileName = "Unit", menuName = "Scriptble Object/UnitData")]

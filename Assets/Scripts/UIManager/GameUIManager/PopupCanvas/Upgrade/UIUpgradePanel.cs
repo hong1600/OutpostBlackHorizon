@@ -29,6 +29,7 @@ public class UIUpgradePanel : MonoBehaviour
         iUnitUpgrader.onUpgradeCostChange += upgradeCostPanel;
         iUnitUpgrader.onUpgradeLevelChange += upgradeLevelPanel;
         iUnitUpgrader.onUpgradePerChange += upgradePerPanel;
+
     }
 
     private void Start()
@@ -49,7 +50,14 @@ public class UIUpgradePanel : MonoBehaviour
     {
         for (int i = 0; i < upgradeCostText.Length; i++) 
         {
-            upgradeCostText[i].text = iUnitUpgrader.getUpgradeCost()[i].ToString();
+            if (iUnitUpgrader.getUpgradeLevel()[i] == 6)
+            {
+                upgradeCostText[i].text = "MAX";
+            }
+            else
+            {
+                upgradeCostText[i].text = iUnitUpgrader.getUpgradeCost()[i].ToString();
+            }
         }
     }
 
@@ -70,13 +78,18 @@ public class UIUpgradePanel : MonoBehaviour
 
     public void upgradePerPanel()
     {
+        int level = (int)iUnitUpgrader.getUpgradeLevel()[(int)EUnitUpgrdae.per] - 1;
+
         spawnPerText[0].text =
-            $"ÀÏ¹Ý : {iUnitSpawner.getSelectWeight()[(int)iUnitUpgrader.getUpgradeLevel()[3] - 1][3]}%";
+            $"ÀÏ¹Ý : {iUnitSpawner.getSelectWeight()[level][0]}%";
         spawnPerText[1].text =
-            $"<color=blue>Èñ±Í : {iUnitSpawner.getSelectWeight()[(int)iUnitUpgrader.getUpgradeLevel()[3] - 1][2]}%</color>%";
+            $"<color=blue>Èñ±Í : " +
+            $"{iUnitSpawner.getSelectWeight()[level][1]}%</color>%";
         spawnPerText[2].text =
-            $"<color=purple>¿µ¿õ : {iUnitSpawner.getSelectWeight()[(int)iUnitUpgrader.getUpgradeLevel()[3] - 1][1]}%</color>";
+            $"<color=purple>¿µ¿õ : " +
+            $"{iUnitSpawner.getSelectWeight()[level][2]}%</color>";
         spawnPerText[3].text =
-            $"<color=yellow>Àü¼³ : {iUnitSpawner.getSelectWeight()[(int)iUnitUpgrader.getUpgradeCost()[2] - 1][0]}%</color>";
+            $"<color=yellow>Àü¼³ : " +
+            $"{iUnitSpawner.getSelectWeight()[level][3]}%</color>";
     }
 }

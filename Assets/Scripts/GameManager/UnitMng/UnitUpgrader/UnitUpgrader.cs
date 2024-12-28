@@ -15,6 +15,14 @@ public interface IUnitUpgrader
     public event Action onUpgradePerChange;
 }
 
+public enum EUnitUpgrdae
+{
+    CB,
+    A,
+    SSS,
+    per
+}
+
 public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
 {
     public UnitMng unitMng;
@@ -35,15 +43,15 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
         iUnitMng = unitMng;
         iGoldCoin = goldCoin;
 
-        upgradeCost[0] = 30;
-        upgradeCost[1] = 50;
-        upgradeCost[2] = 1;
-        upgradeCost[3] = 100;
+        upgradeCost[(int)EUnitUpgrdae.CB] = 30;
+        upgradeCost[(int)EUnitUpgrdae.A] = 50;
+        upgradeCost[(int)EUnitUpgrdae.SSS] = 1;
+        upgradeCost[(int)EUnitUpgrdae.per] = 100;
 
-        upgradeLevel[0] = 1;
-        upgradeLevel[1] = 1;
-        upgradeLevel[2] = 1;
-        upgradeLevel[3] = 1;
+        upgradeLevel[(int)EUnitUpgrdae.CB] = 1;
+        upgradeLevel[(int)EUnitUpgrdae.A] = 1;
+        upgradeLevel[(int)EUnitUpgrdae.SSS] = 1;
+        upgradeLevel[(int)EUnitUpgrdae.per] = 1;
 
         upgradeMaxLevel = 6;
     }
@@ -64,11 +72,13 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
                     amount = 30;
                     grades.Add(EUnitGrade.C);
                     grades.Add(EUnitGrade.B);
+                    type = "Gold";
                     break;
                 case 1:
                     cost = upgradeCost[index];
                     grades.Add(EUnitGrade.A);
                     amount = 50;
+                    type = "Gold";
                     break;
                 case 2:
                     cost = upgradeCost[index];
@@ -80,6 +90,7 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
                 case 3:
                     cost = upgradeCost[index];
                     amount = 100;
+                    type = "Gold";
                     break;
             }
 
@@ -87,17 +98,17 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
         }
     }
 
-    public void upgradeGrade(int index, int cost, int amount, List<EUnitGrade> grades, string type = "Gold")
+    public void upgradeGrade(int index, int cost, int amount, List<EUnitGrade> grades, string type)
     {
-        if (type == "Gold" && iGoldCoin.useGold(cost))
+        if (type == "Gold" && iGoldCoin.getGold() >= cost)
         {
-            unitUpgradeCost(ref upgradeCost[index], cost, type);
+            unitUpgradeCost(ref upgradeCost[index], cost, type, index);
 
             upgradeLevel[index]++;
         }
-        else if (type == "Coin" && iGoldCoin.useCoin(cost))
+        else if (type == "Coin" && iGoldCoin.getCoin() >= cost)
         {
-            unitUpgradeCost(ref upgradeCost[index], cost, type);
+            unitUpgradeCost(ref upgradeCost[index], cost, type, index);
 
             upgradeLevel[index]++;
         }
@@ -111,19 +122,22 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
             }
         }
 
-        onUpgradeLevelChange.Invoke();
         onUpgradeCostChange.Invoke();
+        onUpgradeLevelChange.Invoke();
         onUpgradePerChange.Invoke();
     }
 
-    public void unitUpgradeCost(ref int cost, int amount, string type = "Gold")
+    public void unitUpgradeCost(ref int cost, int amount, string type, int index)
     {
         if (type == "Gold")
-            iGoldCoin.setGold(-cost);
+            iGoldCoin.useGold(cost);
         else if (type == "Coin")
-            iGoldCoin.setCoin(-cost);
+            iGoldCoin.useCoin(cost);
 
-        cost += amount;
+        if (upgradeLevel[index] < 5)
+        {
+            cost += amount;
+        }
     }
 
     public void unitUpgradeApply(EUnitGrade grade)

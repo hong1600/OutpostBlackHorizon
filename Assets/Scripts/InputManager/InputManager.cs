@@ -7,20 +7,18 @@ public class InputManager : MonoBehaviour
 {
     public static event Action<Vector2> onLeftClick;
 
+    public FieldSelector fieldSelector;
+    public IFieldSelector iFieldSelector;
+
+    private void Awake()
+    {
+        iFieldSelector = fieldSelector;
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Ground"))
-                {
-                    return;
-                }
-            }
-
             onLeftClick?.Invoke(Input.mousePosition);
         }
     }
