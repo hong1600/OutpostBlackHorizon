@@ -20,15 +20,14 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
     public IUnitUpgrader iUnitUpgrader;
 
     public float[][] selectWeight = new float[][]
-    {
-    new float[] { 0.72f, 0.15f, 0.10f, 0.03f },
-    new float[] { 0.65f, 0.18f, 0.12f, 0.05f },
-    new float[] { 0.58f, 0.21f, 0.14f, 0.07f },
-    new float[] { 0.51f, 0.24f, 0.16f, 0.09f },
-    new float[] { 0.44f, 0.27f, 0.18f, 0.11f },
-    new float[] { 0.37f, 0.30f, 0.20f, 0.13f }
-    };
-
+{
+    new float[] { 0.03f, 0.10f, 0.15f, 0.72f },
+    new float[] { 0.05f, 0.12f, 0.18f, 0.65f },
+    new float[] { 0.07f, 0.14f, 0.21f, 0.58f },
+    new float[] { 0.09f, 0.16f, 0.24f, 0.51f },
+    new float[] { 0.11f, 0.18f, 0.27f, 0.44f },
+    new float[] { 0.13f, 0.20f, 0.30f, 0.37f }
+};
     public string[] selectOption = { "C", "B", "A", "S" };
     public int spawnGold;
     public GameObject selectSpawnUnit;

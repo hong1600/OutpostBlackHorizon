@@ -19,9 +19,9 @@ public class UIFusionBtn : MonoBehaviour, IUIFusionBtn
 
     private void Awake()
     {
+        this.gameObject.SetActive(false);
         iFieldSelector = fieldSelector;
         iUnitFusion = unitFusion;
-        this.gameObject.SetActive(false);
     }
 
     public void onFusion()

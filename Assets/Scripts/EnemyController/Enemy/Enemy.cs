@@ -24,7 +24,7 @@ public abstract class Enemy : MonoBehaviour
     public float curhp;
     public float enemySpeed;
     public Transform[] wayPoint;
-    public Vector3 wayPointdir;
+    public Vector3 wayPointDir;
     public int wayPointIndex;
     public Transform target;
     public float rotationSpeed;
@@ -69,9 +69,9 @@ public abstract class Enemy : MonoBehaviour
 
     public void move()
     {
-        wayPointdir = (target.transform.position - transform.position).normalized;
+        wayPointDir = (target.transform.position - transform.position).normalized;
 
-        transform.Translate(wayPointdir * enemySpeed * Time.deltaTime, Space.World);
+        transform.Translate(wayPointDir * enemySpeed * Time.deltaTime, Space.World);
 
         if (Vector3.Distance(transform.position, target.position) <= 0.1f)
         {
@@ -95,7 +95,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void turn()
     {
-        Quaternion rotation = Quaternion.LookRotation(new Vector3(wayPointdir.x, 0, wayPointdir.z));
+        Quaternion rotation = Quaternion.LookRotation(new Vector3(wayPointDir.x, 0, wayPointDir.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
             rotationSpeed * Time.deltaTime);
     }
@@ -107,17 +107,19 @@ public abstract class Enemy : MonoBehaviour
         if (curhp <= 0)
         {
             isDie = true;
-            die();
         }
     }
 
     public virtual void die()
     {
-        Destroy(gameObject, 0.5f);
+        changeAnim(eEnemyAI.DIE);
+
         iRewarder.addRewardGold(50);
         iRewarder.addRewardGem(10);
         iRewarder.addRewardPaper(20);
         iRewarder.addRewardExp(1);
+
+        Destroy(this.gameObject, 0.75f);
     }
 
     public void changeAnim(eEnemyAI curState)

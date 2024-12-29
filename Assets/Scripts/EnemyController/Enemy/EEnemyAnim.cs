@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum EEnemyAnim
 {
-    RUN,
-    IDLE,
-    DIE,
+    RUN = 0,
+    STAY = 1,
+    DIE = 3,
 }

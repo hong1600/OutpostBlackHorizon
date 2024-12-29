@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498da0fc17a2c9b4285047183d60f8e3, type: 3}
   m_Name: Gunslinger
   m_EditorClassIdentifier: 
-  unitGrade: 1
+  unitGrade: 3
   index: 3
   unitName: "\uCD1D\uC7A1\uC774"
   unitDamage: 50

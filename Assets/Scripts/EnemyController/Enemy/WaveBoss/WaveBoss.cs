@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class WaveBoss : Enemy
+public abstract class WaveBoss : Enemy
 {
     public float waveBossTime;
     public TextMeshProUGUI waveBossText;
@@ -13,11 +13,6 @@ public class WaveBoss : Enemy
         waveBossTime = 25f;
     }
 
-    private void Update()
-    {
-        waveBossTimer();
-    }
-
     public override void die()
     {
         base.die();
@@ -25,15 +20,15 @@ public class WaveBoss : Enemy
         iWaveBossSpawner.setWaveBossDelay(25f);
     }
 
-    public void waveBossTimer()
-    {
-        waveBossTime -= Time.deltaTime;
-        //waveBossText.text = waveBossTime.ToString("F1") + "s";
+    //public void waveBossTimer()
+    //{
+    //    waveBossTime -= Time.deltaTime;
+    //    waveBossText.text = waveBossTime.ToString("F1") + "s";
 
-        if (waveBossTime <= 0)
-        {
-            Destroy(this.gameObject);
-            iWaveBossSpawner.setWaveBossDelay(25f);
-        }
-    }
+    //    if (waveBossTime <= 0)
+    //    {
+    //        Destroy(this.gameObject);
+    //        iWaveBossSpawner.setWaveBossDelay(25f);
+    //    }
+    //}
 }

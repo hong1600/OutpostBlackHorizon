@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
         if (enemySpawnDelay <= 0)
         {
-            GameObject obj = Instantiate(enemyList[curEnemy], enemySpawnPoint.transform.position,
+            GameObject obj = Instantiate(enemyList[iRound.getCurRound()-1], enemySpawnPoint.transform.position,
             Quaternion.identity, iEnemyMng.getEnemyParent().transform);
 
             Enemy enemy = obj.GetComponent<Enemy>();

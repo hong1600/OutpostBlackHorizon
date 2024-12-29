@@ -76,6 +76,6 @@ public class EnemyAI
 
     public virtual void Die()
     {
-        enemy.changeAnim(eEnemyAI.DIE);
+        enemy.die();
     }
 }
