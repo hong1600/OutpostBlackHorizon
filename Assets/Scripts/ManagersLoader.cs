@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class ManagersLoader : MonoBehaviour
 {
-    [SerializeField] GameObject dataManager;
+    public GameObject dataMng;
+    public GameObject SceneMng;
+    public GameObject UIMng;
 
     private void Awake()
     {
-        if (GameObject.Find("DataManager") == null)
+        if (GameObject.Find("DataMng") == null)
         {
-            Instantiate(dataManager);
+            Instantiate(dataMng);
         }
+        if (GameObject.Find("SceneMng") == null)
+        {
+            Instantiate(SceneMng);
+        }
+        if (GameObject.Find("UIMng") == null)
+        {
+            Instantiate(UIMng);
+        }
+
     }
 }

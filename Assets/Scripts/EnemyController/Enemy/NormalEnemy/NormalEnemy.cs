@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class NormalEnemy : Enemy
 {
-    public override void die()
+    public override void Die()
     {
-        base.die();
-        iGoldCoin.setGold(1);
+        base.Die();
+        Shared.gameMng.iGoldCoin.SetGold(1);
     }
 }

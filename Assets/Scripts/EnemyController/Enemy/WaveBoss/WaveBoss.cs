@@ -8,19 +8,19 @@ public abstract class WaveBoss : Enemy
     public float waveBossTime;
     public TextMeshProUGUI waveBossText;
 
-    public void initWaveBoss()
+    public void InitWaveBoss()
     {
         waveBossTime = 25f;
     }
 
-    public override void die()
+    public override void Die()
     {
-        base.die();
-        iGoldCoin.setCoin(2);
-        iWaveBossSpawner.setWaveBossDelay(25f);
+        base.Die();
+        Shared.gameMng.iGoldCoin.SetCoin(2);
+        Shared.enemyMng.iWaveBossSpawner.SetWaveBossDelay(25f);
     }
 
-    //public void waveBossTimer()
+    //public void WaveBossTimer()
     //{
     //    waveBossTime -= Time.deltaTime;
     //    waveBossText.text = waveBossTime.ToString("F1") + "s";

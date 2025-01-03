@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4344006031879630748}
   - component: {fileID: 4490251059524628637}
   - component: {fileID: 5149619250306071229}
-  - component: {fileID: 2923211849068376885}
+  - component: {fileID: 2381756173077506570}
   m_Layer: 5
   m_Name: CloseBtn
   m_TagString: Untagged
@@ -124,13 +124,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2923211849068376885}
+      - m_Target: {fileID: 2381756173077506570}
         m_TargetAssemblyTypeName: CloseBtn, Assembly-CSharp
-        m_MethodName: closePanel
-        m_Mode: 2
+        m_MethodName: clickCloseBtn
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 3677002916538775913}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 5, y: 5}
   m_UseGraphicAlpha: 1
---- !u!114 &2923211849068376885
+--- !u!114 &2381756173077506570
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3677002916538775913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fdb572e18779de498101fc1ee50ada5, type: 3}
+  m_Script: {fileID: 11500000, guid: d5695a25374888e439a506605b30dbbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5119799893672818931

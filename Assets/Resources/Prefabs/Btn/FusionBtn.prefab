@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8698711343680484374}
   - component: {fileID: 6930984550958634671}
   - component: {fileID: 4611620188906351000}
-  - component: {fileID: 2020512586915800207}
   - component: {fileID: 3518765534331208209}
+  - component: {fileID: 4313552741858674287}
   m_Layer: 5
   m_Name: FusionBtn
   m_TagString: Untagged
@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 4802170142358665371}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.015, y: 0.015, z: 0.015}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4564723561871081104}
@@ -124,9 +124,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2020512586915800207}
+      - m_Target: {fileID: 4313552741858674287}
         m_TargetAssemblyTypeName: UIFusionBtn, Assembly-CSharp
-        m_MethodName: onFusion
+        m_MethodName: ClickFusion
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -136,22 +136,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2020512586915800207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4802170142358665371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562e505dd2edc4c48a6a16e13cb57352, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fieldSelector: {fileID: 0}
-  unitFusion: {fileID: 0}
-  rect: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
 --- !u!114 &3518765534331208209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,6 +151,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 5, y: 5}
   m_UseGraphicAlpha: 1
+--- !u!114 &4313552741858674287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802170142358665371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33f83b6c0439234aa4ebf694925affb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 3, z: -1}
 --- !u!1 &8431359779994663748
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,34 +5,33 @@ using UnityEngine;
 
 public class Boss : Enemy
 {
-    public GameState gamestate;
-
+    public EGameState gameState;
     public TextMeshProUGUI bossTimeText;
-    public float bosstime;
+    public float bossTime;
 
     private void Awake()
     {
-        bosstime = 60f;
+        bossTime = 60f;
     }
 
-    public override void die()
+    public override void Die()
     {
-        base.die();
-        iGoldCoin.setGold(300);
-        iGoldCoin.setCoin(4);
-        iRound.setBossRound(false);
-        iTimer.setSec(15f);
-        iEnemySpawner.setEnemySpawnDelay(0.85f);
+        base.Die();
+        Shared.gameMng.iGoldCoin.SetGold(300);
+        Shared.gameMng.iGoldCoin.SetCoin(4);
+        Shared.gameMng.iRound.SetBossRound(false);
+        Shared.gameMng.iSpawnTimer.SetSec(15f);
+        Shared.enemyMng.iEnemySpawner.SetEnemySpawnDelay(0.85f);
     }
 
     public void bossTimer()
     {
-        bosstime -= Time.deltaTime;
-        bossTimeText.text = bosstime.ToString("F1") + "s";
+        bossTime -= Time.deltaTime;
+        bossTimeText.text = bossTime.ToString("F1") + "s";
 
-        if (bosstime <= 0)
+        if (bossTime <= 0)
         {
-            gamestate = GameState.GameOver;
+            gameState = EGameState.GAMEOVER;
         }
     }
 }

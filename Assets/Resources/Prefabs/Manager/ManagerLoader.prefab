@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a289e7c984b7242b8f1064fc8920b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataManager: {fileID: 5348925604797578186, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+  dataMng: {fileID: 5348925604797578186, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+  SceneMng: {fileID: 3317015124784509950, guid: f4ec127da783f924b848f54f290a7d16, type: 3}
+  UIMng: {fileID: 1985908224059897645, guid: 6e34924bf288c5e4889567a5ccd2dd2b, type: 3}

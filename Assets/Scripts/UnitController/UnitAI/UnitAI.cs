@@ -3,39 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public enum eUnitAI
-{
-    CREATE,
-    SEARCH,
-    ATTACK,
-    RESET,
-}
-
 public class UnitAI
 {
     public Unit unit;
 
-    public eUnitAI AIState = eUnitAI.CREATE;
+    public EUnitAI aiState = EUnitAI.CREATE;
 
-    public void init(Unit _unit)
+    public void Init(Unit _unit)
     {
         unit = _unit;
     }
 
     public void State()
     {
-        switch(AIState) 
+        switch(aiState) 
         {
-            case eUnitAI.CREATE:
+            case EUnitAI.CREATE:
                 Create();
                 break;
-            case eUnitAI.SEARCH:
+            case EUnitAI.SEARCH:
                 Search();
                 break;
-            case eUnitAI.ATTACK:
+            case EUnitAI.ATTACK:
                 Attack();
                 break;
-            case eUnitAI.RESET:
+            case EUnitAI.RESET:
                 Reset();
                 break;
         }
@@ -43,18 +35,18 @@ public class UnitAI
 
     public virtual void Create()
     {
-        AIState = eUnitAI.SEARCH;
+        aiState = EUnitAI.SEARCH;
     }
 
     public virtual void Search()
     {
-        unit.changeAnim(eUnitAI.SEARCH);
-        GameObject target = unit.targetEnemy();
+        unit.ChangeAnim(EUnitAI.SEARCH);
+        GameObject target = unit.TargetEnemy();
 
         if (target != null)
         {
             unit.target = target;
-            AIState = eUnitAI.ATTACK;
+            aiState = EUnitAI.ATTACK;
         }
     }
 
@@ -62,13 +54,13 @@ public class UnitAI
     {
         if(unit.target != null)
         {
-            unit.attack();
-            unit.lookEnemy();
-            unit.changeAnim(eUnitAI.ATTACK);
+            unit.Attack();
+            unit.LookEnemy();
+            unit.ChangeAnim(EUnitAI.ATTACK);
         }
         else
         {
-            AIState = eUnitAI.SEARCH;
+            aiState = EUnitAI.SEARCH;
         }
     }
 

@@ -8,6 +8,6 @@ public class Golem : Boss
 
     private void Start()
     {
-        initEnemyData(enemyData);
+        InitEnemyData(enemyData);
     }
 }

@@ -8,7 +8,7 @@ public class Grunt : WaveBoss
 
     private void Start()
     {
-        initWaveBoss();
-        initEnemyData(enemyData);
+        InitWaveBoss();
+        InitEnemyData(enemyData);
     }
 }

@@ -2,39 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum eEnemyAI
-{
-    CREATE,
-    MOVE,
-    STAY,
-    DIE,
-}
-
 public class EnemyAI
 {
     public Enemy enemy;
 
-    public eEnemyAI AIState = eEnemyAI.CREATE;
+    public EEnemyAI aiState = EEnemyAI.CREATE;
 
-    public void init(Enemy _enemy)
+    public void Init(Enemy _enemy)
     {
         enemy = _enemy;
     }
 
     public void State()
     {
-        switch (AIState)
+        switch (aiState)
         {
-            case eEnemyAI.CREATE:
+            case EEnemyAI.CREATE:
                 Create();
                 break;
-            case eEnemyAI.MOVE:
+            case EEnemyAI.MOVE:
                 Move();
                 break;
-            case eEnemyAI.STAY:
+            case EEnemyAI.STAY:
                 Stay();
                 break;
-            case eEnemyAI.DIE:
+            case EEnemyAI.DIE:
                 Die();
                 break;
         }
@@ -42,23 +34,23 @@ public class EnemyAI
 
     public virtual void Create()
     {
-        AIState = eEnemyAI.MOVE;
+        aiState = EEnemyAI.MOVE;
     }
 
     public virtual void Move()
     {
         if(enemy.isDie == false) 
         {
-            enemy.move();
-            enemy.turn();
+            enemy.Move();
+            enemy.Turn();
         }
         else if (enemy.isStay == true)
         {
-            AIState = eEnemyAI.STAY;
+            aiState = EEnemyAI.STAY;
         }
         else if (enemy.isDie == true) 
         {
-            AIState = eEnemyAI.DIE;
+            aiState = EEnemyAI.DIE;
         }
     }
 
@@ -66,16 +58,16 @@ public class EnemyAI
     {
         if (enemy.isStay == false && enemy.isDie == false)
         {
-            AIState = eEnemyAI.MOVE;
+            aiState = EEnemyAI.MOVE;
         }
         else if (enemy.isStay == false && enemy.isDie == true) 
         {
-            AIState = eEnemyAI.DIE;
+            aiState = EEnemyAI.DIE;
         }
     }
 
     public virtual void Die()
     {
-        enemy.die();
+        enemy.Die();
     }
 }

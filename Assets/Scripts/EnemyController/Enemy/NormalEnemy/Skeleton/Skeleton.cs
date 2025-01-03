@@ -9,6 +9,6 @@ public class Skeleton : NormalEnemy
 
     public void Start()
     {
-        initEnemyData(enemyData);
+        InitEnemyData(enemyData);
     }
 }

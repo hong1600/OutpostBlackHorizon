@@ -8,14 +8,6 @@ public abstract class Enemy : MonoBehaviour
 {
     public EnemyAI enemyAI;
 
-    public IEnemySpawner iEnemySpawner;
-    public IRewarder iRewarder;
-    public IGoldCoin iGoldCoin;
-    public ITimer iTimer;
-    public IRound iRound;
-    public IWaveBossSpawner iWaveBossSpawner;
-    public IBossSpawner iBossSpawner;
-
     public BoxCollider box;
     public Animator anim;
 
@@ -23,7 +15,7 @@ public abstract class Enemy : MonoBehaviour
     public float enemyHp;
     public float curhp;
     public float enemySpeed;
-    public Transform[] wayPoint;
+    public Transform[] wayPoints;
     public Vector3 wayPointDir;
     public int wayPointIndex;
     public Transform target;
@@ -31,32 +23,29 @@ public abstract class Enemy : MonoBehaviour
     public bool isDie;
     public bool isStay;
 
-    public void initEnemyData(EnemyData enemyData)
+    public void InitEnemyData(EnemyData _enemyData)
     {
-        if(iBossSpawner != null) 
-        {
-            box = this.GetComponent<BoxCollider>();
-            anim = this.GetComponent<Animator>();
+        box = this.GetComponent<BoxCollider>();
+        anim = this.GetComponent<Animator>();
 
-            enemyName = enemyData.enemyName;
-            enemyHp = enemyData.enemyHp;
-            curhp = enemyHp;
-            enemySpeed = enemyData.enemySpeed;
-            rotationSpeed = 5;
+        enemyName = _enemyData.enemyName;
+        enemyHp = _enemyData.enemyHp;
+        curhp = enemyHp;
+        enemySpeed = _enemyData.enemySpeed;
+        rotationSpeed = 5;
 
-            wayPoint = iEnemySpawner.getWayPoint();
-            wayPointIndex = 1;
-            target = wayPoint[wayPointIndex];
+        wayPoints = Shared.enemyMng.iEnemySpawner.GetWayPoint();
+        wayPointIndex = 1;
+        target = wayPoints[wayPointIndex];
 
-            //if (enemyData.hpBar != null)
-            //{
-            //    Instantiate(enemyData.hpBar, new Vector3(transform.position.x, transform.position.y, transform.position.z),
-            //        Quaternion.identity, transform);
-            //}
+        //if (enemyData.hpBar != null)
+        //{
+        //    Instantiate(enemyData.hpBar, new Vector3(transform.position.x, transform.position.y, transform.position.z),
+        //        Quaternion.identity, transform);
+        //}
 
-            enemyAI = new EnemyAI();
-            enemyAI.init(this);
-        }
+        enemyAI = new EnemyAI();
+        enemyAI.Init(this);
     }
 
     private void Update()
@@ -67,7 +56,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public void move()
+    public void Move()
     {
         wayPointDir = (target.transform.position - transform.position).normalized;
 
@@ -75,13 +64,13 @@ public abstract class Enemy : MonoBehaviour
 
         if (Vector3.Distance(transform.position, target.position) <= 0.1f)
         {
-            nextMove();
+            NextMove();
         }
     }
 
-    public void nextMove()
+    public void NextMove()
     {
-        if (wayPointIndex >= wayPoint.Length -1)
+        if (wayPointIndex >= wayPoints.Length -1)
         {
             wayPointIndex = 0;
         }
@@ -90,19 +79,19 @@ public abstract class Enemy : MonoBehaviour
             wayPointIndex++;
         }
 
-        target = wayPoint[wayPointIndex];
+        target = wayPoints[wayPointIndex];
     }
 
-    public void turn()
+    public void Turn()
     {
         Quaternion rotation = Quaternion.LookRotation(new Vector3(wayPointDir.x, 0, wayPointDir.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
             rotationSpeed * Time.deltaTime);
     }
 
-    public void takeDamage(int damage)
+    public void TakeDamage(int _damage)
     {
-        curhp -= damage;
+        curhp -= _damage;
 
         if (curhp <= 0)
         {
@@ -110,29 +99,29 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public virtual void die()
+    public virtual void Die()
     {
-        changeAnim(eEnemyAI.DIE);
+        ChangeAnim(EEnemyAI.DIE);
 
-        iRewarder.addRewardGold(50);
-        iRewarder.addRewardGem(10);
-        iRewarder.addRewardPaper(20);
-        iRewarder.addRewardExp(1);
+        Shared.gameMng.iRewarder.AddRewardGold(50);
+        Shared.gameMng.iRewarder.AddRewardGem(10);
+        Shared.gameMng.iRewarder.AddRewardPaper(20);
+        Shared.gameMng.iRewarder.AddRewardExp(1);
 
         Destroy(this.gameObject, 0.75f);
     }
 
-    public void changeAnim(eEnemyAI curState)
+    public void ChangeAnim(EEnemyAI _curState)
     {
-        switch (curState)
+        switch (_curState)
         {
-            case eEnemyAI.CREATE:
+            case EEnemyAI.CREATE:
                 anim.SetInteger("enemyAnim", (int)EEnemyAnim.RUN);
                 break;
-            case eEnemyAI.MOVE:
+            case EEnemyAI.MOVE:
                 anim.SetInteger("enemyAnim", (int)EEnemyAnim.RUN);
                 break;
-            case eEnemyAI.DIE:
+            case EEnemyAI.DIE:
                 anim.SetInteger("enemyAnim", (int)EEnemyAnim.DIE);
                 break;
 

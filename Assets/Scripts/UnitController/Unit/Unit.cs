@@ -5,9 +5,6 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
-    public UnitUpgrader unitUpgrader;
-    public IUnitUpgrader iUnitUpgrader;
-
     public string unitName;
     public int unitIndex;
     public int attackDamage;
@@ -26,46 +23,43 @@ public abstract class Unit : MonoBehaviour
     public float rotationSpeed;
     public Coroutine attackCoroutine;
 
-    public virtual void Init(UnitData unitData)
+    public virtual void Init(UnitData _unitData)
     {
         unitAI = new UnitAI();
-        unitAI.init(this);
+        unitAI.Init(this);
 
         anim = this.GetComponent<Animator>();
         box = this.GetComponent<BoxCollider>();
 
-        unitUpgrader = GameObject.Find("UnitUpgrader").GetComponent<UnitUpgrader>();
-        iUnitUpgrader = unitUpgrader;
-
-        unitName = unitData.unitName;
-        unitIndex = unitData.index;
-        attackDamage = unitData.unitDamage;
-        attackSpeed = unitData.attackSpeed;
-        attackRange = unitData.attackRange;
-        eUnitGrade = unitData.unitGrade;
-        UnitImg = unitData.unitImg;
+        unitName = _unitData.unitName;
+        unitIndex = _unitData.index;
+        attackDamage = _unitData.unitDamage;
+        attackSpeed = _unitData.attackSpeed;
+        attackRange = _unitData.attackRange;
+        eUnitGrade = _unitData.unitGrade;
+        UnitImg = _unitData.unitImg;
 
 
         switch (eUnitGrade)
         {
             case EUnitGrade.C
-            : lastUpgrade = iUnitUpgrader.getUpgradeLevel()[0]; 
+            : lastUpgrade = Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[0]; 
                 break;
             case EUnitGrade.B: 
-                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[0]; 
+                lastUpgrade = Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[0]; 
                 break;
             case EUnitGrade.A:
-                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[1];
+                lastUpgrade = Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[1];
                 break;
             case EUnitGrade.S: 
-                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[2]; 
+                lastUpgrade = Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[2]; 
                 break;
             case EUnitGrade.SS: 
-                lastUpgrade = iUnitUpgrader.getUpgradeLevel()[2];
+                lastUpgrade = Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[2];
                 break;
         }
 
-        iUnitUpgrader.missUpgrade(lastUpgrade, this);
+        Shared.unitMng.iUnitUpgrader.MissUpgrade(lastUpgrade, this);
 
         rotationSpeed = 5f;
     }
@@ -75,7 +69,7 @@ public abstract class Unit : MonoBehaviour
         unitAI.State();
     }
 
-    public GameObject targetEnemy()
+    public GameObject TargetEnemy()
     {
         Collider[] colls = Physics.OverlapSphere(transform.position, attackRange,
              LayerMask.GetMask("Enemy"));
@@ -103,13 +97,13 @@ public abstract class Unit : MonoBehaviour
         return target;
     }
 
-    public void attack()
+    public void Attack()
     {
         if (target != null)
         {
             if (attackCoroutine == null)
             {
-                attackCoroutine = StartCoroutine(Attack());
+                attackCoroutine = StartCoroutine(StartAttack());
             }
         }
         else
@@ -122,7 +116,7 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    IEnumerator Attack()
+    IEnumerator StartAttack()
     {
         while (true) 
         {
@@ -135,14 +129,14 @@ public abstract class Unit : MonoBehaviour
 
             if (enemy != null)
             {
-                enemy.takeDamage(attackDamage);
+                enemy.TakeDamage(attackDamage);
             }
 
             yield return new WaitForSeconds(1 / attackSpeed);
         }
     }
 
-    public void lookEnemy()
+    public void LookEnemy()
     {
         if (target == null) return;
 
@@ -152,20 +146,20 @@ public abstract class Unit : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
-    public void changeAnim(eUnitAI curState)
+    public void ChangeAnim(EUnitAI _curState)
     {
-        switch(curState) 
+        switch(_curState) 
         {
-            case eUnitAI.CREATE:
+            case EUnitAI.CREATE:
                 anim.SetInteger("isAttack", (int)EUnitAnim.IDLE);
                 break;
-            case eUnitAI.SEARCH:
+            case EUnitAI.SEARCH:
                 anim.SetInteger("isAttack", (int)EUnitAnim.IDLE);
                 break;
-            case eUnitAI.ATTACK:
+            case EUnitAI.ATTACK:
                 anim.SetInteger("isAttack", (int)EUnitAnim.ATTACK);
                 break;
-            case eUnitAI.RESET:
+            case EUnitAI.RESET:
                 break;
         }
     }
