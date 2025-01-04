@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameUI : MonoBehaviour
 {
+    public Canvas worldCanvas;
+
     public UIEnemyCounter uiEnemyCounter;
     public IUIEnemyCounter iUIEnemyCounter;
     public UIRoundPanel uiRoundPanel;

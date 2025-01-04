@@ -16,11 +16,7 @@ public class EnemyHpBar : MonoBehaviour
         hpBarFill.fillAmount = 1;
     }
 
-    private void Update()
-    {
-    }
-
-    public void init(Enemy _enemy)
+    public void Init(Enemy _enemy)
     {
         enemy = _enemy;
     }
@@ -29,7 +25,9 @@ public class EnemyHpBar : MonoBehaviour
     {
         hpBarFill.fillAmount = enemy.curhp / enemy.enemyHp;
 
-        hpBarBack.transform.LookAt(Camera.main.transform);
-        hpBarBack.transform.Rotate(0, 180, 0);
+        this.gameObject.transform.position = enemy.transform.position + offset;
+
+        Quaternion rotation = Quaternion.Euler(90f, 0f, 0f);
+        this.gameObject.transform.rotation = rotation;
     }
 }

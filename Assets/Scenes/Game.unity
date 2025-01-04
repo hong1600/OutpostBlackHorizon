@@ -20485,6 +20485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7407d845ea131e743a9c6edaba2cefaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldCanvas: {fileID: 492361833}
   uiEnemyCounter: {fileID: 1073232771}
   uiRoundPanel: {fileID: 1539444028}
   uiTimePanel: {fileID: 1448165647}

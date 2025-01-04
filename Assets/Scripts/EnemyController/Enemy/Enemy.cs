@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public abstract class Enemy : MonoBehaviour
 {
     public EnemyAI enemyAI;
+    public EnemyHpBar enemyHpBar;
 
     public BoxCollider box;
     public Animator anim;
@@ -22,7 +23,6 @@ public abstract class Enemy : MonoBehaviour
     public float rotationSpeed;
     public bool isDie;
     public bool isStay;
-    public EnemyHpBar hpBar;
 
     public void InitEnemyData(EnemyData _enemyData)
     {
@@ -41,10 +41,9 @@ public abstract class Enemy : MonoBehaviour
 
         if (_enemyData.hpBar != null)
         {
-            Instantiate(_enemyData.hpBar, new Vector3
-                (transform.position.x, transform.position.y, transform.position.z), Quaternion.identity, transform);
-            hpBar = _enemyData.hpBar.GetComponent<EnemyHpBar>();
-            hpBar.init(this);
+            GameObject hpBar = Instantiate(_enemyData.hpBar, Shared.gameUI.worldCanvas.transform);
+            enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
+            enemyHpBar.Init(this);
         }
 
         enemyAI = new EnemyAI();

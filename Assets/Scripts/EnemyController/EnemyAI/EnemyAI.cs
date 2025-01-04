@@ -43,7 +43,7 @@ public class EnemyAI
         {
             enemy.Move();
             enemy.Turn();
-            enemy.hpBar.hpBar();
+            enemy.enemyHpBar.hpBar();
         }
         else if (enemy.isStay == true)
         {
@@ -59,8 +59,8 @@ public class EnemyAI
     {
         if (enemy.isStay == false && enemy.isDie == false)
         {
-            enemy.hpBar.hpBar();
             aiState = EEnemyAI.MOVE;
+            enemy.enemyHpBar.hpBar();
         }
         else if (enemy.isStay == false && enemy.isDie == true) 
         {
