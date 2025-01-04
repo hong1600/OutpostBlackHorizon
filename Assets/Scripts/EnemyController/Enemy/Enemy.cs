@@ -22,6 +22,7 @@ public abstract class Enemy : MonoBehaviour
     public float rotationSpeed;
     public bool isDie;
     public bool isStay;
+    public EnemyHpBar hpBar;
 
     public void InitEnemyData(EnemyData _enemyData)
     {
@@ -38,11 +39,13 @@ public abstract class Enemy : MonoBehaviour
         wayPointIndex = 1;
         target = wayPoints[wayPointIndex];
 
-        //if (enemyData.hpBar != null)
-        //{
-        //    Instantiate(enemyData.hpBar, new Vector3(transform.position.x, transform.position.y, transform.position.z),
-        //        Quaternion.identity, transform);
-        //}
+        if (_enemyData.hpBar != null)
+        {
+            Instantiate(_enemyData.hpBar, new Vector3
+                (transform.position.x, transform.position.y, transform.position.z), Quaternion.identity, transform);
+            hpBar = _enemyData.hpBar.GetComponent<EnemyHpBar>();
+            hpBar.init(this);
+        }
 
         enemyAI = new EnemyAI();
         enemyAI.Init(this);
