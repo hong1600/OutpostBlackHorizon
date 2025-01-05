@@ -13,6 +13,7 @@ public interface IEnemySpawner
 
 public class EnemySpawner : MonoBehaviour, IEnemySpawner
 {
+    public GameObject EnemyHpBar;
     public List<GameObject> enemyList;
     public Transform enemySpawnPoint;
     public Transform[] wayPoints;
@@ -39,6 +40,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
             enemySpawnDelay = 0.85f;
         }
+
         enemySpawnDelay -= Time.deltaTime;
     }
 

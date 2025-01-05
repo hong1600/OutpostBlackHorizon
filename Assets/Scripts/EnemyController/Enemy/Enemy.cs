@@ -23,6 +23,7 @@ public abstract class Enemy : MonoBehaviour
     public float rotationSpeed;
     public bool isDie;
     public bool isStay;
+    public GameObject hpBar;
 
     public void InitEnemyData(EnemyData _enemyData)
     {
@@ -41,7 +42,7 @@ public abstract class Enemy : MonoBehaviour
 
         if (_enemyData.hpBar != null)
         {
-            GameObject hpBar = Instantiate(_enemyData.hpBar, Shared.gameUI.worldCanvas.transform);
+            hpBar = Instantiate(_enemyData.hpBar, Shared.gameUI.worldCanvas.transform);
             enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
             enemyHpBar.Init(this);
         }
@@ -110,6 +111,7 @@ public abstract class Enemy : MonoBehaviour
         Shared.gameMng.iRewarder.AddRewardPaper(20);
         Shared.gameMng.iRewarder.AddRewardExp(1);
 
+        Destroy(hpBar, 0.75f);
         Destroy(this.gameObject, 0.75f);
     }
 

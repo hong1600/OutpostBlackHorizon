@@ -11,5 +11,5 @@ public class Shared : MonoBehaviour
     static public SoundMng soundMng;
     static public GameUI gameUI;
     static public InputMng inputMng;
-
+    static public MainCamera mainCamera;
 }

@@ -177,7 +177,7 @@ public class CSVReader
         }
     }
 
-    public void get(int row, ref float val)
+    public void getFloat(int row, ref float val)
     {
         string s = _arr_grid[cur_col, row];
         ++cur_col;

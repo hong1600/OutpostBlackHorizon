@@ -16,9 +16,16 @@ public class EnemyHpBar : MonoBehaviour
         hpBarFill.fillAmount = 1;
     }
 
+    private void Update()
+    {
+        hpBar();
+    }
+
     public void Init(Enemy _enemy)
     {
         enemy = _enemy;
+
+        offset = new Vector3(0.3f, 3f, 0f);
     }
 
     public void hpBar()
@@ -27,7 +34,7 @@ public class EnemyHpBar : MonoBehaviour
 
         this.gameObject.transform.position = enemy.transform.position + offset;
 
-        Quaternion rotation = Quaternion.Euler(90f, 0f, 0f);
+        Quaternion rotation = Quaternion.Euler(60f, 0f, 0f);
         this.gameObject.transform.rotation = rotation;
     }
 }

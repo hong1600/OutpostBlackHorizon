@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum ETable
 {
-    UnitData,
-    EnemyData,
-    ItemData,
+    UNITDATA,
+    ENEMYDATA,
+    ITEMDATA,
+    CAMERADATA
 }

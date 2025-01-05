@@ -44,26 +44,28 @@ public class Table_Base
         stream.Close();
     }
 
-    protected CSVReader GetCSVReader(ETable _Name) 
+    protected CSVReader GetCSVReader(ETable _eTable) 
     {
         string ext = ".csv";
         string path = "";
 
-        switch (_Name) 
+        switch (_eTable) 
         {
-            case ETable.UnitData:
+            case ETable.UNITDATA:
                 path = GetTablePath() + "/Document/Unit/";
                 break;
-            case ETable.EnemyData:
+            case ETable.ENEMYDATA:
                 path = GetTablePath() + "/Document/Enemy/";
                 break;
-            case ETable.ItemData:
+            case ETable.ITEMDATA:
                 path = GetTablePath() + "/Document/Item/";
                 break;
-
+            case ETable.CAMERADATA:
+                path = GetTablePath() + "/Document/Camera/";
+                break;
         }
 
-        FileStream file = new FileStream(path + _Name + ext, FileMode.Open,
+        FileStream file = new FileStream(path + _eTable + ext, FileMode.Open,
             FileAccess.Read, FileShare.ReadWrite);
 
         StreamReader stream = new StreamReader(file, System.Text.Encoding.UTF8);

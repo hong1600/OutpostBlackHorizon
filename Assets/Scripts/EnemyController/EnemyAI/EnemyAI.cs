@@ -39,19 +39,19 @@ public class EnemyAI
 
     public virtual void Move()
     {
-        if(enemy.isDie == false) 
+        if (enemy.isDie == false)
         {
             enemy.Move();
             enemy.Turn();
-            enemy.enemyHpBar.hpBar();
         }
-        else if (enemy.isStay == true)
-        {
-            aiState = EEnemyAI.STAY;
-        }
-        else if (enemy.isDie == true) 
+        else
         {
             aiState = EEnemyAI.DIE;
+        }
+
+        if (enemy.isStay == true)
+        {
+            aiState = EEnemyAI.STAY;
         }
     }
 
@@ -60,7 +60,6 @@ public class EnemyAI
         if (enemy.isStay == false && enemy.isDie == false)
         {
             aiState = EEnemyAI.MOVE;
-            enemy.enemyHpBar.hpBar();
         }
         else if (enemy.isStay == false && enemy.isDie == true) 
         {

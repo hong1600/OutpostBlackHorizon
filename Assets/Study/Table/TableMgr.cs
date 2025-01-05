@@ -22,25 +22,32 @@ public class TableMgr : ITableMgr
     {
         switch (Name)
         {
-            case ETable.UnitData:
+            case ETable.UNITDATA:
 #if UNITY_EDITOR
-                unit.Init_Csv(ETable.UnitData, 1, 0);
+                unit.Init_Csv(ETable.UNITDATA, 1, 0);
 #else
         unit.Init_Binary($"{Name}");
 #endif
                 break;
-            case ETable.EnemyData:
+            case ETable.ENEMYDATA:
 #if UNITY_EDITOR
-                enemy.Init_Csv(ETable.EnemyData, 1, 0);
+                enemy.Init_Csv(ETable.ENEMYDATA, 1, 0);
 #else
         enemy.Init_Binary($"{Name}");
 #endif
                 break;
-            case ETable.ItemData:
+            case ETable.ITEMDATA:
 #if UNITY_EDITOR
-                item.Init_Csv(ETable.ItemData, 1, 0);
+                item.Init_Csv(ETable.ITEMDATA, 1, 0);
 #else
         item.Init_Binary($"{Name}");
+#endif
+                break;
+            case ETable.CAMERADATA:
+#if UNITY_EDITOR
+                unit.Init_Csv(ETable.CAMERADATA, 1, 0);
+#else
+        unit.Init_Binary($"{Name}");
 #endif
                 break;
 
@@ -51,14 +58,17 @@ public class TableMgr : ITableMgr
     {
         switch (Name) 
         {
-            case ETable.UnitData:
+            case ETable.UNITDATA:
                 unit.Save_Binary("UnitData");
                 break;
-            case ETable.EnemyData:
+            case ETable.ENEMYDATA:
                 enemy.Save_Binary("EnemyData");
                 break;
-            case ETable.ItemData:
+            case ETable.ITEMDATA:
                 item.Save_Binary("ItemData");
+                break;
+            case ETable.CAMERADATA:
+                item.Save_Binary("CameraData");
                 break;
         }
 
