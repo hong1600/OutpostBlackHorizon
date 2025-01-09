@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public interface ISpawnTimer
 {
-    void Timer();
-    float GetMin();
+    void SubTimerEvent(Action _listener);
+    void UnTimerEvent(Action _listener);
+    float GetMaxSec();
     float GetSec();
     void SetSec(float _value);
     bool GetIsSpawnTime();
@@ -15,19 +17,31 @@ public interface ISpawnTimer
 
 public class SpawnTimer : MonoBehaviour, ISpawnTimer
 {
-    public float sec;
-    public float min;
-    public bool timerRunning;
-    public bool spawnTime;
+    private event Action onTimeEvent;
 
-    private void OnEnable()
+    float sec;
+    float maxSec;
+    bool spawnTime;
+
+    private void Start()
     {
         spawnTime = false;
-        min = 0.0f;
         sec = 4f;
+        maxSec = sec;
+
+        StartCoroutine(StartTimerLoop());
     }
 
-    public void Timer()
+    IEnumerator StartTimerLoop()
+    {
+        while (Shared.gameMng.iGameState.GetGameState() == EGameState.PLAYING)
+        {
+            Timer();
+            yield return null;
+        }
+    }
+
+    private void Timer()
     {
         if (Shared.gameMng.iRound.GetIsBossRound())
         {
@@ -36,47 +50,43 @@ public class SpawnTimer : MonoBehaviour, ISpawnTimer
         else
         {
             sec -= Time.deltaTime;
+            sec = Mathf.Max(0f, sec);
+            onTimeEvent?.Invoke();
 
-            if(sec < 4) 
+            if (sec < 4)
             {
                 int intSec = (int)sec;
-
-                Shared.gameUI.iUISpawnPointTimerPanel.GetSpawnPointTimerPanel().SetActive(true);
-                Shared.gameUI.iUISpawnPointTimerPanel.GetSpawnPointTimerText().text = intSec.ToString();
             }
         }
 
         int intsec = (int)sec;
 
-        if (sec < 0f)
+        if (sec <= 0f)
         {
-            StartCoroutine(spawn());
+            StartCoroutine(StartSpawnTime());
             Shared.gameUI.iUIRoundPanel.RoundPanel();
-
-            if (min > 0)
-            {
-                min -= 1;
-            }
         }
     }
 
-    IEnumerator spawn()
+    IEnumerator StartSpawnTime()
     {
+        spawnTime = true;
+
         Shared.gameMng.iRound.SetCurRound(1);
         Shared.gameMng.iRound.RoundCheck();
         sec = 20f;
-        spawnTime = true;
-        Shared.gameUI.iUISpawnPointTimerPanel.GetSpawnPointTimerPanel().SetActive(false);
+        maxSec = sec;
 
         yield return new WaitForSeconds(17);
 
         spawnTime = false;
     }
 
-
+    public void SubTimerEvent(Action _listener) { onTimeEvent += _listener; }
+    public void UnTimerEvent(Action _listener) { onTimeEvent -= _listener; }
+    public float GetMaxSec() { return maxSec; }
     public float GetSec() { return sec; }
     public void SetSec(float _value) { sec = _value; }
     public bool GetIsSpawnTime() { return spawnTime; }
     public void SetIsSpawnTime(bool _value) { spawnTime = _value; }
-    public float GetMin() { return min; }
 }

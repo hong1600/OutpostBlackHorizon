@@ -14,8 +14,8 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
 {
     public GameObject randomUnit;
     public bool randomDelay;
+    public Sprite randomFail;
     public Image[] randomUnitImgs;
-    public Sprite[] randomStars;
     public float fadeTime;
     public int spawnCoin0;
     public int spawnCoin1;
@@ -90,7 +90,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
                 }
                 else
                 {
-                    yield return StartCoroutine(FadeInImage(randomUnitImgs[0], randomStars[3]));
+                    yield return StartCoroutine(FadeInImage(randomUnitImgs[0], randomFail));
                 }
                 break;
             case 1:
@@ -102,7 +102,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
                 }
                 else
                 {
-                    yield return StartCoroutine(FadeInImage(randomUnitImgs[1], randomStars[3]));
+                    yield return StartCoroutine(FadeInImage(randomUnitImgs[1], randomFail));
                 }
                 break;
             case 2:
@@ -114,7 +114,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
                 }
                 else
                 {
-                    yield return StartCoroutine(FadeInImage(randomUnitImgs[2], randomStars[3]));
+                    yield return StartCoroutine(FadeInImage(randomUnitImgs[2], randomFail));
                 }
                 break;
         }
@@ -144,23 +144,24 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
     IEnumerator FadeInImage(Image _image, Sprite _sprite)
     {
         float delayTime = 0f;
-        Sprite origin = _image.sprite;
         _image.sprite = _sprite;
-        Color color = _image.color;
-        color.a = 0f;
-        _image.color = color;
+        Color unitColor = _image.color;
+        unitColor.a = 0f;
+        _image.color = unitColor;
 
         while (delayTime < fadeTime)
         {
             delayTime += Time.deltaTime;
-            color.a = Mathf.Lerp(0, 1, delayTime / fadeTime);
-            _image.color = color;
+            unitColor.a = Mathf.Lerp(0, 1, delayTime / fadeTime);
+            _image.color = unitColor;
             yield return null;
         }
 
-        color.a = 1;
-        _image.color = color;
-        _image.sprite = origin;
+        unitColor.a = 1;
 
+        _image.sprite = null;
+        Color orginColor = _image.color;
+        orginColor.a = 0;
+        _image.color = orginColor;
     }
 }

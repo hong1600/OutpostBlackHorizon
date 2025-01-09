@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MainCamera : MonoBehaviour
 {
-    bool CameraShake = false;
+    //bool CameraShake = false;
 
     Transform ShakeTr;
 
@@ -36,7 +36,7 @@ public class MainCamera : MonoBehaviour
     Vector3 OrgPos;
 
     float FovX = 0.2f;
-    float FovY = 0.2f;
+    //float FovY = 0.2f;
 
     float Left = 1.0f;
     float Right = -1.0f;
@@ -54,13 +54,13 @@ public class MainCamera : MonoBehaviour
     {
         ShakeTr = transform.parent;
 
-        CameraShake = true;
+        //CameraShake = true;
     }
 
     void ResetShakeTr()
     {
         ShakeTr.localPosition = Vector3.zero;
-        CameraShake = false;
+        //CameraShake = false;
 
         CameraLimit();
     }
@@ -110,7 +110,7 @@ public class MainCamera : MonoBehaviour
 
     IEnumerator ShakeCoroutine()
     {
-        CameraShake = true;
+        //CameraShake = true;
 
         float dt, dist;
 

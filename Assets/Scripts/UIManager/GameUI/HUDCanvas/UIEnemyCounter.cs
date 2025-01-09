@@ -11,12 +11,21 @@ public interface IUIEnemyCounter
 
 public class UIEnemyCounter : MonoBehaviour, IUIEnemyCounter
 {
-    public TextMeshProUGUI monsterCountText;
-    public Slider monsterCountSlider;
+    [SerializeField] TextMeshProUGUI enemyCountText;
+    [SerializeField] Image sliderValue;
+
+    private void Start()
+    {
+        Shared.enemyMng.iEnemySpawner.UnEnemySpawn(EnemyCounterPanel);
+        Shared.enemyMng.iEnemySpawner.SubEnemySpawn(EnemyCounterPanel);
+
+        sliderValue.fillAmount = 0;
+    }
 
     public void EnemyCounterPanel()
     {
-        monsterCountSlider.value = Shared.enemyMng.EnemyCount() / Shared.enemyMng.maxEnemyCount;
-        monsterCountText.text = $"{Shared.enemyMng.EnemyCount()}  /  {Shared.enemyMng.maxEnemyCount}";
+
+        enemyCountText.text = $"{Shared.enemyMng.EnemyCount()}  /  {Shared.enemyMng.maxEnemyCount}";
+        sliderValue.fillAmount = Shared.enemyMng.EnemyCount() / Shared.enemyMng.maxEnemyCount;
     }
 }

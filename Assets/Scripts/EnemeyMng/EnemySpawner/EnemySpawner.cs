@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public interface IEnemySpawner
 {
+    void SubEnemySpawn(Action _listener);
+    void UnEnemySpawn(Action _listener);
     void SpawnEnemy();
     float GetEnemySpawnDelay();
     void SetEnemySpawnDelay(float _value);
@@ -13,6 +16,8 @@ public interface IEnemySpawner
 
 public class EnemySpawner : MonoBehaviour, IEnemySpawner
 {
+    private event Action onEnemySpawn;
+
     public GameObject EnemyHpBar;
     public List<GameObject> enemyList;
     public Transform enemySpawnPoint;
@@ -32,19 +37,23 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
         if (enemySpawnDelay <= 0)
         {
-            GameObject obj = 
-                Instantiate(enemyList[Shared.gameMng.iRound.GetCurRound()-1], enemySpawnPoint.transform.position,
+            GameObject obj =
+                Instantiate(enemyList[Shared.gameMng.iRound.GetCurRound() - 1], enemySpawnPoint.transform.position,
                 Quaternion.identity, Shared.enemyMng.enemyParent.transform);
 
             Enemy enemy = obj.GetComponent<Enemy>();
 
             enemySpawnDelay = 0.85f;
+
+            onEnemySpawn?.Invoke();
         }
 
         enemySpawnDelay -= Time.deltaTime;
     }
 
-    public float GetEnemySpawnDelay() {  return enemySpawnDelay; }
+    public void SubEnemySpawn(Action _listener) { onEnemySpawn += _listener; }
+    public void UnEnemySpawn(Action _listener) { onEnemySpawn -= _listener; }
+    public float GetEnemySpawnDelay() { return enemySpawnDelay; }
     public void SetEnemySpawnDelay(float _value) { enemySpawnDelay = _value; }
     public Transform GetEnemySpawnPoint() { return enemySpawnPoint; }
     public Transform[] GetWayPoint() { return wayPoints; }

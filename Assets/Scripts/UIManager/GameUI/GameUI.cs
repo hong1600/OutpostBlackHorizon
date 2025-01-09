@@ -16,8 +16,6 @@ public class GameUI : MonoBehaviour
     public IUIMixRightSlot iUIMixRightSlot;
     public UIFusionBtn uiFusionBtn;
     public IUIFusionBtn iUIFusionBtn;
-    public UISpawnPointTimerPanel uiSpawnPointTimerPanel;
-    public IUISpawnPointTimerPanel iUISpawnPointTimerPanel;
 
     private void Awake()
     {
@@ -35,12 +33,5 @@ public class GameUI : MonoBehaviour
         iUITimePanel = uiTimePanel;
         iUIMixRightSlot = uiMixRightSlot;
         iUIFusionBtn = uiFusionBtn;
-        iUISpawnPointTimerPanel = uiSpawnPointTimerPanel;
-    }
-
-    private void Update()
-    {
-        iUITimePanel.TimePanel();
-        iUIEnemyCounter.EnemyCounterPanel();
     }
 }

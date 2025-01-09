@@ -12,9 +12,6 @@ public class GameState : MonoBehaviour, IGameState
 {
     public EGameState curGameState;
 
-    public bool gameOver;
-    public bool gameClear;
-
     private void Awake()
     {
         curGameState = EGameState.PLAYING;

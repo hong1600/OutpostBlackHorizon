@@ -2,20 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public interface IUITimePanel 
+public interface IUITimePanel
 {
-    void TimePanel();
+    void UpdateTimePanel();
 }
 
 public class UITimePanel : MonoBehaviour, IUITimePanel
 {
-    public TextMeshProUGUI timerText;
+    [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] Image sliderValue;
 
-    public void TimePanel()
+    private void Start()
     {
-        int min = (int)Shared.gameMng.iSpawnTimer.GetMin();
+        Shared.gameMng.iSpawnTimer.UnTimerEvent(UpdateTimePanel);
+        Shared.gameMng.iSpawnTimer.SubTimerEvent(UpdateTimePanel);
+    }
+
+    public void UpdateTimePanel()
+    {
         float sec = Shared.gameMng.iSpawnTimer.GetSec();
-        timerText.text = string.Format("{0:00}:{1:00}", min, (int)sec);
+        float maxSec = Shared.gameMng.iSpawnTimer.GetMaxSec();
+        timerText.text = $"{(int)sec}s";
+        sliderValue.fillAmount = sec / maxSec;
+        //timerText.text = string.Format("{0:00}:{1:00}", min, (int)sec);
     }
 }

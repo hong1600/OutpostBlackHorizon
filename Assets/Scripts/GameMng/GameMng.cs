@@ -42,8 +42,6 @@ public class GameMng : MonoBehaviour
     {
         if (!iRound.GetIsBossRound())
         {
-            iSpawnTimer.Timer();
-
             if (iSpawnTimer.GetIsSpawnTime())
             {
                 Shared.enemyMng.enemySpawner.SpawnEnemy();
