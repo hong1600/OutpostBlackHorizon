@@ -23,7 +23,6 @@ public abstract class Enemy : MonoBehaviour
     public float rotationSpeed;
     public bool isDie;
     public bool isStay;
-    public GameObject hpBar;
 
     public void InitEnemyData(EnemyData _enemyData)
     {
@@ -40,12 +39,10 @@ public abstract class Enemy : MonoBehaviour
         wayPointIndex = 1;
         target = wayPoints[wayPointIndex];
 
-        if (_enemyData.hpBar != null)
-        {
-            hpBar = Instantiate(_enemyData.hpBar, Shared.gameUI.worldCanvas.transform);
-            enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
-            enemyHpBar.Init(this);
-        }
+        GameObject hpBar = Shared.objectPoolMng.iHpBarPool.FindHpBar
+            (Shared.objectPoolMng.iHpBarPool.GetHpBar().name);
+        enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
+        enemyHpBar.Init(this);
 
         enemyAI = new EnemyAI();
         enemyAI.Init(this);
@@ -104,6 +101,12 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Die()
     {
+
+        StartCoroutine(StartDie());
+    }
+
+    IEnumerator StartDie()
+    {
         ChangeAnim(EEnemyAI.DIE);
 
         Shared.gameMng.iRewarder.AddRewardGold(50);
@@ -111,8 +114,10 @@ public abstract class Enemy : MonoBehaviour
         Shared.gameMng.iRewarder.AddRewardPaper(20);
         Shared.gameMng.iRewarder.AddRewardExp(1);
 
-        Destroy(hpBar, 0.75f);
-        Destroy(this.gameObject, 0.75f);
+        yield return new WaitForSeconds(0.75f);
+
+        Shared.objectPoolMng.ReturnObject(this.gameObject.name, this.gameObject);
+        Shared.objectPoolMng.ReturnObject(enemyHpBar.gameObject.name, enemyHpBar.gameObject);
     }
 
     public void ChangeAnim(EEnemyAI _curState)

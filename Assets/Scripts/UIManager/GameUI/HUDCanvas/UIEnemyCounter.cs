@@ -19,6 +19,7 @@ public class UIEnemyCounter : MonoBehaviour, IUIEnemyCounter
         Shared.enemyMng.iEnemySpawner.UnEnemySpawn(EnemyCounterPanel);
         Shared.enemyMng.iEnemySpawner.SubEnemySpawn(EnemyCounterPanel);
 
+        enemyCountText.text = $"{Shared.enemyMng.EnemyCount()}  /  {Shared.enemyMng.maxEnemyCount}";
         sliderValue.fillAmount = 0;
     }
 

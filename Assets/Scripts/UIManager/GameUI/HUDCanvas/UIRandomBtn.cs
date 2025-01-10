@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class UIRandomBtn : MonoBehaviour
 {
-    public GameObject randomPanel;
+    [SerializeField] GameObject randomPanel;
+    [SerializeField] GameObject upgradePanel;
+    [SerializeField] GameObject mixPanel;
+
 
     public void ClickRandomBtn()
     {
+        if (mixPanel.activeSelf || upgradePanel.activeSelf)
+        {
+            mixPanel.SetActive(false);
+            upgradePanel.SetActive(false);
+        }
+
         UIMng.instance.OpenPanel(randomPanel);
     }
 }

@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class UIUpgradeBtn : MonoBehaviour
 {
-    public GameObject upgradePanel;
+    [SerializeField] GameObject upgradePanel;
+    [SerializeField] GameObject mixPanel;
+    [SerializeField] GameObject randomPanel;
 
     public void clickUpgradeBtn()
     {
+        if (mixPanel.activeSelf || randomPanel.activeSelf)
+        {
+            mixPanel.SetActive(false);
+            randomPanel.SetActive(false);
+        }
+
         UIMng.instance.OpenPanel(upgradePanel);
     }
 }

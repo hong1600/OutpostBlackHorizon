@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class UIMixBtn : MonoBehaviour
 {
-    public GameObject mixPanel;
+    [SerializeField] GameObject mixPanel;
+    [SerializeField] GameObject upgradePanel;
+    [SerializeField] GameObject randomPanel;
+
 
     public void ClickMixPanelBtn()
     {
+        if (upgradePanel.activeSelf || randomPanel.activeSelf)
+        {
+            upgradePanel.SetActive(false);
+            randomPanel.SetActive(false);
+        }
+
         UIMng.instance.OpenPanel(mixPanel);
     }
 
