@@ -7,8 +7,10 @@ public class InputMng : MonoBehaviour
 {
     public static event Action<Vector2> onLeftClick;
 
-    public FieldSelector fieldSelector;
+    [SerializeField] FieldSelector fieldSelector;
     public IFieldSelector iFieldSelector;
+    [SerializeField] CustomMouse customMouse;
+    public ICustomMouse iCustomMouse;
 
     private void Awake()
     {
@@ -22,6 +24,7 @@ public class InputMng : MonoBehaviour
         }
 
         iFieldSelector = fieldSelector;
+        iCustomMouse = customMouse;
     }
 
     private void Update()
