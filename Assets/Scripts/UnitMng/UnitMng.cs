@@ -31,6 +31,8 @@ public class UnitMng : MonoBehaviour, IUnitMng
     public IUnitSpawner iUnitSpawner;
     public UnitUpgrader unitUpgrader;
     public IUnitUpgrader iUnitUpgrader;
+    public UnitFieldMove unitFieldMove;
+    public IUnitFieldMove iUnitFieldMove;
 
     public List<GameObject> allUnitList = new List<GameObject>();
     public List<GameObject> unitCList, unitBList, unitAList, unitSList, unitSSList = new List<GameObject>();
@@ -54,6 +56,7 @@ public class UnitMng : MonoBehaviour, IUnitMng
         iUnitRandomSpawner = unitRandomSpawner;
         iUnitSpawner = unitSpawner;
         iUnitUpgrader = unitUpgrader;
+        iUnitFieldMove = unitFieldMove;
     }
 
     public bool IsCheckGround(GameObject _spawnUnit)

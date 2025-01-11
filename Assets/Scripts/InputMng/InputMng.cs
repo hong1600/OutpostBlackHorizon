@@ -5,12 +5,18 @@ using UnityEngine;
 
 public class InputMng : MonoBehaviour
 {
-    public static event Action<Vector2> onLeftClick;
+    public static event Action<Vector2> onLeftClickDown;
+    public static event Action<Vector2> onLeftClickDrag;
+    public static event Action<Vector2> onLeftClickUp;
 
     [SerializeField] FieldSelector fieldSelector;
     public IFieldSelector iFieldSelector;
     [SerializeField] CustomMouse customMouse;
     public ICustomMouse iCustomMouse;
+
+    Vector2 startMousePos;
+    Vector2 curMousePos;
+    Vector2 endMousePos;
 
     private void Awake()
     {
@@ -31,7 +37,20 @@ public class InputMng : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            onLeftClick?.Invoke(Input.mousePosition);
+            startMousePos = iCustomMouse.GetMousePos();
+            onLeftClickDown?.Invoke(startMousePos);
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            curMousePos = iCustomMouse.GetMousePos();
+            onLeftClickDrag?.Invoke(iCustomMouse.GetMousePos());
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            endMousePos = iCustomMouse.GetMousePos();
+            onLeftClickUp?.Invoke(iCustomMouse.GetMousePos());
         }
     }
 }

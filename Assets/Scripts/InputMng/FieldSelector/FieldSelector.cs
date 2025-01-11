@@ -4,31 +4,111 @@ using UnityEngine;
 
 public interface IFieldSelector
 {
-    GameObject GetSelectField();
+    GameObject GetStartSelectField();
+    GameObject GetCurSelectField();
 }
 
 public class FieldSelector : MonoBehaviour, IFieldSelector
 {
-    public Material originMat;
-    public Material selectMat;
-    public GameObject selectField;
-    public MeshRenderer selectFieldRenderer;
-    public GameObject fusionBtn;
+    [SerializeField] Material originMat;
+    [SerializeField] Material selectMat;
+    [SerializeField] GameObject startSelectField;
+    [SerializeField] GameObject curSelectField;
+    [SerializeField] MeshRenderer startFieldRenderer;
+    [SerializeField] MeshRenderer curFieldRenderer;
+    [SerializeField] GameObject fusionBtn;
 
     private void Start()
     {
-        InputMng.onLeftClick -= FieldClick;
-        InputMng.onLeftClick += FieldClick;
+        InputMng.onLeftClickDown -= OnFieldClickDown;
+        InputMng.onLeftClickDrag -= OnFieldDrag;
+        InputMng.onLeftClickUp -= OnFieldClickUp;
+        InputMng.onLeftClickDown += OnFieldClickDown;
+        InputMng.onLeftClickDrag += OnFieldDrag;
+        InputMng.onLeftClickUp += OnFieldClickUp;
     }
 
-    public void FieldClick(Vector2 _mousePosition)
+    private void OnFieldClickDown(Vector2 _mousePos)
     {
-        Ray ray = Camera.main.ScreenPointToRay(_mousePosition);
+        if (GetFieldMousePos(_mousePos) == null) 
+        {
+            startSelectField = null;
+            return;
+        }
+
+        startSelectField = GetFieldMousePos(_mousePos);
+
+        if (startFieldRenderer != null) { startFieldRenderer.material = originMat; }
+
+        if (startSelectField != null)
+        {
+            startFieldRenderer = null;
+            startFieldRenderer = startSelectField.GetComponent<MeshRenderer>();
+            startFieldRenderer.material = selectMat;
+        }
+        else
+        {
+            startFieldRenderer = null;
+        }
+    }
+
+    private void OnFieldDrag(Vector2 _mousePos)
+    {
+        if (GetFieldMousePos(_mousePos) == null) { return; }
+
+        curSelectField = GetFieldMousePos(_mousePos);
+
+        if (curSelectField != startSelectField && curSelectField != null)
+        {
+            if (curFieldRenderer != null) { curFieldRenderer.material = originMat; }
+
+            curFieldRenderer = curSelectField.GetComponent<MeshRenderer>();
+            curFieldRenderer.material = selectMat;
+        }
+    }
+
+    private void OnFieldClickUp(Vector2 _mousePos)
+    {
+        if (GetFieldMousePos(_mousePos) == null)
+        {
+            if (startFieldRenderer != null) { startFieldRenderer.material = originMat; }
+            if (curFieldRenderer != null) { curFieldRenderer.material = originMat; }
+            Shared.gameUI.iUIFusionBtn.HideFusionBtn();
+        }
+        else if (startSelectField != curSelectField)
+        {
+            if (startFieldRenderer != null) { startFieldRenderer.material = originMat; }
+            if (curFieldRenderer != null) { curFieldRenderer.material = originMat; }
+
+            Shared.unitMng.iUnitFieldMove.CheckUnitField(
+                startSelectField.transform.GetChild(0).gameObject,
+                curSelectField.transform.GetChild(0).gameObject);
+        }
+        else if(startSelectField == curSelectField)
+        {
+            Shared.gameUI.iUIFusionBtn.HideFusionBtn();
+
+            if (startSelectField != null)
+            {
+                Shared.gameUI.iUIFusionBtn.ShowFusionBtn(startSelectField.transform.position);
+            }
+            else
+            {
+                startSelectField = curSelectField;
+
+                Shared.gameUI.iUIFusionBtn.ShowFusionBtn(startSelectField.transform.position);
+            }
+        }
+        else return;
+    }
+
+
+    public GameObject GetFieldMousePos(Vector2 _mousePos)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(_mousePos);
         RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity);
         RaycastHit closeHit = new RaycastHit();
         closeHit.distance = Mathf.Infinity;
-
-        if (selectFieldRenderer != null) { selectFieldRenderer.material = originMat; }
 
         for (int i = 0; i < hits.Length; i++) 
         {
@@ -38,26 +118,11 @@ public class FieldSelector : MonoBehaviour, IFieldSelector
                 closeHit = hits[i];
             }
         }
+        if (closeHit.collider == null) return null;
 
-
-        if (closeHit.collider != null)
-        {
-            selectField = null;
-            selectFieldRenderer = null;
-            Shared.gameUI.iUIFusionBtn.HideFusionBtn();
-
-            selectField = closeHit.collider.gameObject;
-            selectFieldRenderer = selectField.GetComponent<MeshRenderer>();
-            selectFieldRenderer.material = selectMat;
-
-            Shared.gameUI.iUIFusionBtn.ShowFusionBtn(selectField.transform.position);
-        }
-        else
-        {
-            selectFieldRenderer = null;
-            Shared.gameUI.iUIFusionBtn.HideFusionBtn();
-        }
+        return closeHit.collider.gameObject;
     }
 
-    public GameObject GetSelectField() { return selectField; }
+    public GameObject GetStartSelectField() { return startSelectField; }
+    public GameObject GetCurSelectField() { return curSelectField; }
 }

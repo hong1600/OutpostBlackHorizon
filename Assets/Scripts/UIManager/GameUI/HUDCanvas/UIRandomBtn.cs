@@ -8,7 +8,6 @@ public class UIRandomBtn : MonoBehaviour
     [SerializeField] GameObject upgradePanel;
     [SerializeField] GameObject mixPanel;
 
-
     public void ClickRandomBtn()
     {
         if (mixPanel.activeSelf || upgradePanel.activeSelf)

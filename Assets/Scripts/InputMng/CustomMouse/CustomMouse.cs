@@ -26,12 +26,12 @@ public class CustomMouse : MonoBehaviour, ICustomMouse
 
     private void Update()
     {
-        MouseCursorState();
-        MouseCursorMove();
-        SimulateMouseClick();
+        UpdateMouseCursorState();
+        MoveMouseCursor();
+        OnClickSimulateMouse();
     }
 
-    private void MouseCursorState()
+    private void UpdateMouseCursorState()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -46,7 +46,7 @@ public class CustomMouse : MonoBehaviour, ICustomMouse
         }
     }
 
-    private void MouseCursorMove()
+    private void MoveMouseCursor()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSpeed;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSpeed;
@@ -66,7 +66,7 @@ public class CustomMouse : MonoBehaviour, ICustomMouse
         customCursor.rectTransform.localPosition = localPoint;
     }
 
-    private void SimulateMouseClick()
+    private void OnClickSimulateMouse()
     {
         if (Input.GetMouseButtonDown(0))
         {

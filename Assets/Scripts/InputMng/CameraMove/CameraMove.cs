@@ -28,11 +28,11 @@ public class CameraMove : MonoBehaviour
 
     private void Update()
     {
-        HandleMove();
-        HandleZoom();
+        MoveHandle();
+        ZoomHandle();
     }
 
-    private void HandleMove()
+    private void MoveHandle()
     {
         Vector3 mousePos = Shared.inputMng.iCustomMouse.GetMousePos();
 
@@ -55,7 +55,7 @@ public class CameraMove : MonoBehaviour
         }
     }
 
-    private void HandleZoom()
+    private void ZoomHandle()
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if(scroll != 0) 
