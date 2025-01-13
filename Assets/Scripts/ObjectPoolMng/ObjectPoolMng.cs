@@ -8,6 +8,8 @@ public class ObjectPoolMng : MonoBehaviour
     public IEnemypool iEnemyPool;
     public HpBarPool hpBarPool;
     public IHpBarPool iHpBarPool;
+    public EffectPool effectPool;
+    public IEffectPool iEffectPool;
 
     Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
 
@@ -24,6 +26,7 @@ public class ObjectPoolMng : MonoBehaviour
 
         iEnemyPool = enemyPool;
         iHpBarPool = hpBarPool;
+        iEffectPool = effectPool;
     }
 
     public void Init(string _key, GameObject _prefab, int _initSize, Transform _parent)

@@ -10,4 +10,9 @@ public class Sword : MeleeUnit
     {
         Init(unitData);
     }
+
+    protected override IEnumerator StartAttack()
+    {
+        yield return base.StartAttack();
+    }
 }

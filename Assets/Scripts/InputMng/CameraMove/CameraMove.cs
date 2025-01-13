@@ -28,8 +28,8 @@ public class CameraMove : MonoBehaviour
 
     private void Update()
     {
-        MoveHandle();
-        ZoomHandle();
+        //MoveHandle();
+        //ZoomHandle();
     }
 
     private void MoveHandle()

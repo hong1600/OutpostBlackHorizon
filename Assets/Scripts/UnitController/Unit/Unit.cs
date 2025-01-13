@@ -97,7 +97,7 @@ public abstract class Unit : MonoBehaviour
         return target;
     }
 
-    public void Attack()
+    protected internal void Attack()
     {
         if (target != null)
         {
@@ -106,34 +106,39 @@ public abstract class Unit : MonoBehaviour
                 attackCoroutine = StartCoroutine(StartAttack());
             }
         }
-        else
-        {
-            if (attackCoroutine != null)
-            {
-                StopCoroutine(attackCoroutine);
-                attackCoroutine = null;
-            }
-        }
     }
 
-    IEnumerator StartAttack()
+    protected virtual IEnumerator StartAttack()
     {
         while (true) 
         {
-            if (target == null)
+            Enemy enemy = target.GetComponent<Enemy>();
+
+            GameObject effect = Shared.objectPoolMng.iEffectPool.FindEffect();
+
+            if (enemy != null && !enemy.isDie)
             {
+                enemy.TakeDamage(attackDamage);
+                AttackEffect(effect, enemy.transform);
+            }
+            else
+            {
+                target = null;
+                StopCoroutine(attackCoroutine);
+                attackCoroutine = null;
+
                 yield break;
             }
 
-            Enemy enemy = target.GetComponent<Enemy>();
-
-            if (enemy != null)
-            {
-                enemy.TakeDamage(attackDamage);
-            }
-
             yield return new WaitForSeconds(1 / attackSpeed);
+
+            Shared.objectPoolMng.ReturnObject(effect.name, effect);
         }
+    }
+
+    protected virtual void AttackEffect(GameObject _effect, Transform _enemy)
+    {
+        GameObject effect = Instantiate(_effect, _enemy.transform.position, Quaternion.identity);
     }
 
     public void LookEnemy()
