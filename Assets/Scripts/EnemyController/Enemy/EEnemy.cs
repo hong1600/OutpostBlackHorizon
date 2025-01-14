@@ -16,3 +16,4 @@ public enum EEnemyAnim
     STAY = 1,
     DIE = 3,
 }
+

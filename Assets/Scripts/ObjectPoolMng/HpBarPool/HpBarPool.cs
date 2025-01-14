@@ -4,27 +4,21 @@ using UnityEngine;
 
 public interface IHpBarPool
 {
-    GameObject FindHpBar(string _key);
-    GameObject GetHpBar();
-    Transform GetParent();
+    GameObject FindHpBar(EHpBar _eHpBar);
 }
 
-public class HpBarPool : MonoBehaviour, IHpBarPool
+public class HpBarPool : ObjectPool<EHpBar>, IHpBarPool
 {
-    [SerializeField] GameObject hpBar;
-    [SerializeField] Transform parent;
+    [SerializeField] List<GameObject> hpBarList = new List<GameObject>();
+    [SerializeField] List<Transform> parentList = new List<Transform>();
 
     private void Start()
     {
-        Shared.objectPoolMng.Init(hpBar.name, hpBar, 100, parent);
+        Init(hpBarList, parentList);
     }
 
-    public GameObject FindHpBar(string _key)
+    public GameObject FindHpBar(EHpBar _eHpBar)
     {
-        return Shared.objectPoolMng.GetObject(hpBar.name, parent);
+        return base.FindObject(_eHpBar);
     }
-
-
-    public GameObject GetHpBar() { return hpBar; }
-    public Transform GetParent() { return parent; }
 }

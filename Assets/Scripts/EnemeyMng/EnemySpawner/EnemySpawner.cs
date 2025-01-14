@@ -38,8 +38,9 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
         if (enemySpawnDelay <= 0)
         {
-            GameObject obj = Shared.objectPoolMng.iEnemyPool.FindEnemy(
-                enemyList[Shared.gameMng.iRound.GetCurRound()].name);
+            EEnemy eEnemy = (EEnemy)Shared.gameMng.iRound.GetCurRound() - 1;
+
+            GameObject obj = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy);
 
             obj.transform.position = enemySpawnPoint.transform.position;
 

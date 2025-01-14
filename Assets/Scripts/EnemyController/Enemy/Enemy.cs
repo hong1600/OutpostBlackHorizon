@@ -39,8 +39,7 @@ public abstract class Enemy : MonoBehaviour
         wayPointIndex = 1;
         target = wayPoints[wayPointIndex];
 
-        GameObject hpBar = Shared.objectPoolMng.iHpBarPool.FindHpBar
-            (Shared.objectPoolMng.iHpBarPool.GetHpBar().name);
+        GameObject hpBar = Shared.objectPoolMng.iHpBarPool.FindHpBar(EHpBar.Normal);
         enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
         enemyHpBar.Init(this);
 

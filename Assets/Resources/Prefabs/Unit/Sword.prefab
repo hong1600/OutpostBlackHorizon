@@ -1924,13 +1924,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7675113a02aba3c4f91341f9e17d1ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitUpgrader: {fileID: 0}
   unitName: 
   unitIndex: 0
   attackDamage: 0
   attackSpeed: 0
   attackRange: 0
-  eUnitGrade: 4
+  eUnitGrade: 0
   UnitImg: {fileID: 21300000, guid: deb333aaa4acecd4199189f8bd17a504, type: 3}
   lastUpgrade: 0
   anim: {fileID: 0}

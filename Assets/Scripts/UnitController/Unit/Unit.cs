@@ -23,7 +23,7 @@ public abstract class Unit : MonoBehaviour
     public float rotationSpeed;
     public Coroutine attackCoroutine;
 
-    public virtual void Init(UnitData _unitData)
+    protected virtual void Init(UnitData _unitData)
     {
         unitAI = new UnitAI();
         unitAI.Init(this);
@@ -69,7 +69,7 @@ public abstract class Unit : MonoBehaviour
         unitAI.State();
     }
 
-    public GameObject TargetEnemy()
+    protected internal GameObject TargetEnemy()
     {
         Collider[] colls = Physics.OverlapSphere(transform.position, attackRange,
              LayerMask.GetMask("Enemy"));
@@ -114,12 +114,10 @@ public abstract class Unit : MonoBehaviour
         {
             Enemy enemy = target.GetComponent<Enemy>();
 
-            GameObject effect = Shared.objectPoolMng.iEffectPool.FindEffect();
-
             if (enemy != null && !enemy.isDie)
             {
                 enemy.TakeDamage(attackDamage);
-                AttackEffect(effect, enemy.transform);
+                StartCoroutine(OnDamageEvent(enemy));
             }
             else
             {
@@ -131,17 +129,17 @@ public abstract class Unit : MonoBehaviour
             }
 
             yield return new WaitForSeconds(1 / attackSpeed);
-
-            Shared.objectPoolMng.ReturnObject(effect.name, effect);
         }
     }
+
+    protected virtual IEnumerator OnDamageEvent(Enemy enemy) { return null; }
 
     protected virtual void AttackEffect(GameObject _effect, Transform _enemy)
     {
         GameObject effect = Instantiate(_effect, _enemy.transform.position, Quaternion.identity);
     }
 
-    public void LookEnemy()
+    protected internal void LookEnemy()
     {
         if (target == null) return;
 
@@ -151,7 +149,7 @@ public abstract class Unit : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
-    public void ChangeAnim(EUnitAI _curState)
+    protected internal void ChangeAnim(EUnitAI _curState)
     {
         switch(_curState) 
         {

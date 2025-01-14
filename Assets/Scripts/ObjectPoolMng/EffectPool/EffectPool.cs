@@ -4,21 +4,21 @@ using UnityEngine;
 
 public interface IEffectPool
 {
-    GameObject FindEffect();
+    GameObject FindEffect(EEffect _eEffect);
 }
 
-public class EffectPool : MonoBehaviour, IEffectPool
+public class EffectPool : ObjectPool<EEffect>, IEffectPool
 {
-    [SerializeField] GameObject effect;
-    [SerializeField] Transform parent;
+    [SerializeField] List<GameObject> effectList = new List<GameObject>();
+    [SerializeField] List<Transform> parentList = new List<Transform>();
 
     private void Start()
     {
-        Shared.objectPoolMng.Init(effect.name, effect, 30, parent);
+        Init(effectList, parentList);
     }
 
-    public GameObject FindEffect()
+    public GameObject FindEffect(EEffect _eEffect)
     {
-        return Shared.objectPoolMng.GetObject(effect.name, parent);
+        return base.FindObject(_eEffect);
     }
 }

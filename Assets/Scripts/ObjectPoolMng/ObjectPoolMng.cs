@@ -5,11 +5,11 @@ using UnityEngine;
 public class ObjectPoolMng : MonoBehaviour
 {
     public EnemyPool enemyPool;
-    public IEnemypool iEnemyPool;
-    public HpBarPool hpBarPool;
-    public IHpBarPool iHpBarPool;
+    public IEnemyPool iEnemyPool;
     public EffectPool effectPool;
     public IEffectPool iEffectPool;
+    public HpBarPool hpBarPool;
+    public IHpBarPool iHpBarPool;
 
     Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
 
@@ -25,8 +25,8 @@ public class ObjectPoolMng : MonoBehaviour
         }
 
         iEnemyPool = enemyPool;
-        iHpBarPool = hpBarPool;
         iEffectPool = effectPool;
+        iHpBarPool = hpBarPool;
     }
 
     public void Init(string _key, GameObject _prefab, int _initSize, Transform _parent)

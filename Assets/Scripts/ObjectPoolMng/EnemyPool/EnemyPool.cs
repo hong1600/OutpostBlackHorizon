@@ -2,34 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEnemypool
+public interface IEnemyPool
 {
-    GameObject FindEnemy(string _key);
+    GameObject FindEnemy(EEnemy _eEnemy);
 }
 
-public class EnemyPool : MonoBehaviour, IEnemypool
+public class EnemyPool : ObjectPool<EEnemy>, IEnemyPool
 {
-    Dictionary<string, GameObject> enemyDic = new Dictionary<string, GameObject>();
-
     [SerializeField] List<GameObject> enemyList = new List<GameObject>();
-    [SerializeField] Transform parent;
+    [SerializeField] List<Transform> parentList = new List<Transform>();
 
     private void Start()
     {
-        for (int i = 0; i < enemyList.Count; i++)
-        {
-            enemyDic.Add(enemyList[i].name, enemyList[i]);
-            Shared.objectPoolMng.Init(enemyList[i].name, enemyList[i], 30, parent);
-        }
+        Init(enemyList, parentList);
     }
 
-    public GameObject FindEnemy(string _key)
+    public GameObject FindEnemy(EEnemy _eEnemy)
     {
-        if (enemyDic.ContainsKey(_key))
-        {
-            return Shared.objectPoolMng.GetObject(_key, parent);
-        }
-
-        return null;
+        return base.FindObject(_eEnemy);
     }
 }
