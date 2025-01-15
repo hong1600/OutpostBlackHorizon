@@ -13,6 +13,7 @@ public abstract class Unit : MonoBehaviour
     public EUnitGrade eUnitGrade;
     public Sprite UnitImg;
     public int lastUpgrade;
+    public int skillDamage;
 
     public UnitAI unitAI;
     public UnitSkill unitSkill;
@@ -21,6 +22,8 @@ public abstract class Unit : MonoBehaviour
 
     public GameObject target;
     public float rotationSpeed;
+    public bool isAttack;
+    public bool isSkill;
     public Coroutine attackCoroutine;
 
     protected virtual void Init(UnitData _unitData)
@@ -38,6 +41,7 @@ public abstract class Unit : MonoBehaviour
         attackRange = _unitData.attackRange;
         eUnitGrade = _unitData.unitGrade;
         UnitImg = _unitData.unitImg;
+        skillDamage = 50;
 
 
         switch (eUnitGrade)
@@ -62,11 +66,14 @@ public abstract class Unit : MonoBehaviour
         Shared.unitMng.iUnitUpgrader.MissUpgrade(lastUpgrade, this);
 
         rotationSpeed = 5f;
+        isAttack = false;
+        isSkill = false;
     }
 
     private void Update()
     {
         unitAI.State();
+        ChangeAnim(unitAI.aiState);
     }
 
     protected internal GameObject TargetEnemy()
@@ -99,12 +106,13 @@ public abstract class Unit : MonoBehaviour
 
     protected internal void Attack()
     {
-        if (target != null)
+        if (target != null && attackCoroutine == null && !isSkill)
         {
-            if (attackCoroutine == null)
-            {
-                attackCoroutine = StartCoroutine(StartAttack());
-            }
+            attackCoroutine = StartCoroutine(StartAttack());
+        }
+        if (isSkill && !isAttack)
+        {
+            StartCoroutine(StartSkill());
         }
     }
 
@@ -112,31 +120,52 @@ public abstract class Unit : MonoBehaviour
     {
         while (true) 
         {
-            Enemy enemy = target.GetComponent<Enemy>();
-
-            if (enemy != null && !enemy.isDie)
+            if (target == null)
             {
-                enemy.TakeDamage(attackDamage);
-                StartCoroutine(OnDamageEvent(enemy));
-            }
-            else
-            {
-                target = null;
-                StopCoroutine(attackCoroutine);
-                attackCoroutine = null;
-
+                StopAttack();
                 yield break;
             }
+
+            Enemy enemy = target.GetComponent<Enemy>();
+
+            if (target == null || enemy.isDie)
+            {
+                target = null;
+                StopAttack();
+                yield break;
+            }
+
+            StartCoroutine(OnDamageEvent(enemy, attackDamage));
 
             yield return new WaitForSeconds(1 / attackSpeed);
         }
     }
 
-    protected virtual IEnumerator OnDamageEvent(Enemy enemy) { return null; }
-
-    protected virtual void AttackEffect(GameObject _effect, Transform _enemy)
+    private void StopAttack()
     {
-        GameObject effect = Instantiate(_effect, _enemy.transform.position, Quaternion.identity);
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
+        }
+    }
+
+    protected virtual IEnumerator StartSkill()
+    {
+        Enemy enemy = target.GetComponent<Enemy>();
+        OnDamageEvent(enemy, skillDamage);
+
+        yield return new WaitForSeconds(1);
+
+        isSkill = false;
+        StopCoroutine(StartSkill());
+    }
+
+
+    protected virtual IEnumerator OnDamageEvent(Enemy enemy , int _damage) 
+    {
+        enemy.TakeDamage(_damage);
+        yield return null;
     }
 
     protected internal void LookEnemy()

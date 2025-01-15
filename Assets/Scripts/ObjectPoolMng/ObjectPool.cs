@@ -10,14 +10,14 @@ public abstract class ObjectPool<T> : MonoBehaviour
     [SerializeField] protected List<GameObject> objectList = new List<GameObject>();
     [SerializeField] protected List<Transform> objectParentList = new List<Transform>();
 
-    protected virtual void Init(List<GameObject> _objList, List<Transform> _parentList)
+    protected virtual void Init(List<GameObject> _objList, List<Transform> _parentList, int _amount)
     {
         for (int i = 0; i < _objList.Count; i++)
         {
             T objectType = (T)(object)i;
 
             objectDic.Add(objectType, (_objList[i], _parentList[i]));
-            Shared.objectPoolMng.Init(_objList[i].name, _objList[i], 30, _parentList[i]);
+            Shared.objectPoolMng.Init(_objList[i].name, _objList[i], 15, _parentList[i]);
         }
     }
 

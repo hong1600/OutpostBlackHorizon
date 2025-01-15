@@ -10,4 +10,11 @@ public class Gunslinger : RangedUnit
     {
         Init(unitData);
     }
+
+    protected override IEnumerator OnDamageEvent(Enemy enemy, int _damage)
+    {
+
+
+        return base.OnDamageEvent(enemy, _damage);
+    }
 }

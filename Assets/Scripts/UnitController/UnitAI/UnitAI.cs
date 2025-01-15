@@ -40,7 +40,6 @@ public class UnitAI
 
     public virtual void Search()
     {
-        unit.ChangeAnim(EUnitAI.SEARCH);
         GameObject target = unit.TargetEnemy();
 
         if (target != null)
@@ -56,7 +55,6 @@ public class UnitAI
         {
             unit.Attack();
             unit.LookEnemy();
-            unit.ChangeAnim(EUnitAI.ATTACK);
         }
         else
         {

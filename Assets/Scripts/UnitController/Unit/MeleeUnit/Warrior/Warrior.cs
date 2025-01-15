@@ -5,6 +5,7 @@ using UnityEngine;
 public class Warrior : Unit
 {
     public UnitData unitData;
+    public bool i;
 
     private void Awake()
     {

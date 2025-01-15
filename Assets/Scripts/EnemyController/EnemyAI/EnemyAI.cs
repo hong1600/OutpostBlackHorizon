@@ -61,7 +61,7 @@ public class EnemyAI
         {
             aiState = EEnemyAI.MOVE;
         }
-        else if (enemy.isStay == false && enemy.isDie == true) 
+        if (enemy.isStay == true && enemy.isDie == true)
         {
             aiState = EEnemyAI.DIE;
         }

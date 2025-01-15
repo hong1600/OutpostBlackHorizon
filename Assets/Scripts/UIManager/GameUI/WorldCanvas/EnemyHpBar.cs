@@ -25,7 +25,7 @@ public class EnemyHpBar : MonoBehaviour
     {
         enemy = _enemy;
 
-        offset = new Vector3(0.3f, 3f, 0f);
+        offset = new Vector3(0f, 3f, 0f);
     }
 
     public void hpBar()

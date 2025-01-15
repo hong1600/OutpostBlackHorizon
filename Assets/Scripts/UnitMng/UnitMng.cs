@@ -39,6 +39,8 @@ public class UnitMng : MonoBehaviour, IUnitMng
     public Dictionary<int, List<GameObject>> unitByGroundDic = new Dictionary<int, List<GameObject>>();
     public List<GameObject> unitSpawnPointList = new List<GameObject>();
     public int groundNum;
+    [SerializeField] GameObject unitSkillBar;
+    [SerializeField] Transform unitSkillBarParent;
 
     private void Awake()
     {
@@ -134,6 +136,14 @@ public class UnitMng : MonoBehaviour, IUnitMng
 
             default:
                 return;
+        }
+
+        if (instantiateUnit.GetComponent<Unit>().eUnitGrade == EUnitGrade.SS ||
+            instantiateUnit.GetComponent<Unit>().eUnitGrade == EUnitGrade.S)
+        {
+            GameObject skillBar = Instantiate(unitSkillBar, instantiateUnit.transform.position,
+                Quaternion.identity, unitSkillBarParent);
+            skillBar.GetComponent<UnitSkillBar>().Init(instantiateUnit.GetComponent<Unit>());
         }
 
         AddUnitData(instantiateUnit);

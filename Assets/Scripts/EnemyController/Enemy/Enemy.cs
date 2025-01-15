@@ -98,9 +98,23 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    public void StayEnemy(float _time)
+    {
+        StartCoroutine(StartStay(_time));
+    }
+
+    IEnumerator StartStay(float _time)
+    {
+        isStay = true;
+        enemyAI.aiState = EEnemyAI.STAY;
+
+        yield return new WaitForSeconds(_time);
+
+        isStay = false;
+    }
+
     public virtual void Die()
     {
-
         StartCoroutine(StartDie());
     }
 

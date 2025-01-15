@@ -14,7 +14,7 @@ public class EnemyPool : ObjectPool<EEnemy>, IEnemyPool
 
     private void Start()
     {
-        Init(enemyList, parentList);
+        Init(enemyList, parentList, 30);
     }
 
     public GameObject FindEnemy(EEnemy _eEnemy)
