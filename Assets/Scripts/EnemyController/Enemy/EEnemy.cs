@@ -6,14 +6,16 @@ public enum EEnemyAI
 {
     CREATE,
     MOVE,
+    ATTACK,
     STAY,
     DIE,
 }
 
 public enum EEnemyAnim
 {
-    RUN = 0,
-    STAY = 1,
-    DIE = 3,
+    IDLE,
+    WALK,
+    ATTACK,
+    DIE,
 }
 

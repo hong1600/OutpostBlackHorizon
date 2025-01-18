@@ -6,11 +6,16 @@ public enum EEffect
 {
     SWORD,
     SHIELD,
+    KNIGHT,
+    GUNSLINGER,
+    MAGE
 }
 
 public enum EHpBar
 {
-    Normal,
+    NORMAL,
+    WAVEBOSS,
+    BOSS
 }
 
 public enum EEnemy

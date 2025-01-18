@@ -15,16 +15,18 @@ public abstract class Unit : MonoBehaviour
     public int lastUpgrade;
     public int skillDamage;
 
-    public UnitAI unitAI;
-    public UnitSkill unitSkill;
-    public Animator anim;
-    public BoxCollider box;
+    [SerializeField] EUnitAI aiState;
+    UnitAI unitAI;
+    Animator anim;
+    BoxCollider box;
+    public GameObject skillBar;
 
-    public GameObject target;
-    public float rotationSpeed;
-    public bool isAttack;
-    public bool isSkill;
-    public Coroutine attackCoroutine;
+    [SerializeField] protected internal GameObject target;
+    protected internal float rotationSpeed;
+    [SerializeField] protected internal bool isAttack;
+    [SerializeField] protected internal bool isSkill;
+    [SerializeField] protected internal Coroutine attackCoroutine;
+    [SerializeField] protected internal Coroutine skillCouroutine;
 
     protected virtual void Init(UnitData _unitData)
     {
@@ -68,11 +70,14 @@ public abstract class Unit : MonoBehaviour
         rotationSpeed = 5f;
         isAttack = false;
         isSkill = false;
+        attackCoroutine = null;
+        skillCouroutine = null;
     }
 
     private void Update()
     {
         unitAI.State();
+        aiState = unitAI.aiState;
         ChangeAnim(unitAI.aiState);
     }
 
@@ -106,61 +111,43 @@ public abstract class Unit : MonoBehaviour
 
     protected internal void Attack()
     {
-        if (target != null && attackCoroutine == null && !isSkill)
+        if (isSkill || isAttack) return;
+
+        if (target != null && attackCoroutine == null)
         {
             attackCoroutine = StartCoroutine(StartAttack());
-        }
-        if (isSkill && !isAttack)
-        {
-            StartCoroutine(StartSkill());
         }
     }
 
     protected virtual IEnumerator StartAttack()
     {
-        while (true) 
+        isAttack = true;
+
+        Enemy enemy = target.GetComponent<Enemy>();
+        
+        StartCoroutine(OnDamageEvent(enemy, attackDamage));
+        
+        if (enemy.isDie)
         {
-            if (target == null)
-            {
-                StopAttack();
-                yield break;
-            }
-
-            Enemy enemy = target.GetComponent<Enemy>();
-
-            if (target == null || enemy.isDie)
-            {
-                target = null;
-                StopAttack();
-                yield break;
-            }
-
-            StartCoroutine(OnDamageEvent(enemy, attackDamage));
-
-            yield return new WaitForSeconds(1 / attackSpeed);
-        }
-    }
-
-    private void StopAttack()
-    {
-        if (attackCoroutine != null)
-        {
-            StopCoroutine(attackCoroutine);
+            target = null;
             attackCoroutine = null;
+            isAttack = false;
+            Attack();
         }
+
+        yield return new WaitForSeconds(1 / attackSpeed);
+
+        attackCoroutine = null;
+        isAttack = false;
+        Attack();
+
+        yield return null;
     }
 
     protected virtual IEnumerator StartSkill()
     {
-        Enemy enemy = target.GetComponent<Enemy>();
-        OnDamageEvent(enemy, skillDamage);
-
-        yield return new WaitForSeconds(1);
-
-        isSkill = false;
-        StopCoroutine(StartSkill());
+        yield return null;
     }
-
 
     protected virtual IEnumerator OnDamageEvent(Enemy enemy , int _damage) 
     {
@@ -170,12 +157,14 @@ public abstract class Unit : MonoBehaviour
 
     protected internal void LookEnemy()
     {
-        if (target == null) return;
+        if (target != null)
+        {
+            Vector3 dir = (target.transform.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
 
-        Vector3 dir = (target.transform.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        }
     }
 
     protected internal void ChangeAnim(EUnitAI _curState)
@@ -183,13 +172,17 @@ public abstract class Unit : MonoBehaviour
         switch(_curState) 
         {
             case EUnitAI.CREATE:
-                anim.SetInteger("isAttack", (int)EUnitAnim.IDLE);
+                anim.SetInteger("unitAnim", (int)EUnitAnim.IDLE);
                 break;
             case EUnitAI.SEARCH:
-                anim.SetInteger("isAttack", (int)EUnitAnim.IDLE);
+                anim.SetInteger("unitAnim", (int)EUnitAnim.IDLE);
                 break;
             case EUnitAI.ATTACK:
-                anim.SetInteger("isAttack", (int)EUnitAnim.ATTACK);
+                anim.SetInteger("unitAnim", (int)EUnitAnim.ATTACK);
+                break;
+            case EUnitAI.SKILL:
+                anim.SetInteger("unitAnim", (int)EUnitAnim.SKILL);
+                anim.Play("Skill1");
                 break;
             case EUnitAI.RESET:
                 break;

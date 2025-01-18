@@ -5,7 +5,7 @@ using UnityEngine.TextCore.Text;
 
 public class UnitAI
 {
-    public Unit unit;
+    protected Unit unit;
 
     public EUnitAI aiState = EUnitAI.CREATE;
 
@@ -16,7 +16,7 @@ public class UnitAI
 
     public void State()
     {
-        switch(aiState) 
+        switch (aiState)
         {
             case EUnitAI.CREATE:
                 Create();
@@ -26,6 +26,9 @@ public class UnitAI
                 break;
             case EUnitAI.ATTACK:
                 Attack();
+                break;
+            case EUnitAI.SKILL:
+                Skill();
                 break;
             case EUnitAI.RESET:
                 Reset();
@@ -40,26 +43,39 @@ public class UnitAI
 
     public virtual void Search()
     {
-        GameObject target = unit.TargetEnemy();
-
-        if (target != null)
+        if (unit.target != null)
         {
-            unit.target = target;
             aiState = EUnitAI.ATTACK;
         }
+
+        unit.TargetEnemy();
     }
 
     public virtual void Attack()
     {
-        if(unit.target != null)
+        if (unit.isSkill)
         {
-            unit.Attack();
-            unit.LookEnemy();
+            aiState = EUnitAI.SKILL;
+            return;
         }
-        else
+        if (unit.target == null)
         {
             aiState = EUnitAI.SEARCH;
         }
+
+        unit.Attack();
+        unit.LookEnemy();
+    }
+
+    public virtual void Skill()
+    {
+        if (unit.isSkill == false)
+        {
+            aiState = EUnitAI.SEARCH;
+            return;
+        }
+        unit.Attack();
+        unit.LookEnemy();
     }
 
     public virtual void Reset()

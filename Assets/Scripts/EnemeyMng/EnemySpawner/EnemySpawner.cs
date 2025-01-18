@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.Mathematics;
+using Random = UnityEngine.Random;
 
 public interface IEnemySpawner
 {
@@ -11,44 +13,60 @@ public interface IEnemySpawner
 
     float GetEnemySpawnDelay();
     void SetEnemySpawnDelay(float _value);
-    Transform GetEnemySpawnPoint();
-    Transform[] GetWayPoint();
+    Transform[] GetEnemySpawnPoints();
+    Transform GetTargetPoint();
 }
 
 public class EnemySpawner : MonoBehaviour, IEnemySpawner
 {
     private event Action onEnemySpawn;
 
-    public GameObject EnemyHpBar;
-    public List<GameObject> enemyList;
-    public Transform enemySpawnPoint;
-    public Transform[] wayPoints;
-    public float enemySpawnDelay;
-    public int curEnemy;
+    [SerializeField] List<GameObject> enemyList;
+    [SerializeField] Transform[] enemySpawnPoints;
+    [SerializeField] Vector3[] enemySpawnPos = new Vector3[4];
+    [SerializeField] Transform targetPoint;
+    [SerializeField] float enemySpawnDelay;
 
     private void Awake()
     {
-        curEnemy = 0;
         enemySpawnDelay = 0;
+
+        enemySpawnPos[0] = new Vector3(-3, 0, 0);
+        enemySpawnPos[1] = new Vector3(-1, 0, 0);
+        enemySpawnPos[2] = new Vector3(1, 0, 0);
+        enemySpawnPos[3] = new Vector3(3, 0, 0);
     }
 
     public void SpawnEnemy()
     {
         if (Shared.gameMng.iRound.GetCurRound() == 0 || Shared.gameMng.iRound.GetIsBossRound()) { return; }
 
+        int firstSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
+        int secondSpawnPoint;
+        do 
+        {
+            secondSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
+        }while (firstSpawnPoint == secondSpawnPoint);
+
+        EEnemy eEnemy = (EEnemy)Random.Range(0, 4);
+
+
         if (enemySpawnDelay <= 0)
         {
-            EEnemy eEnemy = (EEnemy)Shared.gameMng.iRound.GetCurRound() - 1;
+            for (int i = 0; i < 1; i++)
+            {
+                GameObject obj1 = Shared.objectPoolMng.iEnemyPool.FindEnemy(EEnemy.SLIME);
 
-            GameObject obj = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy);
+                obj1.transform.position = enemySpawnPoints[firstSpawnPoint].transform.position + (enemySpawnPos[i]);
 
-            obj.transform.position = enemySpawnPoint.transform.position;
+                //GameObject obj2 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy);
+                //
+                //obj2.transform.position = enemySpawnPoints[secondSpawnPoint].transform.position + (enemySpawnPos[i]);
 
-            Enemy enemy = obj.GetComponent<Enemy>();
+                onEnemySpawn?.Invoke();
+            }
 
-            enemySpawnDelay = 0.85f;
-
-            onEnemySpawn?.Invoke();
+            enemySpawnDelay = 100f;
         }
 
         enemySpawnDelay -= Time.deltaTime;
@@ -58,6 +76,6 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     public void UnEnemySpawn(Action _listener) { onEnemySpawn -= _listener; }
     public float GetEnemySpawnDelay() { return enemySpawnDelay; }
     public void SetEnemySpawnDelay(float _value) { enemySpawnDelay = _value; }
-    public Transform GetEnemySpawnPoint() { return enemySpawnPoint; }
-    public Transform[] GetWayPoint() { return wayPoints; }
+    public Transform[] GetEnemySpawnPoints() { return enemySpawnPoints; }
+    public Transform GetTargetPoint() { return targetPoint; }
 }

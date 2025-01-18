@@ -17,7 +17,7 @@ public abstract class ObjectPool<T> : MonoBehaviour
             T objectType = (T)(object)i;
 
             objectDic.Add(objectType, (_objList[i], _parentList[i]));
-            Shared.objectPoolMng.Init(_objList[i].name, _objList[i], 15, _parentList[i]);
+            Shared.objectPoolMng.Init(_objList[i].name, _objList[i], _amount, _parentList[i]);
         }
     }
 

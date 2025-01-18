@@ -7,6 +7,7 @@ public enum EUnitAI
     CREATE,
     SEARCH,
     ATTACK,
+    SKILL,
     RESET,
 }
 
@@ -14,4 +15,5 @@ public enum EUnitAnim
 {
     IDLE,
     ATTACK,
+    SKILL
 }

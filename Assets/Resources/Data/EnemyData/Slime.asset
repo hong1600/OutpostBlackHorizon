@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Slime
   enemySpeed: 3
-  enemyHp: 100
+  enemyHp: 2000
   rotationSpeed: 5
   hpBar: {fileID: 3329937592424594570, guid: d2b5787eec0f7a1499a52de511ff8a49, type: 3}

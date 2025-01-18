@@ -6,23 +6,22 @@ using UnityEngine.UI;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public EnemyAI enemyAI;
-    public EnemyHpBar enemyHpBar;
+    protected EnemyAI enemyAI;
+    protected EnemyHpBar enemyHpBar;
 
-    public BoxCollider box;
-    public Animator anim;
+    protected BoxCollider box;
+    protected Animator anim;
 
     public string enemyName;
     public float enemyHp;
     public float curhp;
     public float enemySpeed;
-    public Transform[] wayPoints;
-    public Vector3 wayPointDir;
-    public int wayPointIndex;
-    public Transform target;
     public float rotationSpeed;
-    public bool isDie;
-    public bool isStay;
+
+    protected Transform targetPoint;
+    protected Vector3 targetPointDir;
+    protected internal bool isDie;
+    protected internal bool isStay;
 
     public void InitEnemyData(EnemyData _enemyData)
     {
@@ -35,11 +34,9 @@ public abstract class Enemy : MonoBehaviour
         enemySpeed = _enemyData.enemySpeed;
         rotationSpeed = 5;
 
-        wayPoints = Shared.enemyMng.iEnemySpawner.GetWayPoint();
-        wayPointIndex = 1;
-        target = wayPoints[wayPointIndex];
+        targetPoint = Shared.enemyMng.iEnemySpawner.GetTargetPoint();
 
-        GameObject hpBar = Shared.objectPoolMng.iHpBarPool.FindHpBar(EHpBar.Normal);
+        GameObject hpBar = Shared.objectPoolMng.iHpBarPool.FindHpBar(EHpBar.NORMAL);
         enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
         enemyHpBar.Init(this);
 
@@ -52,38 +49,20 @@ public abstract class Enemy : MonoBehaviour
         if (enemyAI != null)
         {
             enemyAI.State();
+            ChangeAnim(enemyAI.aiState);
         }
     }
 
     public void Move()
     {
-        wayPointDir = (target.transform.position - transform.position).normalized;
+        targetPointDir = (targetPoint.transform.position - transform.position).normalized;
 
-        transform.Translate(wayPointDir * enemySpeed * Time.deltaTime, Space.World);
-
-        if (Vector3.Distance(transform.position, target.position) <= 0.1f)
-        {
-            NextMove();
-        }
-    }
-
-    public void NextMove()
-    {
-        if (wayPointIndex >= wayPoints.Length -1)
-        {
-            wayPointIndex = 0;
-        }
-        else
-        {
-            wayPointIndex++;
-        }
-
-        target = wayPoints[wayPointIndex];
+        transform.Translate(targetPointDir * enemySpeed * Time.deltaTime, Space.World);
     }
 
     public void Turn()
     {
-        Quaternion rotation = Quaternion.LookRotation(new Vector3(wayPointDir.x, 0, wayPointDir.z));
+        Quaternion rotation = Quaternion.LookRotation(new Vector3(targetPointDir.x, 0, targetPointDir.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
             rotationSpeed * Time.deltaTime);
     }
@@ -120,8 +99,6 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator StartDie()
     {
-        ChangeAnim(EEnemyAI.DIE);
-
         Shared.gameMng.iRewarder.AddRewardGold(50);
         Shared.gameMng.iRewarder.AddRewardGem(10);
         Shared.gameMng.iRewarder.AddRewardPaper(20);
@@ -133,15 +110,21 @@ public abstract class Enemy : MonoBehaviour
         Shared.objectPoolMng.ReturnObject(enemyHpBar.gameObject.name, enemyHpBar.gameObject);
     }
 
-    public void ChangeAnim(EEnemyAI _curState)
+    protected void ChangeAnim(EEnemyAI _curState)
     {
         switch (_curState)
         {
             case EEnemyAI.CREATE:
-                anim.SetInteger("enemyAnim", (int)EEnemyAnim.RUN);
+                anim.SetInteger("enemyAnim", (int)EEnemyAnim.IDLE);
                 break;
             case EEnemyAI.MOVE:
-                anim.SetInteger("enemyAnim", (int)EEnemyAnim.RUN);
+                anim.SetInteger("enemyAnim", (int)EEnemyAnim.WALK);
+                break;
+            case EEnemyAI.ATTACK:
+                anim.SetInteger("enemyAnim", (int)EEnemyAnim.ATTACK);
+                break;
+            case EEnemyAI.STAY:
+                anim.SetInteger("enemyAnim", (int)EEnemyAnim.IDLE);
                 break;
             case EEnemyAI.DIE:
                 anim.SetInteger("enemyAnim", (int)EEnemyAnim.DIE);

@@ -28,7 +28,8 @@ public class WaveBossSpawner : MonoBehaviour, IWaveBossSpawner
     {
         waveBossPanel.SetActive(false);
 
-        GameObject obj = Instantiate(waveBoss, Shared.enemyMng.iEnemySpawner.GetEnemySpawnPoint().position,
+        int rand = Random.Range(0, Shared.enemyMng.iEnemySpawner.GetEnemySpawnPoints().Length);
+        GameObject obj = Instantiate(waveBoss, Shared.enemyMng.iEnemySpawner.GetEnemySpawnPoints()[rand].position,
         Quaternion.identity, Shared.enemyMng.enemyParent.transform);
 
         Enemy enemy = obj.GetComponent<Enemy>();

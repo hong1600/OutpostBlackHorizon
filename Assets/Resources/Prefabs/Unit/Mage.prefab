@@ -514,7 +514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
       propertyPath: m_LocalScale.x
@@ -570,15 +570,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400250, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 35.837414
+      value: 78.143616
       objectReference: {fileID: 0}
     - target: {fileID: 400250, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -166.98224
+      value: 39.378284
       objectReference: {fileID: 0}
     - target: {fileID: 400250, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -80.28185
+      value: 130.58202
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
       propertyPath: m_Controller
@@ -587,6 +587,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 100248, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
+    - {fileID: 100124, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
+    - {fileID: 100120, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
+    - {fileID: 100118, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
+    - {fileID: 100110, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100108, guid: 0404ac7dc12f1524e8ab210e57629e8f, type: 3}
@@ -624,10 +628,12 @@ MonoBehaviour:
   eUnitGrade: 4
   UnitImg: {fileID: 21300000, guid: 5de5f4f4defe03342b215c663b712f56, type: 3}
   lastUpgrade: 0
-  anim: {fileID: 0}
-  box: {fileID: 0}
+  skillDamage: 0
+  aiState: 0
+  skillBar: {fileID: 0}
   target: {fileID: 0}
-  rotationSpeed: 0
+  isAttack: 0
+  isSkill: 0
   unitData: {fileID: 11400000, guid: 7de7b8bd96bf39545a0f9e5bd441e9b9, type: 2}
 --- !u!54 &-7603007464773893089
 Rigidbody:

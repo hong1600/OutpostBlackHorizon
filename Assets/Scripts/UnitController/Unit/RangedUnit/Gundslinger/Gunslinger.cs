@@ -4,17 +4,43 @@ using UnityEngine;
 
 public class Gunslinger : RangedUnit
 {
-    public UnitData unitData;
+    [SerializeField] UnitData unitData;
+    [SerializeField] Transform bulletTrs;
 
     private void Awake()
     {
         Init(unitData);
     }
 
-    protected override IEnumerator OnDamageEvent(Enemy enemy, int _damage)
+    protected override IEnumerator StartAttack()
     {
-
-
-        return base.OnDamageEvent(enemy, _damage);
+        if (skillBar.GetComponent<UnitSkillBar>().isSkillCast && skillCouroutine == null)
+        {
+            StartCoroutine(StartSkill());
+        }
+        else if (!isSkill && attackCoroutine == null)
+        {
+            yield return base.StartAttack();
+        }
     }
+
+    protected override IEnumerator StartSkill()
+    {
+        isSkill = true;
+        Enemy enemy = target.GetComponent<Enemy>();
+
+        yield return new WaitForSeconds(1.3f);
+
+        EEffect eEffect = (EEffect)EEffect.GUNSLINGER;
+        GameObject effect = Shared.objectPoolMng.iEffectPool.FindEffect(eEffect);
+        effect.transform.position = bulletTrs.position;
+        effect.GetComponent<Bullet>().Init(enemy.gameObject);
+        skillCouroutine = null;
+        skillBar.GetComponent<UnitSkillBar>().ResetSkillBar();
+
+        yield return new WaitForSeconds(2f);
+
+        isSkill = false;
+    }
+
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class ObjectPoolMng : MonoBehaviour
     public IHpBarPool iHpBarPool;
 
     Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
+    Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
 
     private void Awake()
     {
@@ -29,29 +31,34 @@ public class ObjectPoolMng : MonoBehaviour
         iHpBarPool = hpBarPool;
     }
 
-    public void Init(string _key, GameObject _prefab, int _initSize, Transform _parent)
+    public void Init(string _type, GameObject _prefab, int _initSize, Transform _parent)
     {
-        if (!poolDic.ContainsKey(_key))
+        if (!poolDic.ContainsKey(_type))
         {
-            poolDic[_key] = new Queue<GameObject>();
+            poolDic[_type] = new Queue<GameObject>();
         }
 
-        Queue<GameObject> pool = poolDic[_key];
+        Queue<GameObject> pool = poolDic[_type];
 
         for(int i = 0; i < _initSize; i++) 
         {
             GameObject obj = Instantiate(_prefab, _parent);
             obj.SetActive(false);
-            obj.name = _key;
+            obj.name = _prefab.name;
             pool.Enqueue(obj);
+        }
+
+        if (!prefabDic.ContainsKey(_type))
+        {
+            prefabDic[_type] = _prefab;
         }
     }
 
-    public GameObject GetObject(string _key, Transform _parent)
+    public GameObject GetObject(string _type, Transform _parent)
     {
-        if (poolDic.ContainsKey(_key))
+        if (poolDic.ContainsKey(_type))
         {
-            Queue<GameObject> pool = poolDic[_key];
+            Queue<GameObject> pool = poolDic[_type];
 
             if(pool.Count > 0) 
             {
@@ -61,7 +68,8 @@ public class ObjectPoolMng : MonoBehaviour
             }
             else
             {
-                GameObject newObj = Instantiate(poolDic[_key].Peek(), _parent);
+                GameObject newObj = Instantiate(prefabDic[_type], _parent);
+                newObj.name = prefabDic[_type].name;
                 newObj.SetActive(true);
                 return newObj;
             }
@@ -69,12 +77,12 @@ public class ObjectPoolMng : MonoBehaviour
         return null;
     }
 
-    public void ReturnObject(string _key, GameObject _obj)
+    public void ReturnObject(string _type, GameObject _obj)
     {
-        if(poolDic.ContainsKey(_key)) 
+        if(poolDic.ContainsKey(_type)) 
         {
             _obj.SetActive(false);
-            poolDic[_key].Enqueue(_obj);
+            poolDic[_type].Enqueue(_obj);
         }
     }
 }

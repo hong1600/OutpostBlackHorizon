@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class EffectPool : ObjectPool<EEffect>, IEffectPool
 
     private void Start()
     {
-        Init(effectList, parentList, 15);
+        Init(effectList, parentList, 10);
     }
 
     public GameObject FindEffect(EEffect _eEffect)

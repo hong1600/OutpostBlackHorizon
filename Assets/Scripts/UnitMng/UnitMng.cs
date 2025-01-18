@@ -61,6 +61,30 @@ public class UnitMng : MonoBehaviour, IUnitMng
         iUnitFieldMove = unitFieldMove;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            UnitInstantiate(unitCList[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            UnitInstantiate(unitBList[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            UnitInstantiate(unitAList[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            UnitInstantiate(unitSList[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            UnitInstantiate(unitSSList[0]);
+        }
+    }
+
     public bool IsCheckGround(GameObject _spawnUnit)
     {
         groundNum = 0;
@@ -144,6 +168,7 @@ public class UnitMng : MonoBehaviour, IUnitMng
             GameObject skillBar = Instantiate(unitSkillBar, instantiateUnit.transform.position,
                 Quaternion.identity, unitSkillBarParent);
             skillBar.GetComponent<UnitSkillBar>().Init(instantiateUnit.GetComponent<Unit>());
+            instantiateUnit.GetComponent<Unit>().skillBar = skillBar;
         }
 
         AddUnitData(instantiateUnit);
