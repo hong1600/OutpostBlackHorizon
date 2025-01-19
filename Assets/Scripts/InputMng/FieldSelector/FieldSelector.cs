@@ -103,7 +103,7 @@ public class FieldSelector : MonoBehaviour, IFieldSelector
     }
 
 
-    public GameObject GetFieldMousePos(Vector2 _mousePos)
+    private GameObject GetFieldMousePos(Vector2 _mousePos)
     {
         Ray ray = Camera.main.ScreenPointToRay(_mousePos);
         RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity);

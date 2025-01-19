@@ -17,7 +17,7 @@ public interface ISpawnTimer
 
 public class SpawnTimer : MonoBehaviour, ISpawnTimer
 {
-    private event Action onTimeEvent;
+    event Action onTimeEvent;
 
     float sec;
     float maxSec;
@@ -64,7 +64,6 @@ public class SpawnTimer : MonoBehaviour, ISpawnTimer
         if (sec <= 0f)
         {
             StartCoroutine(StartSpawnTime());
-            Shared.gameUI.iUIRoundPanel.RoundPanel();
         }
     }
 

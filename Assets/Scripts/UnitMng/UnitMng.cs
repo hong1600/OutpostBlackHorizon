@@ -6,39 +6,36 @@ using UnityEngine.UI;
 
 public interface IUnitMng 
 {
-    event Action onUnitCountChange;
-    int GetGroundNum();
-    bool IsCheckGround(GameObject _spawnUnit);
     void UnitInstantiate(GameObject _unit);
     List<GameObject> GetUnitByGradeList(EUnitGrade _unitType);
-    List<GameObject> GetUnitByGroundList(int _groundNum);
+    void RemoveUnitData(GameObject _unit);
     List<GameObject> GetUnitSpawnPointList();
     List<GameObject> GetAllUnitList();
-    void RemoveUnitData(GameObject _unit);
 }
 
 public class UnitMng : MonoBehaviour, IUnitMng
 {
-    public event Action onUnitCountChange;
+    public event Action onUnitCountEvent;
 
-    public UnitFusion unitFusion;
+    [SerializeField] UnitFusion unitFusion;
+    [SerializeField] UnitMixer unitMixer;
+    [SerializeField] UnitRandomSpawner unitRandomSpawner;
+    [SerializeField] UnitSpawner unitSpawner;
+    [SerializeField] UnitUpgrader unitUpgrader;
+    [SerializeField] UnitFieldMove unitFieldMove;
+    public IUnitMng iUnitMng;
     public IUnitFusion iUnitFusion;
-    public UnitMixer unitMixer;
     public IUnitMixer iUnitMixer;
-    public UnitRandomSpawner unitRandomSpawner;
     public IUnitRandomSpawner iUnitRandomSpawner;
-    public UnitSpawner unitSpawner;
     public IUnitSpawner iUnitSpawner;
-    public UnitUpgrader unitUpgrader;
     public IUnitUpgrader iUnitUpgrader;
-    public UnitFieldMove unitFieldMove;
     public IUnitFieldMove iUnitFieldMove;
 
-    public List<GameObject> allUnitList = new List<GameObject>();
-    public List<GameObject> unitCList, unitBList, unitAList, unitSList, unitSSList = new List<GameObject>();
-    public Dictionary<int, List<GameObject>> unitByGroundDic = new Dictionary<int, List<GameObject>>();
-    public List<GameObject> unitSpawnPointList = new List<GameObject>();
-    public int groundNum;
+    [SerializeField] List<GameObject> allUnitList = new List<GameObject>();
+    [SerializeField] List<GameObject> unitCList, unitBList, unitAList, unitSList, unitSSList = new List<GameObject>();
+    [SerializeField] Dictionary<int, List<GameObject>> unitByGroundDic = new Dictionary<int, List<GameObject>>();
+    [SerializeField] List<GameObject> unitSpawnPointList = new List<GameObject>();
+    [SerializeField] int groundNum;
     [SerializeField] GameObject unitSkillBar;
     [SerializeField] Transform unitSkillBarParent;
 
@@ -53,6 +50,7 @@ public class UnitMng : MonoBehaviour, IUnitMng
             Destroy(this.gameObject);
         }
 
+        iUnitMng = this;
         iUnitFusion = unitFusion;
         iUnitMixer = unitMixer;
         iUnitRandomSpawner = unitRandomSpawner;
@@ -85,38 +83,10 @@ public class UnitMng : MonoBehaviour, IUnitMng
         }
     }
 
-    public bool IsCheckGround(GameObject _spawnUnit)
-    {
-        groundNum = 0;
-
-        for (groundNum = 0; groundNum < unitSpawnPointList.Count; groundNum++)
-        {
-            var ground = unitSpawnPointList[groundNum].transform;
-
-            if (ground.childCount < 3 && ground.childCount > 0)
-            {
-                if (ground.GetChild(0).name == $"{_spawnUnit.name}(Clone)")
-                {
-                    return true;
-                }
-            }
-        }
-
-        for(groundNum = 0 ;groundNum < unitSpawnPointList.Count; groundNum++) 
-        {
-            var ground = unitSpawnPointList[groundNum].transform;
-
-            if (ground.transform.childCount == 0)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public void UnitInstantiate(GameObject _unit)
     {
+        if (!IsCheckGround(_unit)) return;
+
         if (groundNum < 0 || groundNum > unitSpawnPointList.Count || _unit == null) return;
 
         Vector3 twoUnit1Pos = new Vector3(-0.5f, 0, 0);
@@ -174,13 +144,43 @@ public class UnitMng : MonoBehaviour, IUnitMng
         AddUnitData(instantiateUnit);
     }
 
+    private bool IsCheckGround(GameObject _spawnUnit)
+    {
+        groundNum = 0;
+
+        for (groundNum = 0; groundNum < unitSpawnPointList.Count; groundNum++)
+        {
+            var ground = unitSpawnPointList[groundNum].transform;
+
+            if (ground.childCount < 3 && ground.childCount > 0)
+            {
+                if (ground.GetChild(0).name == $"{_spawnUnit.name}(Clone)")
+                {
+                    return true;
+                }
+            }
+        }
+
+        for(groundNum = 0 ;groundNum < unitSpawnPointList.Count; groundNum++) 
+        {
+            var ground = unitSpawnPointList[groundNum].transform;
+
+            if (ground.transform.childCount == 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void AddUnitData(GameObject _unit)
     {
         allUnitList.Add(_unit);
 
         unitByGroundDic[groundNum].Add(_unit);
 
-        onUnitCountChange?.Invoke();
+        onUnitCountEvent?.Invoke();
     }
 
     public void RemoveUnitData(GameObject _unit)
@@ -193,10 +193,11 @@ public class UnitMng : MonoBehaviour, IUnitMng
 
         unitByGroundDic[groundNum].Clear();
 
-        onUnitCountChange?.Invoke();
+        onUnitCountEvent?.Invoke();
     }
 
-    public List<GameObject> GetUnitByGroundList(int _groundNum)
+    
+    private List<GameObject> GetUnitByGroundList(int _groundNum)
     {
         if (!unitByGroundDic.ContainsKey(_groundNum)) return null;
 
@@ -222,7 +223,7 @@ public class UnitMng : MonoBehaviour, IUnitMng
         }
     }
 
-    public int GetSelectGroundNum(Transform _groundTrs)
+    private int GetSelectGroundNum(Transform _groundTrs)
     {
         if (_groundTrs != null)
         {
@@ -238,6 +239,5 @@ public class UnitMng : MonoBehaviour, IUnitMng
     }
 
     public List<GameObject> GetUnitSpawnPointList() { return unitSpawnPointList; }
-    public int GetGroundNum() { return groundNum; }
     public List<GameObject> GetAllUnitList() { return allUnitList; }
 }

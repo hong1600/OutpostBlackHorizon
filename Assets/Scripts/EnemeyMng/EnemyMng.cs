@@ -3,19 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMng : MonoBehaviour
+public interface IEnemyMng
 {
-    public EnemySpawner enemySpawner;
+    int GetMaxEnemy();
+    int GetCurEnemy();
+    GameObject GetEnemyParent();
+}
+
+public class EnemyMng : MonoBehaviour, IEnemyMng
+{
+    [SerializeField] EnemySpawner enemySpawner;
+    [SerializeField] BossSpawner bossSpawner;
+    [SerializeField] WaveBossSpawner waveBossSpawner;
+    public IEnemyMng iEnemyMng;
     public IEnemySpawner iEnemySpawner;
-    public BossSpawner bossSpawner;
     public IBossSpawner iBossSpawner;
-    public WaveBossSpawner waveBossSpawner;
     public IWaveBossSpawner iWaveBossSpawner;
 
-    public GameObject enemyParent;
-    public int maxEnemyCount;
-    public int curEnemyCount;
-    List<GameObject> enemyCountList = new List<GameObject>();
+    [SerializeField] GameObject enemyParent;
+    [SerializeField] int maxEnemy;
+    [SerializeField] int curEnemy;
+    [SerializeField] List<GameObject> enemyCountList = new List<GameObject>();
 
 
     private void Awake()
@@ -29,12 +37,13 @@ public class EnemyMng : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        iEnemyMng = this;
         iEnemySpawner = enemySpawner;
         iBossSpawner = bossSpawner;
         iWaveBossSpawner = waveBossSpawner;
 
-        maxEnemyCount = 100;
-        curEnemyCount = 0;
+        maxEnemy = 100;
+        curEnemy = 0;
     }
 
     private void Start()
@@ -45,18 +54,22 @@ public class EnemyMng : MonoBehaviour
         }
     }
 
-    public int EnemyCount()
+    private int EnemyCount()
     {
-        curEnemyCount = 0;
+        curEnemy = 0;
 
         for (int i = 0; i < enemyCountList.Count; i++)
         {
             if (enemyCountList[i].activeInHierarchy)
             {
-                curEnemyCount++;
+                curEnemy++;
             }
         }
 
-        return curEnemyCount;
+        return curEnemy;
     }
+
+    public int GetMaxEnemy() { return maxEnemy; }
+    public int GetCurEnemy() { return curEnemy; }
+    public GameObject GetEnemyParent() { return enemyParent; }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public EnemyData enemyData;
     protected EnemyAI enemyAI;
     protected EnemyHpBar enemyHpBar;
 
@@ -39,9 +40,12 @@ public abstract class Enemy : MonoBehaviour
         GameObject hpBar = Shared.objectPoolMng.iHpBarPool.FindHpBar(EHpBar.NORMAL);
         enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
         enemyHpBar.Init(this);
-
+ 
         enemyAI = new EnemyAI();
         enemyAI.Init(this);
+
+        isDie = false;
+        isStay = false;
     }
 
     private void Update()
@@ -53,14 +57,14 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public void Move()
+    protected internal void Move()
     {
         targetPointDir = (targetPoint.transform.position - transform.position).normalized;
 
         transform.Translate(targetPointDir * enemySpeed * Time.deltaTime, Space.World);
     }
 
-    public void Turn()
+    protected internal void Turn()
     {
         Quaternion rotation = Quaternion.LookRotation(new Vector3(targetPointDir.x, 0, targetPointDir.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
@@ -77,7 +81,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public void StayEnemy(float _time)
+    protected internal void StayEnemy(float _time)
     {
         StartCoroutine(StartStay(_time));
     }
@@ -92,22 +96,22 @@ public abstract class Enemy : MonoBehaviour
         isStay = false;
     }
 
-    public virtual void Die()
+    protected internal virtual void Die()
     {
         StartCoroutine(StartDie());
     }
 
     IEnumerator StartDie()
     {
-        Shared.gameMng.iRewarder.AddRewardGold(50);
-        Shared.gameMng.iRewarder.AddRewardGem(10);
-        Shared.gameMng.iRewarder.AddRewardPaper(20);
-        Shared.gameMng.iRewarder.AddRewardExp(1);
+        Shared.gameMng.iRewarder.SetReward(EReward.GOLD, 50);
+        Shared.gameMng.iRewarder.SetReward(EReward.GEM, 10);
+        Shared.gameMng.iRewarder.SetReward(EReward.PAPER, 20);
+        Shared.gameMng.iRewarder.SetReward(EReward.EXP, 1);
 
         yield return new WaitForSeconds(0.75f);
 
-        Shared.objectPoolMng.ReturnObject(this.gameObject.name, this.gameObject);
         Shared.objectPoolMng.ReturnObject(enemyHpBar.gameObject.name, enemyHpBar.gameObject);
+        Shared.objectPoolMng.ReturnObject(this.gameObject.name, this.gameObject);
     }
 
     protected void ChangeAnim(EEnemyAI _curState)

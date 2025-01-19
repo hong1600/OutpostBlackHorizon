@@ -5,16 +5,15 @@ using UnityEngine;
 
 public class Boss : Enemy
 {
-    public EGameState gameState;
-    public TextMeshProUGUI bossTimeText;
-    public float bossTime;
+    [SerializeField] TextMeshProUGUI bossTimeText;
+    [SerializeField] float bossTime;
 
     private void Awake()
     {
         bossTime = 60f;
     }
 
-    public override void Die()
+    protected internal override void Die()
     {
         base.Die();
         Shared.gameMng.iGoldCoin.SetGold(300);
@@ -31,7 +30,7 @@ public class Boss : Enemy
 
         if (bossTime <= 0)
         {
-            gameState = EGameState.GAMEOVER;
+            //gameState = EGameState.GAMEOVER;
         }
     }
 }

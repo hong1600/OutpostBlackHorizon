@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.XR;
 
 public interface IUnitMixer
 {
@@ -19,11 +20,14 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
     {
         unitToMixList.Clear();
 
-        foreach (var fieldUnit in Shared.unitMng.GetAllUnitList())
+        List<GameObject> allUnitList = Shared.unitMng.iUnitMng.GetAllUnitList();
+        List<UnitData> sacUnitList = Shared.gameUI.iUIMixRightSlot.GetSacUnitList();
+
+        foreach (var fieldUnit in allUnitList)
         {
             Unit field = fieldUnit.GetComponent<Unit>();
 
-            foreach (UnitData needUnit in Shared.gameUI.iUIMixRightSlot.GetSacUnitList())
+            foreach (UnitData needUnit in sacUnitList)
             {
                 if (field.unitName == needUnit.unitName &&
                     !unitToMixList.Any(unit => unit.unitName == field.unitName))
@@ -55,9 +59,7 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
             GameObject spawnUnit =
                 Shared.unitMng.GetUnitByGradeList(EUnitGrade.SS)[Shared.gameUI.iUIMixRightSlot.GetCurMixUnit()];
 
-            Shared.unitMng.IsCheckGround(spawnUnit);
-
-            Shared.unitMng.UnitInstantiate(spawnUnit);
+            Shared.unitMng.iUnitMng.UnitInstantiate(spawnUnit);
 
             mixPanel.SetActive(false);
         }

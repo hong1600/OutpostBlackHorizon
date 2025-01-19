@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 
 
-public class CameraMove : MonoBehaviour
+public partial class MainCamera : MonoBehaviour
 {
     [SerializeField] Camera cam;
     [SerializeField] Image customMouse;

@@ -10,7 +10,7 @@ public interface IGameState
 
 public class GameState : MonoBehaviour, IGameState
 {
-    public EGameState curGameState;
+    [SerializeField] EGameState curGameState;
 
     private void Awake()
     {

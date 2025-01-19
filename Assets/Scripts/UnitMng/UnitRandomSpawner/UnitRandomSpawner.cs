@@ -12,16 +12,16 @@ public interface IUnitRandomSpawner
 
 public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
 {
-    public GameObject randomUnit;
-    public bool randomDelay;
-    public Sprite randomFail;
-    public Image[] randomUnitImgs;
-    public float fadeTime;
-    public int spawnCoin0;
-    public int spawnCoin1;
-    public int spawnCoin2;
+    [SerializeField] GameObject randomUnit;
+    [SerializeField] bool randomDelay;
+    [SerializeField] Sprite randomFail;
+    [SerializeField] Image[] randomUnitImgs;
+    [SerializeField] float fadeTime;
+    [SerializeField] int spawnCoin0;
+    [SerializeField] int spawnCoin1;
+    [SerializeField] int spawnCoin2;
 
-    private void Awake()
+    private void Start()
     {
         randomDelay = false;
         fadeTime = 1;
@@ -42,11 +42,14 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
         }
     }
 
-    public bool CanSpawn(int _index)
+    private bool CanSpawn(int _index)
     {
-        for (int i = 0; i < Shared.unitMng.GetUnitSpawnPointList().Count; i++)
+        List<GameObject> spawnPointList = Shared.unitMng.iUnitMng.GetUnitSpawnPointList();
+        int spawnPointCount = spawnPointList.Count;
+
+        for (int i = 0; i < spawnPointCount; i++)
         {
-            if (Shared.unitMng.GetUnitSpawnPointList()[i].transform.childCount == 0)
+            if (spawnPointList[i].transform.childCount == 0)
             {
                 switch (_index)
                 {
@@ -77,8 +80,6 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
 
         Sprite randomSprite = GetRandomSprite(_index, randB, randA, randS);
 
-        Shared.unitMng.IsCheckGround(randomUnit);
-
         switch (_index)
         {
             case 0:
@@ -86,7 +87,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
                 {
                     randomUnit = Shared.unitMng.GetUnitByGradeList(EUnitGrade.B)[randB];
                     yield return StartCoroutine(FadeInImage(randomUnitImgs[0], randomSprite));
-                    Shared.unitMng.UnitInstantiate(randomUnit);
+                    Shared.unitMng.iUnitMng.UnitInstantiate(randomUnit);
                 }
                 else
                 {
@@ -98,7 +99,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
                 {
                     randomUnit = Shared.unitMng.GetUnitByGradeList(EUnitGrade.A)[randA];
                     yield return StartCoroutine(FadeInImage(randomUnitImgs[1], randomSprite));
-                    Shared.unitMng.UnitInstantiate(randomUnit);
+                    Shared.unitMng.iUnitMng.UnitInstantiate(randomUnit);
                 }
                 else
                 {
@@ -110,7 +111,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
                 {
                     randomUnit = Shared.unitMng.GetUnitByGradeList(EUnitGrade.S)[randS];
                     yield return StartCoroutine(FadeInImage(randomUnitImgs[2], randomSprite));
-                    Shared.unitMng.UnitInstantiate(randomUnit);
+                    Shared.unitMng.iUnitMng.UnitInstantiate(randomUnit);
                 }
                 else
                 {

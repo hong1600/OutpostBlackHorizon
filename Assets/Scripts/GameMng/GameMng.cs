@@ -6,17 +6,17 @@ using UnityEngine;
 
 public class GameMng : MonoBehaviour
 {
-    public SpawnTimer spawnTimer;
+    [SerializeField] SpawnTimer spawnTimer;
+    [SerializeField] Round round;
+    [SerializeField] GameState gameState;
+    [SerializeField] GoldCoin goldCoin;
+    [SerializeField] Rewarder rewarder;
+    [SerializeField] SpeedUp speedUp;
     public ISpawnTimer iSpawnTimer;
-    public Round round;
     public IRound iRound;
-    public GameState gameState;
     public IGameState iGameState;
-    public GoldCoin goldCoin;
     public IGoldCoin iGoldCoin;
-    public Rewarder rewarder;
     public IRewarder iRewarder;
-    public SpeedUp speedUp;
     public ISpeedUp iSpeedUp;
 
     private void Awake()
@@ -44,7 +44,7 @@ public class GameMng : MonoBehaviour
         {
             if (iSpawnTimer.GetIsSpawnTime())
             {
-                Shared.enemyMng.enemySpawner.SpawnEnemy();
+                Shared.enemyMng.iEnemySpawner.SpawnEnemy();
             }
         }
         else if(iRound.GetIsBossRound())

@@ -133,23 +133,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa45c9430c35184e909b663c364bc51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  box: {fileID: 0}
-  anim: {fileID: 0}
+  enemyData: {fileID: 11400000, guid: 95949fc23e172f94aa298643525aa891, type: 2}
   enemyName: 
   enemyHp: 0
   curhp: 0
   enemySpeed: 0
-  wayPoint: []
-  wayPointDir: {x: 0, y: 0, z: 0}
-  wayPointIndex: 0
-  target: {fileID: 0}
   rotationSpeed: 0
-  isDie: 0
-  isStay: 0
-  gamestate: 0
   bossTimeText: {fileID: 0}
-  bosstime: 0
-  enemyData: {fileID: 11400000, guid: 653786b68af59dd4c98ed051c425bffd, type: 2}
+  bossTime: 0
 --- !u!65 &-1466218070897554118
 BoxCollider:
   m_ObjectHideFlags: 0

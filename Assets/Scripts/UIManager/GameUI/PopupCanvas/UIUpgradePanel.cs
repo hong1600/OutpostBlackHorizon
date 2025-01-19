@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class UIUpgradePanel : MonoBehaviour
 {
-    public TextMeshProUGUI upgradeGoldText;
-    public TextMeshProUGUI upgradeCoinText;
-    public TextMeshProUGUI[] upgradeCostTexts;
-    public TextMeshProUGUI[] upgradeLevelTexts;
-    public TextMeshProUGUI[] spawnPerTexts;
+    [SerializeField] TextMeshProUGUI upgradeGoldText;
+    [SerializeField] TextMeshProUGUI upgradeCoinText;
+    [SerializeField] TextMeshProUGUI[] upgradeCostTexts;
+    [SerializeField] TextMeshProUGUI[] upgradeLevelTexts;
+    [SerializeField] TextMeshProUGUI[] spawnPerTexts;
 
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class UIUpgradePanel : MonoBehaviour
         upgradeCoinText.text = Shared.gameMng.iGoldCoin.GetCoin().ToString();
     }
 
-    public void UpgradeCostPanel()
+    private void UpgradeCostPanel()
     {
         for (int i = 0; i < upgradeCostTexts.Length; i++) 
         {
@@ -55,7 +55,7 @@ public class UIUpgradePanel : MonoBehaviour
         }
     }
 
-    public void UpgradeLevelPanel()
+    private void UpgradeLevelPanel()
     {
         for (int i = 0; i < upgradeLevelTexts.Length; i++)
         {
@@ -70,7 +70,7 @@ public class UIUpgradePanel : MonoBehaviour
         }
     }
 
-    public void UpgradePerPanel()
+    private void UpgradePerPanel()
     {
         int level = (int)Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[(int)EUnitUpgrade.per] - 1;
 

@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class LoadingScene : MonoBehaviour
 {
-    public static EScene nextScene;
+    static EScene nextScene;
 
-    public Slider slider;
-    public GameObject loadingText;
-    public GameObject pressText;
+    [SerializeField] Slider slider;
+    [SerializeField] GameObject loadingText;
+    [SerializeField] GameObject pressText;
 
     private void Start()
     {

@@ -911,19 +911,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3385d7cafec0a4241933d0d47202ae71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  box: {fileID: 0}
-  anim: {fileID: 0}
+  enemyData: {fileID: 11400000, guid: 0829317d674498149a2e95b11372ca1b, type: 2}
   enemyName: 
   enemyHp: 0
   curhp: 0
   enemySpeed: 0
-  wayPoint: []
-  wayPointDir: {x: 0, y: 0, z: 0}
-  wayPointIndex: 0
-  target: {fileID: 0}
   rotationSpeed: 0
-  isDie: 0
-  isStay: 0
-  waveBossTime: 0
+  waveBossDelay: 0
   waveBossText: {fileID: 0}
-  enemyData: {fileID: 11400000, guid: 95949fc23e172f94aa298643525aa891, type: 2}

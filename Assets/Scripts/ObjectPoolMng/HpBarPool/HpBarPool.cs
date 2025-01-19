@@ -15,7 +15,7 @@ public class HpBarPool : ObjectPool<EHpBar>, IHpBarPool
 
     private void Start()
     {
-        Init(hpBarList, parentList, 30);
+        Init(hpBarList, parentList);
     }
 
     public GameObject FindHpBar(EHpBar _eHpBar)

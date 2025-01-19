@@ -5,28 +5,27 @@ using UnityEngine;
 
 public class UIInGameMoneyPanel : MonoBehaviour
 {
-    public TextMeshProUGUI myGoldText;
-    public TextMeshProUGUI myCoinText;
-    public TextMeshProUGUI unitCountText;
+    [SerializeField] TextMeshProUGUI myGoldText;
+    [SerializeField] TextMeshProUGUI myCoinText;
+    [SerializeField] TextMeshProUGUI unitCountText;
 
     private void Start()
     {
         Shared.gameMng.iGoldCoin.onGoldChanged += InGameMoneyPanel;
         Shared.gameMng.iGoldCoin.onCoinChanged += InGameMoneyPanel;
-        Shared.unitMng.onUnitCountChange += UnitCounterPanel;
+        Shared.unitMng.onUnitCountEvent += UnitCounterPanel;
 
         InGameMoneyPanel();
         UnitCounterPanel();
-
     }
 
-    public void InGameMoneyPanel()
+    private void InGameMoneyPanel()
     {
         myGoldText.text = Shared.gameMng.iGoldCoin.GetGold().ToString();
         myCoinText.text = Shared.gameMng.iGoldCoin.GetCoin().ToString();
     }
 
-    public void UnitCounterPanel()
+    private void UnitCounterPanel()
     {
         unitCountText.text = $"{Shared.unitMng.GetAllUnitList().Count.ToString()} / 20";
     }

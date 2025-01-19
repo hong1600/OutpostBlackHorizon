@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class MainCamera : MonoBehaviour
+public partial class MainCamera : MonoBehaviour
 {
     //bool CameraShake = false;
 

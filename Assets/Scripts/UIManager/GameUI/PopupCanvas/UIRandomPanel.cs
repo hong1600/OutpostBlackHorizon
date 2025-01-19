@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UIRandomPanel : MonoBehaviour
 {
-    public TextMeshProUGUI myCoinText;
+    [SerializeField] TextMeshProUGUI myCoinText;
 
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class UIRandomPanel : MonoBehaviour
         myCoinText.text = Shared.gameMng.iGoldCoin.GetCoin().ToString();
     }
 
-    public void randomPanel()
+    private void randomPanel()
     {
         myCoinText.text = Shared.gameMng.iGoldCoin.GetCoin().ToString();
     }

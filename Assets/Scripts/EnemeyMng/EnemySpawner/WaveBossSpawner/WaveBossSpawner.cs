@@ -12,11 +12,12 @@ public interface IWaveBossSpawner
 
 public class WaveBossSpawner : MonoBehaviour, IWaveBossSpawner
 {
-    public GameObject waveBoss;
-    public GameObject waveBossBtn;
-    public GameObject waveBossPanel;
-    public int waveBossLevel;
-    public float wavebossDelay;
+    [SerializeField] GameObject waveBoss;
+    [SerializeField] GameObject waveBossBtn;
+    [SerializeField] GameObject waveBossPanel;
+    [SerializeField] int waveBossLevel;
+    [SerializeField] float wavebossDelay;
+    [SerializeField] Transform waveBossParent;
 
     private void Awake()
     {
@@ -30,7 +31,7 @@ public class WaveBossSpawner : MonoBehaviour, IWaveBossSpawner
 
         int rand = Random.Range(0, Shared.enemyMng.iEnemySpawner.GetEnemySpawnPoints().Length);
         GameObject obj = Instantiate(waveBoss, Shared.enemyMng.iEnemySpawner.GetEnemySpawnPoints()[rand].position,
-        Quaternion.identity, Shared.enemyMng.enemyParent.transform);
+        Quaternion.identity, Shared.enemyMng.iEnemyMng.GetEnemyParent().transform);
 
         Enemy enemy = obj.GetComponent<Enemy>();
 

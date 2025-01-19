@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class EndUIRewardPanel : MonoBehaviour
 {
-    public TextMeshProUGUI finalWave;
-    public TextMeshProUGUI finalExp;
-    public TextMeshProUGUI finalGold;
-    public TextMeshProUGUI finalGem;
-    public TextMeshProUGUI finalPaper;
+    [SerializeField] TextMeshProUGUI finalWave;
+    [SerializeField] TextMeshProUGUI finalExp;
+    [SerializeField] TextMeshProUGUI finalGold;
+    [SerializeField] TextMeshProUGUI finalGem;
+    [SerializeField] TextMeshProUGUI finalPaper;
 
     private void Main()
     {
         finalWave.text = Shared.gameMng.iRound.GetCurRound().ToString();
-        finalGold.text = Shared.gameMng.iRewarder.GetRewardGold().ToString();
-        finalGem.text = Shared.gameMng.iRewarder.GetRewardGem().ToString();
-        finalPaper.text = Shared.gameMng.iRewarder.GetRewardPaper().ToString();
-        finalExp.text = Shared.gameMng.iRewarder.GetRewardPaper().ToString();
+        finalGold.text = Shared.gameMng.iRewarder.GetReward(EReward.GOLD).ToString();
+        finalGem.text = Shared.gameMng.iRewarder.GetReward(EReward.GEM).ToString();
+        finalPaper.text = Shared.gameMng.iRewarder.GetReward(EReward.PAPER).ToString();
+        finalExp.text = Shared.gameMng.iRewarder.GetReward(EReward.EXP).ToString();
     }
 }

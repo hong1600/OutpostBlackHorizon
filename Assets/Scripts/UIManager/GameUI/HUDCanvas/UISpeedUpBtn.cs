@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UISpeedUpBtn : MonoBehaviour
 {
-    public TextMeshProUGUI speedText;
+    [SerializeField] TextMeshProUGUI speedText;
 
     public void SpeedUpBtn()
     {

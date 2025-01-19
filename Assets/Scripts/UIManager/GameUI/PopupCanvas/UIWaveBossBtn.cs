@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIWaveBossBtn : MonoBehaviour
 {
-    public GameObject waveBossPanel;
+    [SerializeField] GameObject waveBossPanel;
 
     public void ClickWaveBossPanelBtn()
     {

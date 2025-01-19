@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UIMixRightPanel : MonoBehaviour
 {
-    public List<UnitData> mixUnitDataList = new List<UnitData>();
+    [SerializeField] List<UnitData> mixUnitDataList = new List<UnitData>();
 
     private void Start()
     {
@@ -15,7 +15,7 @@ public class UIMixRightPanel : MonoBehaviour
         UnitData curUnit = mixUnitDataList[0];
     }
 
-    public void CurMixPanel(int _index)
+    private void CurMixPanel(int _index)
     {
         UnitData curUnit = mixUnitDataList[_index];
     }

@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class UISoundPanel : MonoBehaviour
 {
-    public Image bgmImg;
-    public Image sfxImg;
-    public bool bgm;
-    public bool sfx;
+    [SerializeField] Image bgmImg;
+    [SerializeField] Image sfxImg;
+    [SerializeField] bool bgm;
+    [SerializeField] bool sfx;
 
     private void Awake()
     {

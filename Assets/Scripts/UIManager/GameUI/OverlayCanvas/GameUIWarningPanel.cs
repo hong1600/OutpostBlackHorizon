@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class GameUIWarningPanel : MonoBehaviour
 {
-    public GameObject warningPanel;
-    public TextMeshProUGUI warningText;
-    public bool isWarning;
+    [SerializeField] GameObject warningPanel;
+    [SerializeField] TextMeshProUGUI warningText;
+    [SerializeField] bool isWarning;
 
     private void Awake()
     {
@@ -16,17 +16,17 @@ public class GameUIWarningPanel : MonoBehaviour
 
     private void Warning()
     {
-        if (Shared.enemyMng.EnemyCount() >= Shared.enemyMng.maxEnemyCount * 0.8f && isWarning == true)
+        if (Shared.enemyMng.iEnemyMng.GetCurEnemy() >= Shared.enemyMng.iEnemyMng.GetMaxEnemy() * 0.8f && isWarning == true)
         {
             StartCoroutine(StartWarning());
             isWarning = false;
         }
-        if (Shared.enemyMng.EnemyCount() < Shared.enemyMng.maxEnemyCount * 0.8f)
+        if (Shared.enemyMng.iEnemyMng.GetCurEnemy() < Shared.enemyMng.iEnemyMng.GetMaxEnemy() * 0.8f)
         {
             isWarning = true;
         }
 
-        warningText.text = $"{Shared.enemyMng.EnemyCount()} / {Shared.enemyMng.maxEnemyCount}";
+        warningText.text = $"{Shared.enemyMng.iEnemyMng.GetCurEnemy()} / {Shared.enemyMng.iEnemyMng.GetMaxEnemy()}";
     }
 
     IEnumerator StartWarning()

@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public interface IRound 
 {
+    event Action onRoundEvent;
     bool GetIsBossRound();
     void SetBossRound(bool _value);
     int GetCurRound();
@@ -13,8 +15,10 @@ public interface IRound
 
 public class Round : MonoBehaviour, IRound
 {
-    public bool isBossRound;
-    public int curRound;
+    public event Action onRoundEvent;
+
+    [SerializeField] bool isBossRound;
+    [SerializeField] int curRound;
 
     private void Awake()
     {
@@ -37,5 +41,5 @@ public class Round : MonoBehaviour, IRound
     public bool GetIsBossRound() { return isBossRound; }
     public void SetBossRound(bool value) { isBossRound = value;}
     public int GetCurRound() {  return curRound; }
-    public void SetCurRound(int _value) { curRound += _value; }
+    public void SetCurRound(int _value) { curRound += _value; onRoundEvent?.Invoke(); }
 }

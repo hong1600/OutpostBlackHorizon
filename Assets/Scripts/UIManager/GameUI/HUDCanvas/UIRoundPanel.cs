@@ -3,21 +3,17 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public interface IUIRoundPanel 
-{
-    void RoundPanel();
-}
-
-public class UIRoundPanel : MonoBehaviour, IUIRoundPanel
+public class UIRoundPanel : MonoBehaviour
 {
     public TextMeshProUGUI roundText;
 
     private void Start()
     {
         RoundPanel();
+        Shared.gameMng.iRound.onRoundEvent += RoundPanel;
     }
 
-    public void RoundPanel()
+    private void RoundPanel()
     {
         if (roundText == null) return;
         roundText.text = $"WAVE {Shared.gameMng.iRound.GetCurRound().ToString()}";

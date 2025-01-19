@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class UISetLeftSlot : MonoBehaviour
 {
-    public Image unitImg;
-    public int num;
+    [SerializeField] Image unitImg;
+    [SerializeField] int num;
 
     public void SetUnit(UnitData _unitdata, int _index)
     {

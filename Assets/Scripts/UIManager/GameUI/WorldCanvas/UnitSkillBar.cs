@@ -33,7 +33,7 @@ public class UnitSkillBar : MonoBehaviour
         offset = new Vector3(0f, 3f, 0f);
     }
 
-    public void skillBar()
+    private void skillBar()
     {
         skillValue = Mathf.Clamp(skillValue, 0, 5);
 

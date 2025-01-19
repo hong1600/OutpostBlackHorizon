@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIOptionBtn : MonoBehaviour
 {
-    public GameObject settingPanel;
+    [SerializeField] GameObject settingPanel;
 
     public void ClickOption()
     {

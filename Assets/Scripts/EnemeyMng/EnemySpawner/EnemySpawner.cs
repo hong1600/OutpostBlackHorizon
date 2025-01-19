@@ -10,7 +10,6 @@ public interface IEnemySpawner
     void SubEnemySpawn(Action _listener);
     void UnEnemySpawn(Action _listener);
     void SpawnEnemy();
-
     float GetEnemySpawnDelay();
     void SetEnemySpawnDelay(float _value);
     Transform[] GetEnemySpawnPoints();
@@ -19,7 +18,7 @@ public interface IEnemySpawner
 
 public class EnemySpawner : MonoBehaviour, IEnemySpawner
 {
-    private event Action onEnemySpawn;
+    event Action onEnemySpawn;
 
     [SerializeField] List<GameObject> enemyList;
     [SerializeField] Transform[] enemySpawnPoints;
@@ -53,20 +52,21 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
         if (enemySpawnDelay <= 0)
         {
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 4; i++)
             {
-                GameObject obj1 = Shared.objectPoolMng.iEnemyPool.FindEnemy(EEnemy.SLIME);
+                GameObject obj1 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy);
+                GameObject obj2 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy);
 
                 obj1.transform.position = enemySpawnPoints[firstSpawnPoint].transform.position + (enemySpawnPos[i]);
+                obj2.transform.position = enemySpawnPoints[secondSpawnPoint].transform.position + (enemySpawnPos[i]);
 
-                //GameObject obj2 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy);
-                //
-                //obj2.transform.position = enemySpawnPoints[secondSpawnPoint].transform.position + (enemySpawnPos[i]);
+                obj1.GetComponent<Enemy>().InitEnemyData(obj1.GetComponent<Enemy>().enemyData);
+                obj2.GetComponent<Enemy>().InitEnemyData(obj2.GetComponent<Enemy>().enemyData);
 
                 onEnemySpawn?.Invoke();
             }
 
-            enemySpawnDelay = 100f;
+            enemySpawnDelay = 2f;
         }
 
         enemySpawnDelay -= Time.deltaTime;

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class UIMixLeftPanel : MonoBehaviour
 {
-    public Transform mixLeftContent;
-    public GameObject MixBtnPre;
+    [SerializeField] Transform mixLeftContent;
+    [SerializeField] GameObject MixBtnPre;
 
     private void Awake()
     {

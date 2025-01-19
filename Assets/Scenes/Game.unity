@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402376, g: 0.49316394, b: 0.5722313, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657785, g: 0.4964152, b: 0.57481855, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1105,6 +1105,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddbcf431c569364092156693b99b05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShakeTr: {fileID: 0}
+  OrgPos: {x: 0, y: 0, z: 0}
+  FovX: 0.2
+  Left: 1
+  Right: -1
 --- !u!1 &561776044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,6 +1597,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &789188637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 789188638}
+  m_Layer: 0
+  m_Name: SkillBarPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &789188638
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789188637}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 907814659}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &820364294 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5315672502786170937, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
@@ -1798,6 +1834,7 @@ Transform:
   - {fileID: 419233966}
   - {fileID: 914995291}
   - {fileID: 124667550}
+  - {fileID: 789188638}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3211,6 +3248,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3329455119471090320, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
     - target: {fileID: 3565680195659991903, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -3246,6 +3287,10 @@ PrefabInstance:
     - target: {fileID: 3891145082337674815, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
       propertyPath: m_Color.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3923238651066743867, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 4022907537130806427, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
       propertyPath: mixPanel
@@ -3394,6 +3439,10 @@ PrefabInstance:
     - target: {fileID: 6813882388914878038, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6948100084866818142, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 7254337218875005408, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
       propertyPath: m_IsActive
@@ -3886,6 +3935,7 @@ MonoBehaviour:
   waveBossPanel: {fileID: 1295695065}
   waveBossLevel: 0
   wavebossDelay: 0
+  waveBossParent: {fileID: 0}
 --- !u!1 &1469486984
 GameObject:
   m_ObjectHideFlags: 0
@@ -4669,8 +4719,9 @@ MonoBehaviour:
   bossSpawner: {fileID: 1732316955}
   waveBossSpawner: {fileID: 1451534691}
   enemyParent: {fileID: 124667549}
-  maxEnemyCount: 0
-  curEnemyCount: 0
+  maxEnemy: 0
+  curEnemy: 0
+  enemyCountList: []
 --- !u!114 &1675719264 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1134432755772360340, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}

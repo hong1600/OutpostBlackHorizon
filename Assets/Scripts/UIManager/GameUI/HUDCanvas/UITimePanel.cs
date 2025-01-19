@@ -4,12 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public interface IUITimePanel
-{
-    void UpdateTimePanel();
-}
-
-public class UITimePanel : MonoBehaviour, IUITimePanel
+public class UITimePanel : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] Image sliderValue;
@@ -20,7 +15,7 @@ public class UITimePanel : MonoBehaviour, IUITimePanel
         Shared.gameMng.iSpawnTimer.SubTimerEvent(UpdateTimePanel);
     }
 
-    public void UpdateTimePanel()
+    private void UpdateTimePanel()
     {
         float sec = Shared.gameMng.iSpawnTimer.GetSec();
         float maxSec = Shared.gameMng.iSpawnTimer.GetMaxSec();

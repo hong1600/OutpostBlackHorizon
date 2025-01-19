@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class UISetRightSlot : MonoBehaviour
 {
-    public Image unitImg;
-    public TextMeshProUGUI unitName;
+    [SerializeField] Image unitImg;
+    [SerializeField] TextMeshProUGUI unitName;
 
     public void SetUnit(UnitData _unitdata)
     {

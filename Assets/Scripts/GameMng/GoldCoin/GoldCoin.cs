@@ -20,8 +20,8 @@ public class GoldCoin : MonoBehaviour, IGoldCoin
     public event Action onGoldChanged;
     public event Action onCoinChanged;
 
-    public int myGold;
-    public int myCoin;
+    [SerializeField] int myGold;
+    [SerializeField] int myCoin;
 
     private void Awake()
     {

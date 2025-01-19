@@ -12,7 +12,7 @@ public interface IUnitSpawner
 
 public class UnitSpawner : MonoBehaviour, IUnitSpawner
 {
-    public float[][] selectWeights = new float[][]
+    [SerializeField] float[][] selectWeights = new float[][]
 {
     new float[] { 0.72f, 0.15f, 0.10f, 0.03f },
     new float[] { 0.65f, 0.18f, 0.12f, 0.05f },
@@ -21,9 +21,9 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
     new float[] { 0.44f, 0.27f, 0.18f, 0.11f },
     new float[] { 0.37f, 0.30f, 0.20f, 0.13f }
 };
-    public string[] selectOptions = { "C", "B", "A", "S" };
-    public int spawnGold;
-    public GameObject selectSpawnUnit;
+    [SerializeField] string[] selectOptions = { "C", "B", "A", "S" };
+    [SerializeField] int spawnGold;
+    [SerializeField] GameObject selectSpawnUnit;
 
     private void Awake()
     {
@@ -51,11 +51,12 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
             SelectRandom(selectOptions, selectWeights[(int)Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[3] - 1]);
         selectSpawnUnit = GetSelectSpawnUnit(Selection);
 
-        if (!Shared.unitMng.IsCheckGround(selectSpawnUnit) || !CanSpawn()) return;
+        if (!CanSpawn()) return;
+
+        Shared.unitMng.UnitInstantiate(selectSpawnUnit);
 
         UseGold();
 
-        Shared.unitMng.UnitInstantiate(selectSpawnUnit);
     }
 
     public GameObject GetSelectSpawnUnit(string grade)

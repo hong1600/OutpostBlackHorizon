@@ -10,11 +10,12 @@ public interface IUIFusionBtn
 
 public class UIFusionBtn : MonoBehaviour, IUIFusionBtn
 {
-    public Vector3 offset;
+    [SerializeField] Vector3 offset;
 
-    private void Awake()
+    private void Start()
     {
         this.gameObject.SetActive(false);
+        offset = new Vector3(0, 3, -1);
     }
 
     public void ClickFusion()

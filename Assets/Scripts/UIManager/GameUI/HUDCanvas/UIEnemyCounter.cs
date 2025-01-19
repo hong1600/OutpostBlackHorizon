@@ -4,12 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public interface IUIEnemyCounter
-{
-    void EnemyCounterPanel();
-}
-
-public class UIEnemyCounter : MonoBehaviour, IUIEnemyCounter
+public class UIEnemyCounter : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI enemyCountText;
     [SerializeField] Image sliderValue;
@@ -19,14 +14,14 @@ public class UIEnemyCounter : MonoBehaviour, IUIEnemyCounter
         Shared.enemyMng.iEnemySpawner.UnEnemySpawn(EnemyCounterPanel);
         Shared.enemyMng.iEnemySpawner.SubEnemySpawn(EnemyCounterPanel);
 
-        enemyCountText.text = $"{Shared.enemyMng.EnemyCount()}  /  {Shared.enemyMng.maxEnemyCount}";
+        enemyCountText.text = $"{Shared.enemyMng.iEnemyMng.GetCurEnemy()}  /  {Shared.enemyMng.iEnemyMng.GetMaxEnemy()}";
         sliderValue.fillAmount = 0;
     }
 
-    public void EnemyCounterPanel()
+    private void EnemyCounterPanel()
     {
 
-        enemyCountText.text = $"{Shared.enemyMng.EnemyCount()}  /  {Shared.enemyMng.maxEnemyCount}";
-        sliderValue.fillAmount = Shared.enemyMng.EnemyCount() / Shared.enemyMng.maxEnemyCount;
+        enemyCountText.text = $"{Shared.enemyMng.iEnemyMng.GetCurEnemy()}  /  {Shared.enemyMng.iEnemyMng.GetMaxEnemy()}";
+        sliderValue.fillAmount = Shared.enemyMng.iEnemyMng.GetCurEnemy() / Shared.enemyMng.iEnemyMng.GetMaxEnemy();
     }
 }

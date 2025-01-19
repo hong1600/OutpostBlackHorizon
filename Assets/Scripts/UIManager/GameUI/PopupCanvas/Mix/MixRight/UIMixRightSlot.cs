@@ -10,17 +10,17 @@ public interface IUIMixRightSlot
 
 public class UIMixRightSlot : MonoBehaviour, IUIMixRightSlot
 {
-    public Transform mixRightContent;
-    public int curMixUnit;
-    public GameObject[] sacUnitPanels;
-    public List<UnitData> sacUnitList = new List<UnitData>();
+    [SerializeField] Transform mixRightContent;
+    [SerializeField] int curMixUnit;
+    [SerializeField] GameObject[] sacUnitPanels;
+    [SerializeField] List<UnitData> sacUnitList = new List<UnitData>();
 
     private void Start()
     {
         LoadRightUnit(0);
     }
 
-    public void LoadRightUnit(int _num)
+    private void LoadRightUnit(int _num)
     {
         foreach (Transform child in mixRightContent)
         {

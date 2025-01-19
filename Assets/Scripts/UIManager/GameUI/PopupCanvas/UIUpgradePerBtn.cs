@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIUpgradePerBtn : MonoBehaviour
 {
-    public GameObject spawnPerPanel;
+    [SerializeField] GameObject spawnPerPanel;
 
     public void clickSpawnPer()
     {

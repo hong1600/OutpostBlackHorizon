@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    SphereCollider sphere;
+
     [SerializeField] GameObject effect;
     [SerializeField] Transform target;
     [SerializeField] float speed;
+
+    private void Awake()
+    {
+        sphere = GetComponent<SphereCollider>();
+    }
 
     public void Init(GameObject _enemy)
     {
@@ -25,6 +32,16 @@ public class Bullet : MonoBehaviour
             if (distance < 1f)
             {
                 effect.SetActive(true);
+                sphere.enabled = true;
+
+                Collider[] colls = Physics.OverlapSphere(transform.position, sphere.radius, LayerMask.GetMask("Enemy"));
+
+                for (int i = 0; i < colls.Length; i++)
+                {
+                    Enemy enemy = colls[i].GetComponent<Enemy>();
+
+                    enemy.TakeDamage(100);
+                }
 
                 yield return new WaitForSeconds(1);
 

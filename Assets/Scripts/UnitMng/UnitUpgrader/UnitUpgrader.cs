@@ -21,9 +21,9 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
     public event Action onUpgradeLevelChange;
     public event Action onUpgradePerChange;
 
-    public int[] upgradeCosts = new int[4];
-    public int[] upgradeLevels = new int[4];
-    public int upgradeMaxLevel;
+    [SerializeField] int[] upgradeCosts = new int[4];
+    [SerializeField] int[] upgradeLevels = new int[4];
+    [SerializeField] int upgradeMaxLevel;
 
     private void Awake()
     {

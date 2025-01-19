@@ -5,10 +5,4 @@ using UnityEngine;
 
 public class Skeleton : NormalEnemy
 {
-    public EnemyData enemyData;
-
-    public void Start()
-    {
-        InitEnemyData(enemyData);
-    }
 }

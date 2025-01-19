@@ -7,8 +7,6 @@ public class SceneMng : MonoBehaviour
 {
     EScene scene = EScene.LOGIN;
 
-    public string curNameText;
-
     private void Awake()
     {
         Shared.sceneMng = this;

@@ -4,17 +4,11 @@ using UnityEngine;
 
 public class GameUI : MonoBehaviour
 {
-    public Canvas worldCanvas;
+    [SerializeField] Canvas worldCanvas;
 
-    public UIEnemyCounter uiEnemyCounter;
-    public IUIEnemyCounter iUIEnemyCounter;
-    public UIRoundPanel uiRoundPanel;
-    public IUIRoundPanel iUIRoundPanel;
-    public UITimePanel uiTimePanel;
-    public IUITimePanel iUITimePanel;
-    public UIMixRightSlot uiMixRightSlot;
+    [SerializeField] UIMixRightSlot uiMixRightSlot;
+    [SerializeField] UIFusionBtn uiFusionBtn;
     public IUIMixRightSlot iUIMixRightSlot;
-    public UIFusionBtn uiFusionBtn;
     public IUIFusionBtn iUIFusionBtn;
 
     private void Awake()
@@ -28,9 +22,6 @@ public class GameUI : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        iUIEnemyCounter = uiEnemyCounter;
-        iUIRoundPanel = uiRoundPanel;
-        iUITimePanel = uiTimePanel;
         iUIMixRightSlot = uiMixRightSlot;
         iUIFusionBtn = uiFusionBtn;
     }

@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class UIWaveBossPanel : MonoBehaviour
 {
-    public TextMeshProUGUI waveBossLevelNameText;
+    [SerializeField] TextMeshProUGUI waveBossLevelNameText;
 
-    public void waveBossPanel()
+    private void waveBossPanel()
     {
         waveBossLevelNameText.text = $"LV.{Shared.enemyMng.iWaveBossSpawner.GetWaveBossLevel()} µ¹ °ñ·½";
     }

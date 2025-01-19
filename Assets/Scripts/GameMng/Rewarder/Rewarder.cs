@@ -4,22 +4,24 @@ using UnityEngine;
 
 public interface IRewarder
 {
-    int GetRewardGold();
-    int GetRewardGem();
-    int GetRewardPaper();
-    int GetRewardExp();
-    void AddRewardGold(int _value);
-    void AddRewardGem(int _value);
-    void AddRewardPaper(int _value);
-    void AddRewardExp(int _value);
+    int GetReward(EReward _eReward);
+    void SetReward(EReward _eReward, int _amount);
+}
+
+public enum EReward
+{
+    GOLD,
+    GEM,
+    PAPER,
+    EXP,
 }
 
 public class Rewarder : MonoBehaviour, IRewarder
 {
-    public int rewardGold;
-    public int rewardGem;
-    public int rewardPaper;
-    public int rewardExp;
+    [SerializeField] int rewardGold;
+    [SerializeField] int rewardGem;
+    [SerializeField] int rewardPaper;
+    [SerializeField] int rewardExp;
 
     private void Awake()
     {
@@ -29,12 +31,40 @@ public class Rewarder : MonoBehaviour, IRewarder
         rewardExp = 0;
     }
 
-    public int GetRewardGold() { return rewardGold; }
-    public int GetRewardGem() { return rewardGem; }
-    public int GetRewardPaper() { return rewardPaper; }
-    public int GetRewardExp() { return rewardExp; }
-    public void AddRewardGold(int _value) { rewardGold += _value; }
-    public void AddRewardGem(int _value) { rewardGem += _value; }
-    public void AddRewardPaper(int _value) { rewardPaper += _value; }
-    public void AddRewardExp(int _value) { rewardExp += _value; }
+    public int GetReward(EReward _eReward)
+    {
+        switch (_eReward) 
+        {
+            case EReward.GOLD:
+                return rewardGold;
+            case EReward.GEM:
+                return rewardGem;
+            case EReward.PAPER:
+                return rewardPaper;
+            case EReward.EXP:
+                return rewardExp;
+            default:
+                return 0;
+        }
+    }
+    public void SetReward(EReward _eReward, int _amount)
+    {
+        switch (_eReward)
+        {
+            case EReward.GOLD:
+                rewardGold += _amount;
+                break;
+            case EReward.GEM:
+                rewardGem += _amount;
+                break;
+            case EReward.PAPER:
+                rewardPaper += _amount;
+                break;
+            case EReward.EXP:
+                rewardExp += _amount;
+                break;
+            default:
+                break;
+        }
+    }
 }

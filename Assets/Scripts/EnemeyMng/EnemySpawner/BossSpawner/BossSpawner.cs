@@ -10,7 +10,7 @@ public interface IBossSpawner
 
 public class BossSpawner : MonoBehaviour, IBossSpawner
 {
-    public GameObject boss;
+    [SerializeField] GameObject boss;
 
     public void SpawnBoss()
     {
@@ -18,7 +18,7 @@ public class BossSpawner : MonoBehaviour, IBossSpawner
         {
             int rand = Random.Range(0, Shared.enemyMng.iEnemySpawner.GetEnemySpawnPoints().Length);
             GameObject obj = Instantiate(boss, Shared.enemyMng.iEnemySpawner.GetEnemySpawnPoints()[rand].transform.position,
-            Quaternion.identity, Shared.enemyMng.enemyParent.transform);
+            Quaternion.identity, Shared.enemyMng.iEnemyMng.GetEnemyParent().transform);
 
             Enemy enemy = obj.GetComponent<Enemy>();
 

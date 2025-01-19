@@ -4,11 +4,4 @@ using UnityEngine;
 
 public class Grunt : WaveBoss
 {
-    public EnemyData enemyData;
-
-    private void Start()
-    {
-        InitWaveBoss();
-        InitEnemyData(enemyData);
-    }
 }

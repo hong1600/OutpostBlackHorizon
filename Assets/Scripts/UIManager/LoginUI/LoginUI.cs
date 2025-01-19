@@ -6,14 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class LoginUI : MonoBehaviour
 {
-    public GameObject pressText;
-    public GameObject loginText;
-    public GameObject namePanel;
-    public TMP_InputField nameText;
-    public GameObject text1;
-    public GameObject text2;
-    public GameObject text3;
-    public GameObject text4;
+    [SerializeField] GameObject pressText;
+    [SerializeField] GameObject loginText;
+    [SerializeField] GameObject namePanel;
+    [SerializeField] TMP_InputField nameText;
+    [SerializeField] GameObject text1;
+    [SerializeField] GameObject text2;
+    [SerializeField] GameObject text3;
+    [SerializeField] GameObject text4;
 
     bool isAnykey;
 

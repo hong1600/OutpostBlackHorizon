@@ -15,7 +15,7 @@ public class EffectPool : ObjectPool<EEffect>, IEffectPool
 
     private void Start()
     {
-        Init(effectList, parentList, 10);
+        Init(effectList, parentList);
     }
 
     public GameObject FindEffect(EEffect _eEffect)

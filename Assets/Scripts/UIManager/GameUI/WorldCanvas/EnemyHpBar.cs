@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class EnemyHpBar : MonoBehaviour
 {
-    public Enemy enemy;
+    [SerializeField] Enemy enemy;
 
-    public GameObject hpBarBack;
-    public Image hpBarFill;
-    public Vector3 offset;
+    [SerializeField] GameObject hpBarBack;
+    [SerializeField] Image hpBarFill;
+    [SerializeField] Vector3 offset;
 
     private void Awake()
     {
@@ -28,7 +28,7 @@ public class EnemyHpBar : MonoBehaviour
         offset = new Vector3(0f, 3f, 0f);
     }
 
-    public void hpBar()
+    private void hpBar()
     {
         hpBarFill.fillAmount = enemy.curhp / enemy.enemyHp;
 

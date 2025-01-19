@@ -5,12 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameFinish : MonoBehaviour
 {
-    public Coroutine gameClear;
-
-    public void ClearGame()
-    {
-
-    }
+    Coroutine gameClear;
 
     IEnumerator GameFinsh()
     {

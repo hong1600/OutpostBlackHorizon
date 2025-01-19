@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class ObjectPoolMng : MonoBehaviour
 {
-    public EnemyPool enemyPool;
+    [SerializeField] EnemyPool enemyPool;
+    [SerializeField] EffectPool effectPool;
+    [SerializeField] HpBarPool hpBarPool;
     public IEnemyPool iEnemyPool;
-    public EffectPool effectPool;
     public IEffectPool iEffectPool;
-    public HpBarPool hpBarPool;
     public IHpBarPool iHpBarPool;
 
     Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
@@ -31,23 +31,12 @@ public class ObjectPoolMng : MonoBehaviour
         iHpBarPool = hpBarPool;
     }
 
-    public void Init(string _type, GameObject _prefab, int _initSize, Transform _parent)
+    public void Init(string _type, GameObject _prefab, Transform _parent)
     {
         if (!poolDic.ContainsKey(_type))
         {
             poolDic[_type] = new Queue<GameObject>();
         }
-
-        Queue<GameObject> pool = poolDic[_type];
-
-        for(int i = 0; i < _initSize; i++) 
-        {
-            GameObject obj = Instantiate(_prefab, _parent);
-            obj.SetActive(false);
-            obj.name = _prefab.name;
-            pool.Enqueue(obj);
-        }
-
         if (!prefabDic.ContainsKey(_type))
         {
             prefabDic[_type] = _prefab;
@@ -70,6 +59,7 @@ public class ObjectPoolMng : MonoBehaviour
             {
                 GameObject newObj = Instantiate(prefabDic[_type], _parent);
                 newObj.name = prefabDic[_type].name;
+                pool.Enqueue(newObj);
                 newObj.SetActive(true);
                 return newObj;
             }

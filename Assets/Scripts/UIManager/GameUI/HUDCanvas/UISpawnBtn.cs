@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UISpawnBtn : MonoBehaviour
 {
-    public TextMeshProUGUI spawnGoldText;
+    [SerializeField] TextMeshProUGUI spawnGoldText;
 
     public void SpawnBtnText()
     {

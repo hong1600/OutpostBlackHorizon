@@ -10,8 +10,8 @@ public class InputMng : MonoBehaviour
     public static event Action<Vector2> onLeftClickUp;
 
     [SerializeField] FieldSelector fieldSelector;
-    public IFieldSelector iFieldSelector;
     [SerializeField] CustomMouse customMouse;
+    public IFieldSelector iFieldSelector;
     public ICustomMouse iCustomMouse;
 
     Vector2 startMousePos;

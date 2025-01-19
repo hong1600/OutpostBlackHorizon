@@ -23,14 +23,12 @@ public class UnitFusion : MonoBehaviour, IUnitFusion
             Shared.unitMng.RemoveUnitData(selectGround.transform.GetChild(i).gameObject);
         }
 
-        Shared.unitMng.IsCheckGround(spawnUnit);
-        Shared.unitMng.UnitInstantiate(spawnUnit);
+        Shared.unitMng.iUnitMng.UnitInstantiate(spawnUnit);
     }
 
     public GameObject instantiateUnit(EUnitGrade _grade)
     {
         int rand = 0;
-        int groundNum = Shared.unitMng.GetGroundNum();
         GameObject unit;
 
         switch (_grade)
