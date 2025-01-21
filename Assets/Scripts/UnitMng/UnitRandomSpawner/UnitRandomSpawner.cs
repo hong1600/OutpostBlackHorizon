@@ -44,7 +44,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
 
     private bool CanSpawn(int _index)
     {
-        List<GameObject> spawnPointList = Shared.unitMng.iUnitMng.GetUnitSpawnPointList();
+        List<Transform> spawnPointList = Shared.unitMng.iUnitMng.GetUnitSpawnPointList();
         int spawnPointCount = spawnPointList.Count;
 
         for (int i = 0; i < spawnPointCount; i++)

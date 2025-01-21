@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 6710738970783288552}
   - component: {fileID: 2834366222100378201}
   m_Layer: 5
-  m_Name: MixLeftSlotButton
+  m_Name: MixLeftSlotBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

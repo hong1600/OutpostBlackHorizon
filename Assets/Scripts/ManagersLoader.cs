@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ManagersLoader : MonoBehaviour
 {
-    public GameObject dataMng;
-    public GameObject SceneMng;
-    public GameObject UIMng;
+    [SerializeField] GameObject dataMng;
+    [SerializeField] GameObject sceneMng;
+    [SerializeField] GameObject UIMng;
 
     private void Awake()
     {
@@ -16,7 +16,7 @@ public class ManagersLoader : MonoBehaviour
         }
         if (GameObject.Find("SceneMng") == null)
         {
-            Instantiate(SceneMng);
+            Instantiate(sceneMng);
         }
         if (GameObject.Find("UIMng") == null)
         {

@@ -12,12 +12,14 @@ public class GameMng : MonoBehaviour
     [SerializeField] GoldCoin goldCoin;
     [SerializeField] Rewarder rewarder;
     [SerializeField] SpeedUp speedUp;
+    [SerializeField] FieldBuilder fieldBuilder;
     public ISpawnTimer iSpawnTimer;
     public IRound iRound;
     public IGameState iGameState;
     public IGoldCoin iGoldCoin;
     public IRewarder iRewarder;
     public ISpeedUp iSpeedUp;
+    public IFieldBuilder iFieldBuilder;
 
     private void Awake()
     {
@@ -36,6 +38,7 @@ public class GameMng : MonoBehaviour
         iGoldCoin = goldCoin;
         iRewarder = rewarder;
         iSpeedUp = speedUp;
+        iFieldBuilder = fieldBuilder;
     }
 
     private void Update()

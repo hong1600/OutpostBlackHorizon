@@ -12,7 +12,6 @@ public interface IEnemySpawner
     void SpawnEnemy();
     float GetEnemySpawnDelay();
     void SetEnemySpawnDelay(float _value);
-    Transform[] GetEnemySpawnPoints();
     Transform GetTargetPoint();
 }
 
@@ -21,30 +20,27 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     event Action onEnemySpawn;
 
     [SerializeField] List<GameObject> enemyList;
-    [SerializeField] Transform[] enemySpawnPoints;
+    [SerializeField] List<Transform> enemySpawnPointList;
     [SerializeField] Vector3[] enemySpawnPos = new Vector3[4];
     [SerializeField] Transform targetPoint;
     [SerializeField] float enemySpawnDelay;
 
-    private void Awake()
+    private void Start()
     {
         enemySpawnDelay = 0;
 
-        enemySpawnPos[0] = new Vector3(-3, 0, 0);
-        enemySpawnPos[1] = new Vector3(-1, 0, 0);
-        enemySpawnPos[2] = new Vector3(1, 0, 0);
-        enemySpawnPos[3] = new Vector3(3, 0, 0);
+        enemySpawnPointList = Shared.gameMng.iFieldBuilder.GetEnemySpawnPointList();
     }
 
     public void SpawnEnemy()
     {
         if (Shared.gameMng.iRound.GetCurRound() == 0 || Shared.gameMng.iRound.GetIsBossRound()) { return; }
 
-        int firstSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
+        int firstSpawnPoint = Random.Range(0, enemySpawnPointList.Count);
         int secondSpawnPoint;
         do 
         {
-            secondSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
+            secondSpawnPoint = Random.Range(0, enemySpawnPointList.Count);
         }while (firstSpawnPoint == secondSpawnPoint);
 
         EEnemy eEnemy = (EEnemy)Random.Range(0, 4);
@@ -57,8 +53,8 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
                 GameObject obj1 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy);
                 GameObject obj2 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy);
 
-                obj1.transform.position = enemySpawnPoints[firstSpawnPoint].transform.position + (enemySpawnPos[i]);
-                obj2.transform.position = enemySpawnPoints[secondSpawnPoint].transform.position + (enemySpawnPos[i]);
+                obj1.transform.position = enemySpawnPointList[firstSpawnPoint].transform.position + (enemySpawnPos[i]);
+                obj2.transform.position = enemySpawnPointList[secondSpawnPoint].transform.position + (enemySpawnPos[i]);
 
                 obj1.GetComponent<Enemy>().InitEnemyData(obj1.GetComponent<Enemy>().enemyData);
                 obj2.GetComponent<Enemy>().InitEnemyData(obj2.GetComponent<Enemy>().enemyData);
@@ -76,6 +72,5 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     public void UnEnemySpawn(Action _listener) { onEnemySpawn -= _listener; }
     public float GetEnemySpawnDelay() { return enemySpawnDelay; }
     public void SetEnemySpawnDelay(float _value) { enemySpawnDelay = _value; }
-    public Transform[] GetEnemySpawnPoints() { return enemySpawnPoints; }
     public Transform GetTargetPoint() { return targetPoint; }
 }

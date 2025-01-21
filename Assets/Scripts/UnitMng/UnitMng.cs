@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public interface IUnitMng
     void UnitInstantiate(GameObject _unit);
     List<GameObject> GetUnitByGradeList(EUnitGrade _unitType);
     void RemoveUnitData(GameObject _unit);
-    List<GameObject> GetUnitSpawnPointList();
+    List<Transform> GetUnitSpawnPointList();
     List<GameObject> GetAllUnitList();
 }
 
@@ -34,7 +35,7 @@ public class UnitMng : MonoBehaviour, IUnitMng
     [SerializeField] List<GameObject> allUnitList = new List<GameObject>();
     [SerializeField] List<GameObject> unitCList, unitBList, unitAList, unitSList, unitSSList = new List<GameObject>();
     [SerializeField] Dictionary<int, List<GameObject>> unitByGroundDic = new Dictionary<int, List<GameObject>>();
-    [SerializeField] List<GameObject> unitSpawnPointList = new List<GameObject>();
+    [SerializeField] List<Transform> unitSpawnPointList = new List<Transform>();
     [SerializeField] int groundNum;
     [SerializeField] GameObject unitSkillBar;
     [SerializeField] Transform unitSkillBarParent;
@@ -57,6 +58,11 @@ public class UnitMng : MonoBehaviour, IUnitMng
         iUnitSpawner = unitSpawner;
         iUnitUpgrader = unitUpgrader;
         iUnitFieldMove = unitFieldMove;
+    }
+
+    private void Start()
+    {
+        unitSpawnPointList = Shared.gameMng.iFieldBuilder.GetunitSpawnPointList();
     }
 
     private void Update()
@@ -238,6 +244,6 @@ public class UnitMng : MonoBehaviour, IUnitMng
         return -1;
     }
 
-    public List<GameObject> GetUnitSpawnPointList() { return unitSpawnPointList; }
+    public List<Transform> GetUnitSpawnPointList() { return unitSpawnPointList; }
     public List<GameObject> GetAllUnitList() { return allUnitList; }
 }

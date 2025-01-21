@@ -44,6 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a289e7c984b7242b8f1064fc8920b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataMng: {fileID: 5348925604797578186, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
-  SceneMng: {fileID: 3317015124784509950, guid: f4ec127da783f924b848f54f290a7d16, type: 3}
-  UIMng: {fileID: 1985908224059897645, guid: 6e34924bf288c5e4889567a5ccd2dd2b, type: 3}
+  managers:
+  - {fileID: 5348925604797578186, guid: 4d84ac84ae540eb4a844df865ee311f3, type: 3}
+  - {fileID: 706550431797772950, guid: a2eadc086f17a274a9e8f6a03161eef3, type: 3}
+  - {fileID: 3276679534209907987, guid: e6b2197e298b96e4a935461769931318, type: 3}
+  - {fileID: 2139267353477476989, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
+  - {fileID: 3479096180838384594, guid: 5144d4d648ab8db458c1f7698ee52bca, type: 3}
+  - {fileID: 3879292908697299627, guid: 350a0e7548f2de34bb4d9d00f216f90c, type: 3}
+  - {fileID: 8413069980573577154, guid: 6de8ffc049101bd43970cc33ee409d48, type: 3}
+  - {fileID: 3317015124784509950, guid: f4ec127da783f924b848f54f290a7d16, type: 3}
+  - {fileID: 1985908224059897645, guid: 6e34924bf288c5e4889567a5ccd2dd2b, type: 3}
+  - {fileID: 7973086102540713066, guid: 886a27272fee6c04898fddaca46e3137, type: 3}
