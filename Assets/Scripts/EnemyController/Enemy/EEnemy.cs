@@ -9,6 +9,7 @@ public enum EEnemyAI
     ATTACK,
     STAY,
     DIE,
+    RESET,
 }
 
 public enum EEnemyAnim

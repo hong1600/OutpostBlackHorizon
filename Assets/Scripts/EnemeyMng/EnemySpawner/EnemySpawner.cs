@@ -30,34 +30,36 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
         enemySpawnDelay = 0;
 
         enemySpawnPointList = Shared.gameMng.iFieldBuilder.GetEnemySpawnPointList();
+
+        enemySpawnPos[0] = new Vector3(-3f, 0, 0);
+        enemySpawnPos[1] = new Vector3(-1f, 0, 0);
+        enemySpawnPos[2] = new Vector3(1f, 0, 0);
+        enemySpawnPos[3] = new Vector3(3f, 0, 0);
     }
 
     public void SpawnEnemy()
     {
         if (Shared.gameMng.iRound.GetCurRound() == 0 || Shared.gameMng.iRound.GetIsBossRound()) { return; }
 
-        int firstSpawnPoint = Random.Range(0, enemySpawnPointList.Count);
-        int secondSpawnPoint;
-        do 
-        {
-            secondSpawnPoint = Random.Range(0, enemySpawnPointList.Count);
-        }while (firstSpawnPoint == secondSpawnPoint);
-
-        EEnemy eEnemy = (EEnemy)Random.Range(0, 4);
-
-
         if (enemySpawnDelay <= 0)
         {
+            int firstSpawnPoint = Random.Range(0, enemySpawnPointList.Count);
+            int secondSpawnPoint;
+            do
+            {
+                secondSpawnPoint = Random.Range(0, enemySpawnPointList.Count);
+            } while (firstSpawnPoint == secondSpawnPoint);
+
+            EEnemy eEnemy1 = (EEnemy)Random.Range(0, 4);
+            EEnemy eEnemy2 = (EEnemy)Random.Range(0, 4);
+
             for (int i = 0; i < 4; i++)
             {
-                GameObject obj1 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy);
-                GameObject obj2 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy);
+                GameObject obj1 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy1);
+                GameObject obj2 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy2);
 
                 obj1.transform.position = enemySpawnPointList[firstSpawnPoint].transform.position + (enemySpawnPos[i]);
                 obj2.transform.position = enemySpawnPointList[secondSpawnPoint].transform.position + (enemySpawnPos[i]);
-
-                obj1.GetComponent<Enemy>().InitEnemyData(obj1.GetComponent<Enemy>().enemyData);
-                obj2.GetComponent<Enemy>().InitEnemyData(obj2.GetComponent<Enemy>().enemyData);
 
                 onEnemySpawn?.Invoke();
             }

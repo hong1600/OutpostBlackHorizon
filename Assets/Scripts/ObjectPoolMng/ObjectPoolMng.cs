@@ -13,8 +13,8 @@ public class ObjectPoolMng : MonoBehaviour
     public IEffectPool iEffectPool;
     public IHpBarPool iHpBarPool;
 
-    Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
-    Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
+    [SerializeField] Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
+    [SerializeField] Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
 
     private void Awake()
     {
@@ -50,20 +50,24 @@ public class ObjectPoolMng : MonoBehaviour
         {
             Queue<GameObject> pool = poolDic[_type];
 
-            if(pool.Count > 0) 
+            if (pool.Count > 0)
             {
-                GameObject obj = pool.Dequeue();
-                obj.SetActive(true);
-                return obj;
+                for (int i = 0; i < pool.Count; i++)
+                {
+                    GameObject obj = pool.Dequeue();
+
+                    if (!obj.activeInHierarchy)
+                    {
+                        obj.SetActive(true);
+                        return obj;
+                    }
+                }
             }
-            else
-            {
-                GameObject newObj = Instantiate(prefabDic[_type], _parent);
-                newObj.name = prefabDic[_type].name;
-                pool.Enqueue(newObj);
-                newObj.SetActive(true);
-                return newObj;
-            }
+
+            GameObject newObj = Instantiate(prefabDic[_type], _parent);
+            newObj.name = prefabDic[_type].name;
+            newObj.SetActive(true);
+            return newObj;
         }
         return null;
     }

@@ -18,7 +18,7 @@ public class BossSpawner : MonoBehaviour, IBossSpawner
         {
             int rand = Random.Range(0, Shared.gameMng.iFieldBuilder.GetEnemySpawnPointList().Count);
             GameObject obj = Instantiate(boss, Shared.gameMng.iFieldBuilder.GetEnemySpawnPointList()[rand].transform.position,
-            Quaternion.identity, Shared.enemyMng.iEnemyMng.GetEnemyParent()[6].transform);
+            Quaternion.identity, Shared.enemyMng.iEnemyMng.GetEnemyParent().transform);
 
             Enemy enemy = obj.GetComponent<Enemy>();
 

@@ -7,7 +7,7 @@ public interface IEnemyMng
 {
     int GetMaxEnemy();
     int GetCurEnemy();
-    GameObject[] GetEnemyParent();
+    GameObject GetEnemyParent();
 }
 
 public class EnemyMng : MonoBehaviour, IEnemyMng
@@ -20,7 +20,7 @@ public class EnemyMng : MonoBehaviour, IEnemyMng
     public IBossSpawner iBossSpawner;
     public IWaveBossSpawner iWaveBossSpawner;
 
-    [SerializeField] GameObject[] enemyParents;
+    [SerializeField] GameObject enemyParent;
     [SerializeField] int maxEnemy;
     [SerializeField] int curEnemy;
     [SerializeField] List<GameObject> enemyCountList = new List<GameObject>();
@@ -45,25 +45,17 @@ public class EnemyMng : MonoBehaviour, IEnemyMng
         curEnemy = 0;
     }
 
-    private void Update()
-    {
-        EnemyCount();
-    }
-
     private int EnemyCount()
     {
         int curEnemy = 0;
 
-        for (int i = 0; i < enemyParents.Length; i++)
+        for (int i = 0; i < enemyParent.transform.childCount; i++)
         {
-            for (int j = 0; j < enemyParents[i].transform.childCount; j++)
-            {
-                Transform child = enemyParents[i].transform.GetChild(j);
+            Transform child = enemyParent.transform.GetChild(i);
 
-                if (child.gameObject.activeInHierarchy)
-                {
-                    curEnemy++;
-                }
+            if (child.gameObject.activeInHierarchy)
+            {
+                curEnemy++;
             }
         }
 
@@ -72,5 +64,5 @@ public class EnemyMng : MonoBehaviour, IEnemyMng
 
     public int GetMaxEnemy() { return maxEnemy; }
     public int GetCurEnemy() { return curEnemy; }
-    public GameObject[] GetEnemyParent() { return enemyParents; }
+    public GameObject GetEnemyParent() { return enemyParent; }
 }

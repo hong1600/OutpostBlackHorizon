@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public EnemyData enemyData;
     protected EnemyAI enemyAI;
     protected EnemyHpBar enemyHpBar;
 
@@ -21,7 +18,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected Transform targetPoint;
     protected Vector3 targetPointDir;
-    protected internal bool isDie;
+    [SerializeField] protected internal bool isDie;
     protected internal bool isStay;
 
     public void InitEnemyData(EnemyData _enemyData)
@@ -37,12 +34,17 @@ public abstract class Enemy : MonoBehaviour
 
         targetPoint = Shared.enemyMng.iEnemySpawner.GetTargetPoint();
 
+        enemyAI = new EnemyAI();
+        enemyAI.Init(this);
+    }
+
+    private void OnEnable()
+    {
+        curhp = enemyHp;
+
         GameObject hpBar = Shared.objectPoolMng.iHpBarPool.FindHpBar(EHpBar.NORMAL);
         enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
         enemyHpBar.Init(this);
- 
-        enemyAI = new EnemyAI();
-        enemyAI.Init(this);
 
         isDie = false;
         isStay = false;

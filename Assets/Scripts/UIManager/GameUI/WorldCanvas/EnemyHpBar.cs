@@ -11,11 +11,6 @@ public class EnemyHpBar : MonoBehaviour
     [SerializeField] Image hpBarFill;
     [SerializeField] Vector3 offset;
 
-    private void Awake()
-    {
-        hpBarFill.fillAmount = 1;
-    }
-
     private void Update()
     {
         hpBar();
@@ -26,6 +21,8 @@ public class EnemyHpBar : MonoBehaviour
         enemy = _enemy;
 
         offset = new Vector3(0f, 3f, 0f);
+
+        hpBarFill.fillAmount = 1;
     }
 
     private void hpBar()
