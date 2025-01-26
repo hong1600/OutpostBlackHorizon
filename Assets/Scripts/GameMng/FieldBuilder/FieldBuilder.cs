@@ -76,8 +76,8 @@ public class FieldBuilder : MonoBehaviour, IFieldBuilder
         GameObject enemySpawnPointParent = new GameObject("EnemySpawnPoint");
         enemySpawnPointParent.transform.SetParent(parent);
 
-        float x = 1.5f;
-        float z = 10f;
+        float x = 10f;
+        float z = 30f;
 
         for (int i = 0; i < 4; i++)
         {

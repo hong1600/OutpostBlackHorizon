@@ -6,9 +6,15 @@ public class CameraMove : MonoBehaviour
 {
     Camera mainCam;
 
-    [SerializeField] Transform player;
+    [SerializeField] GameObject player;
+    [SerializeField] Transform cameraTrs;
     [SerializeField] Transform top;
     [SerializeField] GameObject rifle;
+    [SerializeField] GameObject customMouse;
+    [SerializeField] GameObject aimMouse;
+    [SerializeField] GameObject functionUI;
+
+    NormalPlayer normalPlayer;
 
     Vector3 velocity = Vector3.zero;
 
@@ -18,6 +24,9 @@ public class CameraMove : MonoBehaviour
     private void Awake()
     {
         mainCam = Camera.main;
+
+        normalPlayer = player.GetComponent<NormalPlayer>();
+        normalPlayer.enabled = false;
     }
 
     private void Start()
@@ -32,6 +41,11 @@ public class CameraMove : MonoBehaviour
         {
             mainCam.transform.SetParent(null);
             rifle.SetActive(false);
+            customMouse.SetActive(true);
+            aimMouse.SetActive(false);
+            functionUI.SetActive(true);
+
+            normalPlayer.enabled = false;
 
             isFps = false;
         }
@@ -39,6 +53,11 @@ public class CameraMove : MonoBehaviour
         {
             mainCam.transform.SetParent(player.transform);
             rifle.SetActive(true);
+            customMouse.SetActive(false);
+            aimMouse.SetActive(true);
+            functionUI.SetActive(false);
+
+            normalPlayer.enabled = true;
 
             isFps = true;
         }
@@ -51,7 +70,7 @@ public class CameraMove : MonoBehaviour
         else
         {
             isArrive = false;
-            MoveCamera(player);
+            MoveCamera(cameraTrs);
         }
     }
 

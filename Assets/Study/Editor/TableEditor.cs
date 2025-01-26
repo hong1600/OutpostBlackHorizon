@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class TableReload : MonoBehaviour
+public class TableEditor : MonoBehaviour
 {
     static public TableMgr tableMgr;
     static public ITableMgr iTableMgr;

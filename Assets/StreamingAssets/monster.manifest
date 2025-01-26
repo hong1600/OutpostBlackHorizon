@@ -1,0 +1,62 @@
+ManifestFileVersion: 0
+CRC: 762870353
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f31bcfffbca00b08a411261ee332eefb
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 08acb1cd7fbc0ed562b4d283b41400e5
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 680133822291e8944ba4a0899adc3f98, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9d6fd142b39069b46aec3245bdf56a3c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ffb1e9fcb7d2be54bbaa07fbc62c9d29, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
+Assets:
+- Assets/Resources/Prefabs/GamePlay/Monster/Fish.prefab
+- Assets/Resources/Prefabs/GamePlay/Monster/Bird.prefab
+- Assets/Resources/Prefabs/GamePlay/Monster/Turtle.prefab
+- Assets/Resources/Prefabs/GamePlay/Monster/Slime.prefab
+Dependencies: []

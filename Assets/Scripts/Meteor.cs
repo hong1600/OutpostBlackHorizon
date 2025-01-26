@@ -18,19 +18,6 @@ public class Meteor : MonoBehaviour
         Invoke("DestroyEffect", 3);
     }
 
-    //void OnTriggerStay(Collider coll)
-    //{
-    //    if (coll.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-    //    {
-    //        Enemy enemy = coll.GetComponent<Enemy>();
-
-    //        if (enemy != null) 
-    //        {
-    //            enemy.TakeDamage(30);
-    //        }
-    //    }
-    //}
-
     IEnumerator StartDamage()
     {
         while (true)
