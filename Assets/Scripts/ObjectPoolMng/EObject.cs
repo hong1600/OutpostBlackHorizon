@@ -25,3 +25,8 @@ public enum EEnemy
     BIRD,
     TURTLE
 }
+public enum EBullet
+{
+    BULLET,
+}
+

@@ -34,7 +34,7 @@ public class Gunslinger : RangedUnit
         EEffect eEffect = (EEffect)EEffect.GUNSLINGER;
         GameObject effect = Shared.objectPoolMng.iEffectPool.FindEffect(eEffect);
         effect.transform.position = bulletTrs.position;
-        effect.GetComponent<Bullet>().Init(enemy.gameObject);
+        effect.GetComponent<GunslingerEffect>().Init(enemy.gameObject.transform, 100, 150f);
         skillCouroutine = null;
         skillBar.GetComponent<UnitSkillBar>().ResetSkillBar();
 

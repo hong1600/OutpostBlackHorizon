@@ -19,9 +19,6 @@ public abstract class Player : MonoBehaviour
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float runSpeed = 10f;
     [SerializeField] float jumpForce = 5f;
-    [SerializeField] float attackRange = 1f;
-    [SerializeField] int attackDamage = 10;
-    float spawnTime = 5;
     [SerializeField] internal bool isAttack = false;
     [SerializeField] internal bool isGround = false;
     [SerializeField] internal bool isRun = false;
@@ -29,10 +26,7 @@ public abstract class Player : MonoBehaviour
 
     float moveX;
     float moveZ;
-    float mouseX;
-    float mouseY;
-    [SerializeField] float mouseSpeed = 100f;
-    float verticalRotation = 0f;
+    [SerializeField] Transform fireTrs;
 
     public void InitPlayer()
     {
@@ -49,40 +43,18 @@ public abstract class Player : MonoBehaviour
     {
         CheckInput();
         CheckGround();
-        CursorLock();
     }
 
     private void FixedUpdate()
     {
         if (isDie) return;
         Move();
-        Rotation();
-    }
-
-    private void CursorLock()
-    {
-        if(Input.GetMouseButtonDown(0)) 
-        {
-            if (Cursor.lockState == CursorLockMode.None)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None; 
-            }
-        }
     }
 
     private void CheckInput()
     {
         moveX = Input.GetAxis("Horizontal");
         moveZ = Input.GetAxis("Vertical");
-        mouseX = Input.GetAxisRaw("Mouse X") * mouseSpeed * Time.deltaTime;
-        mouseY = Input.GetAxisRaw("Mouse Y") * mouseSpeed * Time.deltaTime;
 
         anim.SetFloat("Horizontal", moveX);
         anim.SetFloat("Vertical", moveZ);
@@ -123,17 +95,6 @@ public abstract class Player : MonoBehaviour
         }
     }
 
-    private void Rotation()
-    {
-        float horizontalRotation = mouseX;
-        transform.Rotate(Vector3.up * horizontalRotation);
-
-        verticalRotation -= mouseY;
-        verticalRotation = Mathf.Clamp(verticalRotation, -60f, 60f);
-
-        mainCam.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
-    }
-
     private void Jump()
     {
         rigid.velocity = new Vector3(rigid.velocity.x, jumpForce, rigid.velocity.z);
@@ -148,18 +109,13 @@ public abstract class Player : MonoBehaviour
     {
         isAttack = true;
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, attackRange, LayerMask.GetMask("Enemy")))
-        {
-            Enemy enemy = hit.collider.GetComponent<Enemy>();
+        GameObject obj = Shared.objectPoolMng.iBulletPool.FindBullet(EBullet.BULLET);
+        obj.transform.position = fireTrs.transform.position;
+        obj.transform.rotation = fireTrs.rotation * Quaternion.Euler(0, 180, 0);
+        Bullet bullet = obj.GetComponent<Bullet>();
+        bullet.InitBullet(null, 10, 0.1f);
 
-            if (enemy != null)
-            {
-                enemy.TakeDamage(attackDamage);
-            }
-        }
-
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
 
         isAttack = false;
     }
@@ -181,7 +137,7 @@ public abstract class Player : MonoBehaviour
 
     IEnumerator StartDie()
     {
-        yield return new WaitForSeconds(spawnTime);
+        yield return new WaitForSeconds(1);
 
         Reset();
     }

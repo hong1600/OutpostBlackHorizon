@@ -3,208 +3,208 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public partial class MainCamera : MonoBehaviour
-{
-    //bool CameraShake = false;
+//public partial class MainCamera : MonoBehaviour
+//{
+//    bool CameraShake = false;
 
-    Transform ShakeTr;
+//    Transform ShakeTr;
 
-    public class cShakeInfo
-    {
-        public float StartDelay;
-        public bool UseTotalTime;
-        public float TotalTime;
-        public Vector3 Dest;
-        public Vector3 Shake;
-        public Vector3 Dir;
+//    public class cShakeInfo
+//    {
+//        public float StartDelay;
+//        public bool UseTotalTime;
+//        public float TotalTime;
+//        public Vector3 Dest;
+//        public Vector3 Shake;
+//        public Vector3 Dir;
 
-        public float RemainDist;
-        public float RemainCountDis;
+//        public float RemainDist;
+//        public float RemainCountDis;
 
-        public bool UseCount;
-        public int Count;
+//        public bool UseCount;
+//        public int Count;
 
-        public float Veclocity;
+//        public float Veclocity;
 
-        public bool UseDamping;
-        public float Damping;
-        public float DampingTime;
-    }
+//        public bool UseDamping;
+//        public float Damping;
+//        public float DampingTime;
+//    }
 
-    cShakeInfo ShakeInfo = new cShakeInfo();
+//    cShakeInfo ShakeInfo = new cShakeInfo();
 
-    Vector3 OrgPos;
+//    Vector3 OrgPos;
 
-    float FovX = 0.2f;
-    //float FovY = 0.2f;
+//    float FovX = 0.2f;
+//    float FovY = 0.2f;
 
-    float Left = 1.0f;
-    float Right = -1.0f;
+//    float Left = 1.0f;
+//    float Right = -1.0f;
 
-    public void Awake()
-    {
-        Shared.mainCamera = this;
+//    public void Awake()
+//    {
+//        Shared.mainCamera = this;
 
-        OrgPos = transform.position;
+//        OrgPos = transform.position;
 
-        InitShake();
-    }
+//        InitShake();
+//    }
 
-    void InitShake()
-    {
-        ShakeTr = transform.parent;
+//    void InitShake()
+//    {
+//        ShakeTr = transform.parent;
 
-        //CameraShake = true;
-    }
+//        CameraShake = true;
+//    }
 
-    void ResetShakeTr()
-    {
-        ShakeTr.localPosition = Vector3.zero;
-        //CameraShake = false;
+//    void ResetShakeTr()
+//    {
+//        ShakeTr.localPosition = Vector3.zero;
+//        CameraShake = false;
 
-        CameraLimit();
-    }
+//        CameraLimit();
+//    }
 
-    void CameraLimit(bool _OrgPosY = false)
-    {
-        Vector3 camera = OrgPos;
+//    void CameraLimit(bool _OrgPosY = false)
+//    {
+//        Vector3 camera = OrgPos;
 
-        if (camera.x - FovX < Left)
-            camera.x = Left + FovX;
-        else if(camera.x + FovX > Right)
-            camera.x = Right - FovX;
+//        if (camera.x - FovX < Left)
+//            camera.x = Left + FovX;
+//        else if(camera.x + FovX > Right)
+//            camera.x = Right - FovX;
 
-        if(_OrgPosY)
-            camera.y = OrgPos.y;
-    }
+//        if(_OrgPosY)
+//            camera.y = OrgPos.y;
+//    }
 
-    public void Shake(int _CameraID)
-    {
-        ShakeInfo.StartDelay = 0f;
-        ShakeInfo.TotalTime = 3f;
-        ShakeInfo.UseTotalTime = true;
+//    public void Shake(int _CameraID)
+//    {
+//        ShakeInfo.StartDelay = 0f;
+//        ShakeInfo.TotalTime = 3f;
+//        ShakeInfo.UseTotalTime = true;
 
-        ShakeInfo.Shake = new Vector3(0.2f, 0.2f, 0f);
+//        ShakeInfo.Shake = new Vector3(0.2f, 0.2f, 0f);
 
-        ShakeInfo.Dest = ShakeInfo.Shake;
-        ShakeInfo.Dir = ShakeInfo.Shake;
-        ShakeInfo.Dir.Normalize();
+//        ShakeInfo.Dest = ShakeInfo.Shake;
+//        ShakeInfo.Dir = ShakeInfo.Shake;
+//        ShakeInfo.Dir.Normalize();
 
-        ShakeInfo.RemainDist = ShakeInfo.Shake.magnitude;
-        ShakeInfo.RemainCountDis = float.MaxValue;
+//        ShakeInfo.RemainDist = ShakeInfo.Shake.magnitude;
+//        ShakeInfo.RemainCountDis = float.MaxValue;
 
-        ShakeInfo.Veclocity = 8;
+//        ShakeInfo.Veclocity = 8;
 
-        ShakeInfo.Damping = 0.5f;
-        ShakeInfo.UseDamping =  true;
+//        ShakeInfo.Damping = 0.5f;
+//        ShakeInfo.UseDamping =  true;
 
-        ShakeInfo.DampingTime = ShakeInfo.RemainDist / ShakeInfo.Veclocity;
+//        ShakeInfo.DampingTime = ShakeInfo.RemainDist / ShakeInfo.Veclocity;
 
-        ShakeInfo.Count = 4;
-        ShakeInfo.UseCount = true;
+//        ShakeInfo.Count = 4;
+//        ShakeInfo.UseCount = true;
 
-        StopCoroutine("ShakeCoroutine");
-        ResetShakeTr();
-        StartCoroutine("ShakeCoroutine");
-    }
+//        StopCoroutine("ShakeCoroutine");
+//        ResetShakeTr();
+//        StartCoroutine("ShakeCoroutine");
+//    }
 
-    IEnumerator ShakeCoroutine()
-    {
-        //CameraShake = true;
+//    IEnumerator ShakeCoroutine()
+//    {
+//        CameraShake = true;
 
-        float dt, dist;
+//        float dt, dist;
 
-        if (ShakeInfo.StartDelay > 0)
-            yield return new WaitForSeconds(ShakeInfo.StartDelay);
+//        if (ShakeInfo.StartDelay > 0)
+//            yield return new WaitForSeconds(ShakeInfo.StartDelay);
 
-        while (true) 
-        {
-            dt = Time.fixedDeltaTime;
-            dist = dt * ShakeInfo.Veclocity;
+//        while (true) 
+//        {
+//            dt = Time.fixedDeltaTime;
+//            dist = dt * ShakeInfo.Veclocity;
 
-            if ((ShakeInfo.RemainDist -= dist) > 0)
-            {
-                ShakeTr.localPosition += ShakeInfo.Dir * dist;
+//            if ((ShakeInfo.RemainDist -= dist) > 0)
+//            {
+//                ShakeTr.localPosition += ShakeInfo.Dir * dist;
 
-                float rc = transform.position.x - FovX - Left;
+//                float rc = transform.position.x - FovX - Left;
 
-                if (rc < 0)
-                    ShakeTr.localPosition += new Vector3(-rc, 0, 0);
+//                if (rc < 0)
+//                    ShakeTr.localPosition += new Vector3(-rc, 0, 0);
 
-                rc = Right - (transform.position.x + FovX);
+//                rc = Right - (transform.position.x + FovX);
 
-                if (rc < 0)
-                    ShakeTr.localPosition += new Vector3(rc, 0, 0);
+//                if (rc < 0)
+//                    ShakeTr.localPosition += new Vector3(rc, 0, 0);
 
-                CameraLimit(true);
+//                CameraLimit(true);
 
-                if(ShakeInfo.UseCount) 
-                {
-                    if ((ShakeInfo.RemainCountDis -= dist) < 0)
-                    {
-                        ShakeInfo.RemainCountDis = float.MaxValue;
+//                if(ShakeInfo.UseCount) 
+//                {
+//                    if ((ShakeInfo.RemainCountDis -= dist) < 0)
+//                    {
+//                        ShakeInfo.RemainCountDis = float.MaxValue;
 
-                        if (--ShakeInfo.Count < 0)
-                            break;
-                    }
-                }
-            }
-            else
-            {
-                if (ShakeInfo.UseDamping)
-                {
-                    float distdamping = Mathf.Max(
-                        ShakeInfo.Damping * ShakeInfo.DampingTime,
-                        ShakeInfo.Damping * dt);
+//                        if (--ShakeInfo.Count < 0)
+//                            break;
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                if (ShakeInfo.UseDamping)
+//                {
+//                    float distdamping = Mathf.Max(
+//                        ShakeInfo.Damping * ShakeInfo.DampingTime,
+//                        ShakeInfo.Damping * dt);
 
-                    if (ShakeInfo.Shake.magnitude > distdamping)
-                        ShakeInfo.Shake -= ShakeInfo.Dir * distdamping;
-                    else
-                    {
-                        ShakeInfo.UseCount = true;
-                        ShakeInfo.Count = 1;
-                    }
-                }
+//                    if (ShakeInfo.Shake.magnitude > distdamping)
+//                        ShakeInfo.Shake -= ShakeInfo.Dir * distdamping;
+//                    else
+//                    {
+//                        ShakeInfo.UseCount = true;
+//                        ShakeInfo.Count = 1;
+//                    }
+//                }
 
-                ShakeTr.localPosition = ShakeInfo.Dest - ShakeInfo.Dir *
-                    (-ShakeInfo.RemainDist);
+//                ShakeTr.localPosition = ShakeInfo.Dest - ShakeInfo.Dir *
+//                    (-ShakeInfo.RemainDist);
 
-                float rc = transform.position.x - FovX - Left;
+//                float rc = transform.position.x - FovX - Left;
 
-                if (rc < 0)
-                    ShakeTr.localPosition += new Vector3(-rc, 0, 0);
+//                if (rc < 0)
+//                    ShakeTr.localPosition += new Vector3(-rc, 0, 0);
 
-                rc = Right - (transform.position.x + FovX);
+//                rc = Right - (transform.position.x + FovX);
 
-                if (rc < 0)
-                    ShakeTr.localPosition += new Vector3(rc, 0, 0);
+//                if (rc < 0)
+//                    ShakeTr.localPosition += new Vector3(rc, 0, 0);
 
-                CameraLimit(true);
+//                CameraLimit(true);
 
-                ShakeInfo.Shake = -ShakeInfo.Shake;
-                ShakeInfo.Dest = ShakeInfo.Shake;
-                ShakeInfo.Dir = -ShakeInfo.Dir;
+//                ShakeInfo.Shake = -ShakeInfo.Shake;
+//                ShakeInfo.Dest = ShakeInfo.Shake;
+//                ShakeInfo.Dir = -ShakeInfo.Dir;
 
-                float len = ShakeInfo.Shake.magnitude;
+//                float len = ShakeInfo.Shake.magnitude;
 
-                ShakeInfo.RemainCountDis = len + ShakeInfo.RemainDist;
-                ShakeInfo.RemainDist += len * 2f;
+//                ShakeInfo.RemainCountDis = len + ShakeInfo.RemainDist;
+//                ShakeInfo.RemainDist += len * 2f;
 
-                ShakeInfo.DampingTime = ShakeInfo.RemainDist / ShakeInfo.Veclocity;
+//                ShakeInfo.DampingTime = ShakeInfo.RemainDist / ShakeInfo.Veclocity;
 
-                if (ShakeInfo.RemainDist < dist)
-                    break;
-            }
+//                if (ShakeInfo.RemainDist < dist)
+//                    break;
+//            }
 
-            if (ShakeInfo.UseTotalTime && (ShakeInfo.TotalTime -= dt) < 0)
-                break;
+//            if (ShakeInfo.UseTotalTime && (ShakeInfo.TotalTime -= dt) < 0)
+//                break;
 
-            yield return new WaitForFixedUpdate();
-        }
+//            yield return new WaitForFixedUpdate();
+//        }
 
 
-        ResetShakeTr();
+//        ResetShakeTr();
 
-        yield break;
-    }
-}
+//        yield break;
+//    }
+//}

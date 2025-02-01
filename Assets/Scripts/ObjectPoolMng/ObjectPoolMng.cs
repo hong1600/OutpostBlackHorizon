@@ -9,9 +9,12 @@ public class ObjectPoolMng : MonoBehaviour
     [SerializeField] EnemyPool enemyPool;
     [SerializeField] EffectPool effectPool;
     [SerializeField] HpBarPool hpBarPool;
+    [SerializeField] BulletPool bulletPool;
     public IEnemyPool iEnemyPool;
     public IEffectPool iEffectPool;
     public IHpBarPool iHpBarPool;
+    public IBulletPool iBulletPool;
+
 
     [SerializeField] Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
     [SerializeField] Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
@@ -30,6 +33,7 @@ public class ObjectPoolMng : MonoBehaviour
         iEnemyPool = enemyPool;
         iEffectPool = effectPool;
         iHpBarPool = hpBarPool;
+        iBulletPool = bulletPool;
     }
 
     public void Init(string _type, GameObject _prefab, Transform _parent)
