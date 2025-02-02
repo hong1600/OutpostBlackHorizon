@@ -31,7 +31,7 @@ public class WaveBossSpawner : MonoBehaviour, IWaveBossSpawner
 
         int rand = Random.Range(0, Shared.gameMng.iFieldBuilder.GetEnemySpawnPointList().Count);
         GameObject obj = Instantiate(waveBoss, Shared.gameMng.iFieldBuilder.GetEnemySpawnPointList()[rand].position,
-        Quaternion.identity, Shared.enemyMng.iEnemyMng.GetEnemyParent().transform);
+        Quaternion.identity, Shared.enemyMng.iEnemyMng.GetEnemyParent()[4].transform);
 
         Enemy enemy = obj.GetComponent<Enemy>();
 

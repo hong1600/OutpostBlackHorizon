@@ -9,10 +9,10 @@ public class CameraMng : MonoBehaviour
     enum ECamMode { FPS, TOP}
     ECamMode curCamMode = ECamMode.TOP;
 
+    Player player;
     Camera mainCam;
-    NormalPlayer normalPlayer;
 
-    [SerializeField] GameObject player;
+    [SerializeField] GameObject playerObj;
     [SerializeField] GameObject rifle;
     [SerializeField] Transform topTrs;
     [SerializeField] GameObject customMouse;
@@ -30,14 +30,13 @@ public class CameraMng : MonoBehaviour
     private void Awake()
     {
         mainCam = Camera.main;
-        normalPlayer = player.GetComponent<NormalPlayer>();
-        normalPlayer.enabled = false;
+        player = playerObj.GetComponent<Player>();
+        player.enabled = false;
         Shared.cameraMng = this;
     }
 
     private void Start()
     {
-        playerEye = player.transform.position + new Vector3 (0.03f, 1.47f, 0.15f);
         isArrive = true;
         SetCameraMode(ECamMode.TOP);
         mainCam.transform.position = topTrs.position;
@@ -75,7 +74,7 @@ public class CameraMng : MonoBehaviour
 
     private void LookMouse()
     {
-        player.transform.Rotate(Vector3.up * mouseX);
+        playerObj.transform.Rotate(Vector3.up * mouseX);
 
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -60f, 60f);
@@ -90,21 +89,16 @@ public class CameraMng : MonoBehaviour
 
         if(curCamMode == ECamMode.FPS) 
         {
-            mainCam.transform.SetParent(player.transform);
+            playerEye = playerObj.transform.position + new Vector3(0.03f, 1.47f, 0.15f);
+            mainCam.transform.SetParent(playerObj.transform);
             customMouse.SetActive(false);
             aimMouse.SetActive(true);
             functionUI.SetActive(false);
-            normalPlayer.enabled = true;
+            player.enabled = true;
             MoveCamera();
         }
         else
         {
-            mainCam.transform.SetParent(null);
-            rifle.transform.SetParent(player.transform);
-            customMouse.SetActive(true);
-            aimMouse.SetActive(false);
-            functionUI.SetActive(true);
-            normalPlayer.enabled = false;
             MoveCamera();
         }
     }
@@ -114,7 +108,7 @@ public class CameraMng : MonoBehaviour
         isArrive = false;
 
         Vector3 targetTrs = (curCamMode == ECamMode.FPS) ? playerEye : topTrs.position;
-        Quaternion targetRot = (curCamMode == ECamMode.FPS) ? player.transform.rotation : topTrs.rotation;
+        Quaternion targetRot = (curCamMode == ECamMode.FPS) ? playerObj.transform.rotation : topTrs.rotation;
 
         StartCoroutine(StartMoveCamera(targetTrs, targetRot));
     }
@@ -133,6 +127,15 @@ public class CameraMng : MonoBehaviour
         if (curCamMode == ECamMode.FPS)
         {
             //rifle.transform.SetParent(mainCam.transform, true);
+        }
+        else if (curCamMode == ECamMode.TOP)
+        {
+            mainCam.transform.SetParent(null);
+            rifle.transform.SetParent(playerObj.transform);
+            customMouse.SetActive(true);
+            aimMouse.SetActive(false);
+            functionUI.SetActive(true);
+            player.enabled = false;
         }
     }
 

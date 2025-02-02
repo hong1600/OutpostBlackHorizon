@@ -11,8 +11,8 @@ public class UIEnemyCounter : MonoBehaviour
 
     private void Start()
     {
-        Shared.enemyMng.iEnemySpawner.UnEnemySpawn(EnemyCounterPanel);
-        Shared.enemyMng.iEnemySpawner.SubEnemySpawn(EnemyCounterPanel);
+        Shared.enemyMng.iEnemyMng.onEnemyCountEvent -= EnemyCounterPanel;
+        Shared.enemyMng.iEnemyMng.onEnemyCountEvent += EnemyCounterPanel;
 
         enemyCountText.text = $"{Shared.enemyMng.iEnemyMng.GetCurEnemy()}  /  {Shared.enemyMng.iEnemyMng.GetMaxEnemy()}";
         sliderValue.fillAmount = 0;
@@ -20,7 +20,6 @@ public class UIEnemyCounter : MonoBehaviour
 
     private void EnemyCounterPanel()
     {
-
         enemyCountText.text = $"{Shared.enemyMng.iEnemyMng.GetCurEnemy()}  /  {Shared.enemyMng.iEnemyMng.GetMaxEnemy()}";
         sliderValue.fillAmount = Shared.enemyMng.iEnemyMng.GetCurEnemy() / Shared.enemyMng.iEnemyMng.GetMaxEnemy();
     }

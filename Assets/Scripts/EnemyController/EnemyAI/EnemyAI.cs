@@ -26,6 +26,9 @@ public class EnemyAI
             case EEnemyAI.STAY:
                 Stay();
                 break;
+            case EEnemyAI.ATTACK:
+                Attack();
+                break;
             case EEnemyAI.DIE:
                 Die();
                 break;
@@ -43,6 +46,8 @@ public class EnemyAI
         {
             enemy.Move();
             enemy.Turn();
+            enemy.CheckTarget();
+            enemy.ReadyAttack();
         }
         else
         {
@@ -53,6 +58,11 @@ public class EnemyAI
         {
             aiState = EEnemyAI.STAY;
         }
+
+        if (enemy.attackReady == true)
+        {
+            aiState = EEnemyAI.ATTACK;
+        }
     }
 
     public virtual void Stay()
@@ -62,6 +72,27 @@ public class EnemyAI
             aiState = EEnemyAI.MOVE;
         }
         if (enemy.isStay == true && enemy.isDie == true)
+        {
+            aiState = EEnemyAI.DIE;
+        }
+    }
+
+    public virtual void Attack()
+    {
+        if (enemy.attackReady)
+        {
+            enemy.ReadyAttack();
+            enemy.Attack();
+        }
+        else if(enemy.attackReady == false && enemy.isDie == false) 
+        {
+            aiState = EEnemyAI.MOVE;
+        }
+        if (enemy.isStay == true)
+        {
+            aiState = EEnemyAI.STAY;
+        }
+        if (enemy.isDie == true)
         {
             aiState = EEnemyAI.DIE;
         }

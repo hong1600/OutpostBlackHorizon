@@ -12,7 +12,7 @@ public interface IEnemySpawner
     void SpawnEnemy();
     float GetEnemySpawnDelay();
     void SetEnemySpawnDelay(float _value);
-    Transform GetTargetPoint();
+    Transform[] GetTargetPoint();
 }
 
 public class EnemySpawner : MonoBehaviour, IEnemySpawner
@@ -22,7 +22,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     [SerializeField] List<GameObject> enemyList;
     [SerializeField] List<Transform> enemySpawnPointList;
     [SerializeField] Vector3[] enemySpawnPos = new Vector3[4];
-    [SerializeField] Transform targetPoint;
+    [SerializeField] Transform[] targetPoints;
     [SerializeField] float enemySpawnDelay;
 
     private void Start()
@@ -53,7 +53,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
             EEnemy eEnemy1 = (EEnemy)Random.Range(0, 4);
             EEnemy eEnemy2 = (EEnemy)Random.Range(0, 4);
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 1; i++)
             {
                 GameObject obj1 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy1);
                 GameObject obj2 = Shared.objectPoolMng.iEnemyPool.FindEnemy(eEnemy2);
@@ -74,5 +74,5 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     public void UnEnemySpawn(Action _listener) { onEnemySpawn -= _listener; }
     public float GetEnemySpawnDelay() { return enemySpawnDelay; }
     public void SetEnemySpawnDelay(float _value) { enemySpawnDelay = _value; }
-    public Transform GetTargetPoint() { return targetPoint; }
+    public Transform[] GetTargetPoint() { return targetPoints; }
 }

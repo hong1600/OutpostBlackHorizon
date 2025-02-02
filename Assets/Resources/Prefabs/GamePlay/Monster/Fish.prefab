@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 3309786654644649927}
   - component: {fileID: -266068991608519171}
   - component: {fileID: -7351209577579952846}
+  - component: {fileID: -6609011848903793733}
   m_Layer: 3
   m_Name: Fish
   m_TagString: Untagged
@@ -198,21 +199,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb1e9fcb7d2be54bbaa07fbc62c9d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHpBar: {fileID: 0}
-  box: {fileID: 0}
-  anim: {fileID: 0}
   enemyName: 
   enemyHp: 0
   curhp: 0
   enemySpeed: 0
-  wayPoints: []
-  wayPointDir: {x: 0, y: 0, z: 0}
-  wayPointIndex: 0
-  target: {fileID: 0}
   rotationSpeed: 0
+  targetPoints: []
+  myTaget: {fileID: 0}
   isDie: 0
-  isStay: 0
-  hpBar: {fileID: 0}
   enemyData: {fileID: 11400000, guid: 18d796079e837a7469e638e4f7639990, type: 2}
 --- !u!65 &-7351209577579952846
 BoxCollider:
@@ -234,6 +228,27 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!135 &-6609011848903793733
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2391359435489877134}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 10
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &2594355968516817363
 GameObject:
