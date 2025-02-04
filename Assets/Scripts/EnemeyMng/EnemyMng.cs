@@ -5,13 +5,16 @@ using UnityEngine;
 
 public interface IEnemyMng
 {
+    event Action onEnemyCountEvent;
     int GetMaxEnemy();
     int GetCurEnemy();
-    GameObject GetEnemyParent();
+    List<GameObject> GetEnemyParent();
 }
 
 public class EnemyMng : MonoBehaviour, IEnemyMng
 {
+    public event Action onEnemyCountEvent;
+
     [SerializeField] EnemySpawner enemySpawner;
     [SerializeField] BossSpawner bossSpawner;
     [SerializeField] WaveBossSpawner waveBossSpawner;
@@ -20,7 +23,7 @@ public class EnemyMng : MonoBehaviour, IEnemyMng
     public IBossSpawner iBossSpawner;
     public IWaveBossSpawner iWaveBossSpawner;
 
-    [SerializeField] GameObject enemyParent;
+    [SerializeField] List<GameObject> enemyParentList;
     [SerializeField] int maxEnemy;
     [SerializeField] int curEnemy;
     [SerializeField] List<GameObject> enemyCountList = new List<GameObject>();
@@ -45,24 +48,33 @@ public class EnemyMng : MonoBehaviour, IEnemyMng
         curEnemy = 0;
     }
 
-    private int EnemyCount()
+    private void Start()
     {
-        int curEnemy = 0;
+        iEnemySpawner.UnEnemySpawn(EnemyCount);
+        iEnemySpawner.SubEnemySpawn(EnemyCount);
+    }
 
-        for (int i = 0; i < enemyParent.transform.childCount; i++)
+    private void EnemyCount()
+    {
+        curEnemy = 0;
+
+        for (int i = 0; i < enemyParentList.Count; i++)
         {
-            Transform child = enemyParent.transform.GetChild(i);
-
-            if (child.gameObject.activeInHierarchy)
+            for (int j = 0; j < enemyParentList[i].transform.childCount; j++)
             {
-                curEnemy++;
+                Transform child = enemyParentList[i].transform.GetChild(j);
+
+                if (child.gameObject.activeInHierarchy)
+                {
+                    curEnemy++;
+                }
             }
         }
 
-        return curEnemy;
+        onEnemyCountEvent?.Invoke();
     }
 
     public int GetMaxEnemy() { return maxEnemy; }
     public int GetCurEnemy() { return curEnemy; }
-    public GameObject GetEnemyParent() { return enemyParent; }
+    public List<GameObject> GetEnemyParent() { return enemyParentList; }
 }

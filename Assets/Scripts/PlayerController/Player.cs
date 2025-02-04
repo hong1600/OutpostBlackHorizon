@@ -3,19 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Player : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    PlayerAI playerAI;
+    public PlayerAI playerAI { get; private set; }
 
     Camera mainCam;
     Rigidbody rigid;
     CapsuleCollider cap;
     Animator anim;
 
-    event Action onTakeDmg;
-
-    [SerializeField] float maxHp = 100;
-    [SerializeField] float curHp = 100;
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float runSpeed = 10f;
     [SerializeField] float jumpForce = 5f;
@@ -27,6 +23,12 @@ public abstract class Player : MonoBehaviour
     float moveX;
     float moveZ;
     [SerializeField] Transform fireTrs;
+    [SerializeField] GameObject muzzleFlash;
+
+    private void Awake()
+    {
+        InitPlayer();
+    }
 
     public void InitPlayer()
     {
@@ -108,34 +110,21 @@ public abstract class Player : MonoBehaviour
     IEnumerator StartAttack()
     {
         isAttack = true;
+        muzzleFlash.SetActive(true);
 
         GameObject obj = Shared.objectPoolMng.iBulletPool.FindBullet(EBullet.BULLET);
         obj.transform.position = fireTrs.transform.position;
         obj.transform.rotation = fireTrs.rotation * Quaternion.Euler(0, 180, 0);
         Bullet bullet = obj.GetComponent<Bullet>();
-        bullet.InitBullet(null, 10, 0.1f);
+        bullet.InitBullet(null, 30, 0.1f);
 
         yield return new WaitForSeconds(0.1f);
 
+        muzzleFlash.SetActive(false);
         isAttack = false;
     }
 
-    public void TakeDmg(float _dmg)
-    {
-        if (curHp > 0)
-        {
-            curHp -= _dmg;
-            curHp = Mathf.Clamp(curHp, 0, maxHp);
-            onTakeDmg?.Invoke();
-        }
-        if (curHp <= 0)
-        {
-            isDie = true;
-            StartCoroutine(StartDie());
-        }
-    }
-
-    IEnumerator StartDie()
+    internal IEnumerator StartDie()
     {
         yield return new WaitForSeconds(1);
 

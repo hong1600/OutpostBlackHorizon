@@ -1,28 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    protected EnemyAI enemyAI;
-    protected EnemyHpBar enemyHpBar;
+    EnemyAI enemyAI;
+    EnemyHpBar enemyHpBar;
 
-    protected BoxCollider box;
-    protected Animator anim;
+    SphereCollider sphere;
+    BoxCollider box;
+    Animator anim;
+
+    public EEnemyAI aiState;
 
     public string enemyName;
     public float enemyHp;
     public float curhp;
     public float enemySpeed;
     public float rotationSpeed;
+    public float attackRange;
+    public int attackDmg;
 
-    protected Transform targetPoint;
+    [SerializeField] protected Transform[] targetPoints;
+    [SerializeField] protected Transform myTarget;
     protected Vector3 targetPointDir;
-    [SerializeField] protected internal bool isDie;
-    protected internal bool isStay;
+    internal bool isDie { get; private set; }
+    internal bool isStay { get; private set; }
+    [SerializeField] internal bool attackReady { get; private set; }
+    [SerializeField] bool isAttack;
+
+    Coroutine attackCoroutine;
+
+    Vector3 tagetTrs;
 
     public void InitEnemyData(EnemyData _enemyData)
     {
+        sphere = GetComponent<SphereCollider>();
         box = this.GetComponent<BoxCollider>();
         anim = this.GetComponent<Animator>();
 
@@ -31,8 +45,12 @@ public abstract class Enemy : MonoBehaviour
         curhp = enemyHp;
         enemySpeed = _enemyData.enemySpeed;
         rotationSpeed = 5;
+        attackRange = 1;
+        attackDmg = 10;
 
-        targetPoint = Shared.enemyMng.iEnemySpawner.GetTargetPoint();
+        targetPoints = Shared.enemyMng.iEnemySpawner.GetTargetPoint();
+        int rand = Random.Range(0, targetPoints.Length);
+        myTarget = targetPoints[rand];
 
         enemyAI = new EnemyAI();
         enemyAI.Init(this);
@@ -46,12 +64,16 @@ public abstract class Enemy : MonoBehaviour
         enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
         enemyHpBar.Init(this);
 
+        attackReady = false;
+        isAttack = false;
         isDie = false;
         isStay = false;
     }
 
     private void Update()
     {
+        aiState = enemyAI.aiState;
+
         if (enemyAI != null)
         {
             enemyAI.State();
@@ -59,9 +81,57 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    protected internal virtual void CheckTarget()
+    {
+        Collider[] colls = Physics.OverlapSphere(transform.position,
+            sphere.radius, LayerMask.GetMask("Player", "UnitField"));
+
+        if(colls.Length > 0) 
+        {
+            myTarget = colls[0].transform;
+        }
+    }
+
+    protected internal void ReadyAttack()
+    {
+        if (Vector3.Distance(transform.position,
+            new Vector3(myTarget.position.x, myTarget.position.y, myTarget.position.z)) 
+            < attackRange)
+        {
+            attackReady = true;
+        }
+        else
+        {
+            attackReady = false;
+        }
+    }
+
+    protected internal virtual void Attack()
+    {
+        if (attackCoroutine == null && !isAttack)
+        {
+            attackCoroutine = StartCoroutine(StartAttack());
+        }
+    }
+
+    IEnumerator StartAttack()
+    {
+        isAttack = true;
+
+        if (myTarget.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            Shared.playerMng.TakeDmg(attackDmg);
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        isAttack = false;
+        attackCoroutine = null;
+    }
+
     protected internal void Move()
     {
-        targetPointDir = (targetPoint.transform.position - transform.position).normalized;
+        targetPointDir = (myTarget.transform.position - transform.position).normalized;
 
         transform.Translate(targetPointDir * enemySpeed * Time.deltaTime, Space.World);
     }

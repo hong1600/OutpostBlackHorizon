@@ -14,4 +14,5 @@ public class Shared : MonoBehaviour
     static public MainCamera mainCamera;
     static public ObjectPoolMng objectPoolMng;
     static public CameraMng cameraMng;
+    static public PlayerMng playerMng;
 }

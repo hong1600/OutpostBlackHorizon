@@ -10,9 +10,11 @@ public class Bullet : MonoBehaviour
     int damage;
     Transform target;
 
+    [SerializeField] GameObject explosion;
+
     private void Awake()
     {
-        sphere = GetComponent<SphereCollider>();
+        sphere = explosion.GetComponent<SphereCollider>();
     }
 
     public void InitBullet(Transform _target, int _damage, float _speed)
@@ -38,15 +40,29 @@ public class Bullet : MonoBehaviour
 
     IEnumerator StartNonTarget()
     {
-        float time = 3f;
+        float time = 0.75f;
 
-        while(time >= 0) 
+        while(time >= 0)
         {
             transform.Translate(Vector3.forward * speed);
             time -= Time.deltaTime;
             yield return null;
         }
 
+        explosion.SetActive(true);
+
+        Collider[] colls = Physics.OverlapSphere
+            (explosion.transform.position, sphere.radius, LayerMask.GetMask("Enemy"));
+
+        for(int i = 0; i < colls.Length; i++) 
+        {
+            Enemy enemy = colls[i].gameObject.GetComponent<Enemy>();
+            enemy.TakeDamage(damage);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        explosion.SetActive(false);
         Shared.objectPoolMng.ReturnObject(gameObject.name, gameObject);
     }
 
@@ -67,16 +83,5 @@ public class Bullet : MonoBehaviour
         }
 
         Shared.objectPoolMng.ReturnObject(gameObject.name, gameObject);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Enemy enemy = other.GetComponent<Enemy>();
-        if(enemy != null) 
-        {
-            enemy.TakeDamage(damage);
-
-            Shared.objectPoolMng.ReturnObject(gameObject.name, gameObject);
-        }
     }
 }

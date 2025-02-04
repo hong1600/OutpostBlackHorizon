@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 95457531584545886}
   - component: {fileID: 4299315612715804434}
   - component: {fileID: -7614708350607107861}
+  - component: {fileID: 6903294718863615035}
   m_Layer: 3
   m_Name: Slime
   m_TagString: Untagged
@@ -488,6 +489,9 @@ MonoBehaviour:
   curhp: 0
   enemySpeed: 0
   rotationSpeed: 0
+  targetPoints: []
+  myTaget: {fileID: 0}
+  isDie: 0
   enemyData: {fileID: 11400000, guid: 18d796079e837a7469e638e4f7639990, type: 2}
 --- !u!65 &-7614708350607107861
 BoxCollider:
@@ -509,4 +513,25 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!135 &6903294718863615035
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931298151966786}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 10
   m_Center: {x: 0, y: 0.5, z: 0}

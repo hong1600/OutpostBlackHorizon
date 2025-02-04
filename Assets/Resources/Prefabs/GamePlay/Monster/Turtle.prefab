@@ -517,6 +517,7 @@ GameObject:
   - component: {fileID: 95706204029656638}
   - component: {fileID: -548541730724051303}
   - component: {fileID: 5354824282935283250}
+  - component: {fileID: 6377369201814474123}
   m_Layer: 3
   m_Name: Turtle
   m_TagString: Untagged
@@ -574,19 +575,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb1e9fcb7d2be54bbaa07fbc62c9d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  box: {fileID: 0}
-  anim: {fileID: 0}
   enemyName: 
   enemyHp: 0
   curhp: 0
   enemySpeed: 0
-  wayPoint: []
-  wayPointDir: {x: 0, y: 0, z: 0}
-  wayPointIndex: 0
-  target: {fileID: 0}
   rotationSpeed: 0
+  targetPoints: []
+  myTaget: {fileID: 0}
   isDie: 0
-  isStay: 0
   enemyData: {fileID: 11400000, guid: 18d796079e837a7469e638e4f7639990, type: 2}
 --- !u!65 &5354824282935283250
 BoxCollider:
@@ -608,6 +604,27 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!135 &6377369201814474123
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524411113276028}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 10
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1532652994627396
 GameObject:
