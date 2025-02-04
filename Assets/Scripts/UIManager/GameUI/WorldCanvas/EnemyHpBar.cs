@@ -32,11 +32,5 @@ public class EnemyHpBar : MonoBehaviour
         this.gameObject.transform.position = enemy.transform.position + offset;
 
         this.gameObject.transform.LookAt(Camera.main.transform);
-<<<<<<< HEAD
-=======
-
-        //Quaternion rotation = Quaternion.Euler(60f, 0f, 0f);
-        //this.gameObject.transform.rotation = rotation;
->>>>>>> origin/main
     }
 }
