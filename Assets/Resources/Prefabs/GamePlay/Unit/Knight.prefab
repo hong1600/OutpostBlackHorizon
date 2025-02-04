@@ -1992,7 +1992,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65076258bfbe70a4da93442b74048372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitUpgrader: {fileID: 0}
   unitName: 
   unitIndex: 0
   attackDamage: 0
@@ -2001,10 +2000,12 @@ MonoBehaviour:
   eUnitGrade: 2
   UnitImg: {fileID: 21300000, guid: 81a6f0a067259984a9e19d8332b97d49, type: 3}
   lastUpgrade: 0
-  anim: {fileID: 0}
-  box: {fileID: 0}
+  skillDamage: 0
+  aiState: 0
+  skillBar: {fileID: 0}
   target: {fileID: 0}
-  rotationSpeed: 0
+  isAttack: 0
+  isSkill: 0
   unitData: {fileID: 11400000, guid: e85ff2dc3ba3679448f0a260b47d559f, type: 2}
 --- !u!65 &5291409770100758350
 BoxCollider:
@@ -2052,7 +2053,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 10
+  m_Constraints: 94
   m_CollisionDetection: 0
 --- !u!1 &6415875916798487454
 GameObject:
