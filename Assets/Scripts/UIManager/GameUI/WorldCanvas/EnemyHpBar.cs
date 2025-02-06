@@ -7,30 +7,59 @@ public class EnemyHpBar : MonoBehaviour
 {
     [SerializeField] Enemy enemy;
 
-    [SerializeField] GameObject hpBarBack;
-    [SerializeField] Image hpBarFill;
-    [SerializeField] Vector3 offset;
+    [SerializeField] GameObject hpBack;
+    [SerializeField] Image hpValue;
 
-    private void Update()
+    [SerializeField] Image smoothHpValue;
+    [SerializeField] float smoothSpeed = 0.5f;
+
+    [SerializeField] Vector3 offset = new Vector3(0f, 3f, 0f);
+
+    private void OnDisable()
     {
-        hpBar();
+        enemy.onTakeDamage -= UpdateHpBar;
     }
 
     public void Init(Enemy _enemy)
     {
         enemy = _enemy;
 
-        offset = new Vector3(0f, 3f, 0f);
-
-        hpBarFill.fillAmount = 1;
+        enemy.onTakeDamage += UpdateHpBar;
+        hpValue.fillAmount = 1;
+        smoothHpValue.fillAmount = 1;
     }
 
-    private void hpBar()
+    private void Update()
     {
-        hpBarFill.fillAmount = enemy.curhp / enemy.enemyHp;
-
         this.gameObject.transform.position = enemy.transform.position + offset;
 
         this.gameObject.transform.LookAt(Camera.main.transform);
+    }
+
+    private void UpdateHpBar()
+    {
+        StopAllCoroutines();
+        StartCoroutine(StartHpBar());
+    }
+
+    IEnumerator StartHpBar()
+    {
+        float curHp = enemy.curhp;
+        float maxHp = enemy.enemyHp;
+        hpValue.fillAmount = curHp / maxHp;
+
+        while (hpValue.fillAmount < smoothHpValue.fillAmount)
+        {
+            smoothHpValue.fillAmount = Mathf.Lerp
+                (smoothHpValue.fillAmount, hpValue.fillAmount, smoothSpeed * Time.deltaTime);
+
+            if (Mathf.Abs(smoothHpValue.fillAmount - hpValue.fillAmount) < 0.01f)
+            {
+                smoothHpValue.fillAmount = hpValue.fillAmount;
+                yield break;
+            }
+
+            yield return null;
+        }
     }
 }

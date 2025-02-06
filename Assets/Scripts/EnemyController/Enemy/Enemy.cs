@@ -1,10 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public event Action onTakeDamage;
+
     EnemyAI enemyAI;
     EnemyHpBar enemyHpBar;
 
@@ -146,6 +150,8 @@ public abstract class Enemy : MonoBehaviour
     public void TakeDamage(int _damage)
     {
         curhp -= _damage;
+
+        onTakeDamage?.Invoke();
 
         if (curhp <= 0)
         {

@@ -6,7 +6,7 @@ using UnityEngine;
 public interface IFieldBuilder
 {
     List<Transform> GetunitSpawnPointList();
-    List<Transform> GetEnemySpawnPointList();
+    //List<Transform> GetEnemySpawnPointList();
 }
 
 public class FieldBuilder : MonoBehaviour, IFieldBuilder
@@ -16,9 +16,9 @@ public class FieldBuilder : MonoBehaviour, IFieldBuilder
     GameObject unitFieldParent;
     List<GameObject> unitFieldList = new List<GameObject>();
     List<Transform> unitSpawnPointList = new List<Transform>();
-    List<Transform> enemySpawnPointList = new List<Transform>();
+    //List<Transform> enemySpawnPointList = new List<Transform>();
     public List<Transform> GetunitSpawnPointList() { return unitSpawnPointList; }
-    public List<Transform> GetEnemySpawnPointList() { return enemySpawnPointList; }
+    //public List<Transform> GetEnemySpawnPointList() { return enemySpawnPointList; }
 
     private void Start()
     {
@@ -28,7 +28,7 @@ public class FieldBuilder : MonoBehaviour, IFieldBuilder
 
         BuildeField();
         BuildSpawnPoint();
-        BuildEnemySpawnPoint();
+        //BuildEnemySpawnPoint();
     }
 
     private void BuildeField()
@@ -61,7 +61,7 @@ public class FieldBuilder : MonoBehaviour, IFieldBuilder
 
     private void BuildSpawnPoint()
     {
-        for(int i = 0; i < unitFieldList.Count; i++) 
+        for (int i = 0; i < unitFieldList.Count; i++)
         {
             GameObject unitSpawnPoint = new GameObject("unitSpawnPoint" + 1);
             unitSpawnPoint.transform.SetParent(unitFieldList[i].transform);
@@ -71,22 +71,22 @@ public class FieldBuilder : MonoBehaviour, IFieldBuilder
         }
     }
 
-    private void BuildEnemySpawnPoint()
-    {
-        GameObject enemySpawnPointParent = new GameObject("EnemySpawnPoint");
-        enemySpawnPointParent.transform.SetParent(parent);
+    //private void BuildEnemySpawnPoint()
+    //{
+    //    GameObject enemySpawnPointParent = new GameObject("EnemySpawnPoint");
+    //    enemySpawnPointParent.transform.SetParent(parent);
 
-        float x = 10f;
-        float z = 30f;
+    //    float x = 10f;
+    //    float z = 30f;
 
-        for (int i = 0; i < 4; i++)
-        {
-            GameObject enemySpawnPoint = new GameObject("EnemySpawnPoint"+i);
-            enemySpawnPoint.transform.SetParent(enemySpawnPointParent.transform);
-            enemySpawnPoint.transform.position = enemySpawnPointParent.transform.position + new Vector3(x, 0, z);
-            x += 6;
+    //    for (int i = 0; i < 4; i++)
+    //    {
+    //        GameObject enemySpawnPoint = new GameObject("EnemySpawnPoint"+i);
+    //        enemySpawnPoint.transform.SetParent(enemySpawnPointParent.transform);
+    //        enemySpawnPoint.transform.position = enemySpawnPointParent.transform.position + new Vector3(x, 0, z);
+    //        x += 6;
 
-            enemySpawnPointList.Add(enemySpawnPoint.transform);
-        }
-    }
+    //        enemySpawnPointList.Add(enemySpawnPoint.transform);
+    //    }
+    //}
 }

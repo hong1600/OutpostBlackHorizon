@@ -16,6 +16,12 @@ public enum EGameState
     PLAYING
 }
 
+public enum EViewState
+{
+    FPS,
+    TOP,
+}
+
 public enum EUnitUpgrade
 {
     CB,

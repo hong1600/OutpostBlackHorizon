@@ -13,6 +13,7 @@ public interface IEnemySpawner
     float GetEnemySpawnDelay();
     void SetEnemySpawnDelay(float _value);
     Transform[] GetTargetPoint();
+    List<Transform> GetEnemySpawnPointList();
 }
 
 public class EnemySpawner : MonoBehaviour, IEnemySpawner
@@ -28,8 +29,6 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     private void Start()
     {
         enemySpawnDelay = 0;
-
-        enemySpawnPointList = Shared.gameMng.iFieldBuilder.GetEnemySpawnPointList();
 
         enemySpawnPos[0] = new Vector3(-3f, 0, 0);
         enemySpawnPos[1] = new Vector3(-1f, 0, 0);
@@ -75,4 +74,5 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     public float GetEnemySpawnDelay() { return enemySpawnDelay; }
     public void SetEnemySpawnDelay(float _value) { enemySpawnDelay = _value; }
     public Transform[] GetTargetPoint() { return targetPoints; }
+    public List<Transform> GetEnemySpawnPointList() { return enemySpawnPointList; }
 }

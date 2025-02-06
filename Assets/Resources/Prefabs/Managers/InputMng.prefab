@@ -32,7 +32,7 @@ Transform:
   - {fileID: 2459531128974112448}
   - {fileID: 2941774891544074043}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5573840136550993378
 MonoBehaviour:
@@ -143,5 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6c7112456ada14fbc747590af78306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customCursor: {fileID: 5767161889450839477, guid: a58c5dfeeab760e4c8a043ddf91bd0a5, type: 3}
+  customCursor: {fileID: 0}
   mouseSpeed: 25

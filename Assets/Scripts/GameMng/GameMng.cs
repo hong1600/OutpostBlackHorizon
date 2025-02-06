@@ -13,6 +13,7 @@ public class GameMng : MonoBehaviour
     [SerializeField] Rewarder rewarder;
     [SerializeField] SpeedUp speedUp;
     [SerializeField] FieldBuilder fieldBuilder;
+    [SerializeField] ViewState viewState;
     public ISpawnTimer iSpawnTimer;
     public IRound iRound;
     public IGameState iGameState;
@@ -20,6 +21,7 @@ public class GameMng : MonoBehaviour
     public IRewarder iRewarder;
     public ISpeedUp iSpeedUp;
     public IFieldBuilder iFieldBuilder;
+    public IViewState iViewState;
 
     private void Awake()
     {
@@ -39,6 +41,7 @@ public class GameMng : MonoBehaviour
         iRewarder = rewarder;
         iSpeedUp = speedUp;
         iFieldBuilder = fieldBuilder;
+        iViewState = viewState;
     }
 
     private void Update()

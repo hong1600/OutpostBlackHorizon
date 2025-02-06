@@ -415,7 +415,7 @@ MonoBehaviour:
   - {fileID: 3874635022589376825, guid: ffdfb7851a968494f8fe76ee88f3791a, type: 3}
   - {fileID: 5659291355382750488, guid: b3db7d4d711f94d4796743baa5ba7a38, type: 3}
   - {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
-  - {fileID: 2223490147625834312, guid: 28fce063fc4d19d42813b3add50f86aa, type: 3}
+  - {fileID: 1385696513647758080, guid: 00ade3be74e8cb24f89712e12a213963, type: 3}
   - {fileID: 6108195706035121270, guid: 6f692cd2d2d5eb84ab790976eccc0bae, type: 3}
   parentList:
   - {fileID: 1323026624750079068}
@@ -454,6 +454,56 @@ Transform:
   m_Father: {fileID: 7672675419605550537}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6596783389566914099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6958266394992732561}
+  - component: {fileID: 5655427058974713816}
+  m_Layer: 0
+  m_Name: BulletPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6958266394992732561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6596783389566914099}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2548385118938775885}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5655427058974713816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6596783389566914099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b898819695012f544a30a3b4c8046d38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectList: []
+  objectParentList: []
+  bulletList:
+  - {fileID: 8489818951931819000, guid: 76d6965a82c700547ac9c860a6e92ca9, type: 3}
+  parentList:
+  - {fileID: 6958266394992732561}
 --- !u!1 &6631735940845887837
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,8 +597,6 @@ MonoBehaviour:
   - {fileID: 4128568093438423734}
   - {fileID: 8282513189084651297}
   - {fileID: 5730597592495876043}
-  - {fileID: 2719156388281065896}
-  - {fileID: 5317801192821030898}
 --- !u!1 &8413069980573577154
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,8 +630,9 @@ Transform:
   - {fileID: 7672675419605550537}
   - {fileID: 1481273143235815176}
   - {fileID: 8620563964629511826}
+  - {fileID: 6958266394992732561}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6578691636034576417
 MonoBehaviour:
@@ -600,3 +649,4 @@ MonoBehaviour:
   enemyPool: {fileID: 6225670581418873532}
   effectPool: {fileID: 8439943599272780702}
   hpBarPool: {fileID: 757488158263460049}
+  bulletPool: {fileID: 5655427058974713816}

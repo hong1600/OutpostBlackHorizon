@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Threading;
+using Unity.VisualScripting;
 
 public class CameraMng : MonoBehaviour
 {
-    enum ECamMode { FPS, TOP}
-    ECamMode curCamMode = ECamMode.TOP;
+    EViewState curViewState;
 
-    Player player;
     Camera mainCam;
 
     [SerializeField] GameObject playerObj;
@@ -18,87 +17,89 @@ public class CameraMng : MonoBehaviour
     [SerializeField] GameObject customMouse;
     [SerializeField] GameObject aimMouse;
     [SerializeField] GameObject functionUI;
-    [SerializeField] bool isArrive;
+    public bool isArrive { get; private set; }
 
     Vector3 playerEye;
 
-    float mouseX;
-    float mouseY;
-    [SerializeField] float mouseSpeed = 3f;
+    [SerializeField] float mouseSpeed = 2f;
     float verticalRotation = 0f;
 
     private void Awake()
     {
         mainCam = Camera.main;
-        player = playerObj.GetComponent<Player>();
-        player.enabled = false;
         Shared.cameraMng = this;
     }
 
     private void Start()
     {
+        curViewState = Shared.gameMng.iViewState.GetViewState();
+        SetCameraMode(curViewState);
         isArrive = true;
-        SetCameraMode(ECamMode.TOP);
         mainCam.transform.position = topTrs.position;
         mainCam.transform.rotation = topTrs.rotation;
+    }
+
+    private void OnEnable()
+    {
+        InputMng.onInputMouse += LookMouse;
+    }
+
+    private void OnDisable()
+    {
+        InputMng.onInputMouse -= LookMouse;
     }
 
     private void Update()
     {
         CursorLock();
 
-        if(curCamMode == ECamMode.FPS) 
-        {
-            CheckInput();
-            LookMouse();
-        }
-
         if (Input.GetKeyDown(KeyCode.F) && isArrive)
         {
-            if(curCamMode == ECamMode.FPS) 
+            if (curViewState == EViewState.FPS)
             {
-                SetCameraMode(ECamMode.TOP);
+                Shared.gameMng.iViewState.SetViewState(EViewState.TOP);
             }
             else
             {
-                SetCameraMode(ECamMode.FPS);
+                Shared.gameMng.iViewState.SetViewState(EViewState.FPS);
             }
+
+            curViewState = Shared.gameMng.iViewState.GetViewState();
+
+            SetCameraMode(curViewState);
         }
     }
 
-    private void CheckInput()
+    private void LookMouse(Vector2 _mouseDelta)
     {
-        mouseX = Input.GetAxisRaw("Mouse X") * mouseSpeed;
-        mouseY = Input.GetAxisRaw("Mouse Y") * mouseSpeed;
+        if (curViewState == EViewState.FPS && isArrive)
+        {
+            playerObj.transform.Rotate(Vector3.up * _mouseDelta.x * mouseSpeed);
+
+            verticalRotation -= _mouseDelta.y * mouseSpeed;
+            verticalRotation = Mathf.Clamp(verticalRotation, -60f, 60f);
+            transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+        }
     }
 
-    private void LookMouse()
+    private void SetCameraMode(EViewState _eGameState)
     {
-        playerObj.transform.Rotate(Vector3.up * mouseX);
-
-        verticalRotation -= mouseY;
-        verticalRotation = Mathf.Clamp(verticalRotation, -60f, 60f);
-        transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
-    }
-
-    private void SetCameraMode(ECamMode _eCamMode)
-    {
-        curCamMode = _eCamMode;
-
         isArrive = false;
 
-        if(curCamMode == ECamMode.FPS) 
+        if(_eGameState == EViewState.FPS)
         {
-            playerEye = playerObj.transform.position + new Vector3(0.03f, 1.47f, 0.15f);
+            playerEye = playerObj.transform.position + new Vector3(0f, 1.56f, 0.24f);
             mainCam.transform.SetParent(playerObj.transform);
             customMouse.SetActive(false);
             aimMouse.SetActive(true);
             functionUI.SetActive(false);
-            player.enabled = true;
             MoveCamera();
         }
         else
         {
+            Player player = playerObj.GetComponent<Player>();
+            player.enabled = false;
+            rifle.transform.SetParent(player.transform);
             MoveCamera();
         }
     }
@@ -107,8 +108,8 @@ public class CameraMng : MonoBehaviour
     {
         isArrive = false;
 
-        Vector3 targetTrs = (curCamMode == ECamMode.FPS) ? playerEye : topTrs.position;
-        Quaternion targetRot = (curCamMode == ECamMode.FPS) ? playerObj.transform.rotation : topTrs.rotation;
+        Vector3 targetTrs = (curViewState == EViewState.FPS) ? playerEye : topTrs.position;
+        Quaternion targetRot = (curViewState == EViewState.FPS) ? playerObj.transform.rotation : topTrs.rotation;
 
         StartCoroutine(StartMoveCamera(targetTrs, targetRot));
     }
@@ -119,28 +120,25 @@ public class CameraMng : MonoBehaviour
         .SetEase(Ease.InOutSine);
 
         mainCam.transform.DORotateQuaternion(_targetRot, 1.25f)
-            .SetEase(Ease.InOutSine)
-            .OnComplete(OnIsArrive);
+            .SetEase(Ease.InOutSine);
 
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(1.26f);
 
-        if (curCamMode == ECamMode.FPS)
+        if (curViewState == EViewState.FPS)
         {
-            //rifle.transform.SetParent(mainCam.transform, true);
+            rifle.transform.SetParent(mainCam.transform, true);
+            rifle.GetComponent<GunMovement>().InitPos();
+            Player player = playerObj.GetComponent<Player>();
+            player.enabled = true;
         }
-        else if (curCamMode == ECamMode.TOP)
+        else if (curViewState == EViewState.TOP)
         {
             mainCam.transform.SetParent(null);
             rifle.transform.SetParent(playerObj.transform);
             customMouse.SetActive(true);
             aimMouse.SetActive(false);
             functionUI.SetActive(true);
-            player.enabled = false;
         }
-    }
-
-    private void OnIsArrive()
-    {
         isArrive = true;
     }
 

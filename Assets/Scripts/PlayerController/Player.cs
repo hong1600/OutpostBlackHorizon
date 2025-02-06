@@ -20,8 +20,6 @@ public class Player : MonoBehaviour
     [SerializeField] internal bool isRun = false;
     [SerializeField] internal bool isDie = false;
 
-    float moveX;
-    float moveZ;
     [SerializeField] Transform fireTrs;
     [SerializeField] GameObject muzzleFlash;
 
@@ -41,26 +39,24 @@ public class Player : MonoBehaviour
         playerAI.Init(this);
     }
 
+    private void OnEnable()
+    {
+        InputMng.onInputKey += Move;
+    }
+
+    private void OnDisable()
+    {
+        InputMng.onInputKey -= Move;
+    }
+
     private void Update()
     {
         CheckInput();
         CheckGround();
     }
 
-    private void FixedUpdate()
-    {
-        if (isDie) return;
-        Move();
-    }
-
     private void CheckInput()
     {
-        moveX = Input.GetAxis("Horizontal");
-        moveZ = Input.GetAxis("Vertical");
-
-        anim.SetFloat("Horizontal", moveX);
-        anim.SetFloat("Vertical", moveZ);
-
         if (Input.GetKeyDown(KeyCode.LeftShift)) isRun = true;
         if (Input.GetKeyUp(KeyCode.LeftShift)) isRun = false;
 
@@ -75,9 +71,11 @@ public class Player : MonoBehaviour
             cap.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground"));
     }
 
-    private void Move()
+    private void Move(Vector3 _inputKey)
     {
-        Vector3 inputDir = new Vector3(moveX, 0, moveZ).normalized;
+        if (isDie) return;
+
+        Vector3 inputDir = new Vector3(_inputKey.x, 0, _inputKey.z).normalized;
 
         if (inputDir.magnitude > 0)
         {
@@ -95,6 +93,9 @@ public class Player : MonoBehaviour
 
             transform.Translate(moveDir * speed * Time.deltaTime, Space.World);
         }
+
+        anim.SetFloat("Horizontal", _inputKey.x);
+        anim.SetFloat("Vertical", _inputKey.z);
     }
 
     private void Jump()
