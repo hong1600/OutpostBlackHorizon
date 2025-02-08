@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     CapsuleCollider cap;
     Animator anim;
 
+    [SerializeField] GunMovement gunMovement;
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float runSpeed = 10f;
     [SerializeField] float jumpForce = 5f;
@@ -91,7 +92,7 @@ public class Player : MonoBehaviour
 
             float speed = isRun ? runSpeed : walkSpeed;
 
-            transform.Translate(moveDir * speed * Time.deltaTime, Space.World);
+            rigid.MovePosition(transform.position + moveDir * speed * Time.fixedDeltaTime);
         }
 
         anim.SetFloat("Horizontal", _inputKey.x);
@@ -112,6 +113,7 @@ public class Player : MonoBehaviour
     {
         isAttack = true;
         muzzleFlash.SetActive(true);
+        gunMovement.RecoilGun(); 
 
         GameObject obj = Shared.objectPoolMng.iBulletPool.FindBullet(EBullet.BULLET);
         obj.transform.position = fireTrs.transform.position;

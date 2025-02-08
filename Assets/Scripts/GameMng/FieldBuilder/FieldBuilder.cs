@@ -6,19 +6,18 @@ using UnityEngine;
 public interface IFieldBuilder
 {
     List<Transform> GetunitSpawnPointList();
-    //List<Transform> GetEnemySpawnPointList();
 }
 
 public class FieldBuilder : MonoBehaviour, IFieldBuilder
 {
+    Rigidbody rigid;
+
     [SerializeField] Transform parent;
     [SerializeField] GameObject fieldObj;
     GameObject unitFieldParent;
     List<GameObject> unitFieldList = new List<GameObject>();
     List<Transform> unitSpawnPointList = new List<Transform>();
-    //List<Transform> enemySpawnPointList = new List<Transform>();
     public List<Transform> GetunitSpawnPointList() { return unitSpawnPointList; }
-    //public List<Transform> GetEnemySpawnPointList() { return enemySpawnPointList; }
 
     private void Start()
     {
@@ -28,7 +27,6 @@ public class FieldBuilder : MonoBehaviour, IFieldBuilder
 
         BuildeField();
         BuildSpawnPoint();
-        //BuildEnemySpawnPoint();
     }
 
     private void BuildeField()
@@ -49,6 +47,8 @@ public class FieldBuilder : MonoBehaviour, IFieldBuilder
                 Ground ground = unitField.AddComponent<Ground>();
                 ground.eGround = groundType[groundIndex];
                 unitFieldList.Add(unitField);
+                rigid = unitField.GetComponent<Rigidbody>();
+                rigid.isKinematic = true;
 
                 groundIndex++;
                 z -= 3;
@@ -70,23 +70,4 @@ public class FieldBuilder : MonoBehaviour, IFieldBuilder
             unitSpawnPointList.Add(unitSpawnPoint.transform);
         }
     }
-
-    //private void BuildEnemySpawnPoint()
-    //{
-    //    GameObject enemySpawnPointParent = new GameObject("EnemySpawnPoint");
-    //    enemySpawnPointParent.transform.SetParent(parent);
-
-    //    float x = 10f;
-    //    float z = 30f;
-
-    //    for (int i = 0; i < 4; i++)
-    //    {
-    //        GameObject enemySpawnPoint = new GameObject("EnemySpawnPoint"+i);
-    //        enemySpawnPoint.transform.SetParent(enemySpawnPointParent.transform);
-    //        enemySpawnPoint.transform.position = enemySpawnPointParent.transform.position + new Vector3(x, 0, z);
-    //        x += 6;
-
-    //        enemySpawnPointList.Add(enemySpawnPoint.transform);
-    //    }
-    //}
 }

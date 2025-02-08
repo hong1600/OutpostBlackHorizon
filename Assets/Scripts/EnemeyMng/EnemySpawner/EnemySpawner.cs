@@ -49,8 +49,8 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
                 secondSpawnPoint = Random.Range(0, enemySpawnPointList.Count);
             } while (firstSpawnPoint == secondSpawnPoint);
 
-            EEnemy eEnemy1 = (EEnemy)Random.Range(0, 4);
-            EEnemy eEnemy2 = (EEnemy)Random.Range(0, 4);
+            EEnemy eEnemy1 = (EEnemy)Random.Range(0, 2);
+            EEnemy eEnemy2 = (EEnemy)Random.Range(0, 2);
 
             for (int i = 0; i < 1; i++)
             {

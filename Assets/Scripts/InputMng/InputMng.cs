@@ -9,6 +9,7 @@ public class InputMng : MonoBehaviour
     public static event Action<Vector2> onLeftClickDown;
     public static event Action<Vector2> onLeftClickDrag;
     public static event Action<Vector2> onLeftClickUp;
+    public static event Action onRightClickDown;
     public static event Action<Vector2> onInputMouse;
     public static event Action<Vector3> onInputKey;
 
@@ -42,14 +43,19 @@ public class InputMng : MonoBehaviour
 
     private void Update()
     {
-        DownMouse();
-        DragMouse();
-        UpMouse();
+        DownMouseLeft();
+        DragMouseLeft();
+        UpMouseLeft();
+        DownMouseRight();
         InputMouse();
+    }
+
+    private void FixedUpdate()
+    {
         InputKey();
     }
 
-    private void DownMouse()
+    private void DownMouseLeft()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -58,7 +64,7 @@ public class InputMng : MonoBehaviour
         }
     }
 
-    private void DragMouse()
+    private void DragMouseLeft()
     {
         if (Input.GetMouseButton(0))
         {
@@ -67,12 +73,20 @@ public class InputMng : MonoBehaviour
         }
     }
 
-    private void UpMouse()
+    private void UpMouseLeft()
     {
         if (Input.GetMouseButtonUp(0))
         {
             endMousePos = iCustomMouse.GetMousePos();
             onLeftClickUp?.Invoke(iCustomMouse.GetMousePos());
+        }
+    }
+
+    private void DownMouseRight()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            onRightClickDown?.Invoke();
         }
     }
 

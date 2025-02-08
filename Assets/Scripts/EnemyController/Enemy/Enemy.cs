@@ -12,6 +12,7 @@ public abstract class Enemy : MonoBehaviour
     EnemyAI enemyAI;
     EnemyHpBar enemyHpBar;
 
+    Rigidbody rigid;
     SphereCollider sphere;
     BoxCollider box;
     Animator anim;
@@ -40,6 +41,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void InitEnemyData(EnemyData _enemyData)
     {
+        rigid = GetComponent<Rigidbody>();
         sphere = GetComponent<SphereCollider>();
         box = this.GetComponent<BoxCollider>();
         anim = this.GetComponent<Animator>();
@@ -83,6 +85,19 @@ public abstract class Enemy : MonoBehaviour
             enemyAI.State();
             ChangeAnim(enemyAI.aiState);
         }
+    }
+    protected internal void Move()
+    {
+        targetPointDir = (myTarget.transform.position - transform.position).normalized;
+
+        rigid.MovePosition(transform.position + targetPointDir * enemySpeed * Time.fixedDeltaTime);
+    }
+
+    protected internal void Turn()
+    {
+        Quaternion rotation = Quaternion.LookRotation(new Vector3(targetPointDir.x, 0, targetPointDir.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
+            rotationSpeed * Time.deltaTime);
     }
 
     protected internal virtual void CheckTarget()
@@ -133,19 +148,6 @@ public abstract class Enemy : MonoBehaviour
         attackCoroutine = null;
     }
 
-    protected internal void Move()
-    {
-        targetPointDir = (myTarget.transform.position - transform.position).normalized;
-
-        transform.Translate(targetPointDir * enemySpeed * Time.deltaTime, Space.World);
-    }
-
-    protected internal void Turn()
-    {
-        Quaternion rotation = Quaternion.LookRotation(new Vector3(targetPointDir.x, 0, targetPointDir.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
-            rotationSpeed * Time.deltaTime);
-    }
 
     public void TakeDamage(int _damage)
     {
@@ -186,7 +188,7 @@ public abstract class Enemy : MonoBehaviour
         Shared.gameMng.iRewarder.SetReward(EReward.PAPER, 20);
         Shared.gameMng.iRewarder.SetReward(EReward.EXP, 1);
 
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(1f);
 
         Shared.objectPoolMng.ReturnObject(enemyHpBar.gameObject.name, enemyHpBar.gameObject);
         Shared.objectPoolMng.ReturnObject(this.gameObject.name, this.gameObject);
@@ -194,22 +196,24 @@ public abstract class Enemy : MonoBehaviour
 
     protected void ChangeAnim(EEnemyAI _curState)
     {
+        _curState = aiState;
+
         switch (_curState)
         {
             case EEnemyAI.CREATE:
-                anim.SetInteger("enemyAnim", (int)EEnemyAnim.IDLE);
+                anim.SetInteger("EnemyAnim", (int)EEnemyAnim.IDLE);
                 break;
             case EEnemyAI.MOVE:
-                anim.SetInteger("enemyAnim", (int)EEnemyAnim.WALK);
+                anim.SetInteger("EnemyAnim", (int)EEnemyAnim.WALK);
                 break;
             case EEnemyAI.ATTACK:
-                anim.SetInteger("enemyAnim", (int)EEnemyAnim.ATTACK);
+                anim.SetInteger("EnemyAnim", (int)EEnemyAnim.ATTACK);
                 break;
             case EEnemyAI.STAY:
-                anim.SetInteger("enemyAnim", (int)EEnemyAnim.IDLE);
+                anim.SetInteger("EnemyAnim", (int)EEnemyAnim.IDLE);
                 break;
             case EEnemyAI.DIE:
-                anim.SetInteger("enemyAnim", (int)EEnemyAnim.DIE);
+                anim.SetInteger("EnemyAnim", (int)EEnemyAnim.DIE);
                 break;
 
         }

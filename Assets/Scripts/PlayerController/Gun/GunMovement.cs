@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class GunMovement : MonoBehaviour
 {
+    Vector3 originPos;
+    Quaternion originRot;
+
     [SerializeField] float swayAmount = 0.02f;
     [SerializeField] float smoothFactor = 2f;
 
     [SerializeField] float walkSwaySpeed = 10f;
     [SerializeField] float walkSwayAmount = 0.01f;
-    float timer = 0;
+    float timer = 0f;
 
-    Vector3 initPos;
+    [SerializeField] float recoilAmount = 2f;
+    [SerializeField] float recoilDuration = 0.1f;
+    [SerializeField] float recoilRecovery = 5f;
+    bool isRecoil;
 
     private void OnEnable()
     {
@@ -28,7 +33,8 @@ public class GunMovement : MonoBehaviour
 
     public void InitPos()
     {
-        initPos = transform.localPosition;
+        originPos = transform.localPosition;
+        originRot = transform.localRotation;
     }
 
     private void SwayGun(Vector2 _inputMouse)
@@ -40,7 +46,7 @@ public class GunMovement : MonoBehaviour
 
         Vector3 swayPos = new Vector3(-moveX, -moveY, 0);
         transform.localPosition = Vector3.Lerp(transform.localPosition,
-            initPos + swayPos, Time.deltaTime * smoothFactor);
+            originPos + swayPos, Time.deltaTime * smoothFactor);
     }
 
     private void WalkSwayGun(Vector3 _inputKey)
@@ -51,12 +57,50 @@ public class GunMovement : MonoBehaviour
         {
             timer += Time.deltaTime * walkSwaySpeed;
             float walkSwayOffset = Mathf.Sin(timer) * walkSwayAmount;
-            transform.localPosition = initPos + new Vector3(0, walkSwayOffset, 0);
+            transform.localPosition = originPos + new Vector3(0, walkSwayOffset, 0);
         }
         else
         {
             timer = 0;
-            transform.localPosition = Vector3.Lerp(transform.localPosition, initPos, Time.deltaTime * walkSwaySpeed);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, originPos, Time.deltaTime * walkSwaySpeed);
         }
+    }
+
+    public void RecoilGun()
+    {
+        if (!isRecoil)
+        {
+            StartCoroutine(StartRecoil());
+        }
+    }
+
+    IEnumerator StartRecoil()
+    {
+        isRecoil = true;
+
+        Vector3 recoilOffset = Vector3.back * recoilAmount;
+        Quaternion recoilRot = Quaternion.Euler(-recoilAmount, Random.Range(-recoilAmount, recoilAmount), 0);
+
+        transform.localPosition += recoilOffset;
+        transform.localRotation *= recoilRot;
+
+        yield return new WaitForSeconds(recoilDuration);
+
+        while (Vector3.Distance(transform.localPosition, originPos) > 0.01f ||
+            Quaternion.Angle(transform.localRotation, originRot) > 0.1f)
+        {
+            transform.localPosition = Vector3.Lerp
+                (transform.localPosition, originPos, Time.deltaTime * recoilRecovery);
+
+            transform.localRotation = Quaternion.Lerp
+                (transform.localRotation, originRot, Time.deltaTime * recoilRecovery);
+
+            yield return null;
+        }
+
+        transform.localPosition = originPos;
+        transform.localRotation = originRot;
+
+        isRecoil = false;
     }
 }

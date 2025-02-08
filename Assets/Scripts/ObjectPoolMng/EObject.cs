@@ -20,10 +20,8 @@ public enum EHpBar
 
 public enum EEnemy
 {
-    SLIME,
-    FISH,
-    BIRD,
-    TURTLE
+    ROBOT1,
+    ROBOT2
 }
 public enum EBullet
 {
