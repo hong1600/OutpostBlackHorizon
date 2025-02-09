@@ -20,7 +20,10 @@ public class UIEnemyCounter : MonoBehaviour
 
     private void EnemyCounterPanel()
     {
-        enemyCountText.text = $"{Shared.enemyMng.iEnemyMng.GetCurEnemy()}  /  {Shared.enemyMng.iEnemyMng.GetMaxEnemy()}";
-        sliderValue.fillAmount = Shared.enemyMng.iEnemyMng.GetCurEnemy() / Shared.enemyMng.iEnemyMng.GetMaxEnemy();
+        float curEnemy = Shared.enemyMng.iEnemyMng.GetCurEnemy();
+        float maxEnemy = Shared.enemyMng.iEnemyMng.GetMaxEnemy();
+
+        enemyCountText.text = $"{curEnemy}  /  {maxEnemy}";
+        sliderValue.fillAmount = curEnemy / maxEnemy;
     }
 }

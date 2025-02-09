@@ -67,11 +67,10 @@ public class EnemyMng : MonoBehaviour, IEnemyMng
                 if (child.gameObject.activeInHierarchy)
                 {
                     curEnemy++;
+                    onEnemyCountEvent?.Invoke();
                 }
             }
         }
-
-        onEnemyCountEvent?.Invoke();
     }
 
     public int GetMaxEnemy() { return maxEnemy; }

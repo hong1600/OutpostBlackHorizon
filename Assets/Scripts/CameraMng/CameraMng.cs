@@ -19,7 +19,9 @@ public class CameraMng : MonoBehaviour
     [SerializeField] GameObject functionUI;
     public bool isArrive { get; private set; }
 
-    Vector3 playerEye;
+    Vector3 playerTrs;
+    Quaternion playerRot;
+    [SerializeField] float lerpSpeed;
 
     [SerializeField] float mouseSpeed = 2f;
     float verticalRotation = 0f;
@@ -33,10 +35,18 @@ public class CameraMng : MonoBehaviour
     private void Start()
     {
         curViewState = Shared.gameMng.iViewState.GetViewState();
-        SetCameraMode(curViewState);
+
         isArrive = true;
+
         mainCam.transform.position = topTrs.position;
         mainCam.transform.rotation = topTrs.rotation;
+
+        Player player = playerObj.GetComponent<Player>();
+        player.enabled = false;
+        mainCam.transform.SetParent(null);
+        customMouse.SetActive(true);
+        aimMouse.SetActive(false);
+        functionUI.SetActive(true);
     }
 
     private void OnEnable()
@@ -88,7 +98,7 @@ public class CameraMng : MonoBehaviour
 
         if(_eGameState == EViewState.FPS)
         {
-            playerEye = playerObj.transform.position + new Vector3(0f, 1.56f, 0.24f);
+            playerTrs = playerObj.transform.position + new Vector3(0f, 1.56f, 0.24f);
             mainCam.transform.SetParent(playerObj.transform);
             customMouse.SetActive(false);
             aimMouse.SetActive(true);
@@ -99,7 +109,7 @@ public class CameraMng : MonoBehaviour
         {
             Player player = playerObj.GetComponent<Player>();
             player.enabled = false;
-            rifle.transform.SetParent(player.transform);
+            rifle.transform.SetParent(playerObj.transform);
             MoveCamera();
         }
     }
@@ -108,7 +118,7 @@ public class CameraMng : MonoBehaviour
     {
         isArrive = false;
 
-        Vector3 targetTrs = (curViewState == EViewState.FPS) ? playerEye : topTrs.position;
+        Vector3 targetTrs = (curViewState == EViewState.FPS) ? playerTrs : topTrs.position;
         Quaternion targetRot = (curViewState == EViewState.FPS) ? playerObj.transform.rotation : topTrs.rotation;
 
         StartCoroutine(StartMoveCamera(targetTrs, targetRot));
@@ -116,6 +126,17 @@ public class CameraMng : MonoBehaviour
 
     private IEnumerator StartMoveCamera(Vector3 _targetTrs, Quaternion _targetRot)
     {
+        //while (Vector3.Distance(mainCam.transform.position, _targetTrs) > 0.01f ||
+        //    Quaternion.Angle(mainCam.transform.rotation, _targetRot) > 0.1f)
+        //{
+        //    mainCam.transform.position = Vector3.Lerp(transform.position, _targetTrs, lerpSpeed * Time.deltaTime);
+        //    mainCam.transform.rotation = Quaternion.Lerp(transform.rotation, _targetRot, lerpSpeed * Time.deltaTime);
+        //    yield return null;
+        //}
+
+        //mainCam.transform.position = _targetTrs;
+        //mainCam.transform.rotation = _targetRot;
+
         mainCam.transform.DOMove(_targetTrs, 1.25f)
         .SetEase(Ease.InOutSine);
 
@@ -134,7 +155,6 @@ public class CameraMng : MonoBehaviour
         else if (curViewState == EViewState.TOP)
         {
             mainCam.transform.SetParent(null);
-            rifle.transform.SetParent(playerObj.transform);
             customMouse.SetActive(true);
             aimMouse.SetActive(false);
             functionUI.SetActive(true);

@@ -11,19 +11,22 @@ public class UIUpgradePanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] upgradeLevelTexts;
     [SerializeField] TextMeshProUGUI[] spawnPerTexts;
 
-    private void Awake()
+    private void OnEnable()
+    {
+        Shared.gameMng.iGoldCoin.onGoldChanged += GoldCoinPanel;
+        Shared.gameMng.iGoldCoin.onCoinChanged += GoldCoinPanel;
+        Shared.unitMng.iUnitUpgrader.onUpgradeCostChange += UpgradeCostPanel;
+        Shared.unitMng.iUnitUpgrader.onUpgradeLevelChange += UpgradeLevelPanel;
+        Shared.unitMng.iUnitUpgrader.onUpgradePerChange += UpgradePerPanel;
+    }
+
+    private void OnDisable()
     {
         Shared.gameMng.iGoldCoin.onGoldChanged -= GoldCoinPanel;
         Shared.gameMng.iGoldCoin.onCoinChanged -= GoldCoinPanel;
         Shared.unitMng.iUnitUpgrader.onUpgradeCostChange -= UpgradeCostPanel;
         Shared.unitMng.iUnitUpgrader.onUpgradeLevelChange -= UpgradeLevelPanel;
         Shared.unitMng.iUnitUpgrader.onUpgradePerChange -= UpgradePerPanel;
-
-        Shared.gameMng.iGoldCoin.onGoldChanged += GoldCoinPanel;
-        Shared.gameMng.iGoldCoin.onCoinChanged += GoldCoinPanel;
-        Shared.unitMng.iUnitUpgrader.onUpgradeCostChange += UpgradeCostPanel;
-        Shared.unitMng.iUnitUpgrader.onUpgradeLevelChange += UpgradeLevelPanel;
-        Shared.unitMng.iUnitUpgrader.onUpgradePerChange += UpgradePerPanel;
     }
 
     private void Start()

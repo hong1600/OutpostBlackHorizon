@@ -65,7 +65,7 @@ public class FieldBuilder : MonoBehaviour, IFieldBuilder
         {
             GameObject unitSpawnPoint = new GameObject("unitSpawnPoint" + 1);
             unitSpawnPoint.transform.SetParent(unitFieldList[i].transform);
-            unitSpawnPoint.transform.position = unitFieldList[i].transform.position + new Vector3(0, 1.7f, 0);
+            unitSpawnPoint.transform.position = unitFieldList[i].transform.position + new Vector3(0, 2.5f, 0);
 
             unitSpawnPointList.Add(unitSpawnPoint.transform);
         }
