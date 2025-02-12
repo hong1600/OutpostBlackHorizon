@@ -62,7 +62,6 @@ public class UnitMng : MonoBehaviour, IUnitMng
 
     private void Start()
     {
-        unitSpawnPointList = Shared.gameMng.iFieldBuilder.GetunitSpawnPointList();
     }
 
     private void Update()

@@ -12,7 +12,6 @@ public class GameMng : MonoBehaviour
     [SerializeField] GoldCoin goldCoin;
     [SerializeField] Rewarder rewarder;
     [SerializeField] SpeedUp speedUp;
-    [SerializeField] FieldBuilder fieldBuilder;
     [SerializeField] ViewState viewState;
     public ISpawnTimer iSpawnTimer;
     public IRound iRound;
@@ -20,7 +19,6 @@ public class GameMng : MonoBehaviour
     public IGoldCoin iGoldCoin;
     public IRewarder iRewarder;
     public ISpeedUp iSpeedUp;
-    public IFieldBuilder iFieldBuilder;
     public IViewState iViewState;
 
     private void Awake()
@@ -40,7 +38,6 @@ public class GameMng : MonoBehaviour
         iGoldCoin = goldCoin;
         iRewarder = rewarder;
         iSpeedUp = speedUp;
-        iFieldBuilder = fieldBuilder;
         iViewState = viewState;
     }
 

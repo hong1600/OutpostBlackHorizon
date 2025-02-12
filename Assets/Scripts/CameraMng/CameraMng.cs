@@ -49,19 +49,10 @@ public class CameraMng : MonoBehaviour
         functionUI.SetActive(true);
     }
 
-    private void OnEnable()
-    {
-        InputMng.onInputMouse += LookMouse;
-    }
-
-    private void OnDisable()
-    {
-        InputMng.onInputMouse -= LookMouse;
-    }
-
     private void Update()
     {
         CursorLock();
+        LookMouse(Shared.inputMng.mouseDelta);
 
         if (Input.GetKeyDown(KeyCode.F) && isArrive)
         {
@@ -98,7 +89,7 @@ public class CameraMng : MonoBehaviour
 
         if(_eGameState == EViewState.FPS)
         {
-            playerTrs = playerObj.transform.position + new Vector3(0f, 1.56f, 0.24f);
+            playerTrs = playerObj.transform.position + new Vector3(0f, 1.56f, 0.3f);
             mainCam.transform.SetParent(playerObj.transform);
             customMouse.SetActive(false);
             aimMouse.SetActive(true);

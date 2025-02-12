@@ -40,20 +40,15 @@ public class Player : MonoBehaviour
         playerAI.Init(this);
     }
 
-    private void OnEnable()
-    {
-        InputMng.onInputKey += Move;
-    }
-
-    private void OnDisable()
-    {
-        InputMng.onInputKey -= Move;
-    }
-
     private void Update()
     {
         CheckInput();
         CheckGround();
+    }
+
+    private void FixedUpdate()
+    {
+        Move(Shared.inputMng.keyDelta);
     }
 
     private void CheckInput()
