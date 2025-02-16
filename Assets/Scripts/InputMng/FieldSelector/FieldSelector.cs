@@ -43,7 +43,7 @@ public class FieldSelector : MonoBehaviour, IFieldSelector
         if (startSelectField != null)
         {
             startFieldRenderer = null;
-            startFieldRenderer = startSelectField.transform.GetChild(1).GetComponent<MeshRenderer>();
+            startFieldRenderer = startSelectField.GetComponent<MeshRenderer>();
             startFieldRenderer.material = selectMat;
         }
         else
@@ -63,7 +63,6 @@ public class FieldSelector : MonoBehaviour, IFieldSelector
             if (curFieldRenderer != null) { curFieldRenderer.material = originMat; }
 
             curFieldRenderer = curSelectField.GetComponent<MeshRenderer>();
-            curFieldRenderer = curSelectField.transform.GetChild(1).GetComponent<MeshRenderer>();
             curFieldRenderer.material = selectMat;
         }
     }

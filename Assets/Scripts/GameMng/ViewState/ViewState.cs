@@ -14,7 +14,7 @@ public class ViewState : MonoBehaviour, IViewState
 
     private void Awake()
     {
-        curViewState = EViewState.TOP;
+        curViewState = EViewState.FPS;
     }
 
     public void SetViewState(EViewState _state)

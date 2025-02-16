@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class UIOptionBtn : MonoBehaviour
 {
-    [SerializeField] GameObject settingPanel;
+    [SerializeField] GameObject optionPanel;
 
     public void ClickOption()
     {
-        UIMng.instance.OpenPanel(settingPanel);
+        optionPanel.SetActive(true);
     }
 }

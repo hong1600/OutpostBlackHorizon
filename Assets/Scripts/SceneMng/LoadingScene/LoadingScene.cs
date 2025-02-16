@@ -8,9 +8,7 @@ public class LoadingScene : MonoBehaviour
 {
     static EScene nextScene;
 
-    [SerializeField] Slider slider;
-    [SerializeField] GameObject loadingText;
-    [SerializeField] GameObject pressText;
+    [SerializeField] Image sliderValue;
 
     private void Start()
     {
@@ -33,21 +31,15 @@ public class LoadingScene : MonoBehaviour
         {
             yield return null;
 
-            if (slider.value < 0.9f)
+            if (sliderValue.fillAmount < 0.9f)
             {
-                slider.value = Mathf.MoveTowards(slider.value, 0.9f, Time.deltaTime);
+                sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, 0.9f, Time.deltaTime);
             }
-            else if (slider.value >= 0.9f)
+            else if (sliderValue.fillAmount >= 0.9f)
             {
-                slider.value = Mathf.MoveTowards(slider.value, 1f, Time.deltaTime);
+                sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, 1f, Time.deltaTime);
             }
-
-            if (slider.value >= 1f)
-            {
-                loadingText.SetActive(false);
-                pressText.SetActive(true);
-            }
-            if (slider.value >= 1f && operation.progress >= 0.9f && Input.anyKeyDown)
+            if (sliderValue.fillAmount >= 1f && operation.progress >= 0.9f)
             {
                 operation.allowSceneActivation = true;
             }
