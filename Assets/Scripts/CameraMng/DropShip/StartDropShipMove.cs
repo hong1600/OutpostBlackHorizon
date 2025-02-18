@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DropShipMove : MonoBehaviour
+public class StartDropShipMove : MonoBehaviour
 {
     Camera mainCam;
     [SerializeField] Cinemachine.CinemachineVirtualCamera virtualCam;
+    Cinemachine.CinemachineTransposer virualTransposer;
 
     [SerializeField] Transform pos1;
     [SerializeField] Transform pos2;
@@ -18,18 +19,31 @@ public class DropShipMove : MonoBehaviour
     [SerializeField] float hatchSpeed = 2f;
 
     [SerializeField] GameObject player;
-    [SerializeField] Transform playerEye;
-    Vector3 playerOffset;
+    [SerializeField] Transform playerStartPos;
 
     [SerializeField] Transform hatchCamTrs;
     [SerializeField] Transform playerCamTrs;
 
     [SerializeField] GameObject HUDCanvas;
 
-    private void Start()
+    Vector3 playerPos;
+    Vector3 dropShipStartPos = new Vector3(-15, 20, -30);
+
+    private void Awake()
     {
         mainCam = Camera.main;
-        playerOffset = player.transform.localPosition;
+        virualTransposer = virtualCam.GetCinemachineComponent<CinemachineTransposer>();
+    }
+
+    private void Start()
+    {
+        player.transform.position = playerStartPos.position;
+        player.transform.SetParent(transform);
+        playerPos = player.transform.localPosition;
+        hatch.transform.localRotation = Quaternion.Euler(0,0,0);
+
+        virualTransposer.m_FollowOffset = dropShipStartPos;
+        HUDCanvas.SetActive(false);
         StartCoroutine(StartMove());
     }
 
@@ -51,7 +65,7 @@ public class DropShipMove : MonoBehaviour
 
             transform.position = Vector3.MoveTowards
                 (transform.position, _target.position, speed * Time.deltaTime);
-            player.transform.localPosition = playerOffset;
+            player.transform.localPosition = playerPos;
 
             yield return null;
         }
@@ -124,5 +138,6 @@ public class DropShipMove : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         HUDCanvas.SetActive(true);
+        this.enabled = false;
     }
 }
