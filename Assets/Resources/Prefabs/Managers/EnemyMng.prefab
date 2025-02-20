@@ -31,7 +31,7 @@ Transform:
   m_Children:
   - {fileID: 2386855172343796906}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7910793371305459659
 MonoBehaviour:
@@ -48,7 +48,11 @@ MonoBehaviour:
   enemySpawner: {fileID: 3355180380901896111}
   bossSpawner: {fileID: 7831183156502761659}
   waveBossSpawner: {fileID: 6946338110557081343}
-  enemyParentList: []
+  enemyParentList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   maxEnemy: 0
   curEnemy: 0
   enemyCountList: []
@@ -194,12 +198,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyList:
-  - {fileID: 1931298151966786, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
-  - {fileID: 2391359435489877134, guid: 75f057b43e0a449dae5f6549f5107474, type: 3}
-  - {fileID: 1467277096911013437, guid: 586a8fad78c64d758ef4b7e17ea63960, type: 3}
-  - {fileID: 1524411113276028, guid: e2aafa8770d34a9591b41bedf4e318ba, type: 3}
-  - {fileID: 1067925524328404, guid: 6bbfea6690ef7724ba495c866081f855, type: 3}
-  enemySpawnPointList: []
+  - {fileID: 1765116360898588, guid: bdd91695cfcf4b643963af1fce587ef5, type: 3}
+  - {fileID: 3409939464685343360, guid: 85413646e0dfaf645a50e52025b31523, type: 3}
+  enemySpawnPointList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   enemySpawnPos:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}

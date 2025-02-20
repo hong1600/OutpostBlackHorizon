@@ -173,7 +173,7 @@ Transform:
   - {fileID: 3168088122827467412}
   - {fileID: 134259182115217574}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8847197993212664443
 MonoBehaviour:
@@ -283,11 +283,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e50115e9fe1c14d816518e12d5354b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingPre: {fileID: 1021938163305598, guid: a641cfe3077db924297063a6022bb5fb, type: 3}
+  buildingPre: {fileID: 5702732148798390224, guid: 6dde2d7943b45b343bd20623f6f40330, type: 3}
   preview: {fileID: 2100000, guid: 3f34be0adb695a0489782e29d79d82bc, type: 2}
+  parent: {fileID: 0}
   buildLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 4224
+  gridSize: 3
 --- !u!1 &4733999125522314085
 GameObject:
   m_ObjectHideFlags: 0

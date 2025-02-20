@@ -16,6 +16,6 @@ public class GameFinish : MonoBehaviour
 
         //waringUI.gameOverPanel.SetActive(false);
         Time.timeScale = 1f;
-        Shared.sceneMng.ChangeScene(EScene.LOBBY, true);
+        SceneMng.Instance.ChangeScene(EScene.LOBBY, true);
     }
 }

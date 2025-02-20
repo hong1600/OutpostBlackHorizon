@@ -6,6 +6,7 @@ public enum EScene
 {
     LOGIN,
     LOBBY,
+    WAITING,
     GAME,
     LOADING,
     END,

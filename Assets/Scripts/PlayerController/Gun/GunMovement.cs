@@ -7,8 +7,8 @@ public class GunMovement : MonoBehaviour
     Vector3 originPos;
     Quaternion originRot;
 
-    [SerializeField] float swayAmount = 0.02f;
-    [SerializeField] float smoothFactor = 2f;
+    //[SerializeField] float swayAmount = 0.02f;
+    //[SerializeField] float smoothFactor = 2f;
 
     [SerializeField] float walkSwaySpeed = 10f;
     [SerializeField] float walkSwayAmount = 0.01f;
@@ -21,13 +21,13 @@ public class GunMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        InputMng.onInputMouse += SwayGun;
+        //InputMng.onInputMouse += SwayGun;
         InputMng.onInputKey += WalkSwayGun;
     }
 
     private void OnDisable()
     {
-        InputMng.onInputMouse -= SwayGun;
+        //InputMng.onInputMouse -= SwayGun;
         InputMng.onInputKey -= WalkSwayGun;
     }
 
@@ -37,23 +37,23 @@ public class GunMovement : MonoBehaviour
         originRot = transform.localRotation;
     }
 
-    private void SwayGun(Vector2 _inputMouse)
+    //private void SwayGun(Vector2 _inputMouse)
+    //{
+    //    if (Shared.gameMng.iViewState.GetViewState() == EViewState.TOP || !Shared.cameraMng.isArrive) return;
+
+    //    float moveX = _inputMouse.x * swayAmount;
+    //    float moveY = _inputMouse.y * swayAmount;
+
+    //    Vector3 swayPos = new Vector3(-moveX, -moveY, 0);
+    //    transform.localPosition = Vector3.Lerp(transform.localPosition,
+    //        originPos + swayPos, Time.deltaTime * smoothFactor);
+    //}
+
+    private void WalkSwayGun(Vector2 _inputKey)
     {
         if (Shared.gameMng.iViewState.GetViewState() == EViewState.TOP || !Shared.cameraMng.isArrive) return;
 
-        float moveX = _inputMouse.x * swayAmount;
-        float moveY = _inputMouse.y * swayAmount;
-
-        Vector3 swayPos = new Vector3(-moveX, -moveY, 0);
-        transform.localPosition = Vector3.Lerp(transform.localPosition,
-            originPos + swayPos, Time.deltaTime * smoothFactor);
-    }
-
-    private void WalkSwayGun(Vector3 _inputKey)
-    {
-        if (Shared.gameMng.iViewState.GetViewState() == EViewState.TOP || !Shared.cameraMng.isArrive) return;
-
-        if (_inputKey.x != 0 || _inputKey.z != 0)
+        if (_inputKey.x != 0 || _inputKey.y != 0)
         {
             timer += Time.deltaTime * walkSwaySpeed;
             float walkSwayOffset = Mathf.Sin(timer) * walkSwayAmount;
@@ -62,7 +62,8 @@ public class GunMovement : MonoBehaviour
         else
         {
             timer = 0;
-            transform.localPosition = Vector3.Lerp(transform.localPosition, originPos, Time.deltaTime * walkSwaySpeed);
+            transform.localPosition = Vector3.Lerp
+                (transform.localPosition, originPos, Time.deltaTime * walkSwaySpeed * 2);
         }
     }
 

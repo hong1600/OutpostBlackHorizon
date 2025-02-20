@@ -313,7 +313,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 2.5, y: 0.15, z: 2.5}
+  m_Size: {x: 0.93, y: 0.15, z: 1.02}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5598853978313734418
 GameObject:
@@ -577,15 +577,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 7c140c2159d378845849a64ec1f297c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.5
+      value: -300
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 7c140c2159d378845849a64ec1f297c1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 7c140c2159d378845849a64ec1f297c1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -26.5
+      value: -300
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 7c140c2159d378845849a64ec1f297c1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -732,19 +732,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7416831019951208465}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f438e3a5092e414fba561468b6e6c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCam: {fileID: 0}
-  hatchCamTrs: {fileID: 9200959415270580000}
-  playerObj: {fileID: 0}
-  pos:
-  - {fileID: 0}
-  - {fileID: 0}
-  finishBox: {fileID: 5588171383801844124}
+  dropShip: {fileID: 7416831019951208465}
   HUDCanvas: {fileID: 0}
+  hatch: {fileID: 7416831019951208467}
+  playerObj: {fileID: 0}
+  rifle: {fileID: 0}
+  finishBox: {fileID: 5588171383801844124}
+  hatchCamTrs: {fileID: 9200959415270580000}
+  movePosList:
+  - {fileID: 0}
+  - {fileID: 0}
+  hatchSpeed: 2
 --- !u!114 &340896306186796093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -752,7 +756,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7416831019951208465}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 457bd4688b08ccc4cb67675371d3bf5f, type: 3}
   m_Name: 
@@ -760,10 +764,11 @@ MonoBehaviour:
   virtualCam: {fileID: 0}
   pos1: {fileID: 0}
   pos2: {fileID: 0}
-  moveSpeed: 200
+  moveSpeed: 100
   hatch: {fileID: 7416831019951208467}
   hatchSpeed: 2
   player: {fileID: 0}
+  playerStartPos: {fileID: 8833211228581516571}
   hatchCamTrs: {fileID: 9200959415270580000}
   playerCamTrs: {fileID: 3809020809424621978}
   HUDCanvas: {fileID: 0}

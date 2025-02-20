@@ -2,10 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86.Avx;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerMng : MonoBehaviour
 {
-    public Player player;
+    public PlayerAI playerAI { get; private set; }
+    public CapsuleCollider cap { get; private set; }
+    public Animator anim { get; private set; }
+
+    public PlayerMovement playerMovement;
+    public PlayerCombat playerCombat;
 
     public event Action onTakeDmg;
 
@@ -15,7 +22,11 @@ public class PlayerMng : MonoBehaviour
     private void Awake()
     {
         Shared.playerMng = this;
-        player = this.gameObject.GetComponent<Player>();
+        cap = GetComponent<CapsuleCollider>();
+        anim = GetComponent<Animator>();
+
+        playerAI = new PlayerAI();
+        playerAI.Init(playerMovement, playerCombat);
     }
 
     private void Update()
@@ -36,8 +47,8 @@ public class PlayerMng : MonoBehaviour
         }
         if (curHp <= 0)
         {
-            player.isDie = true;
-            StartCoroutine(player.StartDie());
+            playerMovement.isDie = true;
+            StartCoroutine(playerMovement.StartDie());
         }
     }
 }

@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class PlayerAI
 {
-    public Player player;
+    public PlayerMovement playerMovement;
+    public PlayerCombat playerCombat;
 
     public EPlayer aiState = EPlayer.CREATE;
 
-    public void Init(Player _player)
+    public void Init(PlayerMovement _playerMovement, PlayerCombat _playerCombat)
     {
-        player = _player;
+        playerMovement = _playerMovement;
+        playerCombat = _playerCombat;
     }
 
     public void State()
@@ -34,7 +36,7 @@ public class PlayerAI
                 break;
         }
 
-        player.ChangeAnim(aiState);
+        playerMovement.ChangeAnim(aiState);
     }
 
     public virtual void Create()
@@ -44,21 +46,21 @@ public class PlayerAI
 
     public virtual void Walk()
     {
-        if (player.isRun) aiState = EPlayer.RUN;
-        if (player.isAttack) aiState = EPlayer.ATTACK;
-        if (player.isDie) aiState = EPlayer.DIE;
+        if (playerMovement.isRun) aiState = EPlayer.RUN;
+        if (playerCombat.isAttack) aiState = EPlayer.ATTACK;
+        if (playerMovement.isDie) aiState = EPlayer.DIE;
     }
 
     public virtual void Run()
     {
-        if (!player.isGround) aiState = EPlayer.JUMP;
-        if (player.isDie) aiState = EPlayer.DIE;
+        if (!playerMovement.isGround) aiState = EPlayer.JUMP;
+        if (playerMovement.isDie) aiState = EPlayer.DIE;
     }
 
     public virtual void Jump()
     {
-        if (player.isGround) aiState = EPlayer.WALK;
-        if (player.isDie) aiState = EPlayer.DIE;
+        if (playerMovement.isGround) aiState = EPlayer.WALK;
+        if (playerMovement.isDie) aiState = EPlayer.DIE;
     }
 
     public virtual void Die()

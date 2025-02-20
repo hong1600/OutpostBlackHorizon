@@ -10,14 +10,14 @@ EditorBuildSettings:
     guid: 57453367dc3cd8245abc95605d2da868
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    guid: 88922686890d574488621ab652eb7d6c
+  - enabled: 1
+    path: Assets/Scenes/Waiting.unity
+    guid: 8f1a01e4b1a374aa6bfe472517a8a56e
   - enabled: 1
     path: Assets/Scenes/Game.unity
-    guid: 4108bd2dcdc06c647b4c8de5f1142c95
+    guid: 39c0a63ac645ce243957b1b91e02e3c0
   - enabled: 1
     path: Assets/Scenes/Loading.unity
-    guid: be1d86a2a269fe048a91240c0788375f
-  - enabled: 1
-    path: Assets/Scenes/End.unity
-    guid: c40c1d7130fba6f4aa4c0298462c810f
+    guid: 3bd8576cbbb25a04ebd9b0c3897a01ac
   m_configObjects: {}

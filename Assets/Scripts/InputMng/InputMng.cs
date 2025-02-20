@@ -11,7 +11,7 @@ public class InputMng : MonoBehaviour
     public static event Action<Vector2> onLeftClickUp;
     public static event Action onRightClickDown;
     public static event Action<Vector2> onInputMouse;
-    public static event Action<Vector3> onInputKey;
+    public static event Action<Vector2> onInputKey;
 
     [SerializeField] FieldSelector fieldSelector;
     [SerializeField] CustomMouse customMouse;
@@ -37,8 +37,14 @@ public class InputMng : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        iFieldSelector = fieldSelector;
-        iCustomMouse = customMouse;
+        if (fieldSelector != null)
+        {
+            iFieldSelector = fieldSelector;
+        }
+        if (customMouse != null)
+        {
+            iCustomMouse = customMouse;
+        }
     }
 
     private void Update()
@@ -47,12 +53,8 @@ public class InputMng : MonoBehaviour
         DragMouseLeft();
         UpMouseLeft();
         DownMouseRight();
-        InputMouse();
-    }
-
-    private void FixedUpdate()
-    {
         InputKey();
+        InputMouse();
     }
 
     private void DownMouseLeft()
@@ -90,26 +92,29 @@ public class InputMng : MonoBehaviour
         }
     }
 
+    private void InputKey()
+    {
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveZ = Input.GetAxisRaw("Vertical");
+
+        Vector2 key = new Vector2(moveX, moveZ);
+
+        if (key != Vector2.zero)
+        {
+            onInputKey?.Invoke(key);
+        }
+    }
+
     private void InputMouse()
     {
         float mouseX = Input.GetAxisRaw("Mouse X");
         float mouseY = Input.GetAxisRaw("Mouse Y");
 
-        mouseDelta = new Vector2(mouseX, mouseY);
+        Vector2 mouse = new Vector2(mouseX, mouseY);
 
-        if(mouseX != 0 || mouseY != 0) 
+        if (mouse != Vector2.zero)
         {
-            onInputMouse?.Invoke(mouseDelta);
+            onInputMouse?.Invoke(mouse);
         }
-    }
-
-    private void InputKey()
-    {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
-
-        keyDelta = new Vector3(moveX, 0, moveZ);
-
-        onInputKey?.Invoke(keyDelta);
     }
 }

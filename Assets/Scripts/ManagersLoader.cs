@@ -6,7 +6,6 @@ public class ManagersLoader : MonoBehaviour
 {
     [SerializeField] GameObject dataMng;
     [SerializeField] GameObject sceneMng;
-    [SerializeField] GameObject UIMng;
 
     private void Awake()
     {
@@ -18,10 +17,5 @@ public class ManagersLoader : MonoBehaviour
         {
             Instantiate(sceneMng);
         }
-        if (GameObject.Find("UIMng") == null)
-        {
-            Instantiate(UIMng);
-        }
-
     }
 }

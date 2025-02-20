@@ -37,8 +37,8 @@ public class StartDropShipMove : MonoBehaviour
 
     private void Start()
     {
-        player.transform.position = playerStartPos.position;
         player.transform.SetParent(transform);
+        player.GetComponent<Rigidbody>().MovePosition(playerStartPos.position);
         playerPos = player.transform.localPosition;
         hatch.transform.localRotation = Quaternion.Euler(0,0,0);
 
@@ -65,7 +65,7 @@ public class StartDropShipMove : MonoBehaviour
 
             transform.position = Vector3.MoveTowards
                 (transform.position, _target.position, speed * Time.deltaTime);
-            player.transform.localPosition = playerPos;
+            player.GetComponent<Rigidbody>().MovePosition(playerStartPos.position);
 
             yield return null;
         }

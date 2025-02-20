@@ -8,7 +8,7 @@ public class FinishDropShipMove : MonoBehaviour
 {
     Camera mainCam;
     BoxCollider box;
-    Player player;
+    PlayerMovement player;
 
     [SerializeField] Cinemachine.CinemachineVirtualCamera virtualCam;
     Cinemachine.CinemachineTransposer virualTransposer;
@@ -30,9 +30,8 @@ public class FinishDropShipMove : MonoBehaviour
     private void Awake()
     {
         mainCam = Camera.main;
-        player = playerObj.GetComponent<Player>();
+        player = playerObj.GetComponent<PlayerMovement>();
         box = finishBox.GetComponent<BoxCollider>();
-        box.enabled = true;
     }
 
     private void Start()

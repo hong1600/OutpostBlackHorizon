@@ -45,7 +45,7 @@ public class LoginUI : MonoBehaviour
         }
         else if (Input.anyKeyDown && isAnykey == true && DataMng.instance.playerData.first == false)
         {
-            Shared.sceneMng.ChangeScene(EScene.LOBBY, true);
+            SceneMng.Instance.ChangeScene(EScene.LOBBY, true);
         }
     }
 
@@ -54,7 +54,7 @@ public class LoginUI : MonoBehaviour
         namePanel.SetActive(false);
         DataMng.instance.playerData.name = nameText.text;
         DataMng.instance.playerData.first = false;
-        Shared.sceneMng.ChangeScene(EScene.LOBBY, true);
+        SceneMng.Instance.ChangeScene(EScene.LOBBY, true);
     }
 
     private void StartAnim()

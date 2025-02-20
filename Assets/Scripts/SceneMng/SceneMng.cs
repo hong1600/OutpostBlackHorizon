@@ -5,11 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class SceneMng : MonoBehaviour
 {
+    public static SceneMng Instance;
+
     EScene scene = EScene.LOGIN;
 
     private void Awake()
     {
-        Shared.sceneMng = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+        DontDestroyOnLoad(Instance);
     }
 
     public void ChangeScene(EScene _eScene, bool _loading = false)
@@ -32,6 +43,9 @@ public class SceneMng : MonoBehaviour
                     break;
                 case EScene.LOBBY:
                     SceneManager.LoadScene("Lobby");
+                    break;
+                case EScene.WAITING:
+                    SceneManager.LoadScene("Waiting");
                     break;
                 case EScene.LOADING:
                     SceneManager.LoadScene("Loading");
