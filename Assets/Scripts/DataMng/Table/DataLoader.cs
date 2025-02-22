@@ -10,5 +10,4 @@ public class DataLoader : MonoBehaviour
     {
         tableMgr = new TableMgr();
     }
-
 }

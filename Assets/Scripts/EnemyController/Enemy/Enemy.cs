@@ -13,7 +13,7 @@ public abstract class Enemy : MonoBehaviour
     EnemyHpBar enemyHpBar;
 
     Rigidbody rigid;
-    SphereCollider sphere;
+    [SerializeField] SphereCollider sensor;
     BoxCollider box;
     Animator anim;
 
@@ -42,7 +42,6 @@ public abstract class Enemy : MonoBehaviour
     public void InitEnemyData(EnemyData _enemyData)
     {
         rigid = GetComponent<Rigidbody>();
-        sphere = GetComponent<SphereCollider>();
         box = this.GetComponent<BoxCollider>();
         anim = this.GetComponent<Animator>();
 
@@ -103,7 +102,7 @@ public abstract class Enemy : MonoBehaviour
     protected internal virtual void CheckTarget()
     {
         Collider[] colls = Physics.OverlapSphere(transform.position,
-            sphere.radius, LayerMask.GetMask("Player", "UnitField"));
+            sensor.radius, LayerMask.GetMask("Player", "UnitField"));
 
         if(colls.Length > 0) 
         {

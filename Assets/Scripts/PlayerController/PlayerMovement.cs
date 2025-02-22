@@ -13,7 +13,14 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float runSpeed = 10f;
+
     [SerializeField] float jumpForce = 5f;
+    [SerializeField] int jumpCount = 0;
+    [SerializeField] int maxJumpCount = 2;
+
+    [SerializeField] float gravity = -9.81f;
+    [SerializeField] float fallGravity = 2.5f;
+
     [SerializeField] internal bool isGround = false;
     [SerializeField] internal bool isRun = false;
     [SerializeField] internal bool isDie = false;
@@ -33,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        SetGravity();
     }
 
     private void CheckInput()
@@ -40,13 +48,37 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift)) isRun = true;
         if (Input.GetKeyUp(KeyCode.LeftShift)) isRun = false;
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGround) Jump();
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {
+            Jump();
+        }
     }
 
     private void CheckGround()
     {
-        isGround = Physics.Raycast(playerMng.cap.bounds.center, Vector3.down,
-            playerMng.cap.bounds.extents.y + 0.3f, LayerMask.GetMask("Ground"));
+        if (Physics.Raycast(playerMng.cap.bounds.center, Vector3.down,
+            playerMng.cap.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground")) && rigid.velocity.y <= 0)
+        {
+            isGround = true;
+            jumpCount = 0;
+        }
+        else
+        {
+            isGround = false;
+        }
+    }
+
+    private void SetGravity()
+    {
+        if(!isGround) 
+        {
+            rigid.velocity += Vector3.up * gravity * Time.fixedDeltaTime;
+
+            if (rigid.velocity.y < 0)
+            {
+                rigid.velocity += Vector3.up * gravity * (fallGravity - 1) * Time.fixedDeltaTime;
+            }
+        }
     }
 
     private void Move()
@@ -74,7 +106,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        rigid.velocity = new Vector3(rigid.velocity.x, jumpForce, rigid.velocity.z);
+        if(jumpCount < maxJumpCount) 
+        {
+            rigid.velocity = new Vector3(rigid.velocity.x, jumpForce, rigid.velocity.z);
+            jumpCount++;
+        }
     }
 
     internal IEnumerator StartDie()

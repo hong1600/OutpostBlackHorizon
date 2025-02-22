@@ -8,7 +8,8 @@ public enum EEffect
     SHIELD,
     KNIGHT,
     GUNSLINGER,
-    MAGE
+    MAGE,
+    GUNHIT
 }
 
 public enum EHpBar
@@ -26,5 +27,6 @@ public enum EEnemy
 public enum EBullet
 {
     BULLET,
+    GRENADE
 }
 

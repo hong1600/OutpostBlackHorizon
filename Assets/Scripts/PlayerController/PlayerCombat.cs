@@ -9,17 +9,39 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] Transform fireTrs;
     [SerializeField] GameObject muzzleFlash;
 
+    [SerializeField] float rifleSpeed;
+    [SerializeField] float grenadeSpeed;
+
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isAttack) Attack();
+        if (Input.GetMouseButton(0) && !isAttack) 
+        {
+            StartCoroutine(StartAttackRifle());
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && !isAttack) 
+        {
+            StartCoroutine(StartAttackGrenade());
+        }
     }
 
-    protected virtual void Attack()
+    IEnumerator StartAttackRifle()
     {
-        StartCoroutine(StartAttack());
+        isAttack = true;
+        muzzleFlash.SetActive(true);
+        gunMovement.RecoilGun();
+
+        GameObject obj = Shared.objectPoolMng.iBulletPool.FindBullet(EBullet.BULLET);
+        Bullet bullet = obj.GetComponent<Bullet>();
+        bullet.InitBullet(null, 30, rifleSpeed, EBullet.BULLET, fireTrs);
+
+        yield return new WaitForSeconds(0.1f);
+        muzzleFlash.SetActive(false);
+
+        isAttack = false;
     }
 
-    IEnumerator StartAttack()
+    IEnumerator StartAttackGrenade()
     {
         isAttack = true;
         muzzleFlash.SetActive(true);
@@ -29,7 +51,7 @@ public class PlayerCombat : MonoBehaviour
         obj.transform.position = fireTrs.transform.position;
         obj.transform.rotation = fireTrs.rotation * Quaternion.Euler(0, 180, 0);
         Bullet bullet = obj.GetComponent<Bullet>();
-        bullet.InitBullet(null, 30, 0.1f);
+        //bullet.InitBullet(null, 30, grenadeSpeed, EBullet.GRENADE);
 
         yield return new WaitForSeconds(0.1f);
 

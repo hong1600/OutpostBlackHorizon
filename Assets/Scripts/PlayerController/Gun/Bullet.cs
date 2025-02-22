@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.Asteroids;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,82 +7,98 @@ public class Bullet : MonoBehaviour
 {
     SphereCollider sphere;
 
-    float speed;
-    int damage;
     Transform target;
+    int damage;
+    float speed;
+    EBullet eBullet;
 
-    [SerializeField] GameObject explosion;
+    [SerializeField] float destroyTime = 3f;
+    float time = 0;
 
     private void Awake()
     {
-        sphere = explosion.GetComponent<SphereCollider>();
+        sphere = GetComponent<SphereCollider>();
     }
 
-    public void InitBullet(Transform _target, int _damage, float _speed)
+    public void InitBullet(Transform _target, int _damage, float _speed, EBullet _eBullet, Transform _firePos)
     {
+        time = 0;
+        transform.position = _firePos.transform.position;
+        transform.rotation = _firePos.transform.rotation * Quaternion.Euler(90, 0, 0);
+
         speed = _speed;
         damage = _damage;
         target = _target;
-
-        MoveBullet();
+        eBullet = _eBullet;
     }
 
-    private void MoveBullet()
+    private void Update()
     {
-        if(target == null) 
+        time += Time.deltaTime;
+
+        if (eBullet == EBullet.BULLET)
         {
-            StartCoroutine(StartNonTarget());
+            MoveRifleBullet();
         }
-        else
+
+        if (eBullet == EBullet.GRENADE)
         {
-            StartCoroutine(StartTarget());
+            MoveGrenadeBullet();
+        }
+
+        if(time > destroyTime) 
+        {
+            ReturnPool();
         }
     }
 
-    IEnumerator StartNonTarget()
+    private void MoveRifleBullet()
     {
-        float time = 0.75f;
+        transform.Translate(Vector3.up * speed * Time.deltaTime);
 
-        while(time >= 0)
+        if (Physics.Raycast(transform.position, transform.up,
+            out RaycastHit hit, speed * Time.deltaTime, ~LayerMask.GetMask("EnemySensor")))
         {
-            transform.Translate(Vector3.forward * speed);
-            time -= Time.deltaTime;
-            yield return null;
+            StartCoroutine(StartRifleBullet(hit.point, hit.collider));
         }
+    }
 
-        explosion.SetActive(true);
+    IEnumerator StartRifleBullet(Vector3 _hitPos, Collider _hitObj)
+    {
+        GameObject spark = Shared.objectPoolMng.iEffectPool.FindEffect(EEffect.GUNHIT);
 
-        Collider[] colls = Physics.OverlapSphere
-            (explosion.transform.position, sphere.radius, LayerMask.GetMask("Enemy"));
+        spark.transform.position = _hitPos;
+        spark.transform.rotation = Quaternion.LookRotation(-transform.forward);
 
-        for(int i = 0; i < colls.Length; i++) 
+        if (_hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            Enemy enemy = colls[i].gameObject.GetComponent<Enemy>();
+            Enemy enemy = _hitObj.gameObject.GetComponent<Enemy>();
             enemy.TakeDamage(damage);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return null;
 
-        explosion.SetActive(false);
-        Shared.objectPoolMng.ReturnObject(gameObject.name, gameObject);
+        ReturnPool();
     }
 
-    IEnumerator StartTarget()
+    private void MoveGrenadeBullet()
     {
-        while (target != null)
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+        if (Physics.Raycast(transform.position, transform.forward,
+            out RaycastHit hit, speed * Time.deltaTime, LayerMask.GetMask("Enemy", "Wall")))
         {
-            Vector3 direction = (target.position - transform.position).normalized;
-            transform.Translate(direction * speed * Time.deltaTime);
-
-            if (Vector3.Distance(transform.position, target.position) < 0.5f)
-            {
-                Shared.objectPoolMng.ReturnObject(gameObject.name, gameObject);
-                yield break;
-            }
-
-            yield return null;
+            StartCoroutine(StartGrenadeBullet(hit.point, target.position));
         }
+    }
 
+    IEnumerator StartGrenadeBullet(Vector3 _hitPos, Vector3 _targetPos)
+    {
+        yield return null;
+    }
+
+    private void ReturnPool()
+    {
         Shared.objectPoolMng.ReturnObject(gameObject.name, gameObject);
     }
 }
