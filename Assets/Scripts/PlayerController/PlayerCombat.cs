@@ -30,10 +30,10 @@ public class PlayerCombat : MonoBehaviour
         isAttack = true;
         muzzleFlash.SetActive(true);
         gunMovement.RecoilGun();
-
         GameObject obj = Shared.objectPoolMng.iBulletPool.FindBullet(EBullet.BULLET);
         Bullet bullet = obj.GetComponent<Bullet>();
         bullet.InitBullet(null, 30, rifleSpeed, EBullet.BULLET, fireTrs);
+        Shared.cameraMng.getCameraFpsShake.Shake();
 
         yield return new WaitForSeconds(0.1f);
         muzzleFlash.SetActive(false);

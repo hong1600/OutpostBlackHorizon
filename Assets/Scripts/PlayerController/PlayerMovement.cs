@@ -2,33 +2,37 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
-using static UnityEditor.Rendering.InspectorCurveEditor;
 
 public class PlayerMovement : MonoBehaviour
 {
     Camera mainCam;
     Rigidbody rigid;
+    CapsuleCollider cap;
     [SerializeField] PlayerMng playerMng;
 
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float runSpeed = 10f;
+    Vector3 moveDir;
 
     [SerializeField] float jumpForce = 5f;
     [SerializeField] int jumpCount = 0;
-    [SerializeField] int maxJumpCount = 2;
 
     [SerializeField] float gravity = -9.81f;
-    [SerializeField] float fallGravity = 2.5f;
+    [SerializeField] float fallGravity = 0.5f;
+    [SerializeField] float maxFallSpeed = 50f;
+
+    [SerializeField] float slopeLimit = 45f;
 
     [SerializeField] internal bool isGround = false;
     [SerializeField] internal bool isRun = false;
     [SerializeField] internal bool isDie = false;
+    [SerializeField] bool isJump = false;
 
     private void Awake()
     {
         mainCam = Camera.main;
         rigid = GetComponent<Rigidbody>();
+        cap = GetComponent<CapsuleCollider>();
     }
 
     private void Update()
@@ -50,16 +54,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
+            jumpCount++;
             Jump();
         }
     }
 
     private void CheckGround()
     {
-        if (Physics.Raycast(playerMng.cap.bounds.center, Vector3.down,
-            playerMng.cap.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground")) && rigid.velocity.y <= 0)
+        if (Physics.SphereCast(cap.bounds.center, cap.radius, Vector3.down,
+            out RaycastHit hit, cap.bounds.extents.y + 0.2f , LayerMask.GetMask("Ground"))
+            && rigid.velocity.y <= 0.5f)
         {
             isGround = true;
+            isJump = false;
             jumpCount = 0;
         }
         else
@@ -68,22 +75,44 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void CheckSlope()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(playerMng.cap.bounds.center, Vector3.down, out hit,
+            playerMng.cap.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground")))
+        {
+            float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
+
+            if(slopeAngle > slopeLimit) 
+            {
+                rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
+            }
+        }
+    }
+
     private void SetGravity()
     {
-        if(!isGround) 
+        if (!isGround) 
         {
+            fallGravity -= gravity * Time.fixedDeltaTime;
             rigid.velocity += Vector3.up * gravity * Time.fixedDeltaTime;
 
             if (rigid.velocity.y < 0)
             {
                 rigid.velocity += Vector3.up * gravity * (fallGravity - 1) * Time.fixedDeltaTime;
             }
+
+            if (rigid.velocity.y < -maxFallSpeed)
+            {
+                rigid.velocity = new Vector3(rigid.velocity.x, -maxFallSpeed, rigid.velocity.z);
+            }
         }
     }
 
     private void Move()
     {
-        if (isDie) return;
+        if (isDie || isJump) return;
 
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
@@ -93,11 +122,15 @@ public class PlayerMovement : MonoBehaviour
         if (inputDir.magnitude > 0)
         {
             Quaternion cameraRot = Quaternion.Euler(0, mainCam.transform.eulerAngles.y, 0);
-            Vector3 moveDir = cameraRot * inputDir;
+            moveDir = cameraRot * inputDir;
 
             float speed = isRun ? runSpeed : walkSpeed;
 
             rigid.velocity = new Vector3(moveDir.x * speed, rigid.velocity.y, moveDir.z * speed);
+        }
+        else
+        {
+            moveDir = Vector3.zero;
         }
 
         playerMng.anim.SetFloat("Horizontal", moveX);
@@ -106,10 +139,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if(jumpCount < maxJumpCount) 
+        if (jumpCount == 0)
         {
-            rigid.velocity = new Vector3(rigid.velocity.x, jumpForce, rigid.velocity.z);
-            jumpCount++;
+            fallGravity = 0.5f;
+            isJump = true;
+
+            float angle = Vector3.Angle(moveDir, Vector3.up);
+
+            Vector3 jumpDir = (moveDir + Vector3.up).normalized;
+
+            rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
+            rigid.AddForce(jumpDir * jumpForce, ForceMode.Impulse);
+        }
+        else if (jumpCount == 1)
+        {
+            fallGravity = 0.5f;
+            rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
+            rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraGunZoom : MonoBehaviour
+public class CameraFpsZoom : MonoBehaviour
 {
     Camera mainCam;
     [SerializeField] GameObject rifle;
