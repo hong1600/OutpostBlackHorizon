@@ -9,11 +9,11 @@ public class StartDropShipMove : MonoBehaviour
 {
     Camera mainCam;
     [SerializeField] Cinemachine.CinemachineVirtualCamera virtualCam;
-    Cinemachine.CinemachineTransposer virualTransposer;
+    Cinemachine.CinemachineTransposer virtualTransposer;
 
     [SerializeField] Transform pos1;
     [SerializeField] Transform pos2;
-    [SerializeField] float moveSpeed = 10f;
+    [SerializeField] float moveSpeed = 100f;
 
     [SerializeField] GameObject hatch;
     [SerializeField] float hatchSpeed = 2f;
@@ -25,14 +25,15 @@ public class StartDropShipMove : MonoBehaviour
     [SerializeField] Transform playerCamTrs;
 
     [SerializeField] GameObject HUDCanvas;
+    [SerializeField] GameObject TextPanel;
 
     Vector3 playerPos;
-    Vector3 dropShipStartPos = new Vector3(-15, 20, -30);
+    Vector3 dropShipCamPos;
 
     private void Awake()
     {
         mainCam = Camera.main;
-        virualTransposer = virtualCam.GetCinemachineComponent<CinemachineTransposer>();
+        virtualTransposer = virtualCam.GetCinemachineComponent<CinemachineTransposer>();
     }
 
     private void Start()
@@ -40,16 +41,20 @@ public class StartDropShipMove : MonoBehaviour
         player.transform.SetParent(transform);
         player.GetComponent<Rigidbody>().MovePosition(playerStartPos.position);
         playerPos = player.transform.localPosition;
-        hatch.transform.localRotation = Quaternion.Euler(0,0,0);
+        hatch.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
-        virualTransposer.m_FollowOffset = dropShipStartPos;
+        dropShipCamPos = new Vector3(0, 30, -30);
+        virtualTransposer.m_FollowOffset = dropShipCamPos;
         HUDCanvas.SetActive(false);
+        TextPanel.SetActive(true);
         StartCoroutine(StartMove());
     }
 
     IEnumerator StartMove()
     {
         yield return StartCoroutine(StartMovePos(pos1));
+
+        moveSpeed = 40f;
 
         yield return StartCoroutine(StartMovePos(pos2));
     }
@@ -69,6 +74,8 @@ public class StartDropShipMove : MonoBehaviour
 
             yield return null;
         }
+
+        TextPanel.SetActive(false);
 
         if (Vector3.Distance(transform.position, pos2.position) <= 0.1f)
         {

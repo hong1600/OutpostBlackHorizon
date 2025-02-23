@@ -561,7 +561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 7c140c2159d378845849a64ec1f297c1, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 7c140c2159d378845849a64ec1f297c1, type: 3}
       propertyPath: m_LocalScale.x
@@ -690,10 +690,10 @@ PrefabInstance:
       addedObject: {fileID: 1452008012680533825}
     - targetCorrespondingSourceObject: {fileID: 100002, guid: 7c140c2159d378845849a64ec1f297c1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7314224725305083607}
+      addedObject: {fileID: 340896306186796093}
     - targetCorrespondingSourceObject: {fileID: 100002, guid: 7c140c2159d378845849a64ec1f297c1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 340896306186796093}
+      addedObject: {fileID: 7314224725305083607}
     - targetCorrespondingSourceObject: {fileID: 100002, guid: 7c140c2159d378845849a64ec1f297c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 912749300238337307}
@@ -725,6 +725,30 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 7c140c2159d378845849a64ec1f297c1, type: 3}
+--- !u!114 &340896306186796093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7416831019951208465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 457bd4688b08ccc4cb67675371d3bf5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualCam: {fileID: 0}
+  pos1: {fileID: 0}
+  pos2: {fileID: 0}
+  moveSpeed: 100
+  hatch: {fileID: 7416831019951208467}
+  hatchSpeed: 2
+  player: {fileID: 0}
+  playerStartPos: {fileID: 8833211228581516571}
+  hatchCamTrs: {fileID: 9200959415270580000}
+  playerCamTrs: {fileID: 3809020809424621978}
+  HUDCanvas: {fileID: 0}
+  TextPanel: {fileID: 0}
 --- !u!114 &7314224725305083607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -749,29 +773,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   hatchSpeed: 2
---- !u!114 &340896306186796093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7416831019951208465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 457bd4688b08ccc4cb67675371d3bf5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  virtualCam: {fileID: 0}
-  pos1: {fileID: 0}
-  pos2: {fileID: 0}
-  moveSpeed: 100
-  hatch: {fileID: 7416831019951208467}
-  hatchSpeed: 2
-  player: {fileID: 0}
-  playerStartPos: {fileID: 8833211228581516571}
-  hatchCamTrs: {fileID: 9200959415270580000}
-  playerCamTrs: {fileID: 3809020809424621978}
-  HUDCanvas: {fileID: 0}
 --- !u!54 &912749300238337307
 Rigidbody:
   m_ObjectHideFlags: 0

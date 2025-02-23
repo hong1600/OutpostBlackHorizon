@@ -13,7 +13,7 @@ public class EnemyHpBar : MonoBehaviour
     [SerializeField] Image smoothHpValue;
     [SerializeField] float smoothSpeed = 0.5f;
 
-    [SerializeField] Vector3 offset = new Vector3(0f, 3f, 0f);
+    [SerializeField] Vector3 offset = new Vector3(0f, 1f, 0f);
 
     private void OnDisable()
     {
