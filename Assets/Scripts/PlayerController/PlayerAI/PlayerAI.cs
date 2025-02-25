@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class PlayerAI
 {
-    public PlayerMovement playerMovement;
-    public PlayerCombat playerCombat;
+    public PlayerMng playerMng;
 
     public EPlayer aiState = EPlayer.CREATE;
 
-    public void Init(PlayerMovement _playerMovement, PlayerCombat _playerCombat)
+    public void Init(PlayerMng _playerMng)
     {
-        playerMovement = _playerMovement;
-        playerCombat = _playerCombat;
+        playerMng = _playerMng;
     }
 
     public void State()
@@ -36,7 +34,7 @@ public class PlayerAI
                 break;
         }
 
-        playerMovement.ChangeAnim(aiState);
+        playerMng.ChangeAnim(aiState);
     }
 
     public virtual void Create()
@@ -46,21 +44,21 @@ public class PlayerAI
 
     public virtual void Walk()
     {
-        if (playerMovement.isRun) aiState = EPlayer.RUN;
-        if (playerCombat.isAttack) aiState = EPlayer.ATTACK;
-        if (playerMovement.isDie) aiState = EPlayer.DIE;
+        if (playerMng.playerMovement.isRun) aiState = EPlayer.RUN;
+        if (playerMng.playerCombat.isAttack) aiState = EPlayer.ATTACK;
+        if (playerMng.playerStat.isDie) aiState = EPlayer.DIE;
     }
 
     public virtual void Run()
     {
-        if (!playerMovement.isGround) aiState = EPlayer.JUMP;
-        if (playerMovement.isDie) aiState = EPlayer.DIE;
+        if (!playerMng.playerMovement.isGround) aiState = EPlayer.JUMP;
+        if (playerMng.playerStat.isDie) aiState = EPlayer.DIE;
     }
 
     public virtual void Jump()
     {
-        if (playerMovement.isGround) aiState = EPlayer.WALK;
-        if (playerMovement.isDie) aiState = EPlayer.DIE;
+        if (playerMng.playerMovement.isGround) aiState = EPlayer.WALK;
+        if (playerMng.playerStat.isDie) aiState = EPlayer.DIE;
     }
 
     public virtual void Die()

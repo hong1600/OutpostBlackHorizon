@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] PlayerStat playerStat;
+
     Camera mainCam;
     Rigidbody rigid;
     CapsuleCollider cap;
-    [SerializeField] PlayerMng playerMng;
 
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float runSpeed = 10f;
@@ -25,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] internal bool isGround = false;
     [SerializeField] internal bool isRun = false;
-    [SerializeField] internal bool isDie = false;
     [SerializeField] bool isJump = false;
 
     private void Awake()
@@ -79,8 +79,8 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(playerMng.cap.bounds.center, Vector3.down, out hit,
-            playerMng.cap.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground")))
+        if (Physics.Raycast(cap.bounds.center, Vector3.down, out hit,
+            cap.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground")))
         {
             float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
 
@@ -112,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (isDie || isJump) return;
+        if (playerStat.isDie || isJump) return;
 
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
@@ -133,8 +133,11 @@ public class PlayerMovement : MonoBehaviour
             moveDir = Vector3.zero;
         }
 
-        playerMng.anim.SetFloat("Horizontal", moveX);
-        playerMng.anim.SetFloat("Vertical", moveZ);
+        if (Shared.playerMng.anim != null)
+        {
+            Shared.playerMng.anim.SetFloat("Horizontal", moveX);
+            Shared.playerMng.anim.SetFloat("Vertical", moveZ);
+        }
     }
 
     private void Jump()
@@ -156,46 +159,6 @@ public class PlayerMovement : MonoBehaviour
             fallGravity = 0.5f;
             rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
             rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
-    }
-
-    internal IEnumerator StartDie()
-    {
-        yield return new WaitForSeconds(1);
-
-        Reset();
-    }
-
-    private void Reset()
-    {
-        isDie = false;
-        playerMng.playerAI.aiState = EPlayer.CREATE;
-    }
-
-    internal void ChangeAnim(EPlayer _ePlayer)
-    {
-        _ePlayer = playerMng.playerAI.aiState;
-
-        switch (_ePlayer)
-        {
-            case EPlayer.WALK:
-                playerMng.anim.SetInteger("PlayerAnim", (int)EPlayerAnim.WALK);
-                break;
-            case EPlayer.RUN:
-                playerMng.anim.SetInteger("PlayerAnim", (int)EPlayerAnim.RUN);
-                break;
-            case EPlayer.JUMP:
-                playerMng.anim.SetInteger("PlayerAnim", (int)EPlayerAnim.JUMP);
-                break;
-            case EPlayer.LAND:
-                playerMng.anim.SetInteger("PlayerAnim", (int)EPlayerAnim.LAND);
-                break;
-            case EPlayer.ATTACK:
-                playerMng.anim.SetInteger("PlayerAnim", (int)EPlayerAnim.ATTACK);
-                break;
-            case EPlayer.DIE:
-                playerMng.anim.SetInteger("PlayerAnim", (int)EPlayerAnim.DIE);
-                break;
         }
     }
 }

@@ -138,7 +138,7 @@ public abstract class Enemy : MonoBehaviour
 
         if (myTarget.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Shared.playerMng.TakeDmg(attackDmg);
+            Shared.playerMng.playerStat.TakeDmg(attackDmg);
         }
 
         yield return new WaitForSeconds(1f);
