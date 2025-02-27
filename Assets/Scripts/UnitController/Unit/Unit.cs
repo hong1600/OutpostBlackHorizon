@@ -37,12 +37,12 @@ public abstract class Unit : MonoBehaviour
         box = this.GetComponent<BoxCollider>();
 
         unitName = _unitData.unitName;
-        unitIndex = _unitData.index;
+        unitIndex = _unitData.ID;
         attackDamage = _unitData.unitDamage;
-        attackSpeed = _unitData.attackSpeed;
-        attackRange = _unitData.attackRange;
+        attackSpeed = _unitData.unitAttackSpeed;
+        attackRange = _unitData.unitAttackRange;
         eUnitGrade = _unitData.unitGrade;
-        UnitImg = _unitData.unitImg;
+        UnitImg = Resources.Load<Sprite>(_unitData.unitImgPath);
         skillDamage = 50;
 
 

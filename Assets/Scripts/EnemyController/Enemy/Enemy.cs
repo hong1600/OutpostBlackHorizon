@@ -46,7 +46,7 @@ public abstract class Enemy : MonoBehaviour
         anim = this.GetComponent<Animator>();
 
         enemyName = _enemyData.enemyName;
-        enemyHp = _enemyData.enemyHp;
+        enemyHp = _enemyData.enemyMaxHp;
         curhp = enemyHp;
         enemySpeed = _enemyData.enemySpeed;
         rotationSpeed = 5;

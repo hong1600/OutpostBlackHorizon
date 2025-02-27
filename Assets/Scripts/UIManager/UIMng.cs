@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIMng : MonoBehaviour
 {
@@ -42,5 +43,31 @@ public class UIMng : MonoBehaviour
                 buttonParent.gameObject.SetActive(false);
             });
         }
+    }
+
+    public IEnumerator StartFadeOut(Graphic _ui, float _duration)
+    {
+        Color _color = _ui.color;
+        float startAlpha = _color.a;
+        float time = 0f;
+
+        while (time < _duration)
+        {
+            time += Time.deltaTime;
+            _color.a = Mathf.Lerp(startAlpha, 0, time / _duration);
+            _ui.color = _color;
+
+            yield return null;
+        }
+
+        _color.a = 0;
+        _ui.color = _color;
+    }
+
+    public void SetAlpha(Graphic _ui, float _alpha)
+    {
+        Color color = _ui.color;
+        color.a = _alpha;
+        _ui.color = color;
     }
 }

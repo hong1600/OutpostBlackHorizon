@@ -17,3 +17,13 @@ public enum EUnitAnim
     ATTACK,
     SKILL
 }
+
+public enum EUnitGrade
+{
+    NONE,
+    C,
+    B,
+    A,
+    S,
+    SS
+}

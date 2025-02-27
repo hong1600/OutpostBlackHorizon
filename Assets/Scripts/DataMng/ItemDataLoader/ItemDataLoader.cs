@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemDataLoader
+public class ItemDataLoader : MonoBehaviour
 {
     public List<ItemData> items;
 
-    public ItemDataLoader()
+    private void Awake()
     {
-        items = DataMng.instance.itemDataList;
+        
     }
 
     public void LoadItemStates(PlayerData _playerData)
@@ -34,20 +34,6 @@ public class ItemDataLoader
                 loadItem.itemImg = Resources.Load<Sprite>("Items/" + saveItem.index.ToString());
                 _playerData.itemStateList[i] = loadItem;
             }
-        }
-    }
-
-    public void InitializeItems(PlayerData _playerData)
-    {
-        if (_playerData.itemStateList == null)
-        {
-            _playerData.itemStateList = new List<ItemState>();
-        }
-
-        foreach (var itemData in DataMng.instance.itemDataList)
-        {
-            ItemState itemState = new ItemState(itemData);
-            _playerData.itemStateList.Add(itemState);
         }
     }
 }

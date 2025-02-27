@@ -20,13 +20,13 @@ public class UnitState
 
     public UnitState(UnitData _unitData)
     {
-        index = _unitData.index;
+        index = _unitData.ID;
         unitName = _unitData.unitName;
         unitDamage = _unitData.unitDamage;
-        attackSpeed = _unitData.attackSpeed;
-        attackRange = _unitData.attackRange;
+        attackSpeed = _unitData.unitAttackSpeed;
+        attackRange = _unitData.unitAttackRange;
         unitLevel = _unitData.unitLevel;
-        skill1Name = _unitData.skill1Name;
+        skill1Name = _unitData.unitSkillName1;
         unitUpgradeCost = _unitData.unitUpgradeCost;
         unitStoreCost = _unitData.unitStoreCost;
         unitCurExp = _unitData.unitCurExp;

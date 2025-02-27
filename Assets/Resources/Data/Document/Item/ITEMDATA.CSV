@@ -1,0 +1,9 @@
+ID,NameKey,Level,CurExp,MaxExp,StoreCost,UpgradeCost,Effect,Img,Desc
+301,item_301_name,1,0,1,1000,1000,1,Img/Item/Redtear,item_301_desc
+302,item_302_name,1,0,1,1000,1000,1,Img/Item/Fairybow,item_302_desc
+303,item_303_name,1,0,1,1000,1000,1,Img/Item/Goldaxe,item_303_desc
+304,item_304_name,1,0,1,1000,1000,1,Img/Item/Treasurechest,item_304_desc
+305,item_305_name,1,0,1,1000,1000,1,Img/Item/Goldcup,item_305_desc
+306,item_306_name,1,0,1,1000,1000,1,Img/Item/Ladybug,item_306_desc
+307,item_307_name,1,0,1,1000,1000,1,Img/Item/Moneysword,item_307_desc
+308,item_308_name,1,0,1,1000,1000,1,Img/Item/Giantsword,item_308_desc

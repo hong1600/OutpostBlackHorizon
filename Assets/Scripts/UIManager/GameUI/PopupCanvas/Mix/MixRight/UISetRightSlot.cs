@@ -10,6 +10,6 @@ public class UISetRightSlot : MonoBehaviour
 
     public void SetUnit(UnitData _unitdata)
     {
-        unitImg.sprite = _unitdata.unitImg;
+        unitImg.sprite = Resources.Load<Sprite>(_unitdata.unitImgPath);
     }
 }

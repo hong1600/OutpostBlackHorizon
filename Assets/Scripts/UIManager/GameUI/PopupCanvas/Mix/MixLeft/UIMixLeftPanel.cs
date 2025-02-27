@@ -14,11 +14,11 @@ public class UIMixLeftPanel : MonoBehaviour
 
     private void LoadLeftPanel()
     {
-        for (int i = 0; i < DataMng.instance.unitDataLoader.GetUnitData(EUnitGrade.SS).Count; i++)
+        for (int i = 0; i < DataMng.instance.UnitDataLoader.GetUnitByGradeData(EUnitGrade.SS).Count; i++)
         {
             GameObject newBtn = Instantiate(MixBtnPre, mixLeftContent);
             UISetLeftSlot mixslot = newBtn.GetComponent<UISetLeftSlot>();
-            mixslot.SetUnit(DataMng.instance.unitDataLoader.GetUnitData(EUnitGrade.SS)[i], i);
+            mixslot.SetUnit(DataMng.instance.UnitDataLoader.GetUnitByGradeData(EUnitGrade.SS)[i], i);
         }
     }
 }

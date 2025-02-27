@@ -1,4 +1,0 @@
-﻿ID,NameKey,Speed,MaxHp,HpBarPrefab,Desc
-201,enemy_201_name,3,100,Prefabs/Enemy/HpBarPrefab,enemy_201_desc
-202,enemy_202_name,3,500,Prefabs/Enemy/HpBarPrefab,enemy_202_desc
-202,enemy_203_name,3,1000,Prefabs/Enemy/HpBarPrefab,enemy_203_desc

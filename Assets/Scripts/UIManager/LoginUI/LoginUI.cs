@@ -3,76 +3,62 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoginUI : MonoBehaviour
 {
-    [SerializeField] GameObject pressText;
-    [SerializeField] GameObject loginText;
-    [SerializeField] GameObject namePanel;
-    [SerializeField] TMP_InputField nameText;
-    [SerializeField] GameObject text1;
-    [SerializeField] GameObject text2;
-    [SerializeField] GameObject text3;
-    [SerializeField] GameObject text4;
-
-    bool isAnykey;
+    [SerializeField] RawImage videoImg;
+    [SerializeField] GameObject textParent;
+    [SerializeField] TextMeshProUGUI text1;
+    [SerializeField] TextMeshProUGUI text2;
+    [SerializeField] Image img;
+    [SerializeField] GameObject loginPanel;
 
     private void Start()
     {
-        isAnykey = false;
-        Invoke("Anykey", 2.5f);
-
-        StartAnim();
+        Color color = videoImg.color;
+        color.a = 0.5f;
+        videoImg.color = color;
+        StartCoroutine(StartScene());
     }
 
-    private void Update()
+    IEnumerator StartScene()
     {
-        CheckFirst();
+        yield return new WaitForSeconds(2);
+
+        yield return StartCoroutine(StartFadeOut(videoImg, 3));
+
+        textParent.SetActive(true);
+        Shared.videoMng.NextVideo(EVideo.LOGIN);
+
+        yield return new WaitForSeconds(2);
+
+        StartCoroutine(StartFadeOut(text1, 2));
+        StartCoroutine(StartFadeOut(img, 2));
+        yield return StartCoroutine(StartFadeOut(text2, 2));
+
+        Color color = videoImg.color;
+        color.a = 0.05f;
+        videoImg.color = color;
+        loginPanel.SetActive(true);
     }
 
-    private void Anykey()
+    IEnumerator StartFadeOut(Graphic _ui, float _duration)
     {
-        pressText.SetActive(true);
-        loginText.SetActive(false);
-        isAnykey = true;
-    }
+        Color _color = _ui.color;
+        float startAlpha = _color.a;
+        float time = 0f;
 
-    private void CheckFirst()
-    {
-        if (Input.anyKeyDown && isAnykey == true && DataMng.instance.playerData.first == true)
+        while (time < _duration) 
         {
-            namePanel.SetActive(true);
+            time += Time.deltaTime;
+            _color.a = Mathf.Lerp(startAlpha, 0, time / _duration);
+            _ui.color = _color;
+
+            yield return null;
         }
-        else if (Input.anyKeyDown && isAnykey == true && DataMng.instance.playerData.first == false)
-        {
-            SceneMng.Instance.ChangeScene(EScene.LOBBY, true);
-        }
+
+        _color.a = 0;
+        _ui.color = _color;
     }
-
-    public void CheckBtn()
-    {
-        namePanel.SetActive(false);
-        DataMng.instance.playerData.name = nameText.text;
-        DataMng.instance.playerData.first = false;
-        SceneMng.Instance.ChangeScene(EScene.LOBBY, true);
-    }
-
-    private void StartAnim()
-    {
-        StartCoroutine(StartAnimation());
-    }
-
-    IEnumerator StartAnimation()
-    {
-        yield return new WaitForSeconds(1);
-
-        Destroy(text1);
-        Destroy(text2);
-        text4.SetActive(true);
-
-        yield return new WaitForSeconds(0.15f);
-
-        text3.SetActive(true);
-    }
-
 }

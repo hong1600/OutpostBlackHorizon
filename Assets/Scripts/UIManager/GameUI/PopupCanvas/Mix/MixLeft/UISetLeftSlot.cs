@@ -11,7 +11,7 @@ public class UISetLeftSlot : MonoBehaviour
 
     public void SetUnit(UnitData _unitdata, int _index)
     {
-        unitImg.sprite = _unitdata.unitImg;
+        unitImg.sprite = Resources.Load<Sprite>(_unitdata.unitImgPath);
         num = _index;
     }
 }
