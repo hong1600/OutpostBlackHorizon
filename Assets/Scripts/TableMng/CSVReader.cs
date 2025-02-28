@@ -218,7 +218,11 @@ public class CSVReader
             val = "";
             return;
         }
-
+        if (s.StartsWith("\"") && s.EndsWith("\""))
+        {
+            s = s.Substring(1, s.Length - 2);
+            s = s.Replace("\"\"", "\"");
+        }
         val = s;
     }
 
@@ -229,7 +233,6 @@ public class CSVReader
 
         if (string.IsNullOrEmpty(s))
         {
-            Debug.LogWarning($"빈 Enum 값: 기본값({default(T)})으로 설정.");
             val = default;
             return;
         }
@@ -240,7 +243,6 @@ public class CSVReader
         }
         else
         {
-            Debug.LogWarning($"잘못된 Enum 값: {s}. 기본값({default(T)})으로 설정.");
             val = default;
         }
     }

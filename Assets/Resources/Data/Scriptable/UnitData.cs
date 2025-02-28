@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,7 @@ public class UnitData : ScriptableObject
     public float unitStoreCost;
     public string unitMixNeedUnit;
     public string unitDesc;
+
     public UnitData[] unitMixNeedUnits;
 }
 
@@ -32,5 +34,10 @@ public class UnitDataBase : ScriptableObject
     public UnitData GetUnitID(int _id)
     {
         return unitList.Find(unit => unit.ID == _id);
+    }
+
+    public UnitData GetUnitName(string _name)
+    {
+        return unitList.Find(unit => unit.unitName == _name);
     }
 }

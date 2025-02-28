@@ -26,7 +26,5 @@ public class EnemyDataLoader : MonoBehaviour
 
             enemyDataBase.enemyList.Add(enemyData);
         }
-
-        Debug.Log(enemyDataBase);
     }
 }

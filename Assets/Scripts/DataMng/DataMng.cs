@@ -10,6 +10,7 @@ public class DataMng : MonoBehaviour
 
     [SerializeField] UnitDataLoader unitDataLoader;
     [SerializeField] EnemyDataLoader enemyDataLoader;
+    [SerializeField] UserDataLoader userDataLoader;
 
     private void Awake()
     {
@@ -26,12 +27,11 @@ public class DataMng : MonoBehaviour
 
         UnitDataLoader = unitDataLoader;
         EnemyDataLoader = enemyDataLoader;
+        UserDataLoader = userDataLoader;
     }
 
-    public PlayerDataLoader PlayerDataLoader { get; private set; }
-    public DataSaveLoader DataSaveLoader { get; private set; }
     public UnitDataLoader UnitDataLoader { get; private set; }
     public EnemyDataLoader EnemyDataLoader { get; private set; }
-    public ItemDataLoader ItemDataLoader { get; private set; }
+    public UserDataLoader UserDataLoader { get; private set; }
 }
 

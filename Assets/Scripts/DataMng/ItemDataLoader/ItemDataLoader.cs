@@ -11,7 +11,7 @@ public class ItemDataLoader : MonoBehaviour
         
     }
 
-    public void LoadItemStates(PlayerData _playerData)
+    public void LoadItemStates(UserData _playerData)
     {
         for (int i = 0; i < _playerData.itemStateList.Count; i++)
         {

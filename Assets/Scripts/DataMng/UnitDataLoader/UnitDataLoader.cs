@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class UnitDataLoader : MonoBehaviour
@@ -38,9 +41,16 @@ public class UnitDataLoader : MonoBehaviour
             unitData.unitMixNeedUnit = unitInfo.MixNeedUnit;
             unitData.unitDesc = unitInfo.Desc;
 
+            if (!string.IsNullOrEmpty(unitInfo.MixNeedUnit))
+            {
+                ConvertStringToArray(unitData, unitInfo);
+            }
+
             unitDataBase.unitList.Add(unitData);
             unitByGradeDataList.Add(unitData);
         }
+
+        Debug.Log(unitDataBase.unitList);
     }
 
     public void UnitGradeData()
@@ -64,5 +74,23 @@ public class UnitDataLoader : MonoBehaviour
             return unitGradeDataDic[_grade];
         }
         return null;
+    }
+
+    public void ConvertStringToArray(UnitData _unitData, Table_Unit.Info _info)
+    {
+        string[] unitNames = _unitData.unitMixNeedUnit.Split(',');
+        _unitData.unitMixNeedUnits = new UnitData[unitNames.Length];
+
+        for (int i = 0; i < unitNames.Length; i++)
+        {
+            string unitName = unitNames[i].Trim();
+
+            UnitData mixUnitData = unitDataBase.GetUnitName(unitName);
+
+            if (mixUnitData != null)
+            {
+                _unitData.unitMixNeedUnits[i] = mixUnitData;
+            }
+        }
     }
 }
