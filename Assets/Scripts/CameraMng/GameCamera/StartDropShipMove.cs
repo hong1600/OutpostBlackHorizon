@@ -26,6 +26,8 @@ public class StartDropShipMove : MonoBehaviour
 
     [SerializeField] GameObject HUDCanvas;
     [SerializeField] GameObject TextPanel;
+    [SerializeField] GameObject customMouse;
+    [SerializeField] GameObject camMng;
 
     Vector3 playerPos;
     Vector3 dropShipCamPos;
@@ -42,6 +44,8 @@ public class StartDropShipMove : MonoBehaviour
         player.GetComponent<Rigidbody>().MovePosition(playerStartPos.position);
         playerPos = player.transform.localPosition;
         hatch.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        customMouse.SetActive(false);
+        camMng.SetActive(false);
 
         dropShipCamPos = new Vector3(0, 30, -30);
         virtualTransposer.m_FollowOffset = dropShipCamPos;
@@ -70,7 +74,8 @@ public class StartDropShipMove : MonoBehaviour
 
             transform.position = Vector3.MoveTowards
                 (transform.position, _target.position, speed * Time.deltaTime);
-            player.GetComponent<Rigidbody>().MovePosition(playerStartPos.position);
+            player.transform.position = playerStartPos.position;
+            //player.GetComponent<Rigidbody>().MovePosition(playerStartPos.position);
 
             yield return null;
         }
@@ -137,10 +142,7 @@ public class StartDropShipMove : MonoBehaviour
     IEnumerator StartChangePlayer()
     {
         virtualCam.enabled = false;
-        CinemachineBrain brain = mainCam.GetComponent<CinemachineBrain>();
-        brain.enabled = false;
-        CameraMng camMng = mainCam.GetComponent<CameraMng>();
-        camMng.enabled = true;
+        camMng.SetActive(true);
 
         yield return new WaitForSeconds(1.5f);
 

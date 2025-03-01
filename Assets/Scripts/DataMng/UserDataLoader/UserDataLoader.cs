@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class UserDataLoader : MonoBehaviour
 {
+    public UserData curUserData;
     const string USERDATA_KEY = "USERDATA_";
 
-    public void SaveUserData(UserData userData)
+    public void SaveUserData()
     {
-        string jsonData = JsonUtility.ToJson(userData, prettyPrint: true);
+        string jsonData = JsonUtility.ToJson(curUserData, prettyPrint: true);
 
-        PlayerPrefs.SetString(USERDATA_KEY + userData.userID, jsonData);
+        PlayerPrefs.SetString(USERDATA_KEY + curUserData.userID, jsonData);
         PlayerPrefs.Save();
     }
 
@@ -23,6 +24,7 @@ public class UserDataLoader : MonoBehaviour
         {
             string jsonData = PlayerPrefs.GetString(key);
             UserData userData = JsonUtility.FromJson<UserData>(jsonData);
+            curUserData = userData;
 
             return userData;
         }

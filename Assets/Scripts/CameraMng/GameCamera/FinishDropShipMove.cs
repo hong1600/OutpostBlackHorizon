@@ -13,6 +13,7 @@ public class FinishDropShipMove : MonoBehaviour
     [SerializeField] Cinemachine.CinemachineVirtualCamera virtualCam;
     Cinemachine.CinemachineTransposer virualTransposer;
 
+    [SerializeField] CameraMng camMng;
     [SerializeField] GameObject dropShip;
     [SerializeField] GameObject HUDCanvas;
     [SerializeField] GameObject hatch;
@@ -44,6 +45,7 @@ public class FinishDropShipMove : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
+            camMng.enabled = false;
             virtualCam.transform.position = mainCam.transform.position;
             virtualCam.transform.rotation = mainCam.transform.rotation;
             virtualCam.enabled = true;
@@ -99,5 +101,9 @@ public class FinishDropShipMove : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         transform.DOMove(movePosList[1].position, 10).SetEase(Ease.InOutSine);
+
+        yield return new WaitForSeconds(3);
+
+        SceneMng.Instance.ChangeScene(EScene.WAITING, true);
     }
 }

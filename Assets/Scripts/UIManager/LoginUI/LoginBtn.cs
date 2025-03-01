@@ -13,17 +13,22 @@ public class LoginBtn : MonoBehaviour
 
     public void ClickRegisterBtn()
     {
-
+        loginMng.ClickRegister();
     }
 
     public void ClickRegisterCheckBtn()
     {
-
+        loginMng.ClickRegisterCheck();
     }
 
     public void ClickRegisterCancleBtn()
     {
+        loginMng.ClickRegisterCancle();
+    }
 
+    public void ClickDataClearBtn()
+    {
+        PlayerPrefs.DeleteAll();
     }
 
 }

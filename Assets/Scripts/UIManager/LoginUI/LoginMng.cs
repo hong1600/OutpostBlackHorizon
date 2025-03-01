@@ -10,6 +10,9 @@ public class LoginMng : MonoBehaviour
     [SerializeField] TMP_InputField inputUserName;
     [SerializeField] TextMeshProUGUI statusText;
 
+    [SerializeField] GameObject userNamePanel;
+    [SerializeField] TextMeshProUGUI nameStatusText;
+
     private const string USERKEY = "USER_";
     private const string USERRPASSWORDKEY = "_PASSWORD";
 
@@ -25,6 +28,32 @@ public class LoginMng : MonoBehaviour
         }
 
         Login(userID, userPassword);
+    }
+
+    private void Login(string _id, string _password)
+    {
+        string savedID = PlayerPrefs.GetString(USERKEY + _id, "");
+        string savedPassword = PlayerPrefs.GetString(USERKEY + _id + USERRPASSWORDKEY, "");
+
+        if (savedID == _id && savedPassword == _password)
+        {
+            SetstatusText("게임 접속 중...", Color.white);
+
+            UserData loadData = DataMng.instance.UserDataLoader.LoadUserData(_id);
+
+            if (loadData.first)
+            {
+                userNamePanel.SetActive(true);
+            }
+            else
+            {
+                SceneMng.Instance.ChangeScene(EScene.LOBBY);
+            }
+        }
+        else
+        {
+            SetstatusText("아이디 또는 비밀번호가 올바르지 않습니다", Color.red);
+        }
     }
 
     public void ClickRegister()
@@ -44,7 +73,7 @@ public class LoginMng : MonoBehaviour
             return;
         }
 
-        if (inputUserName.text.Length > 1) return;
+        if (inputID.text.Length < 1) return;
 
         PlayerPrefs.SetString(USERKEY + userID, userID);
         PlayerPrefs.SetString(USERKEY + userID + USERRPASSWORDKEY, userPassword);
@@ -53,7 +82,7 @@ public class LoginMng : MonoBehaviour
         UserData newUserData = new UserData()
         {
             userID = userID,
-            userName = inputUserName.text.Trim(),
+            userName = "",
             userLevel = 1,
             curExp = 0,
             maxExp = 100,
@@ -63,25 +92,29 @@ public class LoginMng : MonoBehaviour
             first = true
         };
 
-        DataMng.instance.UserDataLoader.SaveUserData(newUserData);
-        SetstatusText("회원가입이 완료되었습니다.", Color.green);
+        DataMng.instance.UserDataLoader.curUserData = newUserData;
+        DataMng.instance.UserDataLoader.SaveUserData();
+        SetstatusText("회원가입이 완료되었습니다.", Color.white);
     }
 
-    private void Login(string _id, string _password)
+    public void ClickRegisterCheck()
     {
-        string savedID = PlayerPrefs.GetString(USERKEY + _id, "");
-        string savedPassword = PlayerPrefs.GetString(USERKEY + _id + USERRPASSWORDKEY, "");
-
-        if (savedID == _id && savedPassword == _password)
+        if (!string.IsNullOrEmpty(inputUserName.text) && inputUserName.text.Length > 1)
         {
-            SetstatusText("게임 접속 중...", Color.black);
-
-            UserData loadData = DataMng.instance.UserDataLoader.LoadUserData(_id);
+            DataMng.instance.UserDataLoader.curUserData.userName = inputUserName.text;
+            DataMng.instance.UserDataLoader.curUserData.first = false;
+            SceneMng.Instance.ChangeScene(EScene.LOBBY);
+            DataMng.instance.UserDataLoader.SaveUserData();
         }
         else
         {
-            SetstatusText("아이디 또는 비밀번호가 올바르지 않습니다", Color.red);
+            SetstatusText(nameStatusText.text, Color.red);
         }
+    }
+
+    public void ClickRegisterCancle()
+    {
+        userNamePanel.SetActive(false);
     }
 
     private void LoadUserData(string _id)
