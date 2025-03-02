@@ -54,13 +54,13 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
                 switch (_index)
                 {
                     case 0:
-                        return spawnCoin0 <= Shared.gameMng.iGoldCoin.GetCoin();
+                        return spawnCoin0 <= Shared.gameMng.GoldCoin.GetCoin();
 
                     case 1:
-                        return spawnCoin1 <= Shared.gameMng.iGoldCoin.GetCoin();
+                        return spawnCoin1 <= Shared.gameMng.GoldCoin.GetCoin();
 
                     case 2:
-                        return spawnCoin2 <= Shared.gameMng.iGoldCoin.GetCoin();
+                        return spawnCoin2 <= Shared.gameMng.GoldCoin.GetCoin();
 
                     default:
                         return false;

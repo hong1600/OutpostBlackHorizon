@@ -102,4 +102,14 @@ public class Table_Unit : Table_Base
             }
         }
     }
+
+    //System.Func<object, bool> UpdateAction = null;
+    //UpdateAction = 함수연결
+    //System.Action<bool> FinishAction = null;
+    //FinishAction = 함수연결
+    //delegate void CallBack();
+    //CallBack callback = null;
+    //callback = 함수연결
+    //async => await 비동기
+    //변수 호출시 연결된 함수 실행
 }

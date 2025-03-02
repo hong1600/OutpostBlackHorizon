@@ -84,13 +84,13 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
 
     public void UpgradeGrade(int _index, int _cost, int _amount, List<EUnitGrade> _grades, string _type)
     {
-        if (_type == "Gold" && Shared.gameMng.iGoldCoin.GetGold() >= _cost)
+        if (_type == "Gold" && Shared.gameMng.GoldCoin.GetGold() >= _cost)
         {
             UnitUpgradeCost(ref upgradeCosts[_index], _cost, _type, _index);
 
             upgradeLevels[_index]++;
         }
-        else if (_type == "Coin" && Shared.gameMng.iGoldCoin.GetGold() >= _cost)
+        else if (_type == "Coin" && Shared.gameMng.GoldCoin.GetGold() >= _cost)
         {
             UnitUpgradeCost(ref upgradeCosts[_index], _cost, _type, _index);
 
@@ -114,9 +114,9 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
     public void UnitUpgradeCost(ref int _cost, int _amount, string _type, int _index)
     {
         if (_type == "Gold")
-            Shared.gameMng.iGoldCoin.UseGold(_cost);
+            Shared.gameMng.GoldCoin.UseGold(_cost);
         else if (_type == "Coin")
-            Shared.gameMng.iGoldCoin.UseGold(_cost);
+            Shared.gameMng.GoldCoin.UseGold(_cost);
 
         if (upgradeLevels[_index] < 5)
         {

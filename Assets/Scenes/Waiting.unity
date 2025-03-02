@@ -554,10 +554,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 204749847}
-  - {fileID: 547101269}
   - {fileID: 1167966857}
   - {fileID: 65942456}
   - {fileID: 1258414887}
+  - {fileID: 547101269}
   m_Father: {fileID: 1325150136}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -868,6 +868,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ManagerLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 1864936623593207802, guid: 33b0339096b651746b0a9244bf933086, type: 3}
+      propertyPath: dataMng
+      value: 
+      objectReference: {fileID: 4030406994812521334, guid: 03eb3c2fceddc3740beab33fae279ce8, type: 3}
     - target: {fileID: 5609326875289353199, guid: 33b0339096b651746b0a9244bf933086, type: 3}
       propertyPath: m_RootOrder
       value: 3

@@ -10,12 +10,12 @@ public class UIRoundPanel : MonoBehaviour
     private void Start()
     {
         RoundPanel();
-        Shared.gameMng.iRound.onRoundEvent += RoundPanel;
+        Shared.gameMng.Round.onRoundEvent += RoundPanel;
     }
 
     private void RoundPanel()
     {
         if (roundText == null) return;
-        roundText.text = $"WAVE {Shared.gameMng.iRound.GetCurRound().ToString()}";
+        roundText.text = $"WAVE {Shared.gameMng.Round.GetCurRound().ToString()}";
     }
 }

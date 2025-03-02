@@ -5,19 +5,19 @@ using UnityEngine;
 
 public class UISpeedUpBtn : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI speedText;
+    //[SerializeField] TextMeshProUGUI speedText;
 
-    public void SpeedUpBtn()
-    {
-        if (Shared.gameMng.iSpeedUp.GetIsSpeedUp())
-        {
-            Shared.gameMng.iSpeedUp.SetIsSpeedUp(false);
-            speedText.text = "X1";
-        }
-        else
-        {
-            Shared.gameMng.iSpeedUp.SetIsSpeedUp(true);
-            speedText.text = "X2";
-        }
-    }
+    //public void SpeedUpBtn()
+    //{
+    //    if (Shared.gameMng.sp.GetIsSpeedUp())
+    //    {
+    //        Shared.gameMng.iSpeedUp.SetIsSpeedUp(false);
+    //        speedText.text = "X1";
+    //    }
+    //    else
+    //    {
+    //        Shared.gameMng.iSpeedUp.SetIsSpeedUp(true);
+    //        speedText.text = "X2";
+    //    }
+    //}
 }

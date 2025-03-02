@@ -38,7 +38,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
     public void SpawnEnemy()
     {
-        if (Shared.gameMng.iRound.GetCurRound() == 0 || Shared.gameMng.iRound.GetIsBossRound()) { return; }
+        if (Shared.gameMng.Round.GetCurRound() == 0 || Shared.gameMng.Round.GetIsBossRound()) { return; }
 
         if (enemySpawnDelay <= 0)
         {

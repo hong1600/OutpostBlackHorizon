@@ -182,10 +182,10 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator StartDie()
     {
-        Shared.gameMng.iRewarder.SetReward(EReward.GOLD, 50);
-        Shared.gameMng.iRewarder.SetReward(EReward.GEM, 10);
-        Shared.gameMng.iRewarder.SetReward(EReward.PAPER, 20);
-        Shared.gameMng.iRewarder.SetReward(EReward.EXP, 1);
+        Shared.gameMng.Rewarder.SetReward(EReward.GOLD, 50);
+        Shared.gameMng.Rewarder.SetReward(EReward.GEM, 10);
+        Shared.gameMng.Rewarder.SetReward(EReward.PAPER, 20);
+        Shared.gameMng.Rewarder.SetReward(EReward.EXP, 1);
 
         yield return new WaitForSeconds(1f);
 

@@ -35,7 +35,7 @@ public class CameraTopToFps : MonoBehaviour
 
     private void Start()
     {
-        curViewState = Shared.gameMng.iViewState.GetViewState();
+        curViewState = Shared.gameMng.ViewState.GetViewState();
 
         isArrive = true;
 
@@ -50,14 +50,14 @@ public class CameraTopToFps : MonoBehaviour
         {
             if (curViewState == EViewState.FPS)
             {
-                Shared.gameMng.iViewState.SetViewState(EViewState.TOP);
+                Shared.gameMng.ViewState.SetViewState(EViewState.TOP);
             }
             else
             {
-                Shared.gameMng.iViewState.SetViewState(EViewState.FPS);
+                Shared.gameMng.ViewState.SetViewState(EViewState.FPS);
             }
 
-            curViewState = Shared.gameMng.iViewState.GetViewState();
+            curViewState = Shared.gameMng.ViewState.GetViewState();
 
             SetCameraMode(curViewState);
         }

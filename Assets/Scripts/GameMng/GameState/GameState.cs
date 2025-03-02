@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public interface IGameState
 
 public class GameState : MonoBehaviour, IGameState
 {
+    public event Action onGameFinish;
+
     [SerializeField] EGameState curGameState;
 
     private void Awake()
@@ -20,6 +23,11 @@ public class GameState : MonoBehaviour, IGameState
     public void SetGameState(EGameState _state)
     { 
         curGameState = _state; 
+
+        if(_state == EGameState.GAMECLEAR) 
+        {
+            onGameFinish?.Invoke();
+        }
     }
 
     public EGameState GetGameState() 

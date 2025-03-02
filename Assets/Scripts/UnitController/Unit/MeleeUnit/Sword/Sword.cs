@@ -20,7 +20,7 @@ public class Sword : MeleeUnit
 
         if (rand < 5)
         {
-            Shared.gameMng.iGoldCoin.SetGold(10);
+            Shared.gameMng.GoldCoin.SetGold(10);
 
             EEffect eEffect = (EEffect)EEffect.SWORD;
             GameObject effect = Shared.objectPoolMng.iEffectPool.FindEffect(eEffect);

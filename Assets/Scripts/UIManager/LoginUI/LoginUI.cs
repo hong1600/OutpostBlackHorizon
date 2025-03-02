@@ -38,7 +38,7 @@ public class LoginUI : MonoBehaviour
         yield return StartCoroutine(StartFadeOut(text2, 2));
 
         Color color = videoImg.color;
-        color.a = 0.05f;
+        color.a = 0.5f;
         videoImg.color = color;
         loginPanel.SetActive(true);
     }

@@ -32,7 +32,7 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
 
     public bool CanSpawn()
     {
-        if (spawnGold <= Shared.gameMng.iGoldCoin.GetGold() && Shared.unitMng.GetAllUnitList().Count < 20)
+        if (spawnGold <= Shared.gameMng.GoldCoin.GetGold() && Shared.unitMng.GetAllUnitList().Count < 20)
         {
             return true;
         }
@@ -41,7 +41,7 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
 
     public void UseGold()
     {
-        Shared.gameMng.iGoldCoin.SetGold(-spawnGold);
+        Shared.gameMng.GoldCoin.SetGold(-spawnGold);
         spawnGold += 2;
     }
 

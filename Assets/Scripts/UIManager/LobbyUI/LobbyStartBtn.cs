@@ -6,6 +6,6 @@ public class LobbyStartBtn : MonoBehaviour
 {
     public void ClickGameStartBtn()
     {
-        SceneMng.Instance.ChangeScene(EScene.WAITING, true);
+        SceneMng.Instance.ChangeScene(EScene.WAITING);
     }
 }

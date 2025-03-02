@@ -14,7 +14,7 @@ public class UISpawnBtn : MonoBehaviour
 
     public void ClickSpawnBtn()
     {
-        if (Shared.gameMng.iGoldCoin.GetGold() > Shared.unitMng.iUnitSpawner.GetSpawnGold())
+        if (Shared.gameMng.GoldCoin.GetGold() > Shared.unitMng.iUnitSpawner.GetSpawnGold())
         {
             Shared.unitMng.iUnitSpawner.SpawnUnit();
         }

@@ -13,8 +13,8 @@ public class UIUpgradePanel : MonoBehaviour
 
     private void OnEnable()
     {
-        Shared.gameMng.iGoldCoin.onGoldChanged += GoldCoinPanel;
-        Shared.gameMng.iGoldCoin.onCoinChanged += GoldCoinPanel;
+        Shared.gameMng.GoldCoin.onGoldChanged += GoldCoinPanel;
+        Shared.gameMng.GoldCoin.onCoinChanged += GoldCoinPanel;
         Shared.unitMng.iUnitUpgrader.onUpgradeCostChange += UpgradeCostPanel;
         Shared.unitMng.iUnitUpgrader.onUpgradeLevelChange += UpgradeLevelPanel;
         Shared.unitMng.iUnitUpgrader.onUpgradePerChange += UpgradePerPanel;
@@ -22,8 +22,8 @@ public class UIUpgradePanel : MonoBehaviour
 
     private void OnDisable()
     {
-        Shared.gameMng.iGoldCoin.onGoldChanged -= GoldCoinPanel;
-        Shared.gameMng.iGoldCoin.onCoinChanged -= GoldCoinPanel;
+        Shared.gameMng.GoldCoin.onGoldChanged -= GoldCoinPanel;
+        Shared.gameMng.GoldCoin.onCoinChanged -= GoldCoinPanel;
         Shared.unitMng.iUnitUpgrader.onUpgradeCostChange -= UpgradeCostPanel;
         Shared.unitMng.iUnitUpgrader.onUpgradeLevelChange -= UpgradeLevelPanel;
         Shared.unitMng.iUnitUpgrader.onUpgradePerChange -= UpgradePerPanel;
@@ -39,8 +39,8 @@ public class UIUpgradePanel : MonoBehaviour
 
     private void GoldCoinPanel()
     {
-        upgradeGoldText.text = Shared.gameMng.iGoldCoin.GetGold().ToString();
-        upgradeCoinText.text = Shared.gameMng.iGoldCoin.GetCoin().ToString();
+        upgradeGoldText.text = Shared.gameMng.GoldCoin.GetGold().ToString();
+        upgradeCoinText.text = Shared.gameMng.GoldCoin.GetCoin().ToString();
     }
 
     private void UpgradeCostPanel()

@@ -49,8 +49,6 @@ public class UnitDataLoader : MonoBehaviour
             unitDataBase.unitList.Add(unitData);
             unitByGradeDataList.Add(unitData);
         }
-
-        Debug.Log(unitDataBase.unitList);
     }
 
     public void UnitGradeData()

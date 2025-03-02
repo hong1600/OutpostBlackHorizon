@@ -16,6 +16,8 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] float rifleSpeed;
     [SerializeField] float grenadeSpeed;
 
+    public float dmg { get; set; } = 1f;
+
     private void Update()
     {
         if (Input.GetMouseButton(0) && !isAttack && gunMng.curBulletCount >= 1) 

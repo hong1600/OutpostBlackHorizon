@@ -11,15 +11,7 @@ public class GameMng : MonoBehaviour
     [SerializeField] GameState gameState;
     [SerializeField] GoldCoin goldCoin;
     [SerializeField] Rewarder rewarder;
-    [SerializeField] SpeedUp speedUp;
     [SerializeField] ViewState viewState;
-    public ISpawnTimer iSpawnTimer;
-    public IRound iRound;
-    public IGameState iGameState;
-    public IGoldCoin iGoldCoin;
-    public IRewarder iRewarder;
-    public ISpeedUp iSpeedUp;
-    public IViewState iViewState;
 
     private void Awake()
     {
@@ -32,29 +24,36 @@ public class GameMng : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        iSpawnTimer = spawnTimer;
-        iRound = round;
-        iGameState = gameState;
-        iGoldCoin = goldCoin;
-        iRewarder = rewarder;
-        iSpeedUp = speedUp;
-        iViewState = viewState;
+        SpawnTimer = spawnTimer;
+        Round = round;
+        GameState = gameState;
+        GoldCoin = goldCoin;
+        Rewarder = rewarder;
+        ViewState = viewState;
     }
 
     private void Update()
     {
-        if (!iRound.GetIsBossRound())
+        if (!round.GetIsBossRound())
         {
-            if (iSpawnTimer.GetIsSpawnTime())
+            if (spawnTimer.GetIsSpawnTime())
             {
                 Shared.enemyMng.iEnemySpawner.SpawnEnemy();
             }
         }
-        else if(iRound.GetIsBossRound())
+        else if(round.GetIsBossRound())
         {
             Shared.enemyMng.iBossSpawner.SpawnBoss();
         }
 
         Shared.enemyMng.iWaveBossSpawner.SpawnWaveBossTime();
     }
+
+    public SpawnTimer SpawnTimer { get; private set; }
+    public Round Round { get; private set; }
+    public GameState GameState { get; private set; }
+    public GoldCoin GoldCoin { get; private set; }
+    public Rewarder Rewarder { get; private set; }
+    public ViewState ViewState { get; private set; }
+
 }

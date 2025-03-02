@@ -34,7 +34,7 @@ public class SpawnTimer : MonoBehaviour, ISpawnTimer
 
     IEnumerator StartTimerLoop()
     {
-        while (Shared.gameMng.iGameState.GetGameState() == EGameState.PLAYING)
+        while (Shared.gameMng.GameState.GetGameState() == EGameState.PLAYING)
         {
             Timer();
             yield return null;
@@ -43,7 +43,7 @@ public class SpawnTimer : MonoBehaviour, ISpawnTimer
 
     private void Timer()
     {
-        if (Shared.gameMng.iRound.GetIsBossRound())
+        if (Shared.gameMng.Round.GetIsBossRound())
         {
             sec = 0f;
         }
@@ -71,8 +71,8 @@ public class SpawnTimer : MonoBehaviour, ISpawnTimer
     {
         spawnTime = true;
 
-        Shared.gameMng.iRound.SetCurRound(1);
-        Shared.gameMng.iRound.RoundCheck();
+        Shared.gameMng.Round.SetCurRound(1);
+        Shared.gameMng.Round.RoundCheck();
         sec = 20f;
         maxSec = sec;
 

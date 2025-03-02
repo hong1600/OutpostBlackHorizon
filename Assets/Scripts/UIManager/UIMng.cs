@@ -64,6 +64,26 @@ public class UIMng : MonoBehaviour
         _ui.color = _color;
     }
 
+    public IEnumerator StartFadeIn(Graphic _ui, float _duration)
+    {
+        Color _color = _ui.color;
+        float startAlpha = _color.a;
+        float time = 0f;
+
+        while (time < _duration)
+        {
+            time += Time.deltaTime;
+            _color.a = Mathf.Lerp(startAlpha, time / _duration, 100);
+            _ui.color = _color;
+
+            yield return null;
+        }
+
+        _color.a = 100;
+        _ui.color = _color;
+    }
+
+
     public void SetAlpha(Graphic _ui, float _alpha)
     {
         Color color = _ui.color;

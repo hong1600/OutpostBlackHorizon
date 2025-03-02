@@ -11,8 +11,8 @@ public class UIInGameMoneyPanel : MonoBehaviour
 
     private void Start()
     {
-        Shared.gameMng.iGoldCoin.onGoldChanged += InGameMoneyPanel;
-        Shared.gameMng.iGoldCoin.onCoinChanged += InGameMoneyPanel;
+        Shared.gameMng.GoldCoin.onGoldChanged += InGameMoneyPanel;
+        Shared.gameMng.GoldCoin.onCoinChanged += InGameMoneyPanel;
         Shared.unitMng.onUnitCountEvent += UnitCounterPanel;
 
         InGameMoneyPanel();
@@ -21,8 +21,8 @@ public class UIInGameMoneyPanel : MonoBehaviour
 
     private void InGameMoneyPanel()
     {
-        myGoldText.text = Shared.gameMng.iGoldCoin.GetGold().ToString();
-        myCoinText.text = Shared.gameMng.iGoldCoin.GetCoin().ToString();
+        myGoldText.text = Shared.gameMng.GoldCoin.GetGold().ToString();
+        myCoinText.text = Shared.gameMng.GoldCoin.GetCoin().ToString();
     }
 
     private void UnitCounterPanel()

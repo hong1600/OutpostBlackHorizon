@@ -51,7 +51,7 @@ public class GunMovement : MonoBehaviour
 
     private void WalkSwayGun(Vector2 _inputKey)
     {
-        if (Shared.gameMng.iViewState.GetViewState() == 
+        if (Shared.gameMng.ViewState.GetViewState() == 
             EViewState.TOP || !Shared.cameraMng.getCameraTopToFps.isArrive) return;
 
         if (_inputKey.x != 0 || _inputKey.y != 0)

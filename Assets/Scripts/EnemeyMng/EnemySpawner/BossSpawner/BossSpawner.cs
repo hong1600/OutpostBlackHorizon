@@ -24,7 +24,7 @@ public class BossSpawner : MonoBehaviour, IBossSpawner
 
             Shared.enemyMng.iEnemySpawner.SetEnemySpawnDelay(100f);
 
-            Shared.gameMng.iSpawnTimer.SetIsSpawnTime(false);
+            Shared.gameMng.SpawnTimer.SetIsSpawnTime(false);
         }
     }
 }

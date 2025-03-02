@@ -16,10 +16,10 @@ public class Boss : Enemy
     protected internal override void Die()
     {
         base.Die();
-        Shared.gameMng.iGoldCoin.SetGold(300);
-        Shared.gameMng.iGoldCoin.SetCoin(4);
-        Shared.gameMng.iRound.SetBossRound(false);
-        Shared.gameMng.iSpawnTimer.SetSec(15f);
+        Shared.gameMng.GoldCoin.SetGold(300);
+        Shared.gameMng.GoldCoin.SetCoin(4);
+        Shared.gameMng.Round.SetBossRound(false);
+        Shared.gameMng.SpawnTimer.SetSec(15f);
         Shared.enemyMng.iEnemySpawner.SetEnemySpawnDelay(0.85f);
     }
 

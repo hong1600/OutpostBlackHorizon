@@ -6,18 +6,39 @@ using UnityEngine;
 public class LobbyUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] GameObject blackPanel;
     UnitDataBase unitData;
     UserData userData;
 
 
     private void Awake()
     {
-        unitData = DataMng.instance.UnitDataLoader.unitDataBase;
-        userData = DataMng.instance.UserDataLoader.curUserData;
+        if (DataMng.instance.UserDataLoader.curUserData != null)
+        {
+            unitData = DataMng.instance.UnitDataLoader.unitDataBase;
+            userData = DataMng.instance.UserDataLoader.curUserData;
+        }
     }
 
     private void Start()
     {
-        nameText.text = $"{unitData.GetUnitID(101).unitName}{userData.userName}";
+        if (DataMng.instance.UserDataLoader.curUserData != null)
+        {
+            nameText.text = $"{unitData.GetUnitID(101).unitName}{userData.userName}";
+        }
+
+        Invoke("OffBlackPanel", 1);
+
+        StartCoroutine(StartLobbyAnim());
+    }
+
+    private void OffBlackPanel()
+    {
+        blackPanel.SetActive(false);
+    }
+
+    IEnumerator StartLobbyAnim()
+    {
+        yield return new WaitForSeconds(1);
     }
 }
