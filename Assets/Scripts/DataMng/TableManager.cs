@@ -6,19 +6,13 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-public interface ITableMgr
+public class TableManager
 {
-    void Init(ETable Name);
-    void Save(ETable Name);
-}
-
-public class TableMgr : ITableMgr
-{
-    public Table_Unit unit = new Table_Unit();
+    public TableUnit unit = new TableUnit();
     public Table_UnitName unitName = new Table_UnitName();
     public Table_UnitSkill unitSkill = new Table_UnitSkill();
-    public Table_Enemy enemy = new Table_Enemy();
-    public Table_Item item = new Table_Item();
+    public TableEnemy enemy = new TableEnemy();
+    public TableItem item = new TableItem();
 
     public void Init(ETable _name)
     {

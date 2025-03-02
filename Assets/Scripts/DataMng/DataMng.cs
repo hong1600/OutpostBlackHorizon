@@ -8,9 +8,11 @@ public class DataMng : MonoBehaviour
 {
     public static DataMng instance;
 
-    [SerializeField] UnitDataLoader unitDataLoader;
-    [SerializeField] EnemyDataLoader enemyDataLoader;
     [SerializeField] UserDataLoader userDataLoader;
+
+    TableUnit tableUnit;
+    TableEnemy tableEnemy;
+    TableItem tableItem;
 
     private void Awake()
     {
@@ -25,13 +27,24 @@ public class DataMng : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
 
-        UnitDataLoader = unitDataLoader;
-        EnemyDataLoader = enemyDataLoader;
         UserDataLoader = userDataLoader;
+
+        tableUnit = new TableUnit();
+        tableUnit.Init_Binary("UnitData");
+        TableUnit = tableUnit;
+
+        tableEnemy = new TableEnemy();
+        tableEnemy.Init_Binary("EnemyData");
+        TableEnemy = tableEnemy;
+
+        tableItem = new TableItem();
+        tableItem.Init_Binary("ItemData");
+        TableItem = tableItem;
     }
 
-    public UnitDataLoader UnitDataLoader { get; private set; }
-    public EnemyDataLoader EnemyDataLoader { get; private set; }
     public UserDataLoader UserDataLoader { get; private set; }
+    public TableUnit TableUnit { get; private set; }
+    public TableEnemy TableEnemy { get; private set; }
+    public TableItem TableItem { get; private set; }
 }
 

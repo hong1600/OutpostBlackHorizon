@@ -39,16 +39,16 @@ public abstract class Enemy : MonoBehaviour
 
     Vector3 tagetTrs;
 
-    public void InitEnemyData(EnemyData _enemyData)
+    public void InitEnemyData(TableEnemy.Info _enemyData)
     {
         rigid = GetComponent<Rigidbody>();
         box = this.GetComponent<BoxCollider>();
         anim = this.GetComponent<Animator>();
 
-        enemyName = _enemyData.enemyName;
-        enemyHp = _enemyData.enemyMaxHp;
+        enemyName = _enemyData.Name;
+        enemyHp = _enemyData.MaxHp;
         curhp = enemyHp;
-        enemySpeed = _enemyData.enemySpeed;
+        enemySpeed = _enemyData.Speed;
         rotationSpeed = 5;
         attackRange = 1;
         attackDmg = 10;

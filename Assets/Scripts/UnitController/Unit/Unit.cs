@@ -17,6 +17,7 @@ public abstract class Unit : MonoBehaviour
 
     [SerializeField] EUnitAI aiState;
     UnitAI unitAI;
+    TableUnit tableUnit;
     Animator anim;
     BoxCollider box;
     public GameObject skillBar;
@@ -28,7 +29,7 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected internal Coroutine attackCoroutine;
     [SerializeField] protected internal Coroutine skillCouroutine;
 
-    protected virtual void Init(UnitData _unitData)
+    protected virtual void Init(TableUnit.Info _unitData)
     {
         unitAI = new UnitAI();
         unitAI.Init(this);
@@ -36,36 +37,36 @@ public abstract class Unit : MonoBehaviour
         anim = this.GetComponent<Animator>();
         box = this.GetComponent<BoxCollider>();
 
-        unitName = _unitData.unitName;
         unitIndex = _unitData.ID;
-        attackDamage = _unitData.unitDamage;
-        attackSpeed = _unitData.unitAttackSpeed;
-        attackRange = _unitData.unitAttackRange;
-        eUnitGrade = _unitData.unitGrade;
-        UnitImg = Resources.Load<Sprite>(_unitData.unitImgPath);
+        unitName = _unitData.Name;
+        attackDamage = _unitData.Damage;
+        attackSpeed = _unitData.AttackSpeed;
+        attackRange = _unitData.AttackRange;
+        eUnitGrade = _unitData.Grade;
+        UnitImg = Resources.Load<Sprite>(_unitData.ImgPath);
         skillDamage = 50;
 
 
         switch (eUnitGrade)
         {
             case EUnitGrade.C
-            : lastUpgrade = Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[0]; 
+            : lastUpgrade = Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[0]; 
                 break;
             case EUnitGrade.B: 
-                lastUpgrade = Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[0]; 
+                lastUpgrade = Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[0]; 
                 break;
             case EUnitGrade.A:
-                lastUpgrade = Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[1];
+                lastUpgrade = Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[1];
                 break;
             case EUnitGrade.S: 
-                lastUpgrade = Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[2]; 
+                lastUpgrade = Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[2]; 
                 break;
             case EUnitGrade.SS: 
-                lastUpgrade = Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[2];
+                lastUpgrade = Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[2];
                 break;
         }
 
-        Shared.unitMng.iUnitUpgrader.MissUpgrade(lastUpgrade, this);
+        Shared.unitMng.UnitUpgrader.MissUpgrade(lastUpgrade, this);
 
         rotationSpeed = 5f;
         isAttack = false;

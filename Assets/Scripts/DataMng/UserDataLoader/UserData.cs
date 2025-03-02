@@ -13,7 +13,4 @@ public class UserData
     public int gem;
     public int paper;
     public bool first;
-
-    public List<UnitState> unitStateList = new List<UnitState>();
-    public List<ItemState> itemStateList = new List<ItemState>();
 }

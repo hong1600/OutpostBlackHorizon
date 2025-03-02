@@ -3,20 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Table_Camera : Table_Base
+public class TableItem : TableBase
 {
     [Serializable]
     public class Info
     {
         public int ID;
-        public float delay;
-        public float shakeTime;
-        public float shakeX;
-        public float shakeY;
-        public float shakeSpd;
-        public float damping;
-        public float maxShakeCount;
-        public float local;
+        public string Name;
+        public int Level;
+        public int CurExp;
+        public int MaxExp;
+        public int StoreCost;
+        public int UpgrdaeCost;
+        public int Effect;
+        public string Img;
+        public string Desc;
     }
 
     public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
@@ -43,6 +44,7 @@ public class Table_Camera : Table_Base
 
     public void Init_Csv(ETable _Name, int _StartRow, int _StartCol)
     {
+        Dictionary.Clear();
         CSVReader reader = GetCSVReader(_Name);
 
         for (int row = _StartRow; row < reader.row; ++row)
@@ -52,7 +54,7 @@ public class Table_Camera : Table_Base
             if (Read(reader, info, row, _StartCol) == false)
                 break;
 
-            Dictionary.Add(row, info);
+            Dictionary.Add(info.ID, info);
         }
     }
 
@@ -62,14 +64,15 @@ public class Table_Camera : Table_Base
             return false;
 
         _Reader.getInt(_Row, ref _Info.ID);
-        _Reader.getFloat(_Row, ref _Info.delay);
-        _Reader.getFloat(_Row, ref _Info.shakeTime);
-        _Reader.getFloat(_Row, ref _Info.shakeX);
-        _Reader.getFloat(_Row, ref _Info.shakeY);
-        _Reader.getFloat(_Row, ref _Info.shakeSpd);
-        _Reader.getFloat(_Row, ref _Info.damping);
-        _Reader.getFloat(_Row, ref _Info.maxShakeCount);
-        _Reader.getFloat(_Row, ref _Info.local);
+        _Reader.getString(_Row, ref _Info.Name);
+        _Reader.getInt(_Row, ref _Info.Level);
+        _Reader.getInt(_Row, ref _Info.CurExp);
+        _Reader.getInt(_Row, ref _Info.MaxExp);
+        _Reader.getInt(_Row, ref _Info.StoreCost);
+        _Reader.getInt(_Row, ref _Info.UpgrdaeCost);
+        _Reader.getInt(_Row, ref _Info.Effect);
+        _Reader.getString(_Row, ref _Info.Img);
+        _Reader.getString(_Row, ref _Info.Desc);
 
         return true;
     }

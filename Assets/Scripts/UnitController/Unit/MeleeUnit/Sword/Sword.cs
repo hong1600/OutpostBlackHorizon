@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Sword : MeleeUnit
 {
-    [SerializeField] UnitData unitData;
     [SerializeField] GameObject effect;
 
     private void Awake()
     {
-        Init(unitData);
+        Init(DataMng.instance.TableUnit.GetUnitData(101));
     }
 
     protected override IEnumerator OnDamageEvent(Enemy enemy, int _dmg)

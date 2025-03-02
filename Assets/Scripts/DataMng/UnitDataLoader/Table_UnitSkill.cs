@@ -3,22 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Table_Enemy : Table_Base
+public class Table_UnitSkill : TableBase
 {
     [Serializable]
     public class Info
     {
-        public int ID;
-        public string Name;
-        public int Speed;
-        public int MaxHp;
-        public string HpBarPath;
-        public string Desc;
+        public string NameKey;
+        public string Ko;
+        public string En;
     }
 
-    public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
+    public Dictionary<string, Info> Dictionary = new Dictionary<string, Info>();
 
-    public Info Get(int _id)
+    public Info Get(string _id)
     {
         if (Dictionary.ContainsKey(_id))
         {
@@ -30,7 +27,7 @@ public class Table_Enemy : Table_Base
 
     public void Init_Binary(string _Name)
     {
-        Load_Binary<Dictionary<int, Info>>(_Name, ref Dictionary);
+        Load_Binary<Dictionary<string, Info>>(_Name, ref Dictionary);
     }
 
     public void Save_Binary(string _Name)
@@ -49,7 +46,7 @@ public class Table_Enemy : Table_Base
             if (Read(reader, info, row, _StartCol) == false)
                 break;
 
-            Dictionary.Add(row, info);
+            Dictionary.Add(info.NameKey, info);
         }
     }
 
@@ -58,12 +55,9 @@ public class Table_Enemy : Table_Base
         if (_Reader.reset_row(_Row, _Col) == false)
             return false;
 
-        _Reader.getInt(_Row, ref _Info.ID);
-        _Reader.getString(_Row, ref _Info.Name);
-        _Reader.getInt(_Row, ref _Info.Speed);
-        _Reader.getInt(_Row, ref _Info.MaxHp);
-        _Reader.getString(_Row, ref _Info.HpBarPath);
-        _Reader.getString(_Row, ref _Info.Desc);
+        _Reader.getString(_Row, ref _Info.NameKey);
+        _Reader.getString(_Row, ref _Info.Ko);
+        _Reader.getString(_Row, ref _Info.En);
 
         return true;
     }

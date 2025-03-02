@@ -73,30 +73,30 @@ public class FieldSelector : MonoBehaviour, IFieldSelector
         {
             if (startFieldRenderer != null) { startFieldRenderer.material = originMat; }
             if (curFieldRenderer != null) { curFieldRenderer.material = originMat; }
-            Shared.gameUI.iUIFusionBtn.HideFusionBtn();
+            Shared.gameUI.UIFusionBtn.HideFusionBtn();
         }
         else if (startSelectField != curSelectField)
         {
             if (startFieldRenderer != null) { startFieldRenderer.material = originMat; }
             if (curFieldRenderer != null) { curFieldRenderer.material = originMat; }
 
-            Shared.unitMng.iUnitFieldMove.CheckUnitField(
+            Shared.unitMng.UnitFieldMove.CheckUnitField(
                 startSelectField.transform.GetChild(0).gameObject,
                 curSelectField.transform.GetChild(0).gameObject);
         }
         else if(startSelectField == curSelectField)
         {
-            Shared.gameUI.iUIFusionBtn.HideFusionBtn();
+            Shared.gameUI.UIFusionBtn.HideFusionBtn();
 
             if (startSelectField != null)
             {
-                Shared.gameUI.iUIFusionBtn.ShowFusionBtn(startSelectField.transform.position);
+                Shared.gameUI.UIFusionBtn.ShowFusionBtn(startSelectField.transform.position);
             }
             else
             {
                 startSelectField = curSelectField;
 
-                Shared.gameUI.iUIFusionBtn.ShowFusionBtn(startSelectField.transform.position);
+                Shared.gameUI.UIFusionBtn.ShowFusionBtn(startSelectField.transform.position);
             }
         }
         else return;

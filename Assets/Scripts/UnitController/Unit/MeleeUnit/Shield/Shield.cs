@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class Shield : MeleeUnit
 {
-    [SerializeField] UnitData unitData;
-
     private void Awake()
     {
-        Init(unitData);
+        Init(DataMng.instance.TableUnit.GetUnitData(102));
     }
     protected override IEnumerator OnDamageEvent(Enemy enemy, int _dmg)
     {

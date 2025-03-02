@@ -15,18 +15,18 @@ public class UIUpgradePanel : MonoBehaviour
     {
         Shared.gameMng.GoldCoin.onGoldChanged += GoldCoinPanel;
         Shared.gameMng.GoldCoin.onCoinChanged += GoldCoinPanel;
-        Shared.unitMng.iUnitUpgrader.onUpgradeCostChange += UpgradeCostPanel;
-        Shared.unitMng.iUnitUpgrader.onUpgradeLevelChange += UpgradeLevelPanel;
-        Shared.unitMng.iUnitUpgrader.onUpgradePerChange += UpgradePerPanel;
+        Shared.unitMng.UnitUpgrader.onUpgradeCostChange += UpgradeCostPanel;
+        Shared.unitMng.UnitUpgrader.onUpgradeLevelChange += UpgradeLevelPanel;
+        Shared.unitMng.UnitUpgrader.onUpgradePerChange += UpgradePerPanel;
     }
 
     private void OnDisable()
     {
         Shared.gameMng.GoldCoin.onGoldChanged -= GoldCoinPanel;
         Shared.gameMng.GoldCoin.onCoinChanged -= GoldCoinPanel;
-        Shared.unitMng.iUnitUpgrader.onUpgradeCostChange -= UpgradeCostPanel;
-        Shared.unitMng.iUnitUpgrader.onUpgradeLevelChange -= UpgradeLevelPanel;
-        Shared.unitMng.iUnitUpgrader.onUpgradePerChange -= UpgradePerPanel;
+        Shared.unitMng.UnitUpgrader.onUpgradeCostChange -= UpgradeCostPanel;
+        Shared.unitMng.UnitUpgrader.onUpgradeLevelChange -= UpgradeLevelPanel;
+        Shared.unitMng.UnitUpgrader.onUpgradePerChange -= UpgradePerPanel;
     }
 
     private void Start()
@@ -47,13 +47,13 @@ public class UIUpgradePanel : MonoBehaviour
     {
         for (int i = 0; i < upgradeCostTexts.Length; i++) 
         {
-            if (Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[i] == 6)
+            if (Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[i] == 6)
             {
                 upgradeCostTexts[i].text = "MAX";
             }
             else
             {
-                upgradeCostTexts[i].text = Shared.unitMng.iUnitUpgrader.GetUpgradeCost()[i].ToString();
+                upgradeCostTexts[i].text = Shared.unitMng.UnitUpgrader.GetUpgradeCost()[i].ToString();
             }
         }
     }
@@ -62,11 +62,11 @@ public class UIUpgradePanel : MonoBehaviour
     {
         for (int i = 0; i < upgradeLevelTexts.Length; i++)
         {
-            if (Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[i] < Shared.unitMng.iUnitUpgrader.GetUpgradeMaxLevel())
+            if (Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[i] < Shared.unitMng.UnitUpgrader.GetUpgradeMaxLevel())
             {
-                upgradeLevelTexts[i].text = $"LV.{Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[i]}";
+                upgradeLevelTexts[i].text = $"LV.{Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[i]}";
             }
-            else if (Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[i] >= Shared.unitMng.iUnitUpgrader.GetUpgradeMaxLevel())
+            else if (Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[i] >= Shared.unitMng.UnitUpgrader.GetUpgradeMaxLevel())
             {
                 upgradeLevelTexts[i].text = "LV.MAX";
             }
@@ -75,18 +75,18 @@ public class UIUpgradePanel : MonoBehaviour
 
     private void UpgradePerPanel()
     {
-        int level = (int)Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[(int)EUnitUpgrade.per] - 1;
+        int level = (int)Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[(int)EUnitUpgrade.per] - 1;
 
         spawnPerTexts[0].text =
-            $"ÀÏ¹Ý : {Shared.unitMng.iUnitSpawner.GetSelectWeight()[level][0]}%";
+            $"ÀÏ¹Ý : {Shared.unitMng.UnitSpawner.GetSelectWeight()[level][0]}%";
         spawnPerTexts[1].text =
             $"<color=blue>Èñ±Í : " +
-            $"{Shared.unitMng.iUnitSpawner.GetSelectWeight()[level][1]}%</color>%";
+            $"{Shared.unitMng.UnitSpawner.GetSelectWeight()[level][1]}%</color>%";
         spawnPerTexts[2].text =
             $"<color=purple>¿µ¿õ : " +
-            $"{Shared.unitMng.iUnitSpawner.GetSelectWeight()[level][2]}%</color>";
+            $"{Shared.unitMng.UnitSpawner.GetSelectWeight()[level][2]}%</color>";
         spawnPerTexts[3].text =
             $"<color=yellow>Àü¼³ : " +
-            $"{Shared.unitMng.iUnitSpawner.GetSelectWeight()[level][3]}%</color>";
+            $"{Shared.unitMng.UnitSpawner.GetSelectWeight()[level][3]}%</color>";
     }
 }

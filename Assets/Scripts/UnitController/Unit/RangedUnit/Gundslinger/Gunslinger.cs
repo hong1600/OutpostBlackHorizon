@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Gunslinger : RangedUnit
 {
-    [SerializeField] UnitData unitData;
     [SerializeField] Transform bulletTrs;
 
     private void Awake()
     {
-        Init(unitData);
+        Init(DataMng.instance.TableUnit.GetUnitData(104));
     }
 
     protected override IEnumerator StartAttack()

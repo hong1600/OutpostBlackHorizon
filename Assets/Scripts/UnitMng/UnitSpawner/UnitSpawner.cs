@@ -48,7 +48,7 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
     public void SpawnUnit()
     {
         string Selection = 
-            SelectRandom(selectOptions, selectWeights[(int)Shared.unitMng.iUnitUpgrader.GetUpgradeLevel()[3] - 1]);
+            SelectRandom(selectOptions, selectWeights[(int)Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[3] - 1]);
         selectSpawnUnit = GetSelectSpawnUnit(Selection);
 
         if (!CanSpawn()) return;

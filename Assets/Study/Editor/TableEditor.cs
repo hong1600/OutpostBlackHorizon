@@ -5,23 +5,21 @@ using UnityEditor;
 
 public class TableEditor : MonoBehaviour
 {
-    static public TableMgr tableMgr;
-    static public ITableMgr iTableMgr;
+    static public TableManager tableManager;
 
     static public void Init()
     {
-        if (tableMgr == null)
+        if (tableManager == null)
         {
-            tableMgr = new TableMgr();
-            iTableMgr = tableMgr;
+            tableManager = new TableManager();
         }
     }
 
     static public void ParseTableCsv(ETable _tableName)
     {
         Init();
-        iTableMgr.Init(_tableName);
-        iTableMgr.Save(_tableName);
+        tableManager.Init(_tableName);
+        tableManager.Save(_tableName);
     }
 
     [MenuItem("CSV_Util/Table/UnitData/Parse Unit Data CSV &F1", false, 1)]

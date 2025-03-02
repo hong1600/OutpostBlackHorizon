@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6287548184292253058}
-  - component: {fileID: 2321256943740858081}
   m_Layer: 0
   m_Name: EnemyDataLoader
   m_TagString: Untagged
@@ -32,19 +31,6 @@ Transform:
   m_Father: {fileID: 2850271304496805829}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2321256943740858081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 654658061211689962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62cb508878480004ba1b23b1cb858ad0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyDataBase: {fileID: 0}
 --- !u!1 &2818342103461967514
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3159567915120236340}
-  - component: {fileID: 585128022387435597}
   m_Layer: 0
   m_Name: UnitDataLoader
   m_TagString: Untagged
@@ -77,20 +62,6 @@ Transform:
   m_Father: {fileID: 2850271304496805829}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &585128022387435597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2818342103461967514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c650df56dd31a0a46835a74b19a4d5e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitDataBase: {fileID: 0}
-  unitByGradeDataList: []
 --- !u!1 &3207461343413915157
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3930998551791320767}
-  - component: {fileID: 3541602668967864203}
+  - component: {fileID: 5698641212509567454}
   m_Layer: 0
   m_Name: UserDataLoader
   m_TagString: Untagged
@@ -123,7 +94,7 @@ Transform:
   m_Father: {fileID: 2850271304496805829}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3541602668967864203
+--- !u!114 &5698641212509567454
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,11 +135,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3930998551791320767}
   - {fileID: 3159567915120236340}
   - {fileID: 6287548184292253058}
-  - {fileID: 3930998551791320767}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4918161884960197133
 MonoBehaviour:
@@ -182,6 +153,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e431ec4053d19a42ae4cb25ff00cf92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitDataLoader: {fileID: 585128022387435597}
-  enemyDataLoader: {fileID: 2321256943740858081}
-  userDataLoader: {fileID: 3541602668967864203}
+  userDataLoader: {fileID: 5698641212509567454}

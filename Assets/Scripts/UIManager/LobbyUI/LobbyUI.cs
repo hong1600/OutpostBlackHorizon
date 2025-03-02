@@ -7,7 +7,6 @@ public class LobbyUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] GameObject blackPanel;
-    UnitDataBase unitData;
     UserData userData;
 
 
@@ -15,18 +14,12 @@ public class LobbyUI : MonoBehaviour
     {
         if (DataMng.instance.UserDataLoader.curUserData != null)
         {
-            unitData = DataMng.instance.UnitDataLoader.unitDataBase;
             userData = DataMng.instance.UserDataLoader.curUserData;
         }
     }
 
     private void Start()
     {
-        if (DataMng.instance.UserDataLoader.curUserData != null)
-        {
-            nameText.text = $"{unitData.GetUnitID(101).unitName}{userData.userName}";
-        }
-
         Invoke("OffBlackPanel", 1);
 
         StartCoroutine(StartLobbyAnim());

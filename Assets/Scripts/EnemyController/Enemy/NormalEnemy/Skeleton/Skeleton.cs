@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class Skeleton : NormalEnemy
 {
-    [SerializeField] EnemyData enemyData;
 
     private void Start()
     {
-        base.InitEnemyData(enemyData);
+        base.InitEnemyData(DataMng.instance.TableEnemy.Get(201));
     }
 }

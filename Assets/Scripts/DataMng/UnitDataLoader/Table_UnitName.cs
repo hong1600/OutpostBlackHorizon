@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Table_UnitSkill : Table_Base
+public class Table_UnitName : TableBase
 {
     [Serializable]
     public class Info

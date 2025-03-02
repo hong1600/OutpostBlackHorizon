@@ -1,20 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public interface IUnitMng 
-{
-    void UnitInstantiate(GameObject _unit);
-    List<GameObject> GetUnitByGradeList(EUnitGrade _unitType);
-    void RemoveUnitData(GameObject _unit);
-    List<Transform> GetUnitSpawnPointList();
-    List<GameObject> GetAllUnitList();
-}
-
-public class UnitMng : MonoBehaviour, IUnitMng
+public class UnitMng : MonoBehaviour
 {
     public event Action onUnitCountEvent;
 
@@ -24,13 +14,6 @@ public class UnitMng : MonoBehaviour, IUnitMng
     [SerializeField] UnitSpawner unitSpawner;
     [SerializeField] UnitUpgrader unitUpgrader;
     [SerializeField] UnitFieldMove unitFieldMove;
-    public IUnitMng iUnitMng;
-    public IUnitFusion iUnitFusion;
-    public IUnitMixer iUnitMixer;
-    public IUnitRandomSpawner iUnitRandomSpawner;
-    public IUnitSpawner iUnitSpawner;
-    public IUnitUpgrader iUnitUpgrader;
-    public IUnitFieldMove iUnitFieldMove;
 
     [SerializeField] List<GameObject> allUnitList = new List<GameObject>();
     [SerializeField] List<GameObject> unitCList, unitBList, unitAList, unitSList, unitSSList = new List<GameObject>();
@@ -51,17 +34,12 @@ public class UnitMng : MonoBehaviour, IUnitMng
             Destroy(this.gameObject);
         }
 
-        iUnitMng = this;
-        iUnitFusion = unitFusion;
-        iUnitMixer = unitMixer;
-        iUnitRandomSpawner = unitRandomSpawner;
-        iUnitSpawner = unitSpawner;
-        iUnitUpgrader = unitUpgrader;
-        iUnitFieldMove = unitFieldMove;
-    }
-
-    private void Start()
-    {
+        UnitFusion = unitFusion;
+        UnitMixer = unitMixer;
+        UnitRandomSpawner = unitRandomSpawner;
+        UnitSpawner = unitSpawner;
+        UnitUpgrader = unitUpgrader;
+        UnitFieldMove = unitFieldMove;
     }
 
     private void Update()
@@ -87,6 +65,14 @@ public class UnitMng : MonoBehaviour, IUnitMng
             UnitInstantiate(unitSSList[0]);
         }
     }
+
+    public UnitFusion UnitFusion { get; private set; }
+    public UnitMixer UnitMixer { get; private set; }
+    public UnitRandomSpawner UnitRandomSpawner { get; private set; }
+    public UnitSpawner UnitSpawner { get; private set; }
+    public UnitUpgrader UnitUpgrader { get; private set; }
+    public UnitFieldMove UnitFieldMove { get; private set; }
+
 
     public void UnitInstantiate(GameObject _unit)
     {

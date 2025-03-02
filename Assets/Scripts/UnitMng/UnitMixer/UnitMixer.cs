@@ -2,15 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.XR;
 
-public interface IUnitMixer
-{
-    IEnumerator StartUnitMixSpawn();
-    bool IsUnitCanMix();
-}
-
-public class UnitMixer : MonoBehaviour, IUnitMixer
+public class UnitMixer : MonoBehaviour
 {
     public List<Unit> unitToMixList = new List<Unit>();
 
@@ -20,16 +13,16 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
     {
         unitToMixList.Clear();
 
-        List<GameObject> allUnitList = Shared.unitMng.iUnitMng.GetAllUnitList();
-        List<UnitData> sacUnitList = Shared.gameUI.iUIMixRightSlot.GetSacUnitList();
+        List<GameObject> allUnitList = Shared.unitMng.GetAllUnitList();
+        List<TableUnit.Info> sacUnitList = Shared.gameUI.UIMixRightSlot.GetUnitList();
 
-        foreach (var fieldUnit in allUnitList)
+        foreach (GameObject fieldUnit in allUnitList)
         {
             Unit field = fieldUnit.GetComponent<Unit>();
 
-            foreach (UnitData needUnit in sacUnitList)
+            foreach (TableUnit.Info needUnit in sacUnitList)
             {
-                if (field.unitName == needUnit.unitName &&
+                if (field.unitName == needUnit.Name &&
                     !unitToMixList.Any(unit => unit.unitName == field.unitName))
                 {
                     unitToMixList.Add(field);
@@ -37,7 +30,7 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
             }
         }
 
-        if(unitToMixList.Count > 0 && unitToMixList.Count == Shared.gameUI.iUIMixRightSlot.GetSacUnitList().Count) 
+        if(unitToMixList.Count > 0 && unitToMixList.Count == Shared.gameUI.UIMixRightSlot.GetUnitList().Count) 
         {
             return true;
         }
@@ -57,9 +50,9 @@ public class UnitMixer : MonoBehaviour, IUnitMixer
             yield return new WaitForEndOfFrame();
 
             GameObject spawnUnit =
-                Shared.unitMng.GetUnitByGradeList(EUnitGrade.SS)[Shared.gameUI.iUIMixRightSlot.GetCurMixUnit()];
+                Shared.unitMng.GetUnitByGradeList(EUnitGrade.SS)[Shared.gameUI.UIMixRightSlot.GetCurMixUnit()];
 
-            Shared.unitMng.iUnitMng.UnitInstantiate(spawnUnit);
+            Shared.unitMng.UnitInstantiate(spawnUnit);
 
             mixPanel.SetActive(false);
         }

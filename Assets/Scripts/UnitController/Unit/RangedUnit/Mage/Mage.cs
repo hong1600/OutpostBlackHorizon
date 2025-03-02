@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class Mage : RangedUnit
 {
-    public UnitData unitData;
-
     private void Awake()
     {
-        Init(unitData);
+        Init(DataMng.instance.TableUnit.GetUnitData(105));
     }
 
     protected override IEnumerator StartAttack()

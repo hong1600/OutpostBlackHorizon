@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static UnityEngine.Rendering.VolumeComponent;
 
-public class Table_Unit : Table_Base
+public class TableUnit : TableBase
 {
     [Serializable]
     public class Info
@@ -23,26 +22,21 @@ public class Table_Unit : Table_Base
         public int MaxExp;
         public int UpgrdaeCost;
         public int StoreCost;
-        public string MixNeedUnit;
+        public string MixUnitID;
         public string Desc;
+
+        [System.NonSerialized]
+        public TableUnit.Info[] mixNeedUnits;
         public Table_UnitName.Info UnitLocalName;
     }
 
     public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
-
-    public Info Get(int _id)
-    {
-        if (Dictionary.ContainsKey(_id))
-        {
-            return Dictionary[_id];
-        }
-
-        return null;
-    }
+    public Dictionary<EUnitGrade, List<Info>> unitGradeDataDic = new Dictionary<EUnitGrade, List<Info>>();
 
     public void Init_Binary(string _Name)
     {
         Load_Binary<Dictionary<int, Info>>(_Name, ref Dictionary);
+        UnitGradeData();
     }
 
     public void Save_Binary(string _Name)
@@ -53,6 +47,7 @@ public class Table_Unit : Table_Base
     public void Init_Csv(ETable _Name, int _StartRow, int _StartCol)
     {
         Dictionary.Clear();
+        unitGradeDataDic.Clear();
 
         CSVReader reader = GetCSVReader(_Name);
 
@@ -63,8 +58,35 @@ public class Table_Unit : Table_Base
             if (Read(reader, info, row, _StartCol) == false)
                 break ;
              
-            Dictionary.Add(row, info);
+            Dictionary.Add(info.ID, info);
         }
+
+        int i = 0;
+        List<int> keys = new List<int>(Dictionary.Keys);
+
+        while (i < Dictionary.Count)
+        {
+            int unitID = keys[i];
+            Info unit = Dictionary[unitID];
+
+            if (!string.IsNullOrEmpty(unit.MixUnitID))
+            {
+                string[] mixUnitIDs = unit.MixUnitID.Split('/');
+                List<TableUnit.Info> mixUnitList = new List<TableUnit.Info>();
+
+                foreach (var mixUnitName in mixUnitIDs)
+                {
+                    if (int.TryParse(mixUnitName.Trim(), out int mixId) && Dictionary.ContainsKey(mixId))
+                    {
+                        mixUnitList.Add(Dictionary[mixId]);
+                    }
+                }
+
+                unit.mixNeedUnits = mixUnitList.ToArray();
+            }
+            i++;
+        }
+        UnitGradeData();
     }
 
     public bool Read(CSVReader _Reader, Info _Info, int _Row, int _Col)
@@ -86,15 +108,48 @@ public class Table_Unit : Table_Base
         _Reader.getInt(_Row, ref _Info.MaxExp);
         _Reader.getInt(_Row, ref _Info.UpgrdaeCost);
         _Reader.getInt(_Row, ref _Info.StoreCost);
-        _Reader.getString(_Row, ref _Info.MixNeedUnit);
+        _Reader.getString(_Row, ref _Info.MixUnitID);
         _Reader.getString(_Row, ref _Info.Desc);
 
         return true;
     }
 
+    public void UnitGradeData()
+    {
+        unitGradeDataDic.Clear();
+
+        foreach (var unitInfo in Dictionary.Values)
+        {
+            if (!unitGradeDataDic.ContainsKey(unitInfo.Grade))
+            {
+                unitGradeDataDic[unitInfo.Grade] = new List<Info>();
+            }
+            unitGradeDataDic[unitInfo.Grade].Add(unitInfo);
+        }
+    }
+
+    public Info GetUnitData(int _id)
+    {
+        if (Dictionary.ContainsKey(_id))
+        {
+            return Dictionary[_id];
+        }
+
+        return null;
+    }
+
+    public List<Info> GetUnitByGradeData(EUnitGrade _grade)
+    {
+        if (unitGradeDataDic.ContainsKey(_grade))
+        {
+            return unitGradeDataDic[_grade];
+        }
+        return null;
+    }
+
     public void LinkUnitName(Table_UnitName _unitName)
     {
-        foreach (Table_Unit.Info unit in Dictionary.Values)
+        foreach (TableUnit.Info unit in Dictionary.Values)
         {
             if (_unitName.Dictionary.TryGetValue(unit.Name, out Table_UnitName.Info unitName))
             {
@@ -102,6 +157,25 @@ public class Table_Unit : Table_Base
             }
         }
     }
+
+    //public void ConvertStringToArray(UnitData _unitData, Table_Unit.Info _info)
+    //{
+    //    string[] unitNames = _unitData.unitMixNeedUnit.Split(',');
+    //    _unitData.unitMixNeedUnits = new UnitData[unitNames.Length];
+
+    //    for (int i = 0; i < unitNames.Length; i++)
+    //    {
+    //        string unitName = unitNames[i].Trim();
+
+    //        UnitData mixUnitData = unitDataBase.GetUnitName(unitName);
+
+    //        if (mixUnitData != null)
+    //        {
+    //            _unitData.unitMixNeedUnits[i] = mixUnitData;
+    //        }
+    //    }
+    //}
+
 
     //System.Func<object, bool> UpdateAction = null;
     //UpdateAction = 함수연결

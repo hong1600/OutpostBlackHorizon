@@ -5,12 +5,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
 
-public interface IUnitRandomSpawner
-{
-    void RandSpawn(int _index);
-}
-
-public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
+public class UnitRandomSpawner : MonoBehaviour
 {
     [SerializeField] GameObject randomUnit;
     [SerializeField] bool randomDelay;
@@ -44,7 +39,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
 
     private bool CanSpawn(int _index)
     {
-        List<Transform> spawnPointList = Shared.unitMng.iUnitMng.GetUnitSpawnPointList();
+        List<Transform> spawnPointList = Shared.unitMng.GetUnitSpawnPointList();
         int spawnPointCount = spawnPointList.Count;
 
         for (int i = 0; i < spawnPointCount; i++)
@@ -87,7 +82,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
                 {
                     randomUnit = Shared.unitMng.GetUnitByGradeList(EUnitGrade.B)[randB];
                     yield return StartCoroutine(FadeInImage(randomUnitImgs[0], randomSprite));
-                    Shared.unitMng.iUnitMng.UnitInstantiate(randomUnit);
+                    Shared.unitMng.UnitInstantiate(randomUnit);
                 }
                 else
                 {
@@ -99,7 +94,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
                 {
                     randomUnit = Shared.unitMng.GetUnitByGradeList(EUnitGrade.A)[randA];
                     yield return StartCoroutine(FadeInImage(randomUnitImgs[1], randomSprite));
-                    Shared.unitMng.iUnitMng.UnitInstantiate(randomUnit);
+                    Shared.unitMng.UnitInstantiate(randomUnit);
                 }
                 else
                 {
@@ -111,7 +106,7 @@ public class UnitRandomSpawner : MonoBehaviour, IUnitRandomSpawner
                 {
                     randomUnit = Shared.unitMng.GetUnitByGradeList(EUnitGrade.S)[randS];
                     yield return StartCoroutine(FadeInImage(randomUnitImgs[2], randomSprite));
-                    Shared.unitMng.iUnitMng.UnitInstantiate(randomUnit);
+                    Shared.unitMng.UnitInstantiate(randomUnit);
                 }
                 else
                 {

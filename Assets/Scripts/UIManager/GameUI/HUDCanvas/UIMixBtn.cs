@@ -22,6 +22,6 @@ public class UIMixBtn : MonoBehaviour
 
     public void ClickMixSpawnBtn()
     {
-        StartCoroutine(Shared.unitMng.iUnitMixer.StartUnitMixSpawn());
+        StartCoroutine(Shared.unitMng.UnitMixer.StartUnitMixSpawn());
     }
 }

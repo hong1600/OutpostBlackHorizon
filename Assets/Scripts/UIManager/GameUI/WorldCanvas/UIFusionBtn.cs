@@ -2,13 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IUIFusionBtn
-{
-    void ShowFusionBtn(Vector3 _fieldPos);
-    void HideFusionBtn();
-}
-
-public class UIFusionBtn : MonoBehaviour, IUIFusionBtn
+public class UIFusionBtn : MonoBehaviour
 {
     [SerializeField] Vector3 offset;
 
@@ -22,7 +16,7 @@ public class UIFusionBtn : MonoBehaviour, IUIFusionBtn
     {
         if (Shared.inputMng.iFieldSelector.GetStartSelectField().transform.GetChild(0).transform.childCount == 3)
         {
-            Shared.unitMng.iUnitFusion.UnitFusionSpawn();
+            Shared.unitMng.UnitFusion.UnitFusionSpawn();
 
             this.gameObject.SetActive(false);
         }

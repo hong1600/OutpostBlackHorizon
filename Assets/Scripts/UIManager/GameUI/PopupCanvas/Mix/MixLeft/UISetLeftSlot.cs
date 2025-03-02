@@ -9,9 +9,9 @@ public class UISetLeftSlot : MonoBehaviour
     [SerializeField] Image unitImg;
     [SerializeField] int num;
 
-    public void SetUnit(UnitData _unitdata, int _index)
+    public void SetUnit(TableUnit.Info _unitdata, int _index)
     {
-        unitImg.sprite = Resources.Load<Sprite>(_unitdata.unitImgPath);
+        unitImg.sprite = Resources.Load<Sprite>(_unitdata.ImgPath);
         num = _index;
     }
 }

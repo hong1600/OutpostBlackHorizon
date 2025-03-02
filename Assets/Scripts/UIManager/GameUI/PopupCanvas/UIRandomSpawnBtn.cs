@@ -6,6 +6,6 @@ public class UIRandomSpawnBtn : MonoBehaviour
 {
     public void clickRandomSpwanBtn(int _index)
     {
-        Shared.unitMng.iUnitRandomSpawner.RandSpawn(_index);
+        Shared.unitMng.UnitRandomSpawner.RandSpawn(_index);
     }
 }

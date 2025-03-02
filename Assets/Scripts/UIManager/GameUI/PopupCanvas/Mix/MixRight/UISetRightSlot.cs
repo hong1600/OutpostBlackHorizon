@@ -8,8 +8,8 @@ public class UISetRightSlot : MonoBehaviour
 {
     [SerializeField] Image unitImg;
 
-    public void SetUnit(UnitData _unitdata)
+    public void SetUnit(TableUnit.Info _unitdata)
     {
-        unitImg.sprite = Resources.Load<Sprite>(_unitdata.unitImgPath);
+        unitImg.sprite = Resources.Load<Sprite>(_unitdata.ImgPath);
     }
 }

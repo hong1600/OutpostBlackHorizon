@@ -8,62 +8,69 @@ using UnityEngine;
 public class StartDropShipMove : MonoBehaviour
 {
     Camera mainCam;
-    [SerializeField] Cinemachine.CinemachineVirtualCamera virtualCam;
+    Cinemachine.CinemachineVirtualCamera virtualCam;
     Cinemachine.CinemachineTransposer virtualTransposer;
 
+    [Header("Movement Settings")]
     [SerializeField] Transform pos1;
     [SerializeField] Transform pos2;
     [SerializeField] float moveSpeed = 100f;
 
+    [Header("Hatch Settings")]
     [SerializeField] GameObject hatch;
     [SerializeField] float hatchSpeed = 2f;
 
+    [Header("Player Settings")]
     [SerializeField] GameObject player;
     [SerializeField] Transform playerStartPos;
 
+    [Header("Camera Transforms")]
     [SerializeField] Transform hatchCamTrs;
     [SerializeField] Transform playerCamTrs;
 
+    [Header("UI Elements")]
     [SerializeField] GameObject HUDCanvas;
     [SerializeField] GameObject TextPanel;
     [SerializeField] GameObject customMouse;
     [SerializeField] GameObject camMng;
 
-    Vector3 playerPos;
-    Vector3 dropShipCamPos;
+    Vector3 dropShipCamPos = new Vector3(0, 30, -30);
 
     private void Awake()
     {
         mainCam = Camera.main;
+        virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
         virtualTransposer = virtualCam.GetCinemachineComponent<CinemachineTransposer>();
     }
 
     private void Start()
     {
+        Init();
+        StartCoroutine(StartMove());
+    }
+
+    private void Init()
+    {
         player.transform.SetParent(transform);
-        player.GetComponent<Rigidbody>().MovePosition(playerStartPos.position);
-        playerPos = player.transform.localPosition;
-        hatch.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        player.transform.position = playerStartPos.position;
+        hatch.transform.localRotation = Quaternion.identity;
         customMouse.SetActive(false);
         camMng.SetActive(false);
-
-        dropShipCamPos = new Vector3(0, 30, -30);
-        virtualTransposer.m_FollowOffset = dropShipCamPos;
         HUDCanvas.SetActive(false);
         TextPanel.SetActive(true);
-        StartCoroutine(StartMove());
+        virtualTransposer.m_FollowOffset = dropShipCamPos;
     }
 
     IEnumerator StartMove()
     {
-        yield return StartCoroutine(StartMovePos(pos1));
+        yield return StartCoroutine(StartMoveToTarget(pos1));
 
         moveSpeed = 40f;
 
-        yield return StartCoroutine(StartMovePos(pos2));
+        yield return StartCoroutine(StartMoveToTarget(pos2));
     }
 
-    IEnumerator StartMovePos(Transform _target)
+    IEnumerator StartMoveToTarget(Transform _target)
     {
         while (Vector3.Distance(transform.position, _target.position) > 0.1f)
         {

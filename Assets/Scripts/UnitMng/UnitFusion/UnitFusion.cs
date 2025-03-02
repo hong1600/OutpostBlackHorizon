@@ -23,7 +23,7 @@ public class UnitFusion : MonoBehaviour, IUnitFusion
             Shared.unitMng.RemoveUnitData(selectGround.transform.GetChild(i).gameObject);
         }
 
-        Shared.unitMng.iUnitMng.UnitInstantiate(spawnUnit);
+        Shared.unitMng.UnitInstantiate(spawnUnit);
     }
 
     public GameObject instantiateUnit(EUnitGrade _grade)
