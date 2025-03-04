@@ -20,12 +20,12 @@ public class FieldSelector : MonoBehaviour, IFieldSelector
 
     private void Start()
     {
-        InputMng.onLeftClickDown -= OnFieldClickDown;
-        InputMng.onLeftClickDrag -= OnFieldDrag;
-        InputMng.onLeftClickUp -= OnFieldClickUp;
-        InputMng.onLeftClickDown += OnFieldClickDown;
-        InputMng.onLeftClickDrag += OnFieldDrag;
-        InputMng.onLeftClickUp += OnFieldClickUp;
+        InputMng.instance.onLeftClickDown -= OnFieldClickDown;
+        InputMng.instance.onLeftClickDrag -= OnFieldDrag;
+        InputMng.instance.onLeftClickUp -= OnFieldClickUp;
+        InputMng.instance.onLeftClickDown += OnFieldClickDown;
+        InputMng.instance.onLeftClickDrag += OnFieldDrag;
+        InputMng.instance.onLeftClickUp += OnFieldClickUp;
     }
 
     private void OnFieldClickDown(Vector2 _mousePos)

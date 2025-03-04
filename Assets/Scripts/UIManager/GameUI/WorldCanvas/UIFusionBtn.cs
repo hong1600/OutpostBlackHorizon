@@ -14,7 +14,7 @@ public class UIFusionBtn : MonoBehaviour
 
     public void ClickFusion()
     {
-        if (Shared.inputMng.iFieldSelector.GetStartSelectField().transform.GetChild(0).transform.childCount == 3)
+        if (InputMng.instance.iFieldSelector.GetStartSelectField().transform.GetChild(0).transform.childCount == 3)
         {
             Shared.unitMng.UnitFusion.UnitFusionSpawn();
 
@@ -24,10 +24,10 @@ public class UIFusionBtn : MonoBehaviour
 
     public void ShowFusionBtn(Vector3 _fieldPos)
     {
-        if (Shared.inputMng.iFieldSelector.GetStartSelectField().transform.GetChild(0).transform.childCount == 0) return;
+        if (InputMng.instance.iFieldSelector.GetStartSelectField().transform.GetChild(0).transform.childCount == 0) return;
 
-        if (Shared.inputMng.iFieldSelector.GetStartSelectField().transform.GetChild(0).transform.childCount == 3
-            || Shared.inputMng.iFieldSelector.GetStartSelectField().transform.GetChild(0).transform.GetChild(0).
+        if (InputMng.instance.iFieldSelector.GetStartSelectField().transform.GetChild(0).transform.childCount == 3
+            || InputMng.instance.iFieldSelector.GetStartSelectField().transform.GetChild(0).transform.GetChild(0).
             GetComponent<Unit>().eUnitGrade != EUnitGrade.S)
         {
             this.gameObject.transform.position = _fieldPos + offset;

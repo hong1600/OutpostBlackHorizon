@@ -5,9 +5,11 @@ using UnityEngine;
 public class UIOptionBtn : MonoBehaviour
 {
     [SerializeField] GameObject optionPanel;
+    [SerializeField] RectTransform[] rects;
+    [SerializeField] Vector2[] pos;
 
     public void ClickOption()
     {
-        optionPanel.SetActive(true);
+        UIMng.instance.OpenPanel(optionPanel, rects, pos, true);
     }
 }

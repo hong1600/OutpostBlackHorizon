@@ -25,7 +25,7 @@ public class CameraTopMove : MonoBehaviour
 
     private void Move()
     {
-        Vector3 mousePos = Shared.inputMng.iCustomMouse.GetMousePos();
+        Vector3 mousePos = InputMng.instance.iCustomMouse.GetMousePos();
 
         if (mousePos.x <= edgeDistance)
         {

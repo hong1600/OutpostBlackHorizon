@@ -8,4 +8,19 @@ public class LobbyStartBtn : MonoBehaviour
     {
         SceneMng.Instance.ChangeScene(EScene.WAITING);
     }
+
+    public void ClickAudioBtn()
+    {
+
+    }
+
+    public void ClickKeyBtn()
+    {
+
+    }
+
+    public void ClickGrapicBtn()
+    {
+
+    }
 }

@@ -20,7 +20,7 @@ public class FieldBuild : MonoBehaviour
 
         if (previewObj != null)
         {
-            MovePreview(Shared.inputMng.iCustomMouse.GetMousePos());
+            MovePreview(InputMng.instance.iCustomMouse.GetMousePos());
             UpdatePreviewColor();
 
             if (Input.GetMouseButtonDown(0) && CanBuild())

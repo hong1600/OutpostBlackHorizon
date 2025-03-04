@@ -22,13 +22,13 @@ public class GunMovement : MonoBehaviour
     private void OnEnable()
     {
         //InputMng.onInputMouse += SwayGun;
-        InputMng.onInputKey += WalkSwayGun;
+        InputMng.instance.onInputKey += WalkSwayGun;
     }
 
     private void OnDisable()
     {
         //InputMng.onInputMouse -= SwayGun;
-        InputMng.onInputKey -= WalkSwayGun;
+        InputMng.instance.onInputKey -= WalkSwayGun;
     }
 
     public void InitPos()

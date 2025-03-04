@@ -8,6 +8,11 @@ public class UIMng : MonoBehaviour
 {
     public static UIMng instance;
 
+    Stack<GameObject> uiStack = new Stack<GameObject>();
+    Dictionary<GameObject, UIData> uiDataDic = new Dictionary<GameObject, UIData>();
+
+    [SerializeField] UIOpenPanel uiOpenPanel;
+
     private void Awake()
     {
         if (instance == null)
@@ -22,26 +27,44 @@ public class UIMng : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void OpenPanel(GameObject _panel)
+    private void Start()
     {
-        if (_panel.activeSelf == false)
+        InputMng.instance.onInputEsc += ClosePanel;
+    }
+
+    public void OpenPanel(GameObject _panel, RectTransform[] _rect, Vector2[] _pos, bool _isEffect)
+    {
+        if (!uiStack.Contains(_panel))
+        {
+            uiStack.Push(_panel);
+            uiDataDic[_panel] = new UIData(_rect, _pos);
+        }
+
+        if(_isEffect) 
+        {
+            StartCoroutine(uiOpenPanel.OpenUI(_panel, _rect, _pos));
+        }
+        else
         {
             _panel.SetActive(true);
-            _panel.transform.localScale = Vector3.zero;
-            _panel.transform.DOScale(Vector3.one, 0.2f);
         }
     }
 
-    public void ClosePanel(GameObject _button)
+    public void ClosePanel()
     {
-        Transform buttonParent = _button.transform.parent;
-
-        if (buttonParent != null)
+        if(uiStack.Count > 0) 
         {
-            buttonParent.gameObject.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() =>
+            GameObject topPanel = uiStack.Pop();
+
+            if (uiDataDic.TryGetValue(topPanel, out UIData uiData))
             {
-                buttonParent.gameObject.SetActive(false);
-            });
+                uiDataDic.Remove(topPanel);
+                StartCoroutine(uiOpenPanel.CloseUI(topPanel, uiData.rects));
+            }
+            else
+            {
+                topPanel.SetActive(false);
+            }
         }
     }
 

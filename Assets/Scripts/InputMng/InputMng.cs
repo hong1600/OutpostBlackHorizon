@@ -6,12 +6,15 @@ using UnityEngine;
 
 public class InputMng : MonoBehaviour
 {
-    public static event Action<Vector2> onLeftClickDown;
-    public static event Action<Vector2> onLeftClickDrag;
-    public static event Action<Vector2> onLeftClickUp;
-    public static event Action onRightClickDown;
-    public static event Action<Vector2> onInputMouse;
-    public static event Action<Vector2> onInputKey;
+    public static InputMng instance;
+
+    public event Action<Vector2> onLeftClickDown;
+    public event Action<Vector2> onLeftClickDrag;
+    public event Action<Vector2> onLeftClickUp;
+    public event Action onRightClickDown;
+    public event Action<Vector2> onInputMouse;
+    public event Action<Vector2> onInputKey;
+    public event Action onInputEsc;
 
     [SerializeField] FieldSelector fieldSelector;
     [SerializeField] CustomMouse customMouse;
@@ -28,14 +31,16 @@ public class InputMng : MonoBehaviour
 
     private void Awake()
     {
-        if (Shared.inputMng == null)
+        if (instance == null)
         {
-            Shared.inputMng = this;
+            instance = this;
         }
-        else
+        else 
         {
             Destroy(this.gameObject);
         }
+
+        DontDestroyOnLoad(this.gameObject);
 
         if (fieldSelector != null)
         {
@@ -55,6 +60,7 @@ public class InputMng : MonoBehaviour
         DownMouseRight();
         InputKey();
         InputMouse();
+        InputEsc();
     }
 
     private void DownMouseLeft()
@@ -115,6 +121,14 @@ public class InputMng : MonoBehaviour
         if (mouse != Vector2.zero)
         {
             onInputMouse?.Invoke(mouse);
+        }
+    }
+
+    private void InputEsc()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            onInputEsc?.Invoke();
         }
     }
 }

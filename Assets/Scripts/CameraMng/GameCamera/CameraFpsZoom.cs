@@ -20,12 +20,12 @@ public class CameraFpsZoom : MonoBehaviour
 
     private void OnEnable()
     {
-        InputMng.onRightClickDown += ZoomCamera;
+        InputMng.instance.onRightClickDown += ZoomCamera;
     }
 
     private void OnDisable()
     {
-        InputMng.onRightClickDown -= ZoomCamera;
+        InputMng.instance.onRightClickDown -= ZoomCamera;
     }
 
     private void ZoomCamera()

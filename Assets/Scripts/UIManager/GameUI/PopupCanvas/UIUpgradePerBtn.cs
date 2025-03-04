@@ -8,6 +8,6 @@ public class UIUpgradePerBtn : MonoBehaviour
 
     public void clickSpawnPer()
     {
-        UIMng.instance.OpenPanel(spawnPerPanel);
+        UIMng.instance.OpenPanel(spawnPerPanel, null, null, false);
     }
 }

@@ -13,7 +13,7 @@ public class UnitFusion : MonoBehaviour, IUnitFusion
 {
     public void UnitFusionSpawn()
     {
-        GameObject selectGround = Shared.inputMng.iFieldSelector.GetStartSelectField().transform.GetChild(0).gameObject;
+        GameObject selectGround = InputMng.instance.iFieldSelector.GetStartSelectField().transform.GetChild(0).gameObject;
         GameObject selectUnit = selectGround.transform.GetChild(0).gameObject;
         EUnitGrade grade = selectUnit.GetComponent<Unit>().eUnitGrade;
         GameObject spawnUnit = instantiateUnit(grade);
