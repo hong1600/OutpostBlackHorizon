@@ -12,9 +12,9 @@ public class LobbyUI : MonoBehaviour
 
     private void Awake()
     {
-        if (DataMng.instance.UserDataLoader.curUserData != null)
+        if (DataManager.instance.UserDataLoader.curUserData != null)
         {
-            userData = DataMng.instance.UserDataLoader.curUserData;
+            userData = DataManager.instance.UserDataLoader.curUserData;
         }
     }
 

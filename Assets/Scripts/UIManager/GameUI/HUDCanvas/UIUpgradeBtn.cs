@@ -16,6 +16,6 @@ public class UIUpgradeBtn : MonoBehaviour
             randomPanel.SetActive(false);
         }
 
-        UIMng.instance.OpenPanel(upgradePanel, null, null, false);
+        UIMng.instance.OpenPanel(upgradePanel, null, null, null, false);
     }
 }

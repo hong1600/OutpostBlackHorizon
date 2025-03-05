@@ -6,7 +6,7 @@ public class Mage : RangedUnit
 {
     private void Awake()
     {
-        Init(DataMng.instance.TableUnit.GetUnitData(105));
+        Init(DataManager.instance.TableUnit.GetUnitData(105));
     }
 
     protected override IEnumerator StartAttack()

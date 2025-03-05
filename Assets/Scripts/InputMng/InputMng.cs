@@ -40,8 +40,6 @@ public class InputMng : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        DontDestroyOnLoad(this.gameObject);
-
         if (fieldSelector != null)
         {
             iFieldSelector = fieldSelector;

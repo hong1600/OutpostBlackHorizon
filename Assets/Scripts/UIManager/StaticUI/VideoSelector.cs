@@ -9,17 +9,12 @@ public enum EVideo
     LOGIN
 }
 
-public class VideoMng : MonoBehaviour
+public class VideoSelector : MonoBehaviour
 {
     [SerializeField] VideoPlayer videoPlayer;
     [SerializeField] List<VideoClip> videoClipList;
 
     EVideo eVideo = EVideo.START;
-
-    private void Awake()
-    {
-        Shared.videoMng = this;
-    }
 
     private void Start()
     {

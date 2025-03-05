@@ -11,7 +11,7 @@ public interface IEnemyMng
     List<GameObject> GetEnemyParent();
 }
 
-public class EnemyMng : MonoBehaviour, IEnemyMng
+public class EnemyManager : MonoBehaviour, IEnemyMng
 {
     public event Action onEnemyCountEvent;
 
@@ -30,9 +30,9 @@ public class EnemyMng : MonoBehaviour, IEnemyMng
 
     private void Awake()
     {
-        if (Shared.enemyMng == null)
+        if (Shared.enemyManager == null)
         {
-            Shared.enemyMng = this;
+            Shared.enemyManager = this;
         }
         else
         {

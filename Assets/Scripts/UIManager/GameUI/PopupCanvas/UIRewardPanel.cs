@@ -103,9 +103,9 @@ public class UIRewardPanel : MonoBehaviour
 
     public void UpdateRewardPanel()
     {
-        if (DataMng.instance.UserDataLoader.curUserData != null)
+        if (DataManager.instance.UserDataLoader.curUserData != null)
         {
-            userNameText.text = DataMng.instance.UserDataLoader.curUserData.userName;
+            userNameText.text = DataManager.instance.UserDataLoader.curUserData.userName;
         }
         else
         {

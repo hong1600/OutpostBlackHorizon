@@ -6,14 +6,13 @@ using UnityEngine.UI;
 
 public class ResolutionSetting : MonoBehaviour
 {
-    [SerializeField] Toggle fullToggle;
-    [SerializeField] TMP_Dropdown resDropDown;
+    [SerializeField] TMP_Dropdown resDropdown;
     [SerializeField] TextMeshProUGUI resText;
 
     Resolution[] allRes;
     List<Resolution> filterResList = new List<Resolution>();
 
-    private static readonly List<Vector2Int> commonResolutions = new List<Vector2Int>
+    List<Vector2Int> commonResolutions = new List<Vector2Int>
     {
         new Vector2Int(2560, 1440), // QHD
         new Vector2Int(1920, 1080), // FHD
@@ -23,7 +22,7 @@ public class ResolutionSetting : MonoBehaviour
     private void Start()
     {
         allRes = Screen.resolutions;
-        resDropDown.ClearOptions();
+        resDropdown.ClearOptions();
         int curResIndex = 0;
         List<string> optionList = new List<string>();
 
@@ -44,11 +43,12 @@ public class ResolutionSetting : MonoBehaviour
             }
         }
 
-        resDropDown.AddOptions(optionList);
-        resDropDown.value = curResIndex;
-        resDropDown.RefreshShownValue();
+        resDropdown.AddOptions(optionList);
+        resDropdown.value = curResIndex;
+        resDropdown.RefreshShownValue();
         resText.text = $"{Screen.currentResolution.width} x {Screen.currentResolution.height}";
-        fullToggle.isOn = Screen.fullScreen;
+
+        resDropdown.onValueChanged.AddListener(SetResolution);
     }
 
     public void SetResolution(int _index)
@@ -56,10 +56,5 @@ public class ResolutionSetting : MonoBehaviour
         Resolution res = filterResList[_index];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
         resText.text = $"{res.width} x {res.height}";
-    }
-
-    public void SetFullScreen(bool _isFull)
-    {
-        Screen.fullScreen = _isFull;
     }
 }

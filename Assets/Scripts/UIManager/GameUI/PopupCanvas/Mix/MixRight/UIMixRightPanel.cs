@@ -10,7 +10,7 @@ public class UIMixRightPanel : MonoBehaviour
 
     private void Start()
     {
-        mixUnitDataList = DataMng.instance.TableUnit.GetUnitByGradeData(EUnitGrade.SS);
+        mixUnitDataList = DataManager.instance.TableUnit.GetUnitByGradeData(EUnitGrade.SS);
 
         TableUnit.Info curUnit = mixUnitDataList[0];
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraMng : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
     [SerializeField] CameraFpsShake cameraFpsShake;
     [SerializeField] CameraFpsZoom cameraFpsZoom;
@@ -19,7 +19,7 @@ public class CameraMng : MonoBehaviour
 
     private void Awake()
     {
-        Shared.cameraMng = this;
+        Shared.cameraManager = this;
 
         getCameraFpsShake = cameraFpsShake;
         getCameraFpsZoom = cameraFpsZoom;

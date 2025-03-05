@@ -8,7 +8,7 @@ public class Sword : MeleeUnit
 
     private void Awake()
     {
-        Init(DataMng.instance.TableUnit.GetUnitData(101));
+        Init(DataManager.instance.TableUnit.GetUnitData(101));
     }
 
     protected override IEnumerator OnDamageEvent(Enemy enemy, int _dmg)

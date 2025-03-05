@@ -35,7 +35,7 @@ public class UIMixRightSlot : MonoBehaviour
         unitList.Clear();
         curMixUnit = _num;
 
-        List<TableUnit.Info> curUnitList = DataMng.instance.TableUnit.GetUnitByGradeData(EUnitGrade.SS);
+        List<TableUnit.Info> curUnitList = DataManager.instance.TableUnit.GetUnitByGradeData(EUnitGrade.SS);
 
         if (_num >= curUnitList.Count) return;
 

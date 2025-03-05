@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class ManagersLoader : MonoBehaviour
 {
-    [SerializeField] GameObject dataMng;
-    [SerializeField] GameObject sceneMng;
+    [SerializeField] GameObject managers;
 
     private void Awake()
     {
-        if (GameObject.Find("DataMng") == null)
+        if (GameObject.Find("MANAGERS") == null)
         {
-            Instantiate(dataMng);
-        }
-        if (GameObject.Find("SceneMng") == null)
-        {
-            Instantiate(sceneMng);
+            Instantiate(managers);
         }
     }
 }

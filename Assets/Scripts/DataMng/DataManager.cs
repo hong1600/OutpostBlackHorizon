@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class DataMng : MonoBehaviour
+public class DataManager : MonoBehaviour
 {
-    public static DataMng instance;
+    public static DataManager instance;
 
     [SerializeField] UserDataLoader userDataLoader;
 
@@ -24,8 +24,6 @@ public class DataMng : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-        DontDestroyOnLoad(this.gameObject);
 
         UserDataLoader = userDataLoader;
 

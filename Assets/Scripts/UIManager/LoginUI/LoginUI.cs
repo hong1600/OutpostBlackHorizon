@@ -29,7 +29,7 @@ public class LoginUI : MonoBehaviour
         yield return StartCoroutine(StartFadeOut(videoImg, 3));
 
         textParent.SetActive(true);
-        Shared.videoMng.NextVideo(EVideo.LOGIN);
+        UIMng.instance.VideoSelector.NextVideo(EVideo.LOGIN);
 
         yield return new WaitForSeconds(2);
 

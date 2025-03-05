@@ -40,7 +40,7 @@ public class PlayerCombat : MonoBehaviour
         GameObject obj = Shared.objectPoolMng.iBulletPool.FindBullet(EBullet.BULLET);
         Bullet bullet = obj.GetComponent<Bullet>();
         bullet.InitBullet(null, 30, rifleSpeed, EBullet.BULLET, fireTrs);
-        Shared.cameraMng.getCameraFpsShake.Shake();
+        Shared.cameraManager.getCameraFpsShake.Shake();
         onUseBullet?.Invoke();
 
         yield return new WaitForSeconds(0.1f);

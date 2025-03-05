@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class UIOpenPanel : MonoBehaviour
+public class PanelOpen : MonoBehaviour
 {
-    [SerializeField] Vector2 offPos;
-
-    public IEnumerator OpenUI(GameObject _panel, RectTransform[] _rect, Vector2[] _onPos)
+    public IEnumerator OpenUI(GameObject _panel, RectTransform[] _rect, Vector2[] _onPos, Vector2[] _offPos)
     {
         for (int i = 0; i < _rect.Length; i++)
         {
-            _rect[i].anchoredPosition = offPos;
+            _rect[i].anchoredPosition = _offPos[i];
         }
 
         yield return null;
@@ -26,13 +24,13 @@ public class UIOpenPanel : MonoBehaviour
         }
     }
 
-    public IEnumerator CloseUI(GameObject _panel, RectTransform[] _rect)
+    public IEnumerator CloseUI(GameObject _panel, RectTransform[] _rect, Vector2[] _offPos)
     {
         Sequence seq = DOTween.Sequence();
 
         for (int i = 0; i < _rect.Length; i++)
         {
-            seq.Join(_rect[i].DOAnchorPos(offPos, 0.3f).SetEase(Ease.OutExpo));
+            seq.Join(_rect[i].DOAnchorPos(_offPos[i], 0.3f).SetEase(Ease.OutExpo));
         }
 
         yield return new WaitForSeconds(0.2f);

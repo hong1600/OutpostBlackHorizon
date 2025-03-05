@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Knight : Unit
 {
-
     private void Awake()
     {
-        Init(DataMng.instance.TableUnit.GetUnitData(103));
+        Init(DataManager.instance.TableUnit.GetUnitData(103));
     }
 
     protected override IEnumerator StartAttack()

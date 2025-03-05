@@ -38,15 +38,15 @@ public class GameMng : MonoBehaviour
         {
             if (spawnTimer.GetIsSpawnTime())
             {
-                Shared.enemyMng.iEnemySpawner.SpawnEnemy();
+                Shared.enemyManager.iEnemySpawner.SpawnEnemy();
             }
         }
         else if(round.GetIsBossRound())
         {
-            Shared.enemyMng.iBossSpawner.SpawnBoss();
+            Shared.enemyManager.iBossSpawner.SpawnBoss();
         }
 
-        Shared.enemyMng.iWaveBossSpawner.SpawnWaveBossTime();
+        Shared.enemyManager.iWaveBossSpawner.SpawnWaveBossTime();
     }
 
     public SpawnTimer SpawnTimer { get; private set; }

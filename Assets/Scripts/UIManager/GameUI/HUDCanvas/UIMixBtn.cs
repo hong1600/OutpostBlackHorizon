@@ -14,7 +14,7 @@ public class UIMixBtn : MonoBehaviour
         if(upgradePanel.activeSelf) upgradePanel.SetActive(false);
         if (randomPanel.activeSelf) randomPanel.SetActive(false);
 
-        UIMng.instance.OpenPanel(mixPanel, null, null, false);
+        UIMng.instance.OpenPanel(mixPanel, null, null, null, false);
     }
 
     public void ClickMixSpawnBtn()

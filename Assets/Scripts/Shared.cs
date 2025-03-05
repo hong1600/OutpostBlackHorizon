@@ -6,12 +6,10 @@ public class Shared : MonoBehaviour
 {
     static public GameMng gameMng;
     static public UnitMng unitMng;
-    static public EnemyMng enemyMng;
-    static public SoundMng soundMng;
+    static public EnemyManager enemyManager;
     static public GameUI gameUI;
     static public MainCamera mainCamera;
     static public ObjectPoolMng objectPoolMng;
-    static public CameraMng cameraMng;
+    static public CameraManager cameraManager;
     static public PlayerMng playerMng;
-    static public VideoMng videoMng;
 }

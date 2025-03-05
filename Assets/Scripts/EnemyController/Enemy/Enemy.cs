@@ -53,7 +53,7 @@ public abstract class Enemy : MonoBehaviour
         attackRange = 1;
         attackDmg = 10;
 
-        targetPoints = Shared.enemyMng.iEnemySpawner.GetTargetPoint();
+        targetPoints = Shared.enemyManager.iEnemySpawner.GetTargetPoint();
         int rand = Random.Range(0, targetPoints.Length);
         myTarget = targetPoints[rand];
 

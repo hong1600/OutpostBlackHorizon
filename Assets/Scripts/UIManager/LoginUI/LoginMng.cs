@@ -39,7 +39,7 @@ public class LoginMng : MonoBehaviour
         {
             SetstatusText("게임 접속 중...", Color.white);
 
-            UserData loadData = DataMng.instance.UserDataLoader.LoadUserData(_id);
+            UserData loadData = DataManager.instance.UserDataLoader.LoadUserData(_id);
 
             if (loadData.first)
             {
@@ -92,8 +92,8 @@ public class LoginMng : MonoBehaviour
             first = true
         };
 
-        DataMng.instance.UserDataLoader.curUserData = newUserData;
-        DataMng.instance.UserDataLoader.SaveUserData();
+        DataManager.instance.UserDataLoader.curUserData = newUserData;
+        DataManager.instance.UserDataLoader.SaveUserData();
         SetstatusText("회원가입이 완료되었습니다.", Color.white);
     }
 
@@ -101,10 +101,10 @@ public class LoginMng : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(inputUserName.text) && inputUserName.text.Length > 1)
         {
-            DataMng.instance.UserDataLoader.curUserData.userName = inputUserName.text;
-            DataMng.instance.UserDataLoader.curUserData.first = false;
+            DataManager.instance.UserDataLoader.curUserData.userName = inputUserName.text;
+            DataManager.instance.UserDataLoader.curUserData.first = false;
             SceneMng.Instance.ChangeScene(EScene.LOBBY);
-            DataMng.instance.UserDataLoader.SaveUserData();
+            DataManager.instance.UserDataLoader.SaveUserData();
         }
         else
         {

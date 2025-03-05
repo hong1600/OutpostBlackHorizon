@@ -11,17 +11,17 @@ public class UIEnemyCounter : MonoBehaviour
 
     private void Start()
     {
-        Shared.enemyMng.iEnemyMng.onEnemyCountEvent -= EnemyCounterPanel;
-        Shared.enemyMng.iEnemyMng.onEnemyCountEvent += EnemyCounterPanel;
+        Shared.enemyManager.iEnemyMng.onEnemyCountEvent -= EnemyCounterPanel;
+        Shared.enemyManager.iEnemyMng.onEnemyCountEvent += EnemyCounterPanel;
 
-        enemyCountText.text = $"{Shared.enemyMng.iEnemyMng.GetCurEnemy()}  /  {Shared.enemyMng.iEnemyMng.GetMaxEnemy()}";
+        enemyCountText.text = $"{Shared.enemyManager.iEnemyMng.GetCurEnemy()}  /  {Shared.enemyManager.iEnemyMng.GetMaxEnemy()}";
         sliderValue.fillAmount = 0;
     }
 
     private void EnemyCounterPanel()
     {
-        float curEnemy = Shared.enemyMng.iEnemyMng.GetCurEnemy();
-        float maxEnemy = Shared.enemyMng.iEnemyMng.GetMaxEnemy();
+        float curEnemy = Shared.enemyManager.iEnemyMng.GetCurEnemy();
+        float maxEnemy = Shared.enemyManager.iEnemyMng.GetMaxEnemy();
 
         enemyCountText.text = $"{curEnemy}  /  {maxEnemy}";
         sliderValue.fillAmount = curEnemy / maxEnemy;

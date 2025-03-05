@@ -6,10 +6,11 @@ public class UIOptionBtn : MonoBehaviour
 {
     [SerializeField] GameObject optionPanel;
     [SerializeField] RectTransform[] rects;
-    [SerializeField] Vector2[] pos;
+    [SerializeField] Vector2[] onPos;
+    [SerializeField] Vector2[] offPos;
 
     public void ClickOption()
     {
-        UIMng.instance.OpenPanel(optionPanel, rects, pos, true);
+        UIMng.instance.OpenPanel(optionPanel, rects, onPos, offPos, true);
     }
 }

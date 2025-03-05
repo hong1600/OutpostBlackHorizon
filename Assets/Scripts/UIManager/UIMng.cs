@@ -11,7 +11,11 @@ public class UIMng : MonoBehaviour
     Stack<GameObject> uiStack = new Stack<GameObject>();
     Dictionary<GameObject, UIData> uiDataDic = new Dictionary<GameObject, UIData>();
 
-    [SerializeField] UIOpenPanel uiOpenPanel;
+    [SerializeField] PanelOpen panelOpen;
+    [SerializeField] VideoSelector videoSelector;
+
+    public PanelOpen PanelOpen { get; private set; }
+    public VideoSelector VideoSelector { get; private set; }
 
     private void Awake()
     {
@@ -25,6 +29,9 @@ public class UIMng : MonoBehaviour
         }
 
         DontDestroyOnLoad(this.gameObject);
+
+        PanelOpen = panelOpen;
+        VideoSelector = videoSelector;
     }
 
     private void Start()
@@ -32,17 +39,18 @@ public class UIMng : MonoBehaviour
         InputMng.instance.onInputEsc += ClosePanel;
     }
 
-    public void OpenPanel(GameObject _panel, RectTransform[] _rect, Vector2[] _pos, bool _isEffect)
+    public void OpenPanel(GameObject _panel, RectTransform[] _rect, 
+        Vector2[] _onPos, Vector2[] _offPos, bool _isEffect)
     {
         if (!uiStack.Contains(_panel))
         {
             uiStack.Push(_panel);
-            uiDataDic[_panel] = new UIData(_rect, _pos);
+            uiDataDic[_panel] = new UIData(_rect, _onPos, _offPos);
         }
 
         if(_isEffect) 
         {
-            StartCoroutine(uiOpenPanel.OpenUI(_panel, _rect, _pos));
+            StartCoroutine(panelOpen.OpenUI(_panel, _rect, _onPos, _offPos));
         }
         else
         {
@@ -59,7 +67,7 @@ public class UIMng : MonoBehaviour
             if (uiDataDic.TryGetValue(topPanel, out UIData uiData))
             {
                 uiDataDic.Remove(topPanel);
-                StartCoroutine(uiOpenPanel.CloseUI(topPanel, uiData.rects));
+                StartCoroutine(panelOpen.CloseUI(topPanel, uiData.rects, uiData.offPos));
             }
             else
             {

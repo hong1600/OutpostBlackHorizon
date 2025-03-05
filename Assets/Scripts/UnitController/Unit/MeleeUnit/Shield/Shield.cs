@@ -6,7 +6,7 @@ public class Shield : MeleeUnit
 {
     private void Awake()
     {
-        Init(DataMng.instance.TableUnit.GetUnitData(102));
+        Init(DataManager.instance.TableUnit.GetUnitData(102));
     }
     protected override IEnumerator OnDamageEvent(Enemy enemy, int _dmg)
     {

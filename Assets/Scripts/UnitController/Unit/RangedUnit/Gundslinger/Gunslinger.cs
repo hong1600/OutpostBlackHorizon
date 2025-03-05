@@ -8,7 +8,7 @@ public class Gunslinger : RangedUnit
 
     private void Awake()
     {
-        Init(DataMng.instance.TableUnit.GetUnitData(104));
+        Init(DataManager.instance.TableUnit.GetUnitData(104));
     }
 
     protected override IEnumerator StartAttack()

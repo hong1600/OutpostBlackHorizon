@@ -17,7 +17,7 @@ public abstract class WaveBoss : Enemy
     {
         base.Die();
         Shared.gameMng.GoldCoin.SetCoin(2);
-        Shared.enemyMng.iWaveBossSpawner.SetWaveBossDelay(waveBossDelay);
+        Shared.enemyManager.iWaveBossSpawner.SetWaveBossDelay(waveBossDelay);
     }
 
     //public void WaveBossTimer()

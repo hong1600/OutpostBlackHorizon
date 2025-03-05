@@ -14,15 +14,15 @@ public class BossSpawner : MonoBehaviour, IBossSpawner
 
     public void SpawnBoss()
     {
-        if (Shared.enemyMng.iEnemySpawner.GetEnemySpawnDelay() < 0)
+        if (Shared.enemyManager.iEnemySpawner.GetEnemySpawnDelay() < 0)
         {
-            int rand = Random.Range(0, Shared.enemyMng.iEnemySpawner.GetEnemySpawnPointList().Count);
-            GameObject obj = Instantiate(boss, Shared.enemyMng.iEnemySpawner.GetEnemySpawnPointList()[rand].transform.position,
-            Quaternion.identity, Shared.enemyMng.iEnemyMng.GetEnemyParent()[5].transform);
+            int rand = Random.Range(0, Shared.enemyManager.iEnemySpawner.GetEnemySpawnPointList().Count);
+            GameObject obj = Instantiate(boss, Shared.enemyManager.iEnemySpawner.GetEnemySpawnPointList()[rand].transform.position,
+            Quaternion.identity, Shared.enemyManager.iEnemyMng.GetEnemyParent()[5].transform);
 
             Enemy enemy = obj.GetComponent<Enemy>();
 
-            Shared.enemyMng.iEnemySpawner.SetEnemySpawnDelay(100f);
+            Shared.enemyManager.iEnemySpawner.SetEnemySpawnDelay(100f);
 
             Shared.gameMng.SpawnTimer.SetIsSpawnTime(false);
         }

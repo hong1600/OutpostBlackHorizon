@@ -19,8 +19,6 @@ public class SceneMng : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-        DontDestroyOnLoad(Instance);
     }
 
     public void ChangeScene(EScene _eScene, bool _loading = false)

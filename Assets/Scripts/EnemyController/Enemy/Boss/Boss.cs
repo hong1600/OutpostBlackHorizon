@@ -20,7 +20,7 @@ public class Boss : Enemy
         Shared.gameMng.GoldCoin.SetCoin(4);
         Shared.gameMng.Round.SetBossRound(false);
         Shared.gameMng.SpawnTimer.SetSec(15f);
-        Shared.enemyMng.iEnemySpawner.SetEnemySpawnDelay(0.85f);
+        Shared.enemyManager.iEnemySpawner.SetEnemySpawnDelay(0.85f);
     }
 
     public void bossTimer()

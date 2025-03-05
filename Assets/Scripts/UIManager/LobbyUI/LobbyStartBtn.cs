@@ -4,23 +4,10 @@ using UnityEngine;
 
 public class LobbyStartBtn : MonoBehaviour
 {
+    [SerializeField] GameObject grapicPanel;
+
     public void ClickGameStartBtn()
     {
         SceneMng.Instance.ChangeScene(EScene.WAITING);
-    }
-
-    public void ClickAudioBtn()
-    {
-
-    }
-
-    public void ClickKeyBtn()
-    {
-
-    }
-
-    public void ClickGrapicBtn()
-    {
-
     }
 }
