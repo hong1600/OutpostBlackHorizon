@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class LobbyStartBtn : MonoBehaviour
 {
-    [SerializeField] GameObject grapicPanel;
-
     public void ClickGameStartBtn()
     {
-        SceneMng.Instance.ChangeScene(EScene.WAITING);
+        MSceneManager.Instance.ChangeScene(EScene.WAITING);
     }
 }

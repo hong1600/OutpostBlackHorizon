@@ -133,10 +133,10 @@ public class PlayerMovement : MonoBehaviour
             moveDir = Vector3.zero;
         }
 
-        if (Shared.playerMng.anim != null)
+        if (Shared.playerManager.anim != null)
         {
-            Shared.playerMng.anim.SetFloat("Horizontal", moveX);
-            Shared.playerMng.anim.SetFloat("Vertical", moveZ);
+            Shared.playerManager.anim.SetFloat("Horizontal", moveX);
+            Shared.playerManager.anim.SetFloat("Vertical", moveZ);
         }
     }
 

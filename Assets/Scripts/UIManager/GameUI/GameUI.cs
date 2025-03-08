@@ -8,7 +8,7 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] UIMixRightSlot uiMixRightSlot;
     [SerializeField] UIFusionBtn uiFusionBtn;
-
+    [SerializeField] GameObject hitAim;
     private void Awake()
     {
         if (Shared.gameUI == null)
@@ -22,8 +22,10 @@ public class GameUI : MonoBehaviour
 
         UIMixRightSlot = uiMixRightSlot;
         UIFusionBtn = uiFusionBtn;
+        HitAim = hitAim;
     }
 
     public UIMixRightSlot UIMixRightSlot { get; private set; }
     public UIFusionBtn UIFusionBtn { get; private set; }
+    public GameObject HitAim { get; private set; }
 }

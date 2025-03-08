@@ -9,14 +9,14 @@ public class UISpawnBtn : MonoBehaviour
 
     public void SpawnBtnText()
     {
-        spawnGoldText.text = Shared.unitMng.UnitSpawner.GetSpawnGold().ToString();
+        spawnGoldText.text = Shared.unitManager.UnitSpawner.GetSpawnGold().ToString();
     }
 
     public void ClickSpawnBtn()
     {
-        if (Shared.gameMng.GoldCoin.GetGold() > Shared.unitMng.UnitSpawner.GetSpawnGold())
+        if (Shared.gameManager.GoldCoin.GetGold() > Shared.unitManager.UnitSpawner.GetSpawnGold())
         {
-            Shared.unitMng.UnitSpawner.SpawnUnit();
+            Shared.unitManager.UnitSpawner.SpawnUnit();
         }
     }
 }

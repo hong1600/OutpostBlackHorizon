@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerAI
 {
-    public PlayerMng playerMng;
+    public PlayerManager playerMng;
 
     public EPlayer aiState = EPlayer.CREATE;
 
-    public void Init(PlayerMng _playerMng)
+    public void Init(PlayerManager _playerMng)
     {
         playerMng = _playerMng;
     }

@@ -16,7 +16,7 @@ public abstract class WaveBoss : Enemy
     protected internal override void Die()
     {
         base.Die();
-        Shared.gameMng.GoldCoin.SetCoin(2);
+        Shared.gameManager.GoldCoin.SetCoin(2);
         Shared.enemyManager.iWaveBossSpawner.SetWaveBossDelay(waveBossDelay);
     }
 

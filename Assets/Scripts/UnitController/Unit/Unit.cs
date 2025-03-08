@@ -50,23 +50,23 @@ public abstract class Unit : MonoBehaviour
         switch (eUnitGrade)
         {
             case EUnitGrade.C
-            : lastUpgrade = Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[0]; 
+            : lastUpgrade = Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[0]; 
                 break;
             case EUnitGrade.B: 
-                lastUpgrade = Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[0]; 
+                lastUpgrade = Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[0]; 
                 break;
             case EUnitGrade.A:
-                lastUpgrade = Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[1];
+                lastUpgrade = Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[1];
                 break;
             case EUnitGrade.S: 
-                lastUpgrade = Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[2]; 
+                lastUpgrade = Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[2]; 
                 break;
             case EUnitGrade.SS: 
-                lastUpgrade = Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[2];
+                lastUpgrade = Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[2];
                 break;
         }
 
-        Shared.unitMng.UnitUpgrader.MissUpgrade(lastUpgrade, this);
+        Shared.unitManager.UnitUpgrader.MissUpgrade(lastUpgrade, this);
 
         rotationSpeed = 5f;
         isAttack = false;

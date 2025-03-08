@@ -6,7 +6,7 @@ using UnityEngine;
 public class UIPlayerBulletPanel : MonoBehaviour
 {
     [SerializeField] PlayerCombat playerCombat;
-    [SerializeField] GunMng gunMng;
+    [SerializeField] GunManager gunManager;
 
     [SerializeField] TextMeshProUGUI curBulletText;
     [SerializeField] TextMeshProUGUI haveBulletText;
@@ -14,6 +14,7 @@ public class UIPlayerBulletPanel : MonoBehaviour
 
     private void Start()
     {
+        gunManager.onReloading += UpdateBullet;
         playerCombat.onUseBullet += UpdateBullet;
 
         UpdateBullet();
@@ -21,12 +22,8 @@ public class UIPlayerBulletPanel : MonoBehaviour
 
     private void UpdateBullet()
     {
-        curBulletText.text = $"{gunMng.curBulletCount}";
-        haveBulletText.text = $"{gunMng.haveBulletCount}";
-    }
-
-    private void UpdateGrenade()
-    {
-
+        curBulletText.text = $"{gunManager.curBulletCount}";
+        haveBulletText.text = $"{gunManager.haveBulletCount}";
+        curGrenadeText.text = $"{gunManager.curGrenadeCount}";
     }
 }

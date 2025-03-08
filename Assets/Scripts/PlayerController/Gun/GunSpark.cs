@@ -11,6 +11,6 @@ public class GunSpark : MonoBehaviour
 
     private void Return()
     {
-        Shared.objectPoolMng.ReturnObject(this.gameObject.name, gameObject);
+        Shared.objectPoolManager.ReturnObject(this.gameObject.name, gameObject);
     }
 }

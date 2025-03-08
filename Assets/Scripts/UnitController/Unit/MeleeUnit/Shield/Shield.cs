@@ -19,12 +19,12 @@ public class Shield : MeleeUnit
             enemy.StayEnemy(1f);
 
             EEffect eEffect = (EEffect)EEffect.SHIELD;
-            GameObject effect = Shared.objectPoolMng.iEffectPool.FindEffect(eEffect);
+            GameObject effect = Shared.objectPoolManager.EffectPool.FindEffect(eEffect);
             effect.transform.position = enemy.transform.position + (Vector3.up * 2);
 
             yield return new WaitForSeconds(1f);
 
-            Shared.objectPoolMng.ReturnObject(effect.name, effect);
+            Shared.objectPoolManager.ReturnObject(effect.name, effect);
         }
 
         yield return null;

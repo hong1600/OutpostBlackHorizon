@@ -19,15 +19,15 @@ public class Sword : MeleeUnit
 
         if (rand < 5)
         {
-            Shared.gameMng.GoldCoin.SetGold(10);
+            Shared.gameManager.GoldCoin.SetGold(10);
 
             EEffect eEffect = (EEffect)EEffect.SWORD;
-            GameObject effect = Shared.objectPoolMng.iEffectPool.FindEffect(eEffect);
+            GameObject effect = Shared.objectPoolManager.EffectPool.FindEffect(eEffect);
             effect.transform.position = this.gameObject.transform.position;
 
             yield return new WaitForSeconds(0.75f);
 
-            Shared.objectPoolMng.ReturnObject(effect.name, effect.gameObject);
+            Shared.objectPoolManager.ReturnObject(effect.name, effect.gameObject);
         }
     }
 }

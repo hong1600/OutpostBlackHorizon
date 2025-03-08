@@ -8,14 +8,14 @@ public class UIRandomPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI myCoinText;
     private void Start()
     {
-    Shared.gameMng.GoldCoin.onCoinChanged -= randomPanel;
-    Shared.gameMng.GoldCoin.onCoinChanged += randomPanel;
+    Shared.gameManager.GoldCoin.onCoinChanged -= randomPanel;
+    Shared.gameManager.GoldCoin.onCoinChanged += randomPanel;
 
-    myCoinText.text = Shared.gameMng.GoldCoin.GetCoin().ToString();
+    myCoinText.text = Shared.gameManager.GoldCoin.GetCoin().ToString();
     }
 
     private void randomPanel()
     {
-        myCoinText.text = Shared.gameMng.GoldCoin.GetCoin().ToString();
+        myCoinText.text = Shared.gameManager.GoldCoin.GetCoin().ToString();
     }
 }

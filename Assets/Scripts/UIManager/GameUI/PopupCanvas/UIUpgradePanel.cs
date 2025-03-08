@@ -13,20 +13,20 @@ public class UIUpgradePanel : MonoBehaviour
 
     private void OnEnable()
     {
-        Shared.gameMng.GoldCoin.onGoldChanged += GoldCoinPanel;
-        Shared.gameMng.GoldCoin.onCoinChanged += GoldCoinPanel;
-        Shared.unitMng.UnitUpgrader.onUpgradeCostChange += UpgradeCostPanel;
-        Shared.unitMng.UnitUpgrader.onUpgradeLevelChange += UpgradeLevelPanel;
-        Shared.unitMng.UnitUpgrader.onUpgradePerChange += UpgradePerPanel;
+        Shared.gameManager.GoldCoin.onGoldChanged += GoldCoinPanel;
+        Shared.gameManager.GoldCoin.onCoinChanged += GoldCoinPanel;
+        Shared.unitManager.UnitUpgrader.onUpgradeCostChange += UpgradeCostPanel;
+        Shared.unitManager.UnitUpgrader.onUpgradeLevelChange += UpgradeLevelPanel;
+        Shared.unitManager.UnitUpgrader.onUpgradePerChange += UpgradePerPanel;
     }
 
     private void OnDisable()
     {
-        Shared.gameMng.GoldCoin.onGoldChanged -= GoldCoinPanel;
-        Shared.gameMng.GoldCoin.onCoinChanged -= GoldCoinPanel;
-        Shared.unitMng.UnitUpgrader.onUpgradeCostChange -= UpgradeCostPanel;
-        Shared.unitMng.UnitUpgrader.onUpgradeLevelChange -= UpgradeLevelPanel;
-        Shared.unitMng.UnitUpgrader.onUpgradePerChange -= UpgradePerPanel;
+        Shared.gameManager.GoldCoin.onGoldChanged -= GoldCoinPanel;
+        Shared.gameManager.GoldCoin.onCoinChanged -= GoldCoinPanel;
+        Shared.unitManager.UnitUpgrader.onUpgradeCostChange -= UpgradeCostPanel;
+        Shared.unitManager.UnitUpgrader.onUpgradeLevelChange -= UpgradeLevelPanel;
+        Shared.unitManager.UnitUpgrader.onUpgradePerChange -= UpgradePerPanel;
     }
 
     private void Start()
@@ -39,21 +39,21 @@ public class UIUpgradePanel : MonoBehaviour
 
     private void GoldCoinPanel()
     {
-        upgradeGoldText.text = Shared.gameMng.GoldCoin.GetGold().ToString();
-        upgradeCoinText.text = Shared.gameMng.GoldCoin.GetCoin().ToString();
+        upgradeGoldText.text = Shared.gameManager.GoldCoin.GetGold().ToString();
+        upgradeCoinText.text = Shared.gameManager.GoldCoin.GetCoin().ToString();
     }
 
     private void UpgradeCostPanel()
     {
         for (int i = 0; i < upgradeCostTexts.Length; i++) 
         {
-            if (Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[i] == 6)
+            if (Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[i] == 6)
             {
                 upgradeCostTexts[i].text = "MAX";
             }
             else
             {
-                upgradeCostTexts[i].text = Shared.unitMng.UnitUpgrader.GetUpgradeCost()[i].ToString();
+                upgradeCostTexts[i].text = Shared.unitManager.UnitUpgrader.GetUpgradeCost()[i].ToString();
             }
         }
     }
@@ -62,11 +62,11 @@ public class UIUpgradePanel : MonoBehaviour
     {
         for (int i = 0; i < upgradeLevelTexts.Length; i++)
         {
-            if (Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[i] < Shared.unitMng.UnitUpgrader.GetUpgradeMaxLevel())
+            if (Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[i] < Shared.unitManager.UnitUpgrader.GetUpgradeMaxLevel())
             {
-                upgradeLevelTexts[i].text = $"LV.{Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[i]}";
+                upgradeLevelTexts[i].text = $"LV.{Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[i]}";
             }
-            else if (Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[i] >= Shared.unitMng.UnitUpgrader.GetUpgradeMaxLevel())
+            else if (Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[i] >= Shared.unitManager.UnitUpgrader.GetUpgradeMaxLevel())
             {
                 upgradeLevelTexts[i].text = "LV.MAX";
             }
@@ -75,18 +75,18 @@ public class UIUpgradePanel : MonoBehaviour
 
     private void UpgradePerPanel()
     {
-        int level = (int)Shared.unitMng.UnitUpgrader.GetUpgradeLevel()[(int)EUnitUpgrade.per] - 1;
+        int level = (int)Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[(int)EUnitUpgrade.per] - 1;
 
         spawnPerTexts[0].text =
-            $"ÀÏ¹Ý : {Shared.unitMng.UnitSpawner.GetSelectWeight()[level][0]}%";
+            $"ÀÏ¹Ý : {Shared.unitManager.UnitSpawner.GetSelectWeight()[level][0]}%";
         spawnPerTexts[1].text =
             $"<color=blue>Èñ±Í : " +
-            $"{Shared.unitMng.UnitSpawner.GetSelectWeight()[level][1]}%</color>%";
+            $"{Shared.unitManager.UnitSpawner.GetSelectWeight()[level][1]}%</color>%";
         spawnPerTexts[2].text =
             $"<color=purple>¿µ¿õ : " +
-            $"{Shared.unitMng.UnitSpawner.GetSelectWeight()[level][2]}%</color>";
+            $"{Shared.unitManager.UnitSpawner.GetSelectWeight()[level][2]}%</color>";
         spawnPerTexts[3].text =
             $"<color=yellow>Àü¼³ : " +
-            $"{Shared.unitMng.UnitSpawner.GetSelectWeight()[level][3]}%</color>";
+            $"{Shared.unitManager.UnitSpawner.GetSelectWeight()[level][3]}%</color>";
     }
 }

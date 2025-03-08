@@ -6,8 +6,9 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     public event Action onUseBullet;
+    BulletPool bulletPool;
 
-    [SerializeField] GunMng gunMng;
+    [SerializeField] GunManager gunManager;
     [SerializeField] GunMovement gunMovement;
     [SerializeField] internal bool isAttack = false;
     [SerializeField] Transform fireTrs;
@@ -18,14 +19,19 @@ public class PlayerCombat : MonoBehaviour
 
     public float dmg { get; set; } = 1f;
 
+    private void Start()
+    {
+        bulletPool = Shared.objectPoolManager.BulletPool;
+    }
+
     private void Update()
     {
-        if (Input.GetMouseButton(0) && !isAttack && gunMng.curBulletCount >= 1) 
+        if (Input.GetMouseButton(0) && !isAttack && !gunManager.isReloading) 
         {
             StartCoroutine(StartAttackRifle());
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && !isAttack && gunMng.curGrenadeCount <= 1) 
+        if (Input.GetKeyDown(KeyCode.E) && !isAttack && gunManager.curGrenadeCount >= 1) 
         {
             StartCoroutine(StartAttackGrenade());
         }
@@ -34,12 +40,13 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator StartAttackRifle()
     {
         isAttack = true;
-        gunMng.UseBullet();
+        gunManager.UseBullet();
         muzzleFlash.SetActive(true);
         gunMovement.RecoilGun();
-        GameObject obj = Shared.objectPoolMng.iBulletPool.FindBullet(EBullet.BULLET);
+        GameObject obj = bulletPool.FindBullet(EBullet.BULLET);
         Bullet bullet = obj.GetComponent<Bullet>();
         bullet.InitBullet(null, 30, rifleSpeed, EBullet.BULLET, fireTrs);
+
         Shared.cameraManager.getCameraFpsShake.Shake();
         onUseBullet?.Invoke();
 
@@ -52,14 +59,14 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator StartAttackGrenade()
     {
         isAttack = true;
+        gunManager.UseGrenade();
         muzzleFlash.SetActive(true);
         gunMovement.RecoilGun();
-
-        GameObject obj = Shared.objectPoolMng.iBulletPool.FindBullet(EBullet.BULLET);
-        obj.transform.position = fireTrs.transform.position;
-        obj.transform.rotation = fireTrs.rotation * Quaternion.Euler(0, 180, 0);
+        GameObject obj = bulletPool.FindBullet(EBullet.GRENADE);
         Bullet bullet = obj.GetComponent<Bullet>();
-        //bullet.InitBullet(null, 30, grenadeSpeed, EBullet.GRENADE);
+        bullet.InitBullet(null, 100, grenadeSpeed, EBullet.GRENADE, fireTrs);
+        Shared.cameraManager.getCameraFpsShake.Shake();
+        onUseBullet?.Invoke();
 
         yield return new WaitForSeconds(0.1f);
 

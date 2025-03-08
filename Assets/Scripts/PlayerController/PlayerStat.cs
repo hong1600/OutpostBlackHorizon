@@ -47,6 +47,6 @@ public class PlayerStat : MonoBehaviour
     private void Reset()
     {
         isDie = false;
-        Shared.playerMng.playerAI.aiState = EPlayer.CREATE;
+        Shared.playerManager.playerAI.aiState = EPlayer.CREATE;
     }
 }

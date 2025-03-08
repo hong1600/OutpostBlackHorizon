@@ -21,6 +21,7 @@ public class LobbyUI : MonoBehaviour
     private void Start()
     {
         Invoke("OffBlackPanel", 1);
+        AudioManager.instance.PlayBgm(EBgm.LOBBYWAITING);
 
         StartCoroutine(StartLobbyAnim());
     }

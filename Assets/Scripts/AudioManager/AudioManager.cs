@@ -7,7 +7,9 @@ public enum EBgm
 {
     LOGIN,
     LOBBYWAITING,
-    GAME,
+    GAMESTART,
+    DESERT,
+    WATER,
     GAMEFINISH,
 }
 
@@ -57,7 +59,7 @@ public class AudioManager : MonoBehaviour
     {
         int bgmIndex = (int)_eBgm;
 
-        if (bgmIndex > 0 && bgmIndex < bgmClips.Length)
+        if (bgmIndex >= 0 && bgmIndex < bgmClips.Length)
         {
             bgmSource.clip = bgmClips[bgmIndex];
             bgmSource.volume = bgmVolume * masterVolume;

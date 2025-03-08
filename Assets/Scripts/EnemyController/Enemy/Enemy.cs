@@ -27,6 +27,9 @@ public abstract class Enemy : MonoBehaviour
     public float attackRange;
     public int attackDmg;
 
+    GameObject hitAim;
+    Coroutine hitAimCoroutine;
+
     [SerializeField] protected Transform[] targetPoints;
     [SerializeField] protected Transform myTarget;
     protected Vector3 targetPointDir;
@@ -53,6 +56,8 @@ public abstract class Enemy : MonoBehaviour
         attackRange = 1;
         attackDmg = 10;
 
+        hitAim = Shared.gameUI.HitAim;
+
         targetPoints = Shared.enemyManager.iEnemySpawner.GetTargetPoint();
         int rand = Random.Range(0, targetPoints.Length);
         myTarget = targetPoints[rand];
@@ -65,7 +70,7 @@ public abstract class Enemy : MonoBehaviour
     {
         curhp = enemyHp;
 
-        GameObject hpBar = Shared.objectPoolMng.iHpBarPool.FindHpBar(EHpBar.NORMAL);
+        GameObject hpBar = Shared.objectPoolManager.HpBarPool.FindHpBar(EHpBar.NORMAL);
         enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
         enemyHpBar.Init(this);
 
@@ -138,7 +143,7 @@ public abstract class Enemy : MonoBehaviour
 
         if (myTarget.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Shared.playerMng.playerStat.TakeDmg(attackDmg);
+            Shared.playerManager.playerStat.TakeDmg(attackDmg);
         }
 
         yield return new WaitForSeconds(1f);
@@ -147,10 +152,16 @@ public abstract class Enemy : MonoBehaviour
         attackCoroutine = null;
     }
 
-
-    public void TakeDamage(int _damage)
+    public void TakeDamage(int _dmg)
     {
-        curhp -= _damage;
+        curhp -= _dmg;
+
+        if(hitAimCoroutine != null)
+        {
+            StopCoroutine(hitAimCoroutine);
+        }
+
+        hitAimCoroutine =  StartCoroutine(StartHitAim());
 
         onTakeDamage?.Invoke();
 
@@ -158,6 +169,15 @@ public abstract class Enemy : MonoBehaviour
         {
             isDie = true;
         }
+    }
+
+    IEnumerator StartHitAim()
+    {
+        hitAim.SetActive(true);
+
+        yield return new WaitForSeconds(0.2f);
+
+        hitAim.SetActive(false);
     }
 
     protected internal void StayEnemy(float _time)
@@ -182,15 +202,15 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator StartDie()
     {
-        Shared.gameMng.Rewarder.SetReward(EReward.GOLD, 50);
-        Shared.gameMng.Rewarder.SetReward(EReward.GEM, 10);
-        Shared.gameMng.Rewarder.SetReward(EReward.PAPER, 20);
-        Shared.gameMng.Rewarder.SetReward(EReward.EXP, 1);
+        Shared.gameManager.Rewarder.SetReward(EReward.GOLD, 50);
+        Shared.gameManager.Rewarder.SetReward(EReward.GEM, 10);
+        Shared.gameManager.Rewarder.SetReward(EReward.PAPER, 20);
+        Shared.gameManager.Rewarder.SetReward(EReward.EXP, 1);
 
         yield return new WaitForSeconds(1f);
 
-        Shared.objectPoolMng.ReturnObject(enemyHpBar.gameObject.name, enemyHpBar.gameObject);
-        Shared.objectPoolMng.ReturnObject(this.gameObject.name, this.gameObject);
+        Shared.objectPoolManager.ReturnObject(enemyHpBar.gameObject.name, enemyHpBar.gameObject);
+        Shared.objectPoolManager.ReturnObject(this.gameObject.name, this.gameObject);
     }
 
     protected void ChangeAnim(EEnemyAI _curState)

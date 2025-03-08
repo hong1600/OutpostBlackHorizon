@@ -44,7 +44,7 @@ public class GunslingerEffect : MonoBehaviour
 
                 yield return new WaitForSeconds(1);
 
-                Shared.objectPoolMng.ReturnObject(this.gameObject.name, this.gameObject);
+                Shared.objectPoolManager.ReturnObject(this.gameObject.name, this.gameObject);
 
                 yield break;
             }

@@ -29,7 +29,7 @@ public class UIRewardPanel : MonoBehaviour
 
     private void Start()
     {
-        Shared.gameMng.GameState.onGameFinish += UpdateRewardPanel;
+        Shared.gameManager.GameState.onGameFinish += UpdateRewardPanel;
         StartCoroutine(StartAnim());
     }
 
@@ -112,11 +112,11 @@ public class UIRewardPanel : MonoBehaviour
             userNameText.text = "";
         }
 
-        dmgText.text = Shared.playerMng.playerCombat.dmg.ToString();
+        dmgText.text = Shared.playerManager.playerCombat.dmg.ToString();
 
-        rewardText.text = Shared.gameMng.Rewarder.GetReward(EReward.GOLD).ToString();
+        rewardText.text = Shared.gameManager.Rewarder.GetReward(EReward.GOLD).ToString();
 
-        if (!Shared.playerMng.playerStat.isDie)
+        if (!Shared.playerManager.playerStat.isDie)
         {
             stateText.text = "»ýÁ¸";
         }

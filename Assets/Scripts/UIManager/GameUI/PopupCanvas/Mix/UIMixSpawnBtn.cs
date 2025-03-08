@@ -6,6 +6,6 @@ public class UIMixSpawnBtn : MonoBehaviour
 {
     public void ClickMixSpawn()
     {
-        StartCoroutine(Shared.unitMng.UnitMixer.StartUnitMixSpawn());
+        StartCoroutine(Shared.unitManager.UnitMixer.StartUnitMixSpawn());
     }
 }

@@ -11,6 +11,6 @@ public class UIOptionBtn : MonoBehaviour
 
     public void ClickOption()
     {
-        UIMng.instance.OpenPanel(optionPanel, rects, onPos, offPos, true);
+        UIManager.instance.OpenPanel(optionPanel, rects, onPos, offPos, true);
     }
 }

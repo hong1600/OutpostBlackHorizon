@@ -6,6 +6,6 @@ public class WaitingStartBtn : MonoBehaviour
 {
     public void OnClickStartBtn()
     {
-        SceneMng.Instance.ChangeScene(EScene.GAME, true);
+        MSceneManager.Instance.ChangeScene(EScene.GAME, true);
     }
 }

@@ -8,7 +8,7 @@ public class ManagersLoader : MonoBehaviour
 
     private void Awake()
     {
-        if (GameObject.Find("MANAGERS") == null)
+        if (FindObjectOfType<Managers>() == null)
         {
             Instantiate(managers);
         }

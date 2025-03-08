@@ -41,6 +41,6 @@ public class MageEffect : MonoBehaviour
 
     private void DestroyEffect()
     {
-        Shared.objectPoolMng.ReturnObject(this.gameObject.name, this.gameObject);
+        Shared.objectPoolManager.ReturnObject(this.gameObject.name, this.gameObject);
     }
 }

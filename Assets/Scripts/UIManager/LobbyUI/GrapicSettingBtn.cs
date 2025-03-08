@@ -11,6 +11,6 @@ public class GrapicSettingBtn : MonoBehaviour
 
     public void ClickGrapic()
     {
-        UIMng.instance.OpenPanel(grapicPanel, rects, onPos, offPos, true);
+        UIManager.instance.OpenPanel(grapicPanel, rects, onPos, offPos, true);
     }
 }

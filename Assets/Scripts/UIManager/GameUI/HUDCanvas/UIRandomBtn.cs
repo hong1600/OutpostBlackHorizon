@@ -16,6 +16,6 @@ public class UIRandomBtn : MonoBehaviour
             upgradePanel.SetActive(false);
         }
 
-        UIMng.instance.OpenPanel(randomPanel, null, null, null, false);
+        UIManager.instance.OpenPanel(randomPanel, null, null, null, false);
     }
 }

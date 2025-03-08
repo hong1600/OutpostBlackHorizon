@@ -11,14 +11,14 @@ public class UITimePanel : MonoBehaviour
 
     private void Start()
     {
-        Shared.gameMng.SpawnTimer.UnTimerEvent(UpdateTimePanel);
-        Shared.gameMng.SpawnTimer.SubTimerEvent(UpdateTimePanel);
+        Shared.gameManager.SpawnTimer.UnTimerEvent(UpdateTimePanel);
+        Shared.gameManager.SpawnTimer.SubTimerEvent(UpdateTimePanel);
     }
 
     private void UpdateTimePanel()
     {
-        float sec = Shared.gameMng.SpawnTimer.GetSec();
-        float maxSec = Shared.gameMng.SpawnTimer.GetMaxSec();
+        float sec = Shared.gameManager.SpawnTimer.GetSec();
+        float maxSec = Shared.gameManager.SpawnTimer.GetMaxSec();
         timerText.text = $"{(int)sec}s";
         sliderValue.fillAmount = sec / maxSec;
         //timerText.text = string.Format("{0:00}:{1:00}", min, (int)sec);

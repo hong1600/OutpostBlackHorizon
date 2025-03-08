@@ -5,24 +5,24 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    SphereCollider sphere;
-
-    Transform target;
-    int damage;
-    float speed;
+    Rigidbody rigid;
     EBullet eBullet;
-
-    [SerializeField] float destroyTime = 3f;
-    float time = 0;
+    SphereCollider sphere;
+    float speed;
+    int damage;
+    Transform target;
+    float time = 3;
 
     private void Awake()
     {
+        rigid = GetComponent<Rigidbody>();
         sphere = GetComponent<SphereCollider>();
     }
 
     public void InitBullet(Transform _target, int _damage, float _speed, EBullet _eBullet, Transform _firePos)
     {
-        time = 0;
+        time = 3f;
+
         transform.position = _firePos.transform.position;
         transform.rotation = _firePos.transform.rotation * Quaternion.Euler(90, 0, 0);
 
@@ -30,11 +30,19 @@ public class Bullet : MonoBehaviour
         damage = _damage;
         target = _target;
         eBullet = _eBullet;
+
+        if(_eBullet == EBullet.GRENADE) 
+        {
+            time = 10f;
+            rigid.velocity = Vector3.zero;
+            Vector3 grenadeDir = transform.up * speed;
+            rigid.AddForce(grenadeDir, ForceMode.Impulse);
+        }
     }
 
     private void Update()
     {
-        time += Time.deltaTime;
+        time -= Time.deltaTime;
 
         if (eBullet == EBullet.BULLET)
         {
@@ -46,7 +54,7 @@ public class Bullet : MonoBehaviour
             MoveGrenadeBullet();
         }
 
-        if(time > destroyTime) 
+        if(time < 0) 
         {
             ReturnPool();
         }
@@ -57,7 +65,7 @@ public class Bullet : MonoBehaviour
         transform.Translate(Vector3.up * speed * Time.deltaTime);
 
         if (Physics.Raycast(transform.position, transform.up,
-            out RaycastHit hit, speed * Time.deltaTime, ~LayerMask.GetMask("EnemySensor")))
+            out RaycastHit hit, speed, ~LayerMask.GetMask("EnemySensor")))
         {
             StartCoroutine(StartRifleBullet(hit.point, hit.collider));
         }
@@ -65,7 +73,7 @@ public class Bullet : MonoBehaviour
 
     IEnumerator StartRifleBullet(Vector3 _hitPos, Collider _hitObj)
     {
-        GameObject spark = Shared.objectPoolMng.iEffectPool.FindEffect(EEffect.GUNHIT);
+        GameObject spark = Shared.objectPoolManager.EffectPool.FindEffect(EEffect.GUNHIT);
 
         spark.transform.position = _hitPos;
         spark.transform.rotation = Quaternion.LookRotation(-transform.forward);
@@ -83,22 +91,33 @@ public class Bullet : MonoBehaviour
 
     private void MoveGrenadeBullet()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-
         if (Physics.Raycast(transform.position, transform.forward,
-            out RaycastHit hit, speed * Time.deltaTime, LayerMask.GetMask("Enemy", "Wall")))
+            out RaycastHit hit, sphere.radius, ~LayerMask.GetMask("EnemySensor")))
         {
-            StartCoroutine(StartGrenadeBullet(hit.point, target.position));
+            StartCoroutine(StartGrenadeBullet(hit.point, hit.collider));
         }
     }
 
-    IEnumerator StartGrenadeBullet(Vector3 _hitPos, Vector3 _targetPos)
+    IEnumerator StartGrenadeBullet(Vector3 _hitPos, Collider _hitObj)
     {
+        GameObject plasma = Shared.objectPoolManager.EffectPool.FindEffect(EEffect.PLASMA);
+
+        plasma.transform.position = _hitPos;
+        plasma.transform.rotation = Quaternion.LookRotation(-transform.forward);
+
+        if (_hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            Enemy enemy = _hitObj.gameObject.GetComponent<Enemy>();
+            enemy.TakeDamage(damage);
+        }
+
         yield return null;
+
+        ReturnPool();
     }
 
     private void ReturnPool()
     {
-        Shared.objectPoolMng.ReturnObject(gameObject.name, gameObject);
+        Shared.objectPoolManager.ReturnObject(gameObject.name, gameObject);
     }
 }

@@ -29,7 +29,7 @@ public class Mage : RangedUnit
         yield return new WaitForSeconds(1.5f);
 
         EEffect eEffect = (EEffect)EEffect.MAGE;
-        GameObject effect = Shared.objectPoolMng.iEffectPool.FindEffect(eEffect);
+        GameObject effect = Shared.objectPoolManager.EffectPool.FindEffect(eEffect);
         effect.transform.position = enemy.transform.position + new Vector3(0,0.1f,0);
         skillCouroutine = null;
         skillBar.GetComponent<UnitSkillBar>().ResetSkillBar();

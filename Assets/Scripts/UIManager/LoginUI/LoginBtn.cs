@@ -4,31 +4,32 @@ using UnityEngine;
 
 public class LoginBtn : MonoBehaviour
 {
-    [SerializeField] LoginMng loginMng;
+    [SerializeField] LoginManager loginManager;
 
     public void ClickLoginBtn()
     {
-        loginMng.ClickLogin();
+        loginManager.ClickLogin();
     }
 
     public void ClickRegisterBtn()
     {
-        loginMng.ClickRegister();
+        loginManager.ClickRegister();
     }
 
     public void ClickRegisterCheckBtn()
     {
-        loginMng.ClickRegisterCheck();
+        loginManager.ClickRegisterCheck();
     }
 
     public void ClickRegisterCancleBtn()
     {
-        loginMng.ClickRegisterCancle();
+        loginManager.ClickRegisterCancle();
     }
 
     public void ClickDataClearBtn()
     {
         PlayerPrefs.DeleteAll();
+        Debug.Log("DATA CLEAR!");
     }
 
 }

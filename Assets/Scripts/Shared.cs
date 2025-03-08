@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Shared : MonoBehaviour
 {
-    static public GameMng gameMng;
-    static public UnitMng unitMng;
+    static public GameManager gameManager;
+    static public UnitManager unitManager;
     static public EnemyManager enemyManager;
     static public GameUI gameUI;
     static public MainCamera mainCamera;
-    static public ObjectPoolMng objectPoolMng;
+    static public ObjectPoolManager objectPoolManager;
     static public CameraManager cameraManager;
-    static public PlayerMng playerMng;
+    static public PlayerManager playerManager;
 }

@@ -19,6 +19,7 @@ public class LoginUI : MonoBehaviour
         Color color = videoImg.color;
         color.a = 0.5f;
         videoImg.color = color;
+        AudioManager.instance.PlayBgm(EBgm.LOGIN);
         StartCoroutine(StartScene());
     }
 
@@ -29,7 +30,7 @@ public class LoginUI : MonoBehaviour
         yield return StartCoroutine(StartFadeOut(videoImg, 3));
 
         textParent.SetActive(true);
-        UIMng.instance.VideoSelector.NextVideo(EVideo.LOGIN);
+        UIManager.instance.VideoSelector.NextVideo(EVideo.LOGIN);
 
         yield return new WaitForSeconds(2);
 

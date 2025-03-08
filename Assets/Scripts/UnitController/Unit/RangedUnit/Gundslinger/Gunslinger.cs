@@ -31,7 +31,7 @@ public class Gunslinger : RangedUnit
         yield return new WaitForSeconds(1.3f);
 
         EEffect eEffect = (EEffect)EEffect.GUNSLINGER;
-        GameObject effect = Shared.objectPoolMng.iEffectPool.FindEffect(eEffect);
+        GameObject effect = Shared.objectPoolManager.EffectPool.FindEffect(eEffect);
         effect.transform.position = bulletTrs.position;
         effect.GetComponent<GunslingerEffect>().Init(enemy.gameObject.transform, 100, 150f);
         skillCouroutine = null;
