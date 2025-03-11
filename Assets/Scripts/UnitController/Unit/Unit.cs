@@ -150,9 +150,15 @@ public abstract class Unit : MonoBehaviour
         yield return null;
     }
 
-    protected virtual IEnumerator OnDamageEvent(Enemy enemy , int _damage) 
+    protected virtual IEnumerator OnDamageEvent(Enemy _enemy, int _dmg) 
     {
-        enemy.TakeDamage(_damage);
+        ITakeDmg iTakeDmg = target.GetComponent<ITakeDmg>();
+
+        if(iTakeDmg != null) 
+        {
+            iTakeDmg.TakeDmg(_dmg);
+        }
+
         yield return null;
     }
 

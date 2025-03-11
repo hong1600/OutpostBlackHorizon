@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] PlayerStat playerStat;
-
+    PlayerStatus playerStatus;
     Camera mainCam;
     Rigidbody rigid;
     CapsuleCollider cap;
 
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float runSpeed = 10f;
+    [SerializeField] float walkInterval = 0.5f;
+    [SerializeField] float runInterval = 0.4f;
+    float footstepTimer = 0f;
     Vector3 moveDir;
 
     [SerializeField] float jumpForce = 5f;
@@ -33,6 +35,11 @@ public class PlayerMovement : MonoBehaviour
         mainCam = Camera.main;
         rigid = GetComponent<Rigidbody>();
         cap = GetComponent<CapsuleCollider>();
+    }
+
+    private void Start()
+    {
+        playerStatus = Shared.playerManager.playerStatus;
     }
 
     private void Update()
@@ -112,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (playerStat.isDie || isJump) return;
+        if (playerStatus.isDie || isJump) return;
 
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
@@ -127,6 +134,17 @@ public class PlayerMovement : MonoBehaviour
             float speed = isRun ? runSpeed : walkSpeed;
 
             rigid.velocity = new Vector3(moveDir.x * speed, rigid.velocity.y, moveDir.z * speed);
+
+            if (isGround)
+            {
+                float footstepInterval = isRun ? runInterval : walkInterval;
+
+                if (Time.time >= footstepTimer)
+                {
+                    footstepTimer = Time.time + footstepInterval;
+                    AudioManager.instance.PlaySfx(ESfx.FOOTSTEP, transform.position);
+                }
+            }
         }
         else
         {
@@ -153,12 +171,14 @@ public class PlayerMovement : MonoBehaviour
 
             rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
             rigid.AddForce(jumpDir * jumpForce, ForceMode.Impulse);
+            AudioManager.instance.PlaySfx(ESfx.JUMP, transform.position);
         }
         else if (jumpCount == 1)
         {
             fallGravity = 0.5f;
             rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
             rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            AudioManager.instance.PlaySfx(ESfx.JUMP, transform.position);
         }
     }
 }

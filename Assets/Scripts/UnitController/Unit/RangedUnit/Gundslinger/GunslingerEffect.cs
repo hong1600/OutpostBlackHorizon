@@ -8,15 +8,15 @@ public class GunslingerEffect : MonoBehaviour
 
     [SerializeField] GameObject effect;
     float speed;
-    int damage;
+    int dmg;
     Transform target;
 
-    public void Init(Transform _target, int _damage, float _speed)
+    public void Init(Transform _target, int _dmg, float _speed)
     {
         sphere = GetComponent<SphereCollider>();
 
         target = _target;
-        damage = _damage;
+        dmg = _dmg;
         speed = _speed;
 
         StartCoroutine(StartFire());
@@ -37,9 +37,9 @@ public class GunslingerEffect : MonoBehaviour
 
                 for (int i = 0; i < colls.Length; i++)
                 {
-                    Enemy enemy = colls[i].GetComponent<Enemy>();
+                    ITakeDmg iTakeDmg = colls[i].GetComponent<ITakeDmg>();
 
-                    enemy.TakeDamage(100);
+                    iTakeDmg.TakeDmg(dmg);
                 }
 
                 yield return new WaitForSeconds(1);

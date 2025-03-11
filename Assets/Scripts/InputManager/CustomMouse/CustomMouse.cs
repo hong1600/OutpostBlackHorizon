@@ -14,6 +14,11 @@ public class CustomMouse : MonoBehaviour
 
     Vector2 mousePos;
 
+    private void Awake()
+    {
+        InputManager.instance.customMouse = this;
+    }
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;

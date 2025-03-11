@@ -6,6 +6,15 @@ using Random = UnityEngine.Random;
 
 public class UnitFusion : MonoBehaviour
 {
+    UnitData unitData;
+    UnitSpawner unitSpawner;
+
+    private void Start()
+    {
+        unitData = Shared.unitManager.UnitData;
+        unitSpawner = Shared.unitManager.UnitSpawner;
+    }
+
     public void UnitFusionSpawn()
     {
         GameObject selectGround = InputManager.instance.FieldSelector.GetStartSelectField().
@@ -16,10 +25,10 @@ public class UnitFusion : MonoBehaviour
 
         for (int i = 2; i >= 0; i--)
         {
-            Shared.unitManager.RemoveUnitData(selectGround.transform.GetChild(i).gameObject);
+            unitData.RemoveUnitData(selectGround.transform.GetChild(i).gameObject);
         }
 
-        Shared.unitManager.UnitInstantiate(spawnUnit);
+        unitSpawner.InstantiateUnit(spawnUnit);
     }
 
     public GameObject instantiateUnit(EUnitGrade _grade)
@@ -30,18 +39,18 @@ public class UnitFusion : MonoBehaviour
         switch (_grade)
         {
             case EUnitGrade.C:
-                rand = Random.Range(0, Shared.unitManager.GetUnitByGradeList(EUnitGrade.B).Count);
-                unit = Shared.unitManager.GetUnitByGradeList(EUnitGrade.B)[rand];
+                rand = Random.Range(0, unitData.GetUnitByGradeList(EUnitGrade.B).Count);
+                unit = unitData.GetUnitByGradeList(EUnitGrade.B)[rand];
                 return unit;
 
             case EUnitGrade.B:
-                rand = Random.Range(0, Shared.unitManager.GetUnitByGradeList(EUnitGrade.A).Count);
-                unit = Shared.unitManager.GetUnitByGradeList(EUnitGrade.A)[rand];
+                rand = Random.Range(0, unitData.GetUnitByGradeList(EUnitGrade.A).Count);
+                unit = unitData.GetUnitByGradeList(EUnitGrade.A)[rand];
                 return unit;
 
             case EUnitGrade.A:
-                rand = Random.Range(0, Shared.unitManager.GetUnitByGradeList(EUnitGrade.S).Count);
-                unit = Shared.unitManager.GetUnitByGradeList(EUnitGrade.S)[rand];
+                rand = Random.Range(0, unitData.GetUnitByGradeList(EUnitGrade.S).Count);
+                unit = unitData.GetUnitByGradeList(EUnitGrade.S)[rand];
                 return unit;
 
             default:

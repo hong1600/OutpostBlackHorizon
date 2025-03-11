@@ -2,12 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IUnitFieldMove
-{
-    void CheckUnitField(GameObject _startSelectField, GameObject _curSelectField);
-}
-
-public class UnitFieldMove : MonoBehaviour, IUnitFieldMove
+public class UnitFieldMove : MonoBehaviour
 {
     [SerializeField] List<GameObject> startSelectUnitList = new List<GameObject>();
     [SerializeField] List<GameObject> curSelectUnitList = new List<GameObject>();

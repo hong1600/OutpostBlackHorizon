@@ -46,19 +46,19 @@ public class PlayerAI
     {
         if (playerMng.playerMovement.isRun) aiState = EPlayer.RUN;
         if (playerMng.playerCombat.isAttack) aiState = EPlayer.ATTACK;
-        if (playerMng.playerStat.isDie) aiState = EPlayer.DIE;
+        if (playerMng.playerStatus.isDie) aiState = EPlayer.DIE;
     }
 
     public virtual void Run()
     {
         if (!playerMng.playerMovement.isGround) aiState = EPlayer.JUMP;
-        if (playerMng.playerStat.isDie) aiState = EPlayer.DIE;
+        if (playerMng.playerStatus.isDie) aiState = EPlayer.DIE;
     }
 
     public virtual void Jump()
     {
         if (playerMng.playerMovement.isGround) aiState = EPlayer.WALK;
-        if (playerMng.playerStat.isDie) aiState = EPlayer.DIE;
+        if (playerMng.playerStatus.isDie) aiState = EPlayer.DIE;
     }
 
     public virtual void Die()

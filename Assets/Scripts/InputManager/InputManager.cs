@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
@@ -15,11 +14,12 @@ public class InputManager : MonoBehaviour
     public event Action<Vector2> onInputMouse;
     public event Action<Vector2> onInputKey;
     public event Action onInputEsc;
+    public event Action onInputB;
 
     [SerializeField] FieldSelector fieldSelector;
-    [SerializeField] CustomMouse customMouse;
+    public CustomMouse customMouse;
+
     public FieldSelector FieldSelector { get; private set; }
-    public CustomMouse CustomMouse { get; private set; }
 
     Vector2 startMousePos;
     Vector2 curMousePos;
@@ -44,10 +44,6 @@ public class InputManager : MonoBehaviour
         {
             FieldSelector = fieldSelector;
         }
-        if (customMouse != null)
-        {
-            CustomMouse = customMouse;
-        }
     }
 
     private void Update()
@@ -59,6 +55,7 @@ public class InputManager : MonoBehaviour
         InputKey();
         InputMouse();
         InputEsc();
+        InputB();
     }
 
     private void DownMouseLeft()
@@ -127,6 +124,14 @@ public class InputManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)) 
         {
             onInputEsc?.Invoke();
+        }
+    }
+
+    private void InputB()
+    {
+        if(Input.GetKeyDown(KeyCode.B)) 
+        {
+            onInputB?.Invoke();
         }
     }
 }

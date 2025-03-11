@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
     public Animator anim { get; private set; }
     public PlayerMovement playerMovement { get; private set; }
     public PlayerCombat playerCombat { get; private set; }
-    public PlayerStat playerStat { get; private set; }
+    public PlayerStatus playerStatus { get; private set; }
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class PlayerManager : MonoBehaviour
 
         playerMovement = GetComponent<PlayerMovement>();
         playerCombat = GetComponent<PlayerCombat>();
-        playerStat = GetComponent<PlayerStat>();
+        playerStatus = GetComponent<PlayerStatus>();
 
         playerAI = new PlayerAI();
         playerAI.Init(this);

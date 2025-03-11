@@ -6,6 +6,7 @@ public class Plasma : MonoBehaviour
 {
     SphereCollider sphere;
 
+    [SerializeField] int plasmaDmg = 5;
     [SerializeField] float duration = 5f;
 
     private void Awake()
@@ -26,7 +27,7 @@ public class Plasma : MonoBehaviour
         }
     }
 
-    IEnumerator StartDmg(Collider _enemy)
+    IEnumerator StartDmg(Collider _target)
     {
         float time = 0;
 
@@ -34,16 +35,17 @@ public class Plasma : MonoBehaviour
         {
             time += Time.deltaTime;
 
-            if (_enemy != null) 
+            if (_target != null) 
             {
-                Enemy enemy = _enemy.GetComponent<Enemy>();
-                if(enemy != null) 
+                ITakeDmg iTakeDmg = _target.GetComponent<ITakeDmg>();
+
+                if(iTakeDmg != null) 
                 {
-                    enemy.TakeDamage(5);
+                    iTakeDmg.TakeDmg(plasmaDmg);
                 }
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.3f);
         }
     }
 

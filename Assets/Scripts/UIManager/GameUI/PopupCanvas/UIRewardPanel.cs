@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UIRewardPanel : MonoBehaviour
 {
     [Header("Finish")]
+    [SerializeField] GameObject finishPanel;
     [SerializeField] Image BackGround;
     [SerializeField] RectTransform finishBackRect;
     [SerializeField] RectTransform finishPanelRect1;
@@ -30,14 +31,13 @@ public class UIRewardPanel : MonoBehaviour
     private void Start()
     {
         Shared.gameManager.GameState.onGameFinish += UpdateRewardPanel;
-        StartCoroutine(StartAnim());
     }
 
     IEnumerator StartAnim()
     {
         finishBackRect.DOSizeDelta(new Vector2(finishBackRect.sizeDelta.x, 400), 0.5f)
             .SetEase(Ease.OutSine);
-        yield return finishPanelRect2.DOSizeDelta (new Vector2(finishPanelRect2.sizeDelta.x, 15), 0.5f)
+        finishPanelRect2.DOSizeDelta (new Vector2(finishPanelRect2.sizeDelta.x, 15), 0.5f)
             .SetEase(Ease.OutSine);
 
         yield return new WaitForSeconds(0.15f);
@@ -47,61 +47,33 @@ public class UIRewardPanel : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        finishBackRect.DOSizeDelta(new Vector2(finishBackRect.sizeDelta.x, 0), 0.3f)
+        finishBackRect.DOSizeDelta(new Vector2(finishBackRect.sizeDelta.x, 0), 0.5f)
             .SetEase(Ease.OutSine);
-        yield return finishPanelRect2.DOSizeDelta(new Vector2(finishPanelRect2.sizeDelta.x, 90), 0.3f)
+        yield return finishPanelRect2.DOSizeDelta(new Vector2(finishPanelRect2.sizeDelta.x, 90), 0.5f)
             .SetEase(Ease.OutSine).WaitForCompletion();
 
         finishText.enabled = false;
         finishImg.SetActive(true);
-        finishPanelRect1.DOSizeDelta(new Vector2(150, finishPanelRect1.sizeDelta.y), 0.3f)
+        finishPanelRect1.DOSizeDelta(new Vector2(150, finishPanelRect1.sizeDelta.y), 0.5f)
             .SetEase(Ease.OutSine);
-        yield return finishPanelRect2.DOSizeDelta(new Vector2(150, finishPanelRect1.sizeDelta.y), 0.3f)
+        yield return finishPanelRect2.DOSizeDelta(new Vector2(150, finishPanelRect1.sizeDelta.y), 0.5f)
             .SetEase(Ease.OutSine).WaitForCompletion();
 
-        yield return finishPanel1.transform.DOMove(movePos1.position, 0.3f)
+        yield return finishPanel1.transform.DOMove(movePos1.position, 0.5f)
             .SetEase(Ease.Linear).WaitForCompletion();
 
+        yield return new WaitForSeconds(0.5f);
 
-        finishPanelRect1.DOSizeDelta(new Vector2(790, finishPanelRect1.sizeDelta.y), 0.3f)
+        finishPanelRect1.DOSizeDelta(new Vector2(790, finishPanelRect1.sizeDelta.y), 0.5f)
             .SetEase(Ease.Linear);
-        yield return finishPanel2.transform.DOMove(movePos2.position, 0.3f)
+        rewardPanel.SetActive(true);
+        yield return finishPanel2.transform.DOMove(movePos2.position, 0.5f)
             .SetEase(Ease.Linear).WaitForCompletion();
 
         finishText.enabled = true;
-
-        rewardPanel.SetActive(true);
     }
 
-    //IEnumerator StartAnim()
-    //{
-    //    yield return new WaitForSeconds(1.1f);
-
-    //    finishText.SetActive(false);
-
-    //    yield return new WaitForSeconds(0.2f);
-
-    //    finishImg.SetActive(true);
-
-    //    finishPanel1.transform.DOMove(movePos1.position, 1).SetEase(Ease.InSine);
-
-    //    yield return new WaitForSeconds(1.4f);
-
-    //    finishPanel2.transform.DOMove(movePos2.position, 0.33f).SetEase(Ease.InSine);
-
-    //    yield return new WaitForSeconds(0.4f);
-
-    //    rewardPanel.SetActive(true);
-    //    finishText.SetActive(true);
-
-    //    yield return new WaitForSeconds(2);
-
-    //    yield return StartCoroutine(UIMng.instance.StartFadeIn(finishBackImg, 5));
-
-    //    SceneMng.Instance.ChangeScene(EScene.WAITING,true);
-    //}
-
-    public void UpdateRewardPanel()
+    public void UpdateRewardPanel(EGameState _state)
     {
         if (DataManager.instance.UserDataLoader.curUserData != null)
         {
@@ -112,17 +84,20 @@ public class UIRewardPanel : MonoBehaviour
             userNameText.text = "";
         }
 
-        dmgText.text = Shared.playerManager.playerCombat.dmg.ToString();
+        dmgText.text = Shared.playerManager.playerCombat.cumulativeDmg.ToString();
 
         rewardText.text = Shared.gameManager.Rewarder.GetReward(EReward.GOLD).ToString();
 
-        if (!Shared.playerManager.playerStat.isDie)
+        if (_state == EGameState.GAMECLEAR)
         {
             stateText.text = "생존";
         }
-        else
+        else if (_state == EGameState.GAMEOVER)
         {
             stateText.text = "실종";
         }
+
+        finishPanel.SetActive(true);
+        StartCoroutine(StartAnim());
     }
 }

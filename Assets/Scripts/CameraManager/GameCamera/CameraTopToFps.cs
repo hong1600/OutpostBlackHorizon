@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using UnityEngine;
 
 public class CameraTopToFps : MonoBehaviour
@@ -18,9 +19,11 @@ public class CameraTopToFps : MonoBehaviour
     [SerializeField] Transform playerEyeTrs;
     [SerializeField] GameObject rifle;
     [SerializeField] Transform topTrs;
-    [SerializeField] GameObject customMouse;
     [SerializeField] GameObject aimMouse;
     [SerializeField] GameObject functionUI;
+    [SerializeField] GameObject customMouse;
+    [SerializeField] GameObject centerLine;
+
     public bool isArrive { get; private set; }
 
     Quaternion playerRot;
@@ -41,7 +44,7 @@ public class CameraTopToFps : MonoBehaviour
 
         playerMovement = playerObj.GetComponent<PlayerMovement>();
         playerCombat = playerObj.GetComponent<PlayerCombat>();
-        SetCameraMode(EViewState.FPS);
+        SetCameraMode(Shared.gameManager.ViewState.GetViewState());
     }
 
     private void Update()
@@ -93,6 +96,7 @@ public class CameraTopToFps : MonoBehaviour
             customMouse.SetActive(false);
             aimMouse.SetActive(true);
             functionUI.SetActive(false);
+            centerLine.SetActive(false);
             MoveCamera();
         }
         else
@@ -143,8 +147,17 @@ public class CameraTopToFps : MonoBehaviour
             functionUI.SetActive(true);
             fpsShake.SetActive(false);
             fpsZoom.SetActive(false);
+            centerLine.SetActive(true);
         }
 
         isArrive = true;
+    }
+
+    private void SwitchFPS()
+    {
+    }
+
+    private void SwitchTOP()
+    {
     }
 }

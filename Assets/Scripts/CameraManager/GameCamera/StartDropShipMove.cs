@@ -23,6 +23,8 @@ public class StartDropShipMove : MonoBehaviour
     [Header("Player Settings")]
     [SerializeField] GameObject player;
     [SerializeField] Transform playerStartPos;
+    PlayerMovement playerMovement;
+    PlayerCombat playerCombat;
 
     [Header("Camera Transforms")]
     [SerializeField] Transform hatchCamTrs;
@@ -45,13 +47,17 @@ public class StartDropShipMove : MonoBehaviour
 
     private void Start()
     {
-        Init();
+        playerMovement = Shared.playerManager.playerMovement;
+        playerCombat = Shared.playerManager.playerCombat;
         AudioManager.instance.PlayBgm(EBgm.GAMESTART);
+        Init();
         StartCoroutine(StartMove());
     }
 
     private void Init()
     {
+        playerMovement.enabled = false;
+        playerCombat.enabled = false;
         player.transform.SetParent(transform);
         player.transform.position = playerStartPos.position;
         hatch.transform.localRotation = Quaternion.identity;
@@ -83,7 +89,6 @@ public class StartDropShipMove : MonoBehaviour
             transform.position = Vector3.MoveTowards
                 (transform.position, _target.position, speed * Time.deltaTime);
             player.transform.position = playerStartPos.position;
-            //player.GetComponent<Rigidbody>().MovePosition(playerStartPos.position);
 
             yield return null;
         }
@@ -157,5 +162,7 @@ public class StartDropShipMove : MonoBehaviour
 
         HUDCanvas.SetActive(true);
         this.enabled = false;
+        playerMovement.enabled = true;
+        playerCombat.enabled = true;
     }
 }

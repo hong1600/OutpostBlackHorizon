@@ -11,9 +11,9 @@ public enum EGround
 
 public enum EGameState
 {
+    PLAYING,
     GAMEOVER,
     GAMECLEAR,
-    PLAYING
 }
 
 public enum EViewState

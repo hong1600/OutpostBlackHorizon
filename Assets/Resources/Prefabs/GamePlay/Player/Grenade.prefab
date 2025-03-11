@@ -244,8 +244,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8193907743918563093, guid: db97ba35f680c914480ecc075d752dbf, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193907743918563093, guid: db97ba35f680c914480ecc075d752dbf, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8193907743918563093, guid: db97ba35f680c914480ecc075d752dbf, type: 3}
       propertyPath: InitialModule.startSize.minScalar
@@ -254,6 +258,18 @@ PrefabInstance:
     - target: {fileID: 8193907743918563093, guid: db97ba35f680c914480ecc075d752dbf, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193907743918563093, guid: db97ba35f680c914480ecc075d752dbf, type: 3}
+      propertyPath: InitialModule.startSize.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193907743918563093, guid: db97ba35f680c914480ecc075d752dbf, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193907743918563093, guid: db97ba35f680c914480ecc075d752dbf, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8193907743918563093, guid: db97ba35f680c914480ecc075d752dbf, type: 3}
       propertyPath: InitialModule.startLifetime.minScalar

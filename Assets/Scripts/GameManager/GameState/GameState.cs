@@ -3,15 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGameState
+public class GameState : MonoBehaviour
 {
-    EGameState GetGameState();
-    void SetGameState(EGameState _state);
-}
-
-public class GameState : MonoBehaviour, IGameState
-{
-    public event Action onGameFinish;
+    public event Action<EGameState> onGameFinish;
 
     [SerializeField] EGameState curGameState;
 
@@ -24,9 +18,9 @@ public class GameState : MonoBehaviour, IGameState
     { 
         curGameState = _state; 
 
-        if(_state == EGameState.GAMECLEAR) 
+        if(_state == EGameState.GAMECLEAR || _state == EGameState.GAMEOVER) 
         {
-            onGameFinish?.Invoke();
+            onGameFinish?.Invoke(_state);
         }
     }
 

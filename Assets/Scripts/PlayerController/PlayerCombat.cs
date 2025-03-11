@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
-    public event Action onUseBullet;
     BulletPool bulletPool;
+
+    public event Action onUseBullet;
 
     [SerializeField] GunManager gunManager;
     [SerializeField] GunMovement gunMovement;
@@ -17,7 +18,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] float rifleSpeed;
     [SerializeField] float grenadeSpeed;
 
-    public float dmg { get; set; } = 1f;
+    public float cumulativeDmg { get; set; } = 0f;
 
     private void Start()
     {
@@ -31,7 +32,7 @@ public class PlayerCombat : MonoBehaviour
             StartCoroutine(StartAttackRifle());
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && !isAttack && gunManager.curGrenadeCount >= 1) 
+        if (Input.GetKeyDown(KeyCode.E) && !isAttack && !gunManager.isReloading) 
         {
             StartCoroutine(StartAttackGrenade());
         }
@@ -40,6 +41,7 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator StartAttackRifle()
     {
         isAttack = true;
+        AudioManager.instance.PlaySfx(ESfx.GUNSHOT, transform.position);
         gunManager.UseBullet();
         muzzleFlash.SetActive(true);
         gunMovement.RecoilGun();
@@ -59,6 +61,7 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator StartAttackGrenade()
     {
         isAttack = true;
+        AudioManager.instance.PlaySfx(ESfx.GRENADESHOT, transform.position);
         gunManager.UseGrenade();
         muzzleFlash.SetActive(true);
         gunMovement.RecoilGun();

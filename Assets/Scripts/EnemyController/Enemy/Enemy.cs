@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, ITakeDmg
 {
     public event Action onTakeDamage;
 
@@ -143,7 +143,7 @@ public abstract class Enemy : MonoBehaviour
 
         if (myTarget.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Shared.playerManager.playerStat.TakeDmg(attackDmg);
+            Shared.playerManager.playerStatus.TakeDmg(attackDmg);
         }
 
         yield return new WaitForSeconds(1f);
@@ -152,7 +152,7 @@ public abstract class Enemy : MonoBehaviour
         attackCoroutine = null;
     }
 
-    public void TakeDamage(int _dmg)
+    public void TakeDmg(int _dmg)
     {
         curhp -= _dmg;
 

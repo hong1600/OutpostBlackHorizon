@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     EBullet eBullet;
     SphereCollider sphere;
     float speed;
-    int damage;
+    int dmg;
     Transform target;
     float time = 3;
 
@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
         sphere = GetComponent<SphereCollider>();
     }
 
-    public void InitBullet(Transform _target, int _damage, float _speed, EBullet _eBullet, Transform _firePos)
+    public void InitBullet(Transform _target, int _dmg, float _speed, EBullet _eBullet, Transform _firePos)
     {
         time = 3f;
 
@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
         transform.rotation = _firePos.transform.rotation * Quaternion.Euler(90, 0, 0);
 
         speed = _speed;
-        damage = _damage;
+        dmg = _dmg;
         target = _target;
         eBullet = _eBullet;
 
@@ -78,10 +78,11 @@ public class Bullet : MonoBehaviour
         spark.transform.position = _hitPos;
         spark.transform.rotation = Quaternion.LookRotation(-transform.forward);
 
-        if (_hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        ITakeDmg iTakeDmg = _hitObj.GetComponent<ITakeDmg>();
+
+        if (_hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy") && iTakeDmg != null)
         {
-            Enemy enemy = _hitObj.gameObject.GetComponent<Enemy>();
-            enemy.TakeDamage(damage);
+            iTakeDmg.TakeDmg(dmg);
         }
 
         yield return null;
@@ -101,14 +102,16 @@ public class Bullet : MonoBehaviour
     IEnumerator StartGrenadeBullet(Vector3 _hitPos, Collider _hitObj)
     {
         GameObject plasma = Shared.objectPoolManager.EffectPool.FindEffect(EEffect.PLASMA);
+        AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
 
         plasma.transform.position = _hitPos;
         plasma.transform.rotation = Quaternion.LookRotation(-transform.forward);
 
-        if (_hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        ITakeDmg iTakeDmg = _hitObj.GetComponent<ITakeDmg>();
+
+        if (_hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy") && iTakeDmg != null)
         {
-            Enemy enemy = _hitObj.gameObject.GetComponent<Enemy>();
-            enemy.TakeDamage(damage);
+            iTakeDmg.TakeDmg(dmg);
         }
 
         yield return null;

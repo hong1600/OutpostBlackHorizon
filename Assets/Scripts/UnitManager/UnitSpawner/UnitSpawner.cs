@@ -1,16 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public interface IUnitSpawner 
-{
-    void SpawnUnit();
-    float[][] GetSelectWeight();
-    int GetSpawnGold();
-}
-
-public class UnitSpawner : MonoBehaviour, IUnitSpawner
+public class UnitSpawner : MonoBehaviour
 {
     [SerializeField] float[][] selectWeights = new float[][]
 {
@@ -25,14 +20,85 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
     [SerializeField] int spawnGold;
     [SerializeField] GameObject selectSpawnUnit;
 
+    [SerializeField] GameObject unitSkillBar;
+    [SerializeField] Transform unitSkillBarParent;
+
+
     private void Awake()
     {
         spawnGold = 20;
     }
 
+    public void InstantiateUnit(GameObject _unit)
+    {
+        UnitFieldData fieldData = Shared.unitManager.UnitFieldData;
+        UnitData unitData = Shared.unitManager.UnitData;
+        List<Transform> SpawnPointList = Shared.unitManager.UnitFieldData.GetUnitSpawnPointList();
+        int fieldNum = fieldData.fieldNum;
+
+        if (!fieldData.IsCheckGround(_unit)) return;
+
+        if (fieldNum < 0 || fieldNum > SpawnPointList.Count || _unit == null) return;
+
+        Vector3 twoUnit1Pos = new Vector3(-0.5f, 0, 0);
+        Vector3 twoUnit2Pos = new Vector3(0.5f, 0, 0);
+
+        Vector3 threeUnit1Pos = new Vector3(0, 0, 0.4f);
+        Vector3 threeUnit2Pos = new Vector3(-0.6f, 0, -0.4f);
+        Vector3 threeUnit3Pos = new Vector3(0.6f, 0, -0.4f);
+
+        GameObject instantiateUnit;
+
+        if (!unitData.getUnitByGroundDic.ContainsKey(fieldNum))
+        {
+            unitData.getUnitByGroundDic[fieldNum] = new List<GameObject>();
+        }
+
+        List<GameObject> curGroundUnit = unitData.getUnitByGroundDic[fieldNum];
+        int unitCount = SpawnPointList[fieldNum].transform.childCount;
+
+        switch (unitCount)
+        {
+            case 0:
+                instantiateUnit = Instantiate(_unit, SpawnPointList[fieldNum].transform.position,
+                    Quaternion.identity, SpawnPointList[fieldNum].transform);
+                break;
+
+            case 1:
+                curGroundUnit[0].transform.position = SpawnPointList[fieldNum].transform.position + twoUnit1Pos;
+
+                instantiateUnit = Instantiate(_unit, SpawnPointList[fieldNum].transform.position + twoUnit2Pos,
+                    Quaternion.identity, SpawnPointList[fieldNum].transform);
+                break;
+
+            case 2:
+                curGroundUnit[0].transform.position = SpawnPointList[fieldNum].transform.position + threeUnit1Pos;
+                curGroundUnit[1].transform.position = SpawnPointList[fieldNum].transform.position + threeUnit2Pos;
+
+                instantiateUnit = Instantiate(_unit, SpawnPointList[fieldNum].transform.position + threeUnit3Pos,
+                    Quaternion.identity, SpawnPointList[fieldNum].transform);
+                break;
+
+            default:
+                return;
+        }
+
+        if (instantiateUnit.GetComponent<Unit>().eUnitGrade == EUnitGrade.SS ||
+            instantiateUnit.GetComponent<Unit>().eUnitGrade == EUnitGrade.S)
+        {
+            GameObject skillBar = Instantiate(unitSkillBar, instantiateUnit.transform.position,
+                Quaternion.identity, unitSkillBarParent);
+            skillBar.GetComponent<UnitSkillBar>().Init(instantiateUnit.GetComponent<Unit>());
+            instantiateUnit.GetComponent<Unit>().skillBar = skillBar;
+        }
+
+        unitData.AddUnitData(instantiateUnit);
+    }
+
     public bool CanSpawn()
     {
-        if (spawnGold <= Shared.gameManager.GoldCoin.GetGold() && Shared.unitManager.GetAllUnitList().Count < 20)
+        if (spawnGold <= Shared.gameManager.GoldCoin.GetGold() &&
+            Shared.unitManager.UnitData.GetAllUnitList().Count < 20)
         {
             return true;
         }
@@ -53,7 +119,7 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
 
         if (!CanSpawn()) return;
 
-        Shared.unitManager.UnitInstantiate(selectSpawnUnit);
+        InstantiateUnit(selectSpawnUnit);
 
         UseGold();
 
@@ -64,17 +130,17 @@ public class UnitSpawner : MonoBehaviour, IUnitSpawner
         switch (grade) 
         {
             case "S":
-                return Shared.unitManager.GetUnitByGradeList(EUnitGrade.S)
-                    [Random.Range(0, Shared.unitManager.GetUnitByGradeList(EUnitGrade.S).Count)];
+                return Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.S)
+                    [Random.Range(0, Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.S).Count)];
             case "A":
-                return Shared.unitManager.GetUnitByGradeList(EUnitGrade.A)
-                    [Random.Range(0, Shared.unitManager.GetUnitByGradeList(EUnitGrade.A).Count)];
+                return Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.A)
+                    [Random.Range(0, Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.A).Count)];
             case "B":
-                return Shared.unitManager.GetUnitByGradeList(EUnitGrade.B)
-                    [Random.Range(0, Shared.unitManager.GetUnitByGradeList(EUnitGrade.B).Count)];
+                return Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.B)
+                    [Random.Range(0, Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.B).Count)];
             case "C":
-                return Shared.unitManager.GetUnitByGradeList(EUnitGrade.C)
-                    [Random.Range(0, Shared.unitManager.GetUnitByGradeList(EUnitGrade.C).Count)];
+                return Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.C)
+                    [Random.Range(0, Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.C).Count)];
             default:
                 return null;
         }

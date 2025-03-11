@@ -5,15 +5,24 @@ using UnityEngine;
 
 public class UnitMixer : MonoBehaviour
 {
+    UnitData unitData;
+    UnitSpawner unitSpawner;
+
     public List<Unit> unitToMixList = new List<Unit>();
 
     public GameObject mixPanel;
+
+    private void Start()
+    {
+        unitData = Shared.unitManager.UnitData;
+        unitSpawner = Shared.unitManager.UnitSpawner;
+    }
 
     public bool IsUnitCanMix()
     {
         unitToMixList.Clear();
 
-        List<GameObject> allUnitList = Shared.unitManager.GetAllUnitList();
+        List<GameObject> allUnitList = unitData.GetAllUnitList();
         List<TableUnit.Info> sacUnitList = Shared.gameUI.UIMixRightSlot.GetUnitList();
 
         foreach (GameObject fieldUnit in allUnitList)
@@ -50,9 +59,9 @@ public class UnitMixer : MonoBehaviour
             yield return new WaitForEndOfFrame();
 
             GameObject spawnUnit =
-                Shared.unitManager.GetUnitByGradeList(EUnitGrade.SS)[Shared.gameUI.UIMixRightSlot.GetCurMixUnit()];
+                unitData.GetUnitByGradeList(EUnitGrade.SS)[Shared.gameUI.UIMixRightSlot.GetCurMixUnit()];
 
-            Shared.unitManager.UnitInstantiate(spawnUnit);
+            unitSpawner.InstantiateUnit(spawnUnit);
 
             mixPanel.SetActive(false);
         }

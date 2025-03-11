@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GoldCoin goldCoin;
     [SerializeField] Rewarder rewarder;
     [SerializeField] ViewState viewState;
+    [SerializeField] FieldBuild fieldBuild;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
         GoldCoin = goldCoin;
         Rewarder = rewarder;
         ViewState = viewState;
+        FieldBuild = fieldBuild;
     }
 
     private void Update()
@@ -55,5 +57,5 @@ public class GameManager : MonoBehaviour
     public GoldCoin GoldCoin { get; private set; }
     public Rewarder Rewarder { get; private set; }
     public ViewState ViewState { get; private set; }
-
+    public FieldBuild FieldBuild { get; private set; }
 }

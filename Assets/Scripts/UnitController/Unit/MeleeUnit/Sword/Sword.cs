@@ -11,11 +11,11 @@ public class Sword : MeleeUnit
         Init(DataManager.instance.TableUnit.GetUnitData(101));
     }
 
-    protected override IEnumerator OnDamageEvent(Enemy enemy, int _dmg)
+    protected override IEnumerator OnDamageEvent(Enemy _enemy, int _dmg)
     {
         int rand = Random.Range(0, 100);
 
-        yield return base.OnDamageEvent(enemy, _dmg);
+        yield return base.OnDamageEvent(_enemy, _dmg);
 
         if (rand < 5)
         {

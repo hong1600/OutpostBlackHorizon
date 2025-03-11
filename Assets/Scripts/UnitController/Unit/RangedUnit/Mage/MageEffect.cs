@@ -27,11 +27,11 @@ public class MageEffect : MonoBehaviour
 
             for (int i = 0; i < colls.Length; i++)
             {
-                Enemy enemy = colls[i].GetComponent<Enemy>();
+                ITakeDmg iTakeDmg = colls[i].GetComponent<ITakeDmg>();
 
-                if (enemy != null)
+                if (iTakeDmg != null)
                 {
-                    enemy.TakeDamage(30);
+                    iTakeDmg.TakeDmg(30);
                 }
             }
 

@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class UnitRandomSpawner : MonoBehaviour
 {
+    UnitData unitData;
+    UnitSpawner unitSpawner;
+    UnitFieldData unitFieldData;
+
     [SerializeField] GameObject randomUnit;
     [SerializeField] bool randomDelay;
     [SerializeField] Sprite randomFail;
@@ -18,6 +22,10 @@ public class UnitRandomSpawner : MonoBehaviour
 
     private void Start()
     {
+        unitData = Shared.unitManager.UnitData;
+        unitSpawner = Shared.unitManager.UnitSpawner;
+        unitFieldData = Shared.unitManager.UnitFieldData;
+
         randomDelay = false;
         fadeTime = 1;
         spawnCoin0 = 1;
@@ -39,7 +47,7 @@ public class UnitRandomSpawner : MonoBehaviour
 
     private bool CanSpawn(int _index)
     {
-        List<Transform> spawnPointList = Shared.unitManager.GetUnitSpawnPointList();
+        List<Transform> spawnPointList = unitFieldData.GetUnitSpawnPointList();
         int spawnPointCount = spawnPointList.Count;
 
         for (int i = 0; i < spawnPointCount; i++)
@@ -69,9 +77,9 @@ public class UnitRandomSpawner : MonoBehaviour
     {
         randomDelay = true;
         int per = Random.Range(0, 10);
-        int randB = Random.Range(0, Shared.unitManager.GetUnitByGradeList(EUnitGrade.B).Count);
-        int randA = Random.Range(0, Shared.unitManager.GetUnitByGradeList(EUnitGrade.A).Count);
-        int randS = Random.Range(0, Shared.unitManager.GetUnitByGradeList(EUnitGrade.S).Count);
+        int randB = Random.Range(0, unitData.GetUnitByGradeList(EUnitGrade.B).Count);
+        int randA = Random.Range(0, unitData.GetUnitByGradeList(EUnitGrade.A).Count);
+        int randS = Random.Range(0, unitData.GetUnitByGradeList(EUnitGrade.S).Count);
 
         Sprite randomSprite = GetRandomSprite(_index, randB, randA, randS);
 
@@ -80,9 +88,9 @@ public class UnitRandomSpawner : MonoBehaviour
             case 0:
                 if (per < 6)
                 {
-                    randomUnit = Shared.unitManager.GetUnitByGradeList(EUnitGrade.B)[randB];
+                    randomUnit = unitData.GetUnitByGradeList(EUnitGrade.B)[randB];
                     yield return StartCoroutine(FadeInImage(randomUnitImgs[0], randomSprite));
-                    Shared.unitManager.UnitInstantiate(randomUnit);
+                    unitSpawner.InstantiateUnit(randomUnit);
                 }
                 else
                 {
@@ -92,9 +100,9 @@ public class UnitRandomSpawner : MonoBehaviour
             case 1:
                 if (per < 2)
                 {
-                    randomUnit = Shared.unitManager.GetUnitByGradeList(EUnitGrade.A)[randA];
+                    randomUnit = unitData.GetUnitByGradeList(EUnitGrade.A)[randA];
                     yield return StartCoroutine(FadeInImage(randomUnitImgs[1], randomSprite));
-                    Shared.unitManager.UnitInstantiate(randomUnit);
+                    unitSpawner.InstantiateUnit(randomUnit);
                 }
                 else
                 {
@@ -104,9 +112,9 @@ public class UnitRandomSpawner : MonoBehaviour
             case 2:
                 if (per < 1)
                 {
-                    randomUnit = Shared.unitManager.GetUnitByGradeList(EUnitGrade.S)[randS];
+                    randomUnit = unitData.GetUnitByGradeList(EUnitGrade.S)[randS];
                     yield return StartCoroutine(FadeInImage(randomUnitImgs[2], randomSprite));
-                    Shared.unitManager.UnitInstantiate(randomUnit);
+                    unitSpawner.InstantiateUnit(randomUnit);
                 }
                 else
                 {
@@ -125,13 +133,13 @@ public class UnitRandomSpawner : MonoBehaviour
         switch (_index)
         {
             case 0:
-                return Shared.unitManager.GetUnitByGradeList(EUnitGrade.B)[_randB].GetComponent<Unit>().UnitImg;
+                return unitData.GetUnitByGradeList(EUnitGrade.B)[_randB].GetComponent<Unit>().UnitImg;
 
             case 1:
-                return Shared.unitManager.GetUnitByGradeList(EUnitGrade.A)[_randA].GetComponent<Unit>().UnitImg;
+                return unitData.GetUnitByGradeList(EUnitGrade.A)[_randA].GetComponent<Unit>().UnitImg;
 
             case 2:
-                return Shared.unitManager.GetUnitByGradeList(EUnitGrade.S)[_randS].GetComponent<Unit>().UnitImg;
+                return unitData.GetUnitByGradeList(EUnitGrade.S)[_randS].GetComponent<Unit>().UnitImg;
         }
         return null;
     }

@@ -15,10 +15,12 @@ public enum EBgm
 
 public enum ESfx
 {
-    EXPLOSION,
+    FOOTSTEP,
     JUMP,
     GUNSHOT,
-    STEP,
+    GUNRELOAD,
+    GRENADESHOT,
+    EXPLOSION,
     MOSTERATTACK,
 }
 
@@ -38,6 +40,11 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1f)] public float bgmVolume = 1.0f;
     [Range(0f, 1f)] public float sfxVolume = 1.0f;
 
+    [Header("Volume")]
+    [SerializeField] float minDistance = 1f;
+    [SerializeField] float maxDistance = 100f;
+    [SerializeField] AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic;
+
     private void Awake()
     {
         if (instance == null)
@@ -53,6 +60,11 @@ public class AudioManager : MonoBehaviour
         sfxSource = gameObject.AddComponent<AudioSource>();
 
         bgmSource.loop = true;
+
+        sfxSource.rolloffMode = rolloffMode;
+        sfxSource.minDistance = minDistance;
+        sfxSource.maxDistance = maxDistance;
+        sfxSource.spatialBlend = 1f;
     }
 
     public void PlayBgm(EBgm _eBgm)
@@ -79,12 +91,13 @@ public class AudioManager : MonoBehaviour
         bgmSource.volume = bgmVolume * masterVolume;
     }
 
-    public void PlaySfx(ESfx _eSfx)
+    public void PlaySfx(ESfx _eSfx, Vector3 _pos)
     {
         int sfxIndex = (int)_eSfx;
 
-        if (sfxIndex > 0 && sfxIndex < sfxClips.Length)
+        if (sfxIndex >= 0 && sfxIndex < sfxClips.Length)
         {
+            sfxSource.transform.position = _pos;
             sfxSource.PlayOneShot(sfxClips[sfxIndex], sfxVolume * masterVolume);
         }
         else return;

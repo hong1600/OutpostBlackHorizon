@@ -31,14 +31,17 @@ public class GunManager : MonoBehaviour
 
     private void ReloadBullet()
     {
-        StartCoroutine(StartReloading());
+        if (!isReloading && (curBulletCount < maxBulletCount || curGrenadeCount == 0))
+        {
+            StartCoroutine(StartReloading());
+        }
     }
 
     public void UseBullet()
     {
         curBulletCount -= 1;
 
-        if (curBulletCount <= 0)
+        if (curBulletCount <= 0 && !isReloading)
         {
             StartCoroutine(StartReloading());
         }
@@ -53,12 +56,17 @@ public class GunManager : MonoBehaviour
     {
         isReloading = true;
 
-        yield return new WaitForSeconds(1.5f);
+        AudioManager.instance.PlaySfx(ESfx.GUNRELOAD, transform.position);
 
-        curGrenadeCount = 1;
+        yield return new WaitForSeconds(2.5f);
+
+        if (curGrenadeCount == 0) curGrenadeCount = 1;
+
         haveBulletCount -= (maxBulletCount - curBulletCount);
         curBulletCount = maxBulletCount;
+
         onReloading?.Invoke();
+
         isReloading = false;
     }
 }

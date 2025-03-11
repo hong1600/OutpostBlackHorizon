@@ -3,20 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IUnitUpgrader 
+public partial class UnitUpgrader : MonoBehaviour
 {
-    public event Action onUpgradeCostChange;
-    public event Action onUpgradeLevelChange;
-    public event Action onUpgradePerChange;
-    void UnitUpgrade(int _index);
-    void MissUpgrade(int _lastUpgrade, Unit _unit);
-    int[] GetUpgradeLevel();
-    int[] GetUpgradeCost();
-    int GetUpgradeMaxLevel();
-}
+    UnitData unitData;
 
-public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
-{
     public event Action onUpgradeCostChange;
     public event Action onUpgradeLevelChange;
     public event Action onUpgradePerChange;
@@ -38,6 +28,11 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
         upgradeLevels[(int)EUnitUpgrade.per] = 1;
 
         upgradeMaxLevel = 6;
+    }
+
+    private void Start()
+    {
+        unitData = Shared.unitManager.UnitData;
     }
 
     public void UnitUpgrade(int _index)
@@ -126,7 +121,7 @@ public partial class UnitUpgrader : MonoBehaviour, IUnitUpgrader
 
     public void UnitUpgradeApply(EUnitGrade _grade)
     {
-        List<GameObject> unitList = Shared.unitManager.GetAllUnitList();
+        List<GameObject> unitList = unitData.GetAllUnitList();
 
         for (int i = 0; i < unitList.Count; i++)
         {

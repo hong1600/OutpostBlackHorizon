@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UIPlayerStatPanel : MonoBehaviour
 {
-    [SerializeField] PlayerStat playerStat;
+    PlayerStatus playerStatus;
     
     [SerializeField] Image hpValue;
     [SerializeField] Image energyValue;
@@ -15,7 +15,8 @@ public class UIPlayerStatPanel : MonoBehaviour
 
     private void Start()
     {
-        playerStat.onTakeDmg += UpdateHp;
+        playerStatus = Shared.playerManager.playerStatus;
+        playerStatus.onTakeDmg += UpdateHp;
 
         UpdateHp();
         UpdateEnergy();
@@ -23,13 +24,13 @@ public class UIPlayerStatPanel : MonoBehaviour
 
     private void UpdateHp()
     {
-        hpValue.fillAmount = playerStat.curHp / playerStat.maxHp;
-        hpText.text = $"{playerStat.curHp}/{playerStat.maxHp}";
+        hpValue.fillAmount = playerStatus.curHp / playerStatus.maxHp;
+        hpText.text = $"{playerStatus.curHp}/{playerStatus.maxHp}";
     }
 
     private void UpdateEnergy()
     {
-        energyValue.fillAmount = playerStat.curEnergy / playerStat.maxEnergy;
-        energyText.text = $"{playerStat.curEnergy}/{playerStat.maxEnergy}";
+        energyValue.fillAmount = playerStatus.curEnergy / playerStatus.maxEnergy;
+        energyText.text = $"{playerStatus.curEnergy}/{playerStatus.maxEnergy}";
     }
 }
