@@ -1,11 +1,13 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class FieldBuild : MonoBehaviour
 {
+    public event Action onDecreaseField;
+
     CustomMouse customMouse;
     Terrain terrain;
     BoxCollider box;
@@ -18,12 +20,13 @@ public class FieldBuild : MonoBehaviour
     [SerializeField] Transform parent;
     [SerializeField] LayerMask canBuildLayer;
     [SerializeField] float gridSize = 1.0f;
-    [SerializeField] GameObject previewObj;
+
+    GameObject previewObj;
+    FieldData fieldData;
 
     private void Start()
     {
         terrain = Terrain.activeTerrain;
-        InputManager.instance.onInputB += BuildPreview;
         customMouse = Shared.gameUI.CustomMouse;
     }
 
@@ -43,10 +46,12 @@ public class FieldBuild : MonoBehaviour
         }
     }
 
-    private void BuildPreview()
+    public void BuildPreview(GameObject _fieldObj, FieldData _fieldData)
     {
         if(previewObj == null && Shared.gameManager.ViewState.GetViewState() == EViewState.TOP) 
         {
+            previewObj = _fieldObj;
+            fieldData = _fieldData;
             previewObj = Instantiate(buildingPre);
             previewObj.layer = LayerMask.NameToLayer("BluePrint");
 
@@ -122,5 +127,8 @@ public class FieldBuild : MonoBehaviour
         Instantiate(buildingPre, previewObj.transform.position, Quaternion.identity, parent.transform);
         Destroy(previewObj);
         previewObj = null;
+        Shared.fieldManager.DecreaseFieldAmount(fieldData);
+        Shared.gameManager.GoldCoin.UseGold(fieldData.fieldPrice);
+        onDecreaseField?.Invoke();
     }
 }

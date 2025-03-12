@@ -19,7 +19,7 @@ public class ViewState : MonoBehaviour
     {
         playerMovement = Shared.playerManager.playerMovement;
         playerCombat = Shared.playerManager.playerCombat;
-        fieldBuild = Shared.gameManager.FieldBuild;
+        fieldBuild = Shared.fieldManager.FieldBuild;
 
         UpdateState(curViewState);
     }

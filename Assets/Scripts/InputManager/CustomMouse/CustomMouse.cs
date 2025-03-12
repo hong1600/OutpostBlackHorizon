@@ -97,14 +97,19 @@ public class CustomMouse : MonoBehaviour
         EventSystem.current.RaycastAll(eventData, resultList);
 
         GameObject eventObj = null;
-        float minDepth = float.MaxValue;
+        float minDistance = float.MaxValue;
 
         for (int i = 0; i < resultList.Count; i++)
         {
-            if (resultList[i].depth < minDepth)
+            var result = resultList[i];
+
+            if (result.gameObject.GetComponent<CanvasRenderer>() != null)
             {
-                minDepth = resultList[i].depth;
-                eventObj = resultList[i].gameObject;
+                if (result.distance < minDistance)
+                {
+                    minDistance = result.distance;
+                    eventObj = result.gameObject;
+                }
             }
         }
 

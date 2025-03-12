@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7116500024565109841}
   - component: {fileID: 6920602230908102086}
-  m_Layer: 13
+  m_Layer: 12
   m_Name: Sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -800,7 +800,6 @@ MonoBehaviour:
   targetPoints: []
   myTarget: {fileID: 0}
   isAttack: 0
-  enemyData: {fileID: 11400000, guid: 18d796079e837a7469e638e4f7639990, type: 2}
 --- !u!54 &-7327055851096263251
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -847,5 +846,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 6, z: 3}
-  m_Center: {x: 0, y: 3, z: 1}
+  m_Size: {x: 4, y: 6, z: 4}
+  m_Center: {x: 0, y: 3, z: 1.5}
