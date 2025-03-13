@@ -6,6 +6,7 @@ using UnityEngine;
 public class MageEffect : MonoBehaviour
 {
     BoxCollider box;
+    float dmg = 30f;
 
     private void Awake()
     {
@@ -31,7 +32,7 @@ public class MageEffect : MonoBehaviour
 
                 if (iTakeDmg != null)
                 {
-                    iTakeDmg.TakeDmg(30);
+                    iTakeDmg.TakeDmg(dmg, false);
                 }
             }
 

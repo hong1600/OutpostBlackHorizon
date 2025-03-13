@@ -39,7 +39,7 @@ public class GunslingerEffect : MonoBehaviour
                 {
                     ITakeDmg iTakeDmg = colls[i].GetComponent<ITakeDmg>();
 
-                    iTakeDmg.TakeDmg(dmg);
+                    iTakeDmg.TakeDmg(dmg, false);
                 }
 
                 yield return new WaitForSeconds(1);

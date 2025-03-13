@@ -5,19 +5,10 @@ using System;
 using Unity.Mathematics;
 using Random = UnityEngine.Random;
 
-public interface IEnemySpawner
+public class EnemySpawner : MonoBehaviour
 {
-    void SubEnemySpawn(Action _listener);
-    void UnEnemySpawn(Action _listener);
-    void SpawnEnemy();
-    float GetEnemySpawnDelay();
-    void SetEnemySpawnDelay(float _value);
-    Transform[] GetTargetPoint();
-    List<Transform> GetEnemySpawnPointList();
-}
-
-public class EnemySpawner : MonoBehaviour, IEnemySpawner
-{
+    Terrain terrain;
+    
     event Action onEnemySpawn;
 
     [SerializeField] List<GameObject> enemyList;
@@ -25,6 +16,11 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     [SerializeField] Vector3[] enemySpawnPos = new Vector3[4];
     [SerializeField] Transform[] targetPoints;
     [SerializeField] float enemySpawnDelay;
+
+    private void Awake()
+    {
+        terrain = Terrain.activeTerrain;
+    }
 
     private void Start()
     {
@@ -54,11 +50,21 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
             for (int i = 0; i < 1; i++)
             {
+                //적 가져오기
                 GameObject obj1 = Shared.objectPoolManager.EnemyPool.FindEnemy(eEnemy1);
                 GameObject obj2 = Shared.objectPoolManager.EnemyPool.FindEnemy(eEnemy2);
 
-                obj1.transform.position = enemySpawnPointList[firstSpawnPoint].transform.position + (enemySpawnPos[i]);
-                obj2.transform.position = enemySpawnPointList[secondSpawnPoint].transform.position + (enemySpawnPos[i]);
+                //적 초기위치
+                Vector3 spawnPos1 = enemySpawnPointList[firstSpawnPoint].transform.position + (enemySpawnPos[i]);
+                Vector3 spawnPos2 = enemySpawnPointList[secondSpawnPoint].transform.position + (enemySpawnPos[i]);
+
+                //터레인 지면 높이
+                spawnPos1.y = terrain.SampleHeight(spawnPos1);
+                spawnPos2.y = terrain.SampleHeight(spawnPos2);
+
+                //적 실제 스폰위치
+                obj1.transform.position = spawnPos1;
+                obj2.transform.position = spawnPos2;
 
                 onEnemySpawn?.Invoke();
             }

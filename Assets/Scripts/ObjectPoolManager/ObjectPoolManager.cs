@@ -19,6 +19,8 @@ public class ObjectPoolManager : MonoBehaviour
     [SerializeField] Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
     [SerializeField] Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
 
+    [SerializeField] Transform bulletTrs;
+
     private void Awake()
     {
         if (Shared.objectPoolManager == null)
@@ -62,12 +64,29 @@ public class ObjectPoolManager : MonoBehaviour
 
                     if (!obj.activeInHierarchy)
                     {
+                        Bullet bullet = obj.GetComponent<Bullet>();
+                        if (bullet != null)
+                        {
+                            obj.SetActive(false);
+                            obj.transform.position = bulletTrs.transform.position;
+                            obj.transform.rotation = bulletTrs.transform.rotation * Quaternion.Euler(90, 0, 0);
+                        }
+
                         obj.SetActive(true);
                         return obj;
                     }
                 }
             }
             GameObject newObj = Instantiate(prefabDic[_type], _parent);
+
+            Bullet newBullet = newObj.GetComponent<Bullet>();
+            if (newBullet != null)
+            {
+                newObj.SetActive(false);
+                newObj.transform.position = bulletTrs.transform.position;
+                newObj.transform.rotation = bulletTrs.transform.rotation * Quaternion.Euler(90, 0, 0);
+            }
+
             newObj.name = prefabDic[_type].name;
             newObj.SetActive(true);
             return newObj;

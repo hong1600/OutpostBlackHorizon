@@ -10,22 +10,22 @@ public class CameraManager : MonoBehaviour
     [SerializeField] CameraTopZoom cameraTopZoom;
     [SerializeField] CameraTopToFps cameraTopToFps;
 
-    public CameraFpsShake getCameraFpsShake { get; private set; }
-    public CameraFpsZoom getCameraFpsZoom { get; private set; }
-    public CameraTopMove getCameraTopMove { get; private set; }
-    public CameraTopZoom getCameraTopZoom { get; private set; }
-    public CameraTopToFps getCameraTopToFps { get; private set; }
+    public CameraFpsShake CameraFpsShake { get; private set; }
+    public CameraFpsZoom CameraFpsZoom { get; private set; }
+    public CameraTopMove CameraTopMove { get; private set; }
+    public CameraTopZoom CameraTopZoom { get; private set; }
+    public CameraTopToFps CameraTopToFps { get; private set; }
 
 
     private void Awake()
     {
         Shared.cameraManager = this;
 
-        getCameraFpsShake = cameraFpsShake;
-        getCameraFpsZoom = cameraFpsZoom;
-        getCameraTopMove = cameraTopMove;
-        getCameraTopZoom = cameraTopZoom;
-        getCameraTopToFps = cameraTopToFps;
+        CameraFpsShake = cameraFpsShake;
+        CameraFpsZoom = cameraFpsZoom;
+        CameraTopMove = cameraTopMove;
+        CameraTopZoom = cameraTopZoom;
+        CameraTopToFps = cameraTopToFps;
     }
 
     private void Update()

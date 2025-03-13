@@ -12,10 +12,9 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] GunManager gunManager;
     [SerializeField] GunMovement gunMovement;
     [SerializeField] internal bool isAttack = false;
-    [SerializeField] Transform fireTrs;
     [SerializeField] GameObject muzzleFlash;
 
-    [SerializeField] float rifleSpeed;
+    [SerializeField] float bulletSpeed;
     [SerializeField] float grenadeSpeed;
 
     public float cumulativeDmg { get; set; } = 0f;
@@ -47,9 +46,9 @@ public class PlayerCombat : MonoBehaviour
         gunMovement.RecoilGun();
         GameObject obj = bulletPool.FindBullet(EBullet.BULLET);
         Bullet bullet = obj.GetComponent<Bullet>();
-        bullet.InitBullet(null, 30, rifleSpeed, EBullet.BULLET, fireTrs);
+        bullet.InitBullet(null, 30, bulletSpeed, EBullet.BULLET);
 
-        Shared.cameraManager.getCameraFpsShake.Shake();
+        Shared.cameraManager.CameraFpsShake.Shake();
         onUseBullet?.Invoke();
 
         yield return new WaitForSeconds(0.1f);
@@ -67,8 +66,9 @@ public class PlayerCombat : MonoBehaviour
         gunMovement.RecoilGun();
         GameObject obj = bulletPool.FindBullet(EBullet.GRENADE);
         Bullet bullet = obj.GetComponent<Bullet>();
-        bullet.InitBullet(null, 100, grenadeSpeed, EBullet.GRENADE, fireTrs);
-        Shared.cameraManager.getCameraFpsShake.Shake();
+        bullet.InitBullet(null, 100, grenadeSpeed, EBullet.GRENADE);
+
+        Shared.cameraManager.CameraFpsShake.Shake();
         onUseBullet?.Invoke();
 
         yield return new WaitForSeconds(0.1f);

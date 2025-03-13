@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] Rewarder rewarder;
     [SerializeField] ViewState viewState;
 
+    EnemySpawner enemySpawner;
+    WaveBossSpawner waveBossSpawner;
+    BossSpawner bossSpawner;
+
     private void Awake()
     {
         if (Shared.gameManager == null)
@@ -32,21 +36,28 @@ public class GameManager : MonoBehaviour
         ViewState = viewState;
     }
 
+    private void Start()
+    {
+        enemySpawner = Shared.enemyManager.EnemySpawner;
+        waveBossSpawner = Shared.enemyManager.WaveBossSpawner;
+        bossSpawner = Shared.enemyManager.BossSpawner;
+    }
+
     private void Update()
     {
         if (!round.GetIsBossRound())
         {
             if (spawnTimer.GetIsSpawnTime())
             {
-                Shared.enemyManager.iEnemySpawner.SpawnEnemy();
+                enemySpawner.SpawnEnemy();
             }
         }
-        else if(round.GetIsBossRound())
+        else if (round.GetIsBossRound())
         {
-            Shared.enemyManager.iBossSpawner.SpawnBoss();
+            bossSpawner.SpawnBoss();
         }
 
-        Shared.enemyManager.iWaveBossSpawner.SpawnWaveBossTime();
+        waveBossSpawner.SpawnWaveBossTime();
     }
 
     public SpawnTimer SpawnTimer { get; private set; }

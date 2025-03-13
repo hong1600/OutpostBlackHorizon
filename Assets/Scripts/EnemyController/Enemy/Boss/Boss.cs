@@ -15,12 +15,12 @@ public class Boss : Enemy
 
     protected internal override void Die()
     {
-        base.Die();
-        Shared.gameManager.GoldCoin.SetGold(300);
-        Shared.gameManager.GoldCoin.SetCoin(4);
-        Shared.gameManager.Round.SetBossRound(false);
-        Shared.gameManager.SpawnTimer.SetSec(15f);
-        Shared.enemyManager.iEnemySpawner.SetEnemySpawnDelay(0.85f);
+        Die();
+        goldCoin.SetGold(300);
+        goldCoin.SetCoin(4);
+        round.SetBossRound(false);
+        spawnTimer.SetSec(15f);
+        enemySpawner.SetEnemySpawnDelay(0.85f);
     }
 
     public void bossTimer()
@@ -32,5 +32,10 @@ public class Boss : Enemy
         {
             //gameState = EGameState.GAMEOVER;
         }
+    }
+
+    protected override IEnumerator StartAttack()
+    {
+        throw new System.NotImplementedException();
     }
 }

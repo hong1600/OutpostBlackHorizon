@@ -3,30 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEnemyMng
-{
-    event Action onEnemyCountEvent;
-    int GetMaxEnemy();
-    int GetCurEnemy();
-    List<GameObject> GetEnemyParent();
-}
-
-public class EnemyManager : MonoBehaviour, IEnemyMng
+public class EnemyManager : MonoBehaviour
 {
     public event Action onEnemyCountEvent;
 
     [SerializeField] EnemySpawner enemySpawner;
-    [SerializeField] BossSpawner bossSpawner;
     [SerializeField] WaveBossSpawner waveBossSpawner;
-    public IEnemyMng iEnemyMng;
-    public IEnemySpawner iEnemySpawner;
-    public IBossSpawner iBossSpawner;
-    public IWaveBossSpawner iWaveBossSpawner;
+    [SerializeField] BossSpawner bossSpawner;
 
     [SerializeField] List<GameObject> enemyParentList;
     [SerializeField] int maxEnemy;
     [SerializeField] int curEnemy;
     [SerializeField] List<GameObject> enemyCountList = new List<GameObject>();
+
+    public EnemySpawner EnemySpawner { get; private set; }
+    public WaveBossSpawner WaveBossSpawner { get; private set; }
+    public BossSpawner BossSpawner { get; private set; }
 
     private void Awake()
     {
@@ -38,20 +30,18 @@ public class EnemyManager : MonoBehaviour, IEnemyMng
         {
             Destroy(this.gameObject);
         }
-
-        iEnemyMng = this;
-        iEnemySpawner = enemySpawner;
-        iBossSpawner = bossSpawner;
-        iWaveBossSpawner = waveBossSpawner;
-
         maxEnemy = 100;
         curEnemy = 0;
+
+        EnemySpawner = enemySpawner;
+        WaveBossSpawner = waveBossSpawner;
+        BossSpawner = bossSpawner;
     }
 
     private void Start()
     {
-        iEnemySpawner.UnEnemySpawn(EnemyCount);
-        iEnemySpawner.SubEnemySpawn(EnemyCount);
+        enemySpawner.UnEnemySpawn(EnemyCount);
+        enemySpawner.SubEnemySpawn(EnemyCount);
     }
 
     private void EnemyCount()

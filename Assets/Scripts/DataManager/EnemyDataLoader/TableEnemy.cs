@@ -13,6 +13,8 @@ public class TableEnemy : TableBase
         public int Speed;
         public int MaxHp;
         public string HpBarPath;
+        public int AttackRange;
+        public int AttackDmg;
         public string Desc;
     }
 
@@ -64,6 +66,8 @@ public class TableEnemy : TableBase
         _Reader.getInt(_Row, ref _Info.Speed);
         _Reader.getInt(_Row, ref _Info.MaxHp);
         _Reader.getString(_Row, ref _Info.HpBarPath);
+        _Reader.getInt(_Row, ref _Info.AttackRange);
+        _Reader.getInt(_Row, ref _Info.AttackDmg);
         _Reader.getString(_Row, ref _Info.Desc);
 
         return true;

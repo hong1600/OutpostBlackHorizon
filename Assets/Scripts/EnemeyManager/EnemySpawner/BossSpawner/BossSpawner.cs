@@ -1,28 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public interface IBossSpawner
+public class BossSpawner : MonoBehaviour
 {
-    void SpawnBoss();
-}
+    EnemyManager enemyManager;
+    EnemySpawner enemySpawner;
 
-public class BossSpawner : MonoBehaviour, IBossSpawner
-{
     [SerializeField] GameObject boss;
+
+    private void Start()
+    {
+        enemyManager = Shared.enemyManager;
+        enemySpawner = Shared.enemyManager.EnemySpawner;
+    }
 
     public void SpawnBoss()
     {
-        if (Shared.enemyManager.iEnemySpawner.GetEnemySpawnDelay() < 0)
+        if (enemySpawner.GetEnemySpawnDelay() < 0)
         {
-            int rand = Random.Range(0, Shared.enemyManager.iEnemySpawner.GetEnemySpawnPointList().Count);
-            GameObject obj = Instantiate(boss, Shared.enemyManager.iEnemySpawner.GetEnemySpawnPointList()[rand].transform.position,
-            Quaternion.identity, Shared.enemyManager.iEnemyMng.GetEnemyParent()[5].transform);
+            int rand = Random.Range(0, enemySpawner.GetEnemySpawnPointList().Count);
+            GameObject obj = Instantiate(boss, enemySpawner.GetEnemySpawnPointList()[rand].transform.position,
+            Quaternion.identity, enemyManager.GetEnemyParent()[5].transform);
 
             Enemy enemy = obj.GetComponent<Enemy>();
 
-            Shared.enemyManager.iEnemySpawner.SetEnemySpawnDelay(100f);
+            enemySpawner.SetEnemySpawnDelay(100f);
 
             Shared.gameManager.SpawnTimer.SetIsSpawnTime(false);
         }

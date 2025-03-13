@@ -2,22 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CenterLine : MonoBehaviour
+public class Center : MonoBehaviour, ITakeDmg
 {
-    LineRenderer lineRenderer;
     Terrain terrain;
+    GameState gameState;
 
+    [Header("Status")]
+    public float centerHp = 1000f;
+
+
+    [Header("CenterLine")]
+    [SerializeField] LineRenderer lineRenderer;
     public int point { get; private set; } = 50;
     public float radius { get; private set; } = 25f;
 
     private void Awake()
     {
-        lineRenderer = GetComponent<LineRenderer>();
         terrain = Terrain.activeTerrain;
     }
 
     void Start()
     {
+        gameState = Shared.gameManager.GameState;
         DrawCircle();
     }
 
@@ -35,6 +41,16 @@ public class CenterLine : MonoBehaviour
             lineRenderer.SetPosition(i, new Vector3(x, y, z));
 
             angle += (2 * Mathf.PI) / point;
+        }
+    }
+
+    public void TakeDmg(float _dmg, bool _isHead)
+    {
+        centerHp -= _dmg;
+
+        if (centerHp <= 0)
+        {
+            gameState.SetGameState(EGameState.GAMEOVER);
         }
     }
 }

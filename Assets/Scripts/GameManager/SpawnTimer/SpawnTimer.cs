@@ -3,21 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public interface ISpawnTimer
+public class SpawnTimer : MonoBehaviour
 {
-    void SubTimerEvent(Action _listener);
-    void UnTimerEvent(Action _listener);
-    float GetMaxSec();
-    float GetSec();
-    void SetSec(float _value);
-    bool GetIsSpawnTime();
-    void SetIsSpawnTime(bool _value);
-
-}
-
-public class SpawnTimer : MonoBehaviour, ISpawnTimer
-{
-    event Action onTimeEvent;
+    public event Action onTimeEvent;
 
     float sec;
     float maxSec;
@@ -81,8 +69,6 @@ public class SpawnTimer : MonoBehaviour, ISpawnTimer
         spawnTime = false;
     }
 
-    public void SubTimerEvent(Action _listener) { onTimeEvent += _listener; }
-    public void UnTimerEvent(Action _listener) { onTimeEvent -= _listener; }
     public float GetMaxSec() { return maxSec; }
     public float GetSec() { return sec; }
     public void SetSec(float _value) { sec = _value; }

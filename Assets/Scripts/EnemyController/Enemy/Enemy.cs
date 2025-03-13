@@ -2,68 +2,86 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public abstract class Enemy : MonoBehaviour, ITakeDmg
 {
     public event Action onTakeDamage;
 
+    EEnemyAI aiState;
+
     EnemyAI enemyAI;
     EnemyHpBar enemyHpBar;
+    protected EnemySpawner enemySpawner;
+    protected GoldCoin goldCoin;
+    protected Round round;
+    protected SpawnTimer spawnTimer;
+    protected BulletPool bulletPool;
 
     Rigidbody rigid;
     [SerializeField] SphereCollider sensor;
-    BoxCollider box;
+    [SerializeField] BoxCollider box;
     Animator anim;
 
-    public EEnemyAI aiState;
 
-    public string enemyName;
-    public float enemyHp;
-    public float curhp;
-    public float enemySpeed;
-    public float rotationSpeed;
-    public float attackRange;
-    public int attackDmg;
+    public string enemyName { get; private set; }
+    public float enemyHp { get; private set; }
+    public float curhp { get; private set; }
+    public float enemySpeed { get; private set; }
+    public float rotationSpeed { get; private set; }
+    public float attackRange { get; private set; }
+    public int attackDmg { get; private set; }
 
     GameObject hitAim;
+    Image hitAimImg;
     Coroutine hitAimCoroutine;
 
-    [SerializeField] protected Transform[] targetPoints;
-    [SerializeField] protected Transform myTarget;
+    protected Transform[] targetPoints;
+    protected Transform myTarget;
     protected Vector3 targetPointDir;
+
     internal bool isDie { get; private set; }
     internal bool isStay { get; private set; }
-    [SerializeField] internal bool attackReady { get; private set; }
-    [SerializeField] bool isAttack;
+    protected internal bool attackReady { get; private set; }
+    protected bool isAttack;
 
-    Coroutine attackCoroutine;
+    protected Coroutine attackCoroutine;
 
-    Vector3 tagetTrs;
 
-    public void InitEnemyData(TableEnemy.Info _enemyData)
+    private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        box = this.GetComponent<BoxCollider>();
         anim = this.GetComponent<Animator>();
-
-        enemyName = _enemyData.Name;
-        enemyHp = _enemyData.MaxHp;
-        curhp = enemyHp;
-        enemySpeed = _enemyData.Speed;
-        rotationSpeed = 5;
-        attackRange = 1;
-        attackDmg = 10;
-
-        hitAim = Shared.gameUI.HitAim;
-
-        targetPoints = Shared.enemyManager.iEnemySpawner.GetTargetPoint();
-        int rand = Random.Range(0, targetPoints.Length);
-        myTarget = targetPoints[rand];
 
         enemyAI = new EnemyAI();
         enemyAI.Init(this);
+    }
+
+    public void InitEnemyData(TableEnemy.Info _enemyData)
+    {
+        enemySpawner = Shared.enemyManager.EnemySpawner;
+        goldCoin = Shared.gameManager.GoldCoin;
+        round = Shared.gameManager.Round;
+        spawnTimer = Shared.gameManager.SpawnTimer;
+        bulletPool = Shared.objectPoolManager.BulletPool;
+
+        enemyName = _enemyData.Name;
+        enemyHp = _enemyData.MaxHp;
+        enemySpeed = _enemyData.Speed;
+        attackRange = _enemyData.AttackRange;
+        attackDmg = _enemyData.AttackDmg;
+        curhp = enemyHp;
+        rotationSpeed = 5;
+
+        targetPoints = enemySpawner.GetTargetPoint();
+        int rand = Random.Range(0, targetPoints.Length);
+        myTarget = targetPoints[rand];
+
+        hitAim = Shared.gameUI.HitAim;
+        hitAimImg = hitAim.GetComponent<Image>();
     }
 
     private void OnEnable()
@@ -107,19 +125,49 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     protected internal virtual void CheckTarget()
     {
         Collider[] colls = Physics.OverlapSphere(transform.position,
-            sensor.radius, LayerMask.GetMask("Player", "UnitField"));
+            sensor.radius, LayerMask.GetMask("Player", "Field"));
 
         if(colls.Length > 0) 
         {
-            myTarget = colls[0].transform;
+            int highPriority = int.MinValue;
+            Transform highTargetTrs = null;
+
+            for(int i = 0; i < colls.Length; i++) 
+            {
+                int priority = GetTargetPriority(colls[i]);
+
+                if (priority > highPriority)
+                {
+                    highPriority = priority;
+                    highTargetTrs = colls[i].transform;
+                }
+            }
+
+            if (highTargetTrs != null)
+            {
+                myTarget = highTargetTrs;
+            }
         }
+    }
+
+    protected virtual int GetTargetPriority(Collider _target)
+    {
+        if (_target.gameObject.layer == LayerMask.NameToLayer("Field")) return 2;
+        if (_target.gameObject.layer == LayerMask.NameToLayer("Player")) return 1;
+        return 0;
     }
 
     protected internal void ReadyAttack()
     {
-        if (Vector3.Distance(transform.position,
-            new Vector3(myTarget.position.x, myTarget.position.y, myTarget.position.z)) 
-            < attackRange)
+        if(myTarget == null) return;
+
+        Collider targetColl = myTarget.GetComponent<Collider>();
+        if(targetColl == null) return;
+
+        Vector3 closePoint = targetColl.ClosestPoint(transform.position);
+        float distance = Vector3.Distance(closePoint, transform.position);
+
+        if (distance < attackRange)
         {
             attackReady = true;
         }
@@ -137,31 +185,15 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         }
     }
 
-    IEnumerator StartAttack()
-    {
-        isAttack = true;
+    protected abstract IEnumerator StartAttack();
 
-        if (myTarget.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            Shared.playerManager.playerStatus.TakeDmg(attackDmg);
-        }
-
-        yield return new WaitForSeconds(1f);
-
-        isAttack = false;
-        attackCoroutine = null;
-    }
-
-    public void TakeDmg(int _dmg)
+    public void TakeDmg(float _dmg, bool _isHead)
     {
         curhp -= _dmg;
 
-        if(hitAimCoroutine != null)
-        {
-            StopCoroutine(hitAimCoroutine);
-        }
-
-        hitAimCoroutine =  StartCoroutine(StartHitAim());
+        hitAimImg.color = _isHead ? Color.red : Color.white;
+        hitAim.SetActive(true);
+        Invoke(nameof(HideHitAim), 0.3f);
 
         onTakeDamage?.Invoke();
 
@@ -171,12 +203,8 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         }
     }
 
-    IEnumerator StartHitAim()
+    private void HideHitAim()
     {
-        hitAim.SetActive(true);
-
-        yield return new WaitForSeconds(0.2f);
-
         hitAim.SetActive(false);
     }
 

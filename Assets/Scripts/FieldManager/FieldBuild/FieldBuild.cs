@@ -12,7 +12,7 @@ public class FieldBuild : MonoBehaviour
     Terrain terrain;
     BoxCollider box;
 
-    [SerializeField] CenterLine centerLine;
+    [SerializeField] Center center;
     [SerializeField] Transform centerBuilding;
 
     [SerializeField] GameObject buildingPre;
@@ -89,12 +89,12 @@ public class FieldBuild : MonoBehaviour
 
     private bool CanBuild()
     {
-        Vector3 center = new Vector3(centerBuilding.position.x, 0, centerBuilding.position.z);
+        Vector3 centerPos = new Vector3(centerBuilding.position.x, 0, centerBuilding.position.z);
 
-        float distanceToCenter = Vector3.Distance(center, 
+        float distanceToCenter = Vector3.Distance(centerPos, 
             new Vector3(previewObj.transform.position.x, 0, previewObj.transform.position.z));
 
-        if (distanceToCenter <= centerLine.radius)
+        if (distanceToCenter <= center.radius)
         {
             return CheckCanBuild(previewObj.transform.position);
         }

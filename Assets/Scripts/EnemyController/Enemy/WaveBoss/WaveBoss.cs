@@ -5,19 +5,26 @@ using UnityEngine;
 
 public abstract class WaveBoss : Enemy
 {
+    WaveBossSpawner waveBossSpawner;
+
     [SerializeField] float waveBossDelay;
     [SerializeField] TextMeshProUGUI waveBossText;
 
-    private void Start()
+    private void Awake()
     {
         waveBossDelay = 25f;
     }
 
+    private void Start()
+    {
+        waveBossSpawner = Shared.enemyManager.WaveBossSpawner;
+    }
+
     protected internal override void Die()
     {
-        base.Die();
-        Shared.gameManager.GoldCoin.SetCoin(2);
-        Shared.enemyManager.iWaveBossSpawner.SetWaveBossDelay(waveBossDelay);
+        Die();
+        goldCoin.SetCoin(2);
+        waveBossSpawner.SetWaveBossDelay(waveBossDelay);
     }
 
     //public void WaveBossTimer()

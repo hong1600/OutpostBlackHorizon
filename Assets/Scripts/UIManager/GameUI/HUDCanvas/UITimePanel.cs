@@ -11,8 +11,7 @@ public class UITimePanel : MonoBehaviour
 
     private void Start()
     {
-        Shared.gameManager.SpawnTimer.UnTimerEvent(UpdateTimePanel);
-        Shared.gameManager.SpawnTimer.SubTimerEvent(UpdateTimePanel);
+        Shared.gameManager.SpawnTimer.onTimeEvent += UpdateTimePanel;
     }
 
     private void UpdateTimePanel()

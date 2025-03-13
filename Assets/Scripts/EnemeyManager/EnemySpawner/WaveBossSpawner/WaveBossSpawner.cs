@@ -2,16 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IWaveBossSpawner
+public class WaveBossSpawner : MonoBehaviour
 {
-    int GetWaveBossLevel();
-    void SetWaveBossDelay(float _value);
-    void SpawnWaveBoss();
-    void SpawnWaveBossTime();
-}
+    EnemyManager enemyManager;
+    EnemySpawner enemySpawner;
 
-public class WaveBossSpawner : MonoBehaviour, IWaveBossSpawner
-{
     [SerializeField] GameObject waveBoss;
     [SerializeField] GameObject waveBossBtn;
     [SerializeField] GameObject waveBossPanel;
@@ -25,13 +20,19 @@ public class WaveBossSpawner : MonoBehaviour, IWaveBossSpawner
         wavebossDelay = 25f;
     }
 
+    private void Start()
+    {
+        enemyManager = Shared.enemyManager;
+        enemySpawner = Shared.enemyManager.EnemySpawner;
+    }
+
     public void SpawnWaveBoss()
     {
         waveBossPanel.SetActive(false);
 
-        int rand = Random.Range(0, Shared.enemyManager.iEnemySpawner.GetEnemySpawnPointList().Count);
-        GameObject obj = Instantiate(waveBoss, Shared.enemyManager.iEnemySpawner.GetEnemySpawnPointList()[rand].position,
-        Quaternion.identity, Shared.enemyManager.iEnemyMng.GetEnemyParent()[4].transform);
+        int rand = Random.Range(0, enemySpawner.GetEnemySpawnPointList().Count);
+        GameObject obj = Instantiate(waveBoss, enemySpawner.GetEnemySpawnPointList()[rand].position,
+        Quaternion.identity, enemyManager.GetEnemyParent()[4].transform);
 
         Enemy enemy = obj.GetComponent<Enemy>();
 

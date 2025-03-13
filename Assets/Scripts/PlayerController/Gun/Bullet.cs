@@ -2,16 +2,23 @@ using Photon.Pun.Demo.Asteroids;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Cinemachine.CinemachineOrbitalTransposer;
 
 public class Bullet : MonoBehaviour
 {
-    Rigidbody rigid;
     EBullet eBullet;
+
+    Rigidbody rigid;
     SphereCollider sphere;
-    float speed;
-    int dmg;
+
+    ObjectPoolManager objectPool;
+
     Transform target;
+    float speed;
+    float dmg;
     float time = 3;
+
+    [SerializeField] TrailRenderer bulletTrail;
 
     private void Awake()
     {
@@ -19,12 +26,15 @@ public class Bullet : MonoBehaviour
         sphere = GetComponent<SphereCollider>();
     }
 
-    public void InitBullet(Transform _target, int _dmg, float _speed, EBullet _eBullet, Transform _firePos)
+    private void Start()
+    {
+        objectPool = Shared.objectPoolManager;
+    }
+
+    public void InitBullet(Transform _target, int _dmg, float _speed, 
+        EBullet _eBullet)
     {
         time = 3f;
-
-        transform.position = _firePos.transform.position;
-        transform.rotation = _firePos.transform.rotation * Quaternion.Euler(90, 0, 0);
 
         speed = _speed;
         dmg = _dmg;
@@ -37,6 +47,11 @@ public class Bullet : MonoBehaviour
             rigid.velocity = Vector3.zero;
             Vector3 grenadeDir = transform.up * speed;
             rigid.AddForce(grenadeDir, ForceMode.Impulse);
+        }
+        else
+        {
+            Vector3 bulletDir = transform.up * speed;
+            rigid.AddForce(bulletDir, ForceMode.Impulse);
         }
     }
 
@@ -62,32 +77,31 @@ public class Bullet : MonoBehaviour
 
     private void MoveRifleBullet()
     {
-        transform.Translate(Vector3.up * speed * Time.deltaTime);
-
         if (Physics.Raycast(transform.position, transform.up,
             out RaycastHit hit, speed, ~LayerMask.GetMask("EnemySensor")))
         {
             StartCoroutine(StartRifleBullet(hit.point, hit.collider));
+            ReturnPool();
         }
     }
 
     IEnumerator StartRifleBullet(Vector3 _hitPos, Collider _hitObj)
     {
         GameObject spark = Shared.objectPoolManager.EffectPool.FindEffect(EEffect.GUNHIT);
-
         spark.transform.position = _hitPos;
         spark.transform.rotation = Quaternion.LookRotation(-transform.forward);
 
-        ITakeDmg iTakeDmg = _hitObj.GetComponent<ITakeDmg>();
+        ITakeDmg iTakeDmg = _hitObj.GetComponentInParent<ITakeDmg>();
 
         if (_hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy") && iTakeDmg != null)
         {
-            iTakeDmg.TakeDmg(dmg);
+            bool isHead = _hitObj.CompareTag("Head");
+            float finalDmg = isHead ? dmg * 1.5f : dmg;
+
+            iTakeDmg.TakeDmg(finalDmg, isHead);
         }
 
         yield return null;
-
-        ReturnPool();
     }
 
     private void MoveGrenadeBullet()
@@ -96,6 +110,7 @@ public class Bullet : MonoBehaviour
             out RaycastHit hit, sphere.radius, ~LayerMask.GetMask("EnemySensor")))
         {
             StartCoroutine(StartGrenadeBullet(hit.point, hit.collider));
+            ReturnPool();
         }
     }
 
@@ -111,16 +126,23 @@ public class Bullet : MonoBehaviour
 
         if (_hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy") && iTakeDmg != null)
         {
-            iTakeDmg.TakeDmg(dmg);
+            iTakeDmg.TakeDmg(dmg, false);
         }
 
         yield return null;
+    }
 
-        ReturnPool();
+    public void ClearTrail()
+    {
+        if (bulletTrail != null)
+        {
+            bulletTrail.Clear();
+        }
     }
 
     private void ReturnPool()
     {
-        Shared.objectPoolManager.ReturnObject(gameObject.name, gameObject);
+        bulletTrail.Clear();
+        objectPool.ReturnObject(gameObject.name, gameObject);
     }
 }

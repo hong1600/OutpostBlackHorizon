@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ITakeDmg
 {
-    void TakeDmg(int _dmg);
+    void TakeDmg(float _dmg, bool _isHead);
 }

@@ -41,7 +41,7 @@ public class Plasma : MonoBehaviour
 
                 if(iTakeDmg != null) 
                 {
-                    iTakeDmg.TakeDmg(plasmaDmg);
+                    iTakeDmg.TakeDmg(plasmaDmg, false);
                 }
             }
 

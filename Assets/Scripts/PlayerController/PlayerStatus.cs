@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatus : MonoBehaviour
+public class PlayerStatus : MonoBehaviour, ITakeDmg
 {
     public event Action onTakeDmg;
 
@@ -16,21 +16,13 @@ public class PlayerStatus : MonoBehaviour
     private void Awake()
     {
         maxHp = 100;
-        curHp = 10;
+        curHp = maxHp;
         maxEnergy = 100;
         curEnergy = 100;
         isDie = false;
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            TakeDmg(10);
-        }
-    }
-
-    public void TakeDmg(int _dmg)
+    public void TakeDmg(float _dmg, bool _isHead)
     {
         if (curHp > 0)
         {
@@ -50,4 +42,5 @@ public class PlayerStatus : MonoBehaviour
         Shared.gameManager.GameState.SetGameState(EGameState.GAMEOVER);
         yield return null;
     }
+
 }

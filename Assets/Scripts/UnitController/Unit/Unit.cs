@@ -156,7 +156,7 @@ public abstract class Unit : MonoBehaviour
 
         if(iTakeDmg != null) 
         {
-            iTakeDmg.TakeDmg(_dmg);
+            iTakeDmg.TakeDmg(_dmg, false);
         }
 
         yield return null;
