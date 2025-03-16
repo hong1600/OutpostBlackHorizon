@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public abstract class DefenderController : MonoBehaviour
+public abstract class Defender : MonoBehaviour
 {
+    protected DefenderAI defenderAI;
+
+    public EDefenderAI curState;
+
     public int defenderID;
     public string defenderName;
     public int attackDamage;
@@ -12,13 +17,16 @@ public abstract class DefenderController : MonoBehaviour
     public float attackRange;
     public Sprite defenderImg;
 
-    [SerializeField] protected internal GameObject target;
+    [SerializeField] protected internal GameObject target = null;
     protected internal float rotationSpeed;
     [SerializeField] protected internal bool isAttack;
     [SerializeField] protected internal Coroutine attackCoroutine;
 
     protected virtual void Init(int _id, string _name, int _dmg, float _spd, float _range, string _imgPath)
     {
+        defenderAI = new DefenderAI();
+        defenderAI.Init(this);
+
         defenderID = _id;
         defenderName = _name;
         attackDamage = _dmg;

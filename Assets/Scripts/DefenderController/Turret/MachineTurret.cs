@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineTurret : DefenderController
+public class MachineTurret : Defender
 {
     TableTurret.Info info;
 

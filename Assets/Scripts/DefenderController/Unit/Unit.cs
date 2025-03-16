@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public abstract class Unit : DefenderController
+public abstract class Unit : Defender
 {
     public EUnitGrade eUnitGrade;
     public int lastUpgrade;
     public int skillDamage;
 
-    [SerializeField] EUnitAI aiState;
+    [SerializeField] EDefenderAI aiState;
     UnitAI unitAI;
     TableUnit tableUnit;
     Animator anim;
@@ -21,6 +21,8 @@ public abstract class Unit : DefenderController
 
     protected virtual void UnitInit(EUnitGrade _eUnitGrade)
     {
+        defenderAI = null;
+
         unitAI = new UnitAI();
         unitAI.Init(this);
 
@@ -29,7 +31,6 @@ public abstract class Unit : DefenderController
 
         eUnitGrade = _eUnitGrade;
         skillDamage = 50;
-
 
         switch (eUnitGrade)
         {
@@ -69,24 +70,24 @@ public abstract class Unit : DefenderController
         base.Attack();
     }
 
-    protected internal void ChangeAnim(EUnitAI _curState)
+    protected internal void ChangeAnim(EDefenderAI _curState)
     {
         switch(_curState) 
         {
-            case EUnitAI.CREATE:
+            case EDefenderAI.CREATE:
                 anim.SetInteger("unitAnim", (int)EUnitAnim.IDLE);
                 break;
-            case EUnitAI.SEARCH:
+            case EDefenderAI.SEARCH:
                 anim.SetInteger("unitAnim", (int)EUnitAnim.IDLE);
                 break;
-            case EUnitAI.ATTACK:
+            case EDefenderAI.ATTACK:
                 anim.SetInteger("unitAnim", (int)EUnitAnim.ATTACK);
                 break;
-            case EUnitAI.SKILL:
+            case EDefenderAI.SKILL:
                 anim.SetInteger("unitAnim", (int)EUnitAnim.SKILL);
                 anim.Play("Skill1");
                 break;
-            case EUnitAI.RESET:
+            case EDefenderAI.RESET:
                 break;
         }
     }
