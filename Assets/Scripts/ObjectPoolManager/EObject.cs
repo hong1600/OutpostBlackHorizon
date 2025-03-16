@@ -10,7 +10,8 @@ public enum EEffect
     GUNSLINGER,
     MAGE,
     GUNHIT,
-    PLASMA
+    PLASMA,
+    LASER,
 }
 
 public enum EHpBar

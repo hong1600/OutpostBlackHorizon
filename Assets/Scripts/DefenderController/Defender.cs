@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public abstract class Defender : MonoBehaviour
 {
     protected DefenderAI defenderAI;
+    protected EffectPool effectPool;
 
     public EDefenderAI curState;
 
@@ -17,15 +18,20 @@ public abstract class Defender : MonoBehaviour
     public float attackRange;
     public Sprite defenderImg;
 
-    [SerializeField] protected internal GameObject target = null;
-    protected internal float rotationSpeed;
-    [SerializeField] protected internal bool isAttack;
-    [SerializeField] protected internal Coroutine attackCoroutine;
+    public GameObject target { get; private set; }
 
-    protected virtual void Init(int _id, string _name, int _dmg, float _spd, float _range, string _imgPath)
+    protected float rotationSpeed;
+    protected bool isAttack;
+    protected Coroutine attackCoroutine;
+
+    protected virtual void Init(int _id, string _name, int _dmg, 
+        float _spd, float _range, string _imgPath, bool _isAI)
     {
-        defenderAI = new DefenderAI();
-        defenderAI.Init(this);
+        if (_isAI)
+        {
+            defenderAI = new DefenderAI();
+            defenderAI.Init(this);
+        }
 
         defenderID = _id;
         defenderName = _name;
@@ -34,9 +40,17 @@ public abstract class Defender : MonoBehaviour
         attackRange = _range;
         defenderImg = Resources.Load<Sprite>(_imgPath);
 
-        rotationSpeed = 5f;
+        rotationSpeed = 2.5f;
         isAttack = false;
         attackCoroutine = null;
+
+        effectPool = Shared.objectPoolManager.EffectPool;
+    }
+
+    private void Update()
+    {
+        defenderAI.State();
+        curState = defenderAI.aiState;
     }
 
     protected internal GameObject TargetEnemy()
@@ -50,7 +64,7 @@ public abstract class Defender : MonoBehaviour
 
         foreach (Collider coll in colls)
         {
-            Enemy enemy = coll.GetComponent<Enemy>();
+            Enemy enemy = coll.GetComponentInParent<Enemy>();
 
             if (enemy == null || enemy.isDie == true)
                 continue;
@@ -67,7 +81,7 @@ public abstract class Defender : MonoBehaviour
         return target;
     }
 
-    protected virtual internal void Attack()
+    protected internal virtual void Attack()
     {
         if (isAttack) return;
 
@@ -81,7 +95,7 @@ public abstract class Defender : MonoBehaviour
     {
         isAttack = true;
 
-        Enemy enemy = target.GetComponent<Enemy>();
+        Enemy enemy = target.GetComponentInParent<Enemy>();
 
         StartCoroutine(OnDamageEvent(enemy, attackDamage));
 
@@ -102,14 +116,9 @@ public abstract class Defender : MonoBehaviour
         yield return null;
     }
 
-    protected virtual IEnumerator StartSkill()
-    {
-        yield return null;
-    }
-
     protected virtual IEnumerator OnDamageEvent(Enemy _enemy, int _dmg)
     {
-        ITakeDmg iTakeDmg = target.GetComponent<ITakeDmg>();
+        ITakeDmg iTakeDmg = target.GetComponentInParent<ITakeDmg>();
 
         if (iTakeDmg != null)
         {
@@ -127,13 +136,12 @@ public abstract class Defender : MonoBehaviour
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
 
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.black;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = new Color(1, 0, 0, 0.3f);
+        Gizmos.DrawSphere(transform.position, attackRange);
     }
 }

@@ -1,35 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public abstract class ObjectPool<T> : MonoBehaviour
 {
-    [SerializeField] protected Dictionary<T, (GameObject obj, Transform parent)> objectDic =
-    new Dictionary<T, (GameObject obj, Transform parent)>();
+    ObjectPoolManager poolManager;
 
     [SerializeField] protected List<GameObject> objectList = new List<GameObject>();
-    [SerializeField] protected List<Transform> objectParentList = new List<Transform>();
+    [SerializeField] protected List<Transform> parentList = new List<Transform>();
 
-    protected virtual void Init(List<GameObject> _objList, List<Transform> _parentList)
+    protected Dictionary<T, Transform> parentDic = new Dictionary<T, Transform>();
+
+    protected virtual void Init()
     {
-        for (int i = 0; i < _objList.Count; i++)
-        {
-            T objectType = (T)(object)i;
+        poolManager = Shared.objectPoolManager;
 
-            objectDic.Add(objectType, (_objList[i], _parentList[i]));
-            Shared.objectPoolManager.Init(_objList[i].name, _objList[i], _parentList[i]);
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            T type = (T)(object)i;
+            string typeName = objectList[i].name;
+
+            poolManager.Init(typeName, objectList[i], parentList[i]);
+            parentDic[type] = parentList[i];
         }
     }
 
-    protected virtual GameObject FindObject(T _objectType)
+    protected virtual GameObject FindObject(T _type)
     {
-        if (objectDic.ContainsKey(_objectType))
+        if (parentDic.TryGetValue(_type, out Transform parent))
         {
-            (GameObject obj, Transform parent) objectData = objectDic[_objectType];
-
-            return Shared.objectPoolManager.GetObject(objectData.obj.name, objectData.parent);
+            return poolManager.GetObject(_type.ToString(), parent);
         }
 
         return null;
+    }
+
+    protected virtual void ReturnPool(T _type, GameObject _obj)
+    {
+        poolManager.ReturnObject(_type.ToString(), _obj);
     }
 }

@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class EnemyPool : ObjectPool<EEnemy>
 {
-    [SerializeField] List<GameObject> enemyList = new List<GameObject>();
-    [SerializeField] List<Transform> parentList = new List<Transform>();
-
     private void Start()
     {
-        Init(enemyList, parentList);
+        Init();
     }
 
-    public GameObject FindEnemy(EEnemy _eEnemy)
+    public GameObject FindEnemy(EEnemy _type)
     {
-        return base.FindObject(_eEnemy);
+        return FindObject(_type);
+    }
+
+    public void ReturnEnemy(EEnemy _type, GameObject _obj)
+    {
+        ReturnPool(_type, _obj);
     }
 }

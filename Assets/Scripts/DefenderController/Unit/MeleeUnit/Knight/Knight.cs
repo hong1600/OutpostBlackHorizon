@@ -10,7 +10,7 @@ public class Knight : Unit
     {
         info = DataManager.instance.TableUnit.GetUnitData(103);
 
-        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.ImgPath);
+        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.ImgPath, false);
         base.UnitInit(info.Grade);
     }
 

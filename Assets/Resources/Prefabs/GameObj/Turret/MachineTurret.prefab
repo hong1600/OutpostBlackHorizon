@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2285683386842693543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8538757707364766263}
+  m_Layer: 0
+  m_Name: FireTrs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8538757707364766263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2285683386842693543}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 14.66, z: 27.99}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4789211385024503927}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4789211385024478289
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +381,7 @@ Transform:
   - {fileID: 4789211385024503925}
   - {fileID: 4789211385024503923}
   - {fileID: 4789211385024503921}
+  - {fileID: 8538757707364766263}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -365,11 +397,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa96ea90f893525439711b860c5bc0fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curState: 0
   defenderID: 0
   defenderName: 
   attackDamage: 0
   attackSpeed: 0
   attackRange: 0
   defenderImg: {fileID: 0}
-  target: {fileID: 0}
-  isAttack: 0
+  gunLine: {fileID: 3624099617563453064, guid: aeec94ac14e0a0e4ea7b208ba0fb252d, type: 3}
+  fireTrs: {fileID: 8538757707364766263}

@@ -21,8 +21,6 @@ public abstract class Unit : Defender
 
     protected virtual void UnitInit(EUnitGrade _eUnitGrade)
     {
-        defenderAI = null;
-
         unitAI = new UnitAI();
         unitAI.Init(this);
 
@@ -68,6 +66,11 @@ public abstract class Unit : Defender
     {
         if (isSkill) return;
         base.Attack();
+    }
+
+    protected virtual IEnumerator StartSkill()
+    {
+        yield return null;
     }
 
     protected internal void ChangeAnim(EDefenderAI _curState)

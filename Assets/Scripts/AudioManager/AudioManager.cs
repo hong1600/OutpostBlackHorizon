@@ -85,11 +85,6 @@ public class AudioManager : MonoBehaviour
         bgmSource.Stop();
     }
 
-    public void SetBgmVolume(float _volume)
-    {
-        bgmVolume = Mathf.Clamp(_volume, 0f, 1f);
-        bgmSource.volume = bgmVolume * masterVolume;
-    }
 
     public void PlaySfx(ESfx _eSfx, Vector3 _pos)
     {
@@ -103,17 +98,23 @@ public class AudioManager : MonoBehaviour
         else return;
     }
 
-    public void SetSfxVolume(float _volume)
-    {
-        sfxVolume = Mathf.Clamp(_volume, 0f, 1f);
-        sfxSource.volume = sfxVolume * masterVolume;
-    }
-
     public void SetMasterVolume(float _volume)
     {
         masterVolume = Mathf.Clamp(_volume, 0f, 1f);
 
         bgmSource.volume = bgmVolume * masterVolume;
+        sfxSource.volume = sfxVolume * masterVolume;
+    }
+
+    public void SetBgmVolume(float _volume)
+    {
+        bgmVolume = Mathf.Clamp(_volume, 0f, 1f);
+        bgmSource.volume = bgmVolume * masterVolume;
+    }
+
+    public void SetSfxVolume(float _volume)
+    {
+        sfxVolume = Mathf.Clamp(_volume, 0f, 1f);
         sfxSource.volume = sfxVolume * masterVolume;
     }
 }

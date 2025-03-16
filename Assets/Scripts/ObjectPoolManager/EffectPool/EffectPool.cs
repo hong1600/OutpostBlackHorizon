@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class EffectPool : ObjectPool<EEffect>
 {
-    [SerializeField] List<GameObject> effectList = new List<GameObject>();
-    [SerializeField] List<Transform> parentList = new List<Transform>();
-
     private void Start()
     {
-        Init(effectList, parentList);
+        Init();
     }
 
-    public GameObject FindEffect(EEffect _eEffect)
+    public GameObject FindEffect(EEffect _type)
     {
-        return base.FindObject(_eEffect);
+        return FindObject(_type);
+    }
+
+    public void ReturnEffect(EEffect _type, GameObject _obj)
+    {
+        ReturnPool(_type, _obj);
     }
 }

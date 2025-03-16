@@ -15,6 +15,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     EnemyAI enemyAI;
     EnemyHpBar enemyHpBar;
+    HpBarPool hpBarPool;
     protected EnemySpawner enemySpawner;
     protected GoldCoin goldCoin;
     protected Round round;
@@ -67,6 +68,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         round = Shared.gameManager.Round;
         spawnTimer = Shared.gameManager.SpawnTimer;
         bulletPool = Shared.objectPoolManager.BulletPool;
+        hpBarPool = Shared.objectPoolManager.HpBarPool;
 
         enemyName = _enemyData.Name;
         enemyHp = _enemyData.MaxHp;
@@ -88,7 +90,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     {
         curhp = enemyHp;
 
-        GameObject hpBar = Shared.objectPoolManager.HpBarPool.FindHpBar(EHpBar.NORMAL);
+        GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL);
         enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
         enemyHpBar.Init(this);
 

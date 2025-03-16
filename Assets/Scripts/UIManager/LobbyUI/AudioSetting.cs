@@ -23,23 +23,35 @@ public class AudioSetting : MonoBehaviour
         masterSlider.onValueChanged.AddListener(SetMasterVolume);
         sfxSlider.onValueChanged.AddListener(SetSfxVolume);
         bgmSlider.onValueChanged.AddListener(SetBgmVolume);
+
+        UpdateUI();
     }
 
     private void SetMasterVolume(float _value)
     {
         AudioManager.instance.SetMasterVolume(_value);
         masterText.text = (masterSlider.value * 100).ToString("0");
+        UpdateUI();
     }
 
     private void SetSfxVolume(float _value)
     {
         AudioManager.instance.SetSfxVolume(_value);
-        masterText.text = (sfxSlider.value * 100).ToString("0");
+        sfxText.text = (sfxSlider.value * 100).ToString("0");
+        UpdateUI();
     }
 
     private void SetBgmVolume(float _value)
     {
         AudioManager.instance.SetBgmVolume(_value);
-        masterText.text = (bgmSlider.value * 100).ToString("0");
+        bgmText.text = (bgmSlider.value * 100).ToString("0");
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        masterText.text = (masterSlider.value * 100).ToString("0");
+        sfxText.text = (sfxSlider.value * 100).ToString("0");
+        bgmText.text = (bgmSlider.value * 100).ToString("0");
     }
 }

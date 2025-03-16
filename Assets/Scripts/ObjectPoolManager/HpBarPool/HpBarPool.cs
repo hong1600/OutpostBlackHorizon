@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class HpBarPool : ObjectPool<EHpBar>
 {
-    [SerializeField] List<GameObject> hpBarList = new List<GameObject>();
-    [SerializeField] List<Transform> parentList = new List<Transform>();
-
     private void Start()
     {
-        Init(hpBarList, parentList);
+        Init();
     }
 
-    public GameObject FindHpBar(EHpBar _eHpBar)
+    public GameObject FindHpbar(EHpBar _type)
     {
-        return base.FindObject(_eHpBar);
+        return FindObject(_type);
+    }
+
+    public void ReturnHpBar(EHpBar _type, GameObject _obj)
+    {
+        ReturnPool(_type, _obj);
     }
 }

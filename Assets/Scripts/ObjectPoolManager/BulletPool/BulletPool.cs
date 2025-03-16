@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class BulletPool : ObjectPool<EBullet>
 {
-    [SerializeField] List<GameObject> bulletList = new List<GameObject>();
-    [SerializeField] List<Transform> parentList = new List<Transform>();
-
     private void Start()
     {
-        Init(bulletList, parentList);
+        Init();
     }
 
-    public GameObject FindBullet(EBullet _eBullet)
+    public GameObject FindBullet(EBullet _type)
     {
-        return base.FindObject(_eBullet);
+        return FindObject(_type);
+    }
+
+    public void ReturnBullet(EBullet _type, GameObject _obj)
+    {
+        ReturnPool(_type, _obj);
     }
 }

@@ -10,6 +10,6 @@ public class RocketTurret : Defender
     {
         info = DataManager.instance.TableTurret.GetTurretData(402);
 
-        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.ImgPath);
+        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.ImgPath, true);
     }
 }

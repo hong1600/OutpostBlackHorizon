@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4268570111676256473}
   - component: {fileID: 5135512013901806819}
   m_Layer: 0
-  m_Name: RazerTurret
+  m_Name: LaserTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
