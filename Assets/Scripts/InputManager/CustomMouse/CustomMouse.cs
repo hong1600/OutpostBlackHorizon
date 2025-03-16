@@ -11,6 +11,7 @@ public class CustomMouse : MonoBehaviour
 
     [SerializeField] Image customCursor;
     [SerializeField] float mouseSpeed;
+    [SerializeField] LayerMask objLayer;
 
     Vector2 mousePos;
 
@@ -23,35 +24,35 @@ public class CustomMouse : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        InputManager.instance.onInputMouse += UpdateMouseEvent;
-        InputManager.instance.onLeftClickUp += OnClickMouseEvent;
+        InputManager.instance.onInputMouse += CheckUIOrObj;
+        InputManager.instance.onLeftClickUp += ClickMouseEvent;
 
         mousePos = new Vector2(Screen.width / 2, Screen.height / 2);
+        customCursor.rectTransform.position = mousePos;
     }
 
     private void OnEnable()
     {
         if (InputManager.instance != null)
         {
-            InputManager.instance.onInputMouse += UpdateMouseEvent;
-            InputManager.instance.onLeftClickUp += OnClickMouseEvent;
+            InputManager.instance.onInputMouse += CheckUIOrObj;
+            InputManager.instance.onLeftClickUp += ClickMouseEvent;
         }
     }
 
     private void OnDisable()
     {
-        InputManager.instance.onInputMouse -= UpdateMouseEvent;
-        InputManager.instance.onLeftClickUp -= OnClickMouseEvent;
+        InputManager.instance.onInputMouse -= CheckUIOrObj;
+        InputManager.instance.onLeftClickUp -= ClickMouseEvent;
     }
 
     private void Update()
     {
-        UpdateMouseCursorState();
+        UpdateCursorLock();
         MoveMouseCursor();
     }
 
-    private void UpdateMouseCursorState()
+    private void UpdateCursorLock()
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
@@ -68,26 +69,53 @@ public class CustomMouse : MonoBehaviour
 
     private void MoveMouseCursor()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSpeed;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSpeed;
+        if(Cursor.lockState == CursorLockMode.Locked) 
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSpeed;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSpeed;
 
-        mousePos += new Vector2(mouseX, mouseY);
+            mousePos += new Vector2(mouseX, mouseY);
+            mousePos.x = Mathf.Clamp(mousePos.x, 0, Screen.width);
+            mousePos.y = Mathf.Clamp(mousePos.y, 0, Screen.height);
 
-        mousePos.x = Mathf.Clamp(mousePos.x, 0, Screen.width);
-        mousePos.y = Mathf.Clamp(mousePos.y, 0, Screen.height);
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            customCursor.canvas.transform as RectTransform,
-            mousePos,
-            customCursor.canvas.worldCamera,
-            out Vector2 localPoint
-        );
-
-        customCursor.rectTransform.localPosition = localPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                customCursor.canvas.transform as RectTransform,
+                mousePos,
+                customCursor.canvas.worldCamera,
+                out Vector2 localPoint
+            );
+            customCursor.rectTransform.localPosition = localPoint;
+        }
     }
 
-    private void UpdateMouseEvent(Vector2 _pos)
+    private void CheckUIOrObj()
     {
+        GameObject target = CheckUI();
+
+        if (target == null) 
+        {
+            target = CheckObj();
+        }
+
+        if (target != lastEventObj)
+        {
+            if (lastEventObj != null)
+            {
+                ExecuteEvents.Execute(lastEventObj, eventData, ExecuteEvents.pointerExitHandler);
+            }
+            if (target != null)
+            {
+                ExecuteEvents.Execute(target, eventData, ExecuteEvents.pointerEnterHandler);
+            }
+
+            lastEventObj = target;
+        }
+    }
+
+    private GameObject CheckUI()
+    {
+        if (EventSystem.current == null) return null;
+
         eventData = new PointerEventData(EventSystem.current)
         {
             position = mousePos
@@ -96,41 +124,37 @@ public class CustomMouse : MonoBehaviour
         List<RaycastResult> resultList = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, resultList);
 
-        GameObject eventObj = null;
+        GameObject closeUI = null;
         float minDistance = float.MaxValue;
 
-        for (int i = 0; i < resultList.Count; i++)
+        for (int i = 0; i < resultList.Count; i++) 
         {
-            var result = resultList[i];
+            RaycastResult result = resultList[i];
 
-            if (result.gameObject.GetComponent<CanvasRenderer>() != null)
+            if (result.distance < minDistance)
             {
-                if (result.distance < minDistance)
-                {
-                    minDistance = result.distance;
-                    eventObj = result.gameObject;
-                }
+                minDistance = result.distance;
+                closeUI = result.gameObject;
             }
         }
 
-        if (eventObj != lastEventObj)
-        {
-            if (lastEventObj != null)
-            {
-                ExecuteEvents.Execute(lastEventObj, eventData, ExecuteEvents.pointerExitHandler);
-            }
-
-            if (eventObj != null)
-            {
-                ExecuteEvents.Execute(eventObj, eventData, ExecuteEvents.pointerEnterHandler);
-            }
-
-            lastEventObj = eventObj;
-        }
+        return closeUI;
     }
 
-    private void OnClickMouseEvent(Vector2 _pos)
+    private GameObject CheckObj()
     {
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        {
+            return hit.collider.gameObject;
+        }
+        return null;
+    }
+
+    private void ClickMouseEvent(Vector2 _pos)
+    {
+        CheckUIOrObj();
+
         if (lastEventObj != null)
         {
             ExecuteEvents.Execute(lastEventObj, eventData, ExecuteEvents.pointerClickHandler);

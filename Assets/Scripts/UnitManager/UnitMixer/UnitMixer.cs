@@ -27,14 +27,14 @@ public class UnitMixer : MonoBehaviour
 
         foreach (GameObject fieldUnit in allUnitList)
         {
-            Unit field = fieldUnit.GetComponent<Unit>();
+            Unit unit = fieldUnit.GetComponent<Unit>();
 
             foreach (TableUnit.Info needUnit in sacUnitList)
             {
-                if (field.unitName == needUnit.Name &&
-                    !unitToMixList.Any(unit => unit.unitName == field.unitName))
+                if (unit.defenderName == needUnit.Name &&
+                    !unitToMixList.Any(unit => unit.defenderName == needUnit.Name))
                 {
-                    unitToMixList.Add(field);
+                    unitToMixList.Add(unit);
                 }
             }
         }

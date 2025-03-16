@@ -11,6 +11,10 @@ public class FieldBuild : MonoBehaviour
     CustomMouse customMouse;
     Terrain terrain;
     BoxCollider box;
+    FieldManager fieldManager;
+    GoldCoin goldCoin;
+    ViewState viewState;
+    UnitFieldData unitFieldData;
 
     [SerializeField] Center center;
     [SerializeField] Transform centerBuilding;
@@ -28,6 +32,10 @@ public class FieldBuild : MonoBehaviour
     {
         terrain = Terrain.activeTerrain;
         customMouse = Shared.gameUI.CustomMouse;
+        fieldManager = Shared.fieldManager;
+        goldCoin = Shared.gameManager.GoldCoin;
+        viewState = Shared.gameManager.ViewState;
+        unitFieldData = Shared.unitManager.UnitFieldData;
     }
 
     private void Update()
@@ -48,9 +56,9 @@ public class FieldBuild : MonoBehaviour
 
     public void BuildPreview(GameObject _fieldObj, FieldData _fieldData)
     {
-        if(previewObj == null && Shared.gameManager.ViewState.GetViewState() == EViewState.TOP) 
+        if(previewObj == null && viewState.GetViewState() == EViewState.TOP) 
         {
-            previewObj = _fieldObj;
+            buildingPre = _fieldObj;
             fieldData = _fieldData;
             previewObj = Instantiate(buildingPre);
             previewObj.layer = LayerMask.NameToLayer("BluePrint");
@@ -84,7 +92,7 @@ public class FieldBuild : MonoBehaviour
         float z = Mathf.Round(originPos.z / gridSize) * gridSize;
         float y = terrain.SampleHeight(new Vector3(x, 0, z));
 
-        return new Vector3 (x, y + 1.5f, z);
+        return new Vector3(x, y + (buildingPre.transform.localScale.y * 0.5f), z);
     }
 
     private bool CanBuild()
@@ -124,11 +132,18 @@ public class FieldBuild : MonoBehaviour
     private void Build()
     {
         box.isTrigger = false;
-        Instantiate(buildingPre, previewObj.transform.position, Quaternion.identity, parent.transform);
+        GameObject unitField = Instantiate(buildingPre, previewObj.transform.position, Quaternion.identity, parent.transform);
         Destroy(previewObj);
         previewObj = null;
-        Shared.fieldManager.DecreaseFieldAmount(fieldData);
-        Shared.gameManager.GoldCoin.UseGold(fieldData.fieldPrice);
+        fieldManager.DecreaseFieldAmount(fieldData);
+        goldCoin.UseGold(fieldData.fieldPrice);
+        if (buildingPre.CompareTag("UnitField"))
+        {
+            unitFieldData.SetUnitSpawnPointList(unitField.transform);
+        }
+        else if (buildingPre.CompareTag("TurretField"))
+        {
+        }
         onDecreaseField?.Invoke();
     }
 }

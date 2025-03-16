@@ -11,7 +11,7 @@ public class UnitManager : MonoBehaviour
     [SerializeField] UnitRandomSpawner unitRandomSpawner;
     [SerializeField] UnitSpawner unitSpawner;
     [SerializeField] UnitUpgrader unitUpgrader;
-    [SerializeField] UnitFieldMove unitFieldMove;
+    [SerializeField] UnitMoveField unitMoveField;
     [SerializeField] UnitData unitData;
     [SerializeField] UnitFieldData unitFieldData;
 
@@ -31,7 +31,7 @@ public class UnitManager : MonoBehaviour
         UnitRandomSpawner = unitRandomSpawner;
         UnitSpawner = unitSpawner;
         UnitUpgrader = unitUpgrader;
-        UnitFieldMove = unitFieldMove;
+        UnitMoveField = unitMoveField;
         UnitData = unitData;
         UnitFieldData = unitFieldData;
     }
@@ -65,7 +65,7 @@ public class UnitManager : MonoBehaviour
     public UnitRandomSpawner UnitRandomSpawner { get; private set; }
     public UnitSpawner UnitSpawner { get; private set; }
     public UnitUpgrader UnitUpgrader { get; private set; }
-    public UnitFieldMove UnitFieldMove { get; private set; }
+    public UnitMoveField UnitMoveField { get; private set; }
     public UnitData UnitData { get; private set; }
     public UnitFieldData UnitFieldData { get; private set; }
 }

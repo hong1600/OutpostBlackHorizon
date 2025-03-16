@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class Shield : MeleeUnit
 {
+    TableUnit.Info info;
+
     private void Awake()
     {
-        Init(DataManager.instance.TableUnit.GetUnitData(102));
+        info = DataManager.instance.TableUnit.GetUnitData(102);
+
+        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.ImgPath);
+        base.UnitInit(info.Grade);
     }
+
     protected override IEnumerator OnDamageEvent(Enemy enemy, int _dmg)
     {
         int rand = Random.Range(0, 100);

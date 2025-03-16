@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitFieldMove : MonoBehaviour
+public class UnitMoveField : MonoBehaviour
 {
     [SerializeField] List<GameObject> startSelectUnitList = new List<GameObject>();
     [SerializeField] List<GameObject> curSelectUnitList = new List<GameObject>();

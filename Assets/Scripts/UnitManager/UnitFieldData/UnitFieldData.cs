@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitFieldData : MonoBehaviour
 {
-    [SerializeField] List<Transform> unitSpawnPointList = new List<Transform>();
+    List<Transform> unitSpawnPointList = new List<Transform>();
     public int fieldNum;
 
     public bool IsCheckGround(GameObject _spawnUnit)
@@ -50,6 +50,11 @@ public class UnitFieldData : MonoBehaviour
         }
 
         return -1;
+    }
+
+    public void SetUnitSpawnPointList(Transform _spawnPoint)
+    {
+        unitSpawnPointList.Add(_spawnPoint);
     }
 
     public List<Transform> GetUnitSpawnPointList() { return unitSpawnPointList; }

@@ -80,7 +80,7 @@ public class FieldSelector : MonoBehaviour, IFieldSelector
             if (startFieldRenderer != null) { startFieldRenderer.material = originMat; }
             if (curFieldRenderer != null) { curFieldRenderer.material = originMat; }
 
-            Shared.unitManager.UnitFieldMove.CheckUnitField(
+            Shared.unitManager.UnitMoveField.CheckUnitField(
                 startSelectField.transform.GetChild(0).gameObject,
                 curSelectField.transform.GetChild(0).gameObject);
         }

@@ -66,8 +66,8 @@ public class TableBase
             case ETable.ITEMDATA:
                 path = GetTablePath() + "/Resources/Data/Document/Item/";
                 break;
-            case ETable.CAMERADATA:
-                path = GetTablePath() + "/Resources/Data/Document/Camera/";
+            case ETable.TURRETDATA:
+                path = GetTablePath() + "/Resources/Data/Document/Turret/";
                 break;
         }
 

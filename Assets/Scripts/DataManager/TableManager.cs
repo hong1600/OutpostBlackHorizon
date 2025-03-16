@@ -13,6 +13,7 @@ public class TableManager
     public Table_UnitSkill unitSkill = new Table_UnitSkill();
     public TableEnemy enemy = new TableEnemy();
     public TableItem item = new TableItem();
+    public TableTurret turret = new TableTurret();
 
     public void Init(ETable _name)
     {
@@ -54,9 +55,9 @@ public class TableManager
         item.Init_Binary($"{_name}");
 #endif
                 break;
-            case ETable.CAMERADATA:
+            case ETable.TURRETDATA:
 #if UNITY_EDITOR
-                unit.Init_Csv(ETable.CAMERADATA, 1, 0);
+                turret.Init_Csv(ETable.TURRETDATA, 1, 0);
 #else
         unit.Init_Binary($"{_name}");
 #endif
@@ -84,8 +85,8 @@ public class TableManager
             case ETable.ITEMDATA:
                 item.Save_Binary("ItemData");
                 break;
-            case ETable.CAMERADATA:
-                item.Save_Binary("CameraData");
+            case ETable.TURRETDATA:
+                turret.Save_Binary("TurretData");
                 break;
         }
 

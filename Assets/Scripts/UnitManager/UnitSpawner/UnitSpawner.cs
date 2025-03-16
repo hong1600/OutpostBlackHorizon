@@ -7,6 +7,11 @@ using Random = UnityEngine.Random;
 
 public class UnitSpawner : MonoBehaviour
 {
+    UnitFieldData unitFieldData;
+    UnitData unitData;
+    GoldCoin goldCoin;
+    UnitUpgrader unitUpgrader;
+
     [SerializeField] float[][] selectWeights = new float[][]
 {
     new float[] { 0.72f, 0.15f, 0.10f, 0.03f },
@@ -29,23 +34,29 @@ public class UnitSpawner : MonoBehaviour
         spawnGold = 20;
     }
 
+    private void Start()
+    {
+        unitFieldData = Shared.unitManager.UnitFieldData;
+        unitData = Shared.unitManager.UnitData;
+        goldCoin = Shared.gameManager.GoldCoin;
+        unitUpgrader = Shared.unitManager.UnitUpgrader;
+    }
+
     public void InstantiateUnit(GameObject _unit)
     {
-        UnitFieldData fieldData = Shared.unitManager.UnitFieldData;
-        UnitData unitData = Shared.unitManager.UnitData;
-        List<Transform> SpawnPointList = Shared.unitManager.UnitFieldData.GetUnitSpawnPointList();
-        int fieldNum = fieldData.fieldNum;
+        List<Transform> SpawnPointList = unitFieldData.GetUnitSpawnPointList();
+        int fieldNum = unitFieldData.fieldNum;
 
-        if (!fieldData.IsCheckGround(_unit)) return;
+        if (!unitFieldData.IsCheckGround(_unit)) return;
 
         if (fieldNum < 0 || fieldNum > SpawnPointList.Count || _unit == null) return;
 
-        Vector3 twoUnit1Pos = new Vector3(-0.5f, 0, 0);
-        Vector3 twoUnit2Pos = new Vector3(0.5f, 0, 0);
+        Vector3 twoUnit1Pos = new Vector3(-0.3f, 0.5f, 0);
+        Vector3 twoUnit2Pos = new Vector3(0.5f, 0.5f, 0);
 
-        Vector3 threeUnit1Pos = new Vector3(0, 0, 0.4f);
-        Vector3 threeUnit2Pos = new Vector3(-0.6f, 0, -0.4f);
-        Vector3 threeUnit3Pos = new Vector3(0.6f, 0, -0.4f);
+        Vector3 threeUnit1Pos = new Vector3(0, 0.5f, 0.4f);
+        Vector3 threeUnit2Pos = new Vector3(-0.6f, 0.5f, -0.4f);
+        Vector3 threeUnit3Pos = new Vector3(0.6f, 0.5f, -0.4f);
 
         GameObject instantiateUnit;
 
@@ -65,15 +76,15 @@ public class UnitSpawner : MonoBehaviour
                 break;
 
             case 1:
-                curGroundUnit[0].transform.position = SpawnPointList[fieldNum].transform.position + twoUnit1Pos;
+                curGroundUnit[0].transform.localPosition = twoUnit1Pos;
 
                 instantiateUnit = Instantiate(_unit, SpawnPointList[fieldNum].transform.position + twoUnit2Pos,
                     Quaternion.identity, SpawnPointList[fieldNum].transform);
                 break;
 
             case 2:
-                curGroundUnit[0].transform.position = SpawnPointList[fieldNum].transform.position + threeUnit1Pos;
-                curGroundUnit[1].transform.position = SpawnPointList[fieldNum].transform.position + threeUnit2Pos;
+                curGroundUnit[0].transform.localPosition = threeUnit1Pos;
+                curGroundUnit[1].transform.localPosition = threeUnit2Pos;
 
                 instantiateUnit = Instantiate(_unit, SpawnPointList[fieldNum].transform.position + threeUnit3Pos,
                     Quaternion.identity, SpawnPointList[fieldNum].transform);
@@ -83,13 +94,32 @@ public class UnitSpawner : MonoBehaviour
                 return;
         }
 
+        instantiateUnit.transform.localPosition = new Vector3
+            (instantiateUnit.transform.localPosition.x,
+            instantiateUnit.transform.localPosition.y + 0.5f,
+            instantiateUnit.transform.localPosition.z);
+
+
+        Vector3 fieldScale = SpawnPointList[fieldNum].transform.localScale;
+        Vector3 unitScale = instantiateUnit.transform.localScale;
+
+        instantiateUnit.transform.localScale = new Vector3(
+            unitScale.x * (1 / fieldScale.x),
+            unitScale.y * (1 / fieldScale.y),
+            unitScale.z * (1 / fieldScale.z));
+
+
         if (instantiateUnit.GetComponent<Unit>().eUnitGrade == EUnitGrade.SS ||
             instantiateUnit.GetComponent<Unit>().eUnitGrade == EUnitGrade.S)
         {
             GameObject skillBar = Instantiate(unitSkillBar, instantiateUnit.transform.position,
                 Quaternion.identity, unitSkillBarParent);
-            skillBar.GetComponent<UnitSkillBar>().Init(instantiateUnit.GetComponent<Unit>());
-            instantiateUnit.GetComponent<Unit>().skillBar = skillBar;
+
+            Unit unit = instantiateUnit.GetComponent<Unit>();
+            UnitSkillBar UnitSkillBar = skillBar.GetComponent<UnitSkillBar>();
+
+            UnitSkillBar.Init(unit);
+            unit.skillBar = skillBar;
         }
 
         unitData.AddUnitData(instantiateUnit);
@@ -97,8 +127,8 @@ public class UnitSpawner : MonoBehaviour
 
     public bool CanSpawn()
     {
-        if (spawnGold <= Shared.gameManager.GoldCoin.GetGold() &&
-            Shared.unitManager.UnitData.GetAllUnitList().Count < 20)
+        if (spawnGold <= goldCoin.GetGold() &&
+            unitData.GetAllUnitList().Count < 20)
         {
             return true;
         }
@@ -107,14 +137,14 @@ public class UnitSpawner : MonoBehaviour
 
     public void UseGold()
     {
-        Shared.gameManager.GoldCoin.SetGold(-spawnGold);
+        goldCoin.SetGold(-spawnGold);
         spawnGold += 2;
     }
 
     public void SpawnUnit()
     {
         string Selection = 
-            SelectRandom(selectOptions, selectWeights[(int)Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[3] - 1]);
+            SelectRandom(selectOptions, selectWeights[(int)unitUpgrader.GetUpgradeLevel()[3] - 1]);
         selectSpawnUnit = GetSelectSpawnUnit(Selection);
 
         if (!CanSpawn()) return;
@@ -130,17 +160,17 @@ public class UnitSpawner : MonoBehaviour
         switch (grade) 
         {
             case "S":
-                return Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.S)
-                    [Random.Range(0, Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.S).Count)];
+                return unitData.GetUnitByGradeList(EUnitGrade.S)
+                    [Random.Range(0, unitData.GetUnitByGradeList(EUnitGrade.S).Count)];
             case "A":
-                return Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.A)
-                    [Random.Range(0, Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.A).Count)];
+                return unitData.GetUnitByGradeList(EUnitGrade.A)
+                    [Random.Range(0, unitData.GetUnitByGradeList(EUnitGrade.A).Count)];
             case "B":
-                return Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.B)
-                    [Random.Range(0, Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.B).Count)];
+                return unitData.GetUnitByGradeList(EUnitGrade.B)
+                    [Random.Range(0, unitData.GetUnitByGradeList(EUnitGrade.B).Count)];
             case "C":
-                return Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.C)
-                    [Random.Range(0, Shared.unitManager.UnitData.GetUnitByGradeList(EUnitGrade.C).Count)];
+                return unitData.GetUnitByGradeList(EUnitGrade.C)
+                    [Random.Range(0, unitData.GetUnitByGradeList(EUnitGrade.C).Count)];
             default:
                 return null;
         }

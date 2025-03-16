@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gunslinger : RangedUnit
+public class Mage : RangedUnit
 {
-    [SerializeField] Transform bulletTrs;
+    TableUnit.Info info;
 
     private void Awake()
     {
-        Init(DataManager.instance.TableUnit.GetUnitData(104));
+        info = DataManager.instance.TableUnit.GetUnitData(105);
+
+        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.ImgPath);
+        base.UnitInit(info.Grade);
     }
 
     protected override IEnumerator StartAttack()
@@ -28,16 +31,15 @@ public class Gunslinger : RangedUnit
         isSkill = true;
         Enemy enemy = target.GetComponent<Enemy>();
 
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(1.5f);
 
-        EEffect eEffect = (EEffect)EEffect.GUNSLINGER;
+        EEffect eEffect = (EEffect)EEffect.MAGE;
         GameObject effect = Shared.objectPoolManager.EffectPool.FindEffect(eEffect);
-        effect.transform.position = bulletTrs.position;
-        effect.GetComponent<GunslingerEffect>().Init(enemy.gameObject.transform, 100, 150f);
+        effect.transform.position = enemy.transform.position + new Vector3(0,0.1f,0);
         skillCouroutine = null;
         skillBar.GetComponent<UnitSkillBar>().ResetSkillBar();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         isSkill = false;
     }

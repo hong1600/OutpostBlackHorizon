@@ -10,5 +10,5 @@ public enum ETable
     ITEMDATA,
     ENEMYDATA,
     ENEMYLOCAL,
-    CAMERADATA,
+    TURRETDATA,
 }

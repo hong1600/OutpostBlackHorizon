@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour
     public event Action<Vector2> onLeftClickDrag;
     public event Action<Vector2> onLeftClickUp;
     public event Action onRightClickDown;
-    public event Action<Vector2> onInputMouse;
+    public event Action onInputMouse;
     public event Action<Vector2> onInputKey;
     public event Action onInputEsc;
     public event Action onInputB;
@@ -115,7 +115,7 @@ public class InputManager : MonoBehaviour
 
         if (mouse != Vector2.zero)
         {
-            onInputMouse?.Invoke(mouse);
+            onInputMouse?.Invoke();
         }
     }
 

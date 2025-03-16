@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
 
 public class TableEditor : MonoBehaviour
 {
@@ -52,9 +53,9 @@ public class TableEditor : MonoBehaviour
         ParseTableCsv(ETable.ENEMYDATA);
     }
 
-    [MenuItem("CSV_Util/Table/CameraData/Parse Camera CSV &F6", false, 1)]
-    static public void ParserCameraCsv()
+    [MenuItem("CSV_Util/Table/TurretData/Parse Turret CSV &F6", false, 1)]
+    static public void ParserTurretCsv()
     {
-        ParseTableCsv(ETable.CAMERADATA);
+        ParseTableCsv(ETable.TURRETDATA);
     }
 }

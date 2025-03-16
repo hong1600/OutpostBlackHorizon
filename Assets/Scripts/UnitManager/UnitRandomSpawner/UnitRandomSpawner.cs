@@ -133,13 +133,13 @@ public class UnitRandomSpawner : MonoBehaviour
         switch (_index)
         {
             case 0:
-                return unitData.GetUnitByGradeList(EUnitGrade.B)[_randB].GetComponent<Unit>().UnitImg;
+                return unitData.GetUnitByGradeList(EUnitGrade.B)[_randB].GetComponent<Unit>().defenderImg;
 
             case 1:
-                return unitData.GetUnitByGradeList(EUnitGrade.A)[_randA].GetComponent<Unit>().UnitImg;
+                return unitData.GetUnitByGradeList(EUnitGrade.A)[_randA].GetComponent<Unit>().defenderImg;
 
             case 2:
-                return unitData.GetUnitByGradeList(EUnitGrade.S)[_randS].GetComponent<Unit>().UnitImg;
+                return unitData.GetUnitByGradeList(EUnitGrade.S)[_randS].GetComponent<Unit>().defenderImg;
         }
         return null;
     }

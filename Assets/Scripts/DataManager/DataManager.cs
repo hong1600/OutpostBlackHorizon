@@ -13,6 +13,7 @@ public class DataManager : MonoBehaviour
     TableUnit tableUnit;
     TableEnemy tableEnemy;
     TableItem tableItem;
+    TableTurret tableTurret;
 
     private void Awake()
     {
@@ -38,11 +39,16 @@ public class DataManager : MonoBehaviour
         tableItem = new TableItem();
         tableItem.Init_Binary("ItemData");
         TableItem = tableItem;
+
+        tableTurret = new TableTurret();
+        tableTurret.Init_Binary("TurretData");
+        TableTurret = tableTurret;
     }
 
     public UserDataLoader UserDataLoader { get; private set; }
     public TableUnit TableUnit { get; private set; }
     public TableEnemy TableEnemy { get; private set; }
     public TableItem TableItem { get; private set; }
+    public TableTurret TableTurret { get; private set; }
 }
 
