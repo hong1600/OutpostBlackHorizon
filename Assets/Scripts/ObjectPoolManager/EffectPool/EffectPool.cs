@@ -10,9 +10,9 @@ public class EffectPool : ObjectPool<EEffect>
         Init();
     }
 
-    public GameObject FindEffect(EEffect _type)
+    public GameObject FindEffect(EEffect _type, Vector3 _pos, Quaternion _rot)
     {
-        return FindObject(_type);
+        return FindObject(_type, _pos, _rot);
     }
 
     public void ReturnEffect(EEffect _type, GameObject _obj)

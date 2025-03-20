@@ -19,18 +19,18 @@ public abstract class ObjectPool<T> : MonoBehaviour
         for (int i = 0; i < objectList.Count; i++)
         {
             T type = (T)(object)i;
-            string typeName = objectList[i].name;
+            string typeName = type.ToString();
 
             poolManager.Init(typeName, objectList[i], parentList[i]);
             parentDic[type] = parentList[i];
         }
     }
 
-    protected virtual GameObject FindObject(T _type)
+    protected virtual GameObject FindObject(T _type, Vector3 _pos, Quaternion _rot)
     {
         if (parentDic.TryGetValue(_type, out Transform parent))
         {
-            return poolManager.GetObject(_type.ToString(), parent);
+            return poolManager.GetObject(_type.ToString(), _pos, _rot, parent);
         }
 
         return null;

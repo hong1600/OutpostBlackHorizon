@@ -1155,9 +1155,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb1e9fcb7d2be54bbaa07fbc62c9d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  render: {fileID: 3409939464698945518}
+  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
   sensor: {fileID: 6920602230908102086}
   box: {fileID: 5618747858258874661}
-  firePos: {fileID: 4809583184100695967}
+  fireTrs: {fileID: 4809583184100695967}
   bulletSpeed: 500
 --- !u!54 &-7327055851096263251
 Rigidbody:
@@ -1186,3 +1188,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!137 &3409939464698945518 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700000, guid: fec746e46c2fd354fa0bc92720075dbd, type: 3}
+  m_PrefabInstance: {fileID: 3409939464685245518}
+  m_PrefabAsset: {fileID: 0}

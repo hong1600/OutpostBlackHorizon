@@ -36,14 +36,13 @@ public class Knight : Unit
         yield return new WaitForSeconds(0.85f);
 
         EEffect eEffect = (EEffect)EEffect.KNIGHT;
-        GameObject effect = Shared.objectPoolManager.EffectPool.FindEffect(eEffect);
+        GameObject effect = effectPool.FindEffect(eEffect, enemy.transform.position, Quaternion.identity);
         yield return base.OnDamageEvent(enemy, skillDamage);
-        effect.transform.position = enemy.transform.position;
         skillCouroutine = null;
 
         yield return new WaitForSeconds(0.85f);
 
         isSkill = false;
-        Shared.objectPoolManager.ReturnObject(effect.name, effect);
+        effectPool.ReturnEffect(eEffect, effect);
     }
 }

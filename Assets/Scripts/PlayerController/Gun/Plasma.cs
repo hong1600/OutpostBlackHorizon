@@ -5,52 +5,75 @@ using UnityEngine;
 public class Plasma : MonoBehaviour
 {
     SphereCollider sphere;
+    EffectPool pool;
+
+    HashSet<Collider> targetList = new HashSet<Collider>();
 
     [SerializeField] int plasmaDmg = 5;
     [SerializeField] float duration = 5f;
+    [SerializeField] float dmgInterval = 0.3f;
+    float time = 0;
 
     private void Awake()
     {
         sphere = GetComponent<SphereCollider>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        Invoke("Return", duration);
+        pool = Shared.objectPoolManager.EffectPool;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnEnable()
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        time = 0f;
+        Invoke(nameof(Return), duration);
+        StartCoroutine(StartDmgEvent());
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(StartDmgEvent());
+    }
+
+    private void Update()
+    {
+        time += Time.deltaTime;
+    }
+
+    private void CheckEnemy()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, sphere.radius, LayerMask.GetMask("Enemy"));
+
+        if (hits.Length > 0)
         {
-            StartCoroutine(StartDmg(other));
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].gameObject.CompareTag("Body"))
+                {
+                    GameObject target = hits[i].gameObject;
+                    ITakeDmg iTakeDmg = target.GetComponentInParent<ITakeDmg>();
+
+                    if (iTakeDmg != null)
+                    {
+                        iTakeDmg.TakeDmg(plasmaDmg, false);
+                    }
+                }
+            }
         }
     }
 
-    IEnumerator StartDmg(Collider _target)
+    IEnumerator StartDmgEvent()
     {
-        float time = 0;
-
-        while (time < duration) 
+        while (time < duration)
         {
-            time += Time.deltaTime;
-
-            if (_target != null) 
-            {
-                ITakeDmg iTakeDmg = _target.GetComponent<ITakeDmg>();
-
-                if(iTakeDmg != null) 
-                {
-                    iTakeDmg.TakeDmg(plasmaDmg, false);
-                }
-            }
-
-            yield return new WaitForSeconds(0.3f);
+            CheckEnemy();
+            yield return new WaitForSeconds(dmgInterval);
         }
     }
 
     private void Return()
     {
-        Shared.objectPoolManager.ReturnObject(this.gameObject.name, gameObject);
+        pool.ReturnEffect(EEffect.PLASMA, gameObject);
     }
 }

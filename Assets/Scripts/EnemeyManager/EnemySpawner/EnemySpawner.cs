@@ -8,7 +8,8 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : MonoBehaviour
 {
     Terrain terrain;
-    
+    EnemyPool enemyPool;
+
     event Action onEnemySpawn;
 
     [SerializeField] List<GameObject> enemyList;
@@ -24,6 +25,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
+        enemyPool = Shared.objectPoolManager.EnemyPool;
         enemySpawnDelay = 0;
 
         enemySpawnPos[0] = new Vector3(-3f, 0, 0);
@@ -50,10 +52,6 @@ public class EnemySpawner : MonoBehaviour
 
             for (int i = 0; i < 1; i++)
             {
-                //적 가져오기
-                GameObject obj1 = Shared.objectPoolManager.EnemyPool.FindEnemy(eEnemy1);
-                GameObject obj2 = Shared.objectPoolManager.EnemyPool.FindEnemy(eEnemy2);
-
                 //적 초기위치
                 Vector3 spawnPos1 = enemySpawnPointList[firstSpawnPoint].transform.position + (enemySpawnPos[i]);
                 Vector3 spawnPos2 = enemySpawnPointList[secondSpawnPoint].transform.position + (enemySpawnPos[i]);
@@ -62,9 +60,9 @@ public class EnemySpawner : MonoBehaviour
                 spawnPos1.y = terrain.SampleHeight(spawnPos1);
                 spawnPos2.y = terrain.SampleHeight(spawnPos2);
 
-                //적 실제 스폰위치
-                obj1.transform.position = spawnPos1;
-                obj2.transform.position = spawnPos2;
+                //적 가져오기
+                GameObject obj1 = enemyPool.FindEnemy(eEnemy1, spawnPos1, Quaternion.identity);
+                GameObject obj2 = enemyPool.FindEnemy(eEnemy2, spawnPos2, Quaternion.identity);
 
                 onEnemySpawn?.Invoke();
             }

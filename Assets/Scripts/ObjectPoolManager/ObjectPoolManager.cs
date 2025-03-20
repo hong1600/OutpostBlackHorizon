@@ -19,8 +19,6 @@ public class ObjectPoolManager : MonoBehaviour
     [SerializeField] Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
     [SerializeField] Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
 
-    [SerializeField] Transform bulletTrs;
-
     private void Awake()
     {
         if (Shared.objectPoolManager == null)
@@ -50,7 +48,7 @@ public class ObjectPoolManager : MonoBehaviour
         }
     }
 
-    public GameObject GetObject(string _type, Transform _parent)
+    public GameObject GetObject(string _type, Vector3 _pos, Quaternion _rot, Transform _parent)
     {
         if (poolDic.ContainsKey(_type))
         {
@@ -64,30 +62,19 @@ public class ObjectPoolManager : MonoBehaviour
 
                     if (!obj.activeInHierarchy)
                     {
-                        Bullet bullet = obj.GetComponent<Bullet>();
-                        if (bullet != null)
-                        {
-                            obj.SetActive(false);
-                            obj.transform.position = bulletTrs.transform.position;
-                            obj.transform.rotation = bulletTrs.transform.rotation * Quaternion.Euler(90, 0, 0);
-                        }
-
+                        obj.transform.position = _pos;
+                        obj.transform.rotation = _rot;
                         obj.SetActive(true);
+                        Debug.Log("ÃÑ¾Ë»ý¼º");
                         return obj;
                     }
                 }
             }
+
             GameObject newObj = Instantiate(prefabDic[_type], _parent);
-
-            Bullet newBullet = newObj.GetComponent<Bullet>();
-            if (newBullet != null)
-            {
-                newObj.SetActive(false);
-                newObj.transform.position = bulletTrs.transform.position;
-                newObj.transform.rotation = bulletTrs.transform.rotation * Quaternion.Euler(90, 0, 0);
-            }
-
             newObj.name = prefabDic[_type].name;
+            newObj.transform.position = _pos;
+            newObj.transform.rotation = _rot;
             newObj.SetActive(true);
             return newObj;
         }

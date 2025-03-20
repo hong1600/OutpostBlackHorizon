@@ -23,12 +23,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2285683386842693543}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 14.66, z: 27.99}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 7.2399335, z: 28.430922}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4789211385024503927}
+  m_Father: {fileID: 4789211385024503925}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4789211385024478289
@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 4789211385023176791}
   - component: {fileID: 4789211385022210711}
   - component: {fileID: 3898842352446329862}
+  - component: {fileID: 4941354753234338811}
   m_Layer: 0
   m_Name: MGMain
   m_TagString: Untagged
@@ -273,7 +274,8 @@ Transform:
   m_LocalPosition: {x: 0.00000049274723, y: 7.4200683, z: -0.44090742}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8538757707364766263}
   m_Father: {fileID: 4789211385024503927}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -349,6 +351,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: f16e897509d6fa64bb33fa7e0e5bff68, type: 3}
+--- !u!114 &4941354753234338811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4789211385024478293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa96ea90f893525439711b860c5bc0fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curState: 0
+  defenderID: 0
+  defenderName: 
+  attackDamage: 0
+  attackSpeed: 0
+  attackRange: 0
+  defenderImg: {fileID: 0}
+  fireTrs: {fileID: 8538757707364766263}
+  bulletSpeed: 100
 --- !u!1 &4789211385024478295
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +381,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4789211385024503927}
-  - component: {fileID: -4992348966111582342}
   m_Layer: 0
   m_Name: MachineTurret
   m_TagString: Untagged
@@ -381,28 +403,6 @@ Transform:
   - {fileID: 4789211385024503925}
   - {fileID: 4789211385024503923}
   - {fileID: 4789211385024503921}
-  - {fileID: 8538757707364766263}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4992348966111582342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4789211385024478295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa96ea90f893525439711b860c5bc0fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curState: 0
-  defenderID: 0
-  defenderName: 
-  attackDamage: 0
-  attackSpeed: 0
-  attackRange: 0
-  defenderImg: {fileID: 0}
-  gunLine: {fileID: 3624099617563453064, guid: aeec94ac14e0a0e4ea7b208ba0fb252d, type: 3}
-  fireTrs: {fileID: 8538757707364766263}

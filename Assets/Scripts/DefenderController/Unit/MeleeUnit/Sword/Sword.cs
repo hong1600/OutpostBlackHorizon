@@ -27,12 +27,11 @@ public class Sword : MeleeUnit
             Shared.gameManager.GoldCoin.SetGold(10);
 
             EEffect eEffect = (EEffect)EEffect.SWORD;
-            GameObject effect = Shared.objectPoolManager.EffectPool.FindEffect(eEffect);
-            effect.transform.position = this.gameObject.transform.position;
+            GameObject effect = effectPool.FindEffect(eEffect, gameObject.transform.position, Quaternion.identity);
 
             yield return new WaitForSeconds(0.75f);
 
-            Shared.objectPoolManager.ReturnObject(effect.name, effect.gameObject);
+            effectPool.ReturnEffect(eEffect, effect.gameObject);
         }
     }
 }

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MageEffect : MonoBehaviour
 {
     BoxCollider box;
+    EffectPool pool;
+
     float dmg = 30f;
 
     private void Awake()
@@ -14,6 +15,11 @@ public class MageEffect : MonoBehaviour
     }
 
     private void Start()
+    {
+        pool = Shared.objectPoolManager.EffectPool;
+    }
+
+    private void OnEnable()
     {
         StartCoroutine(StartDamage());
         Invoke("DestroyEffect", 3);
@@ -42,6 +48,6 @@ public class MageEffect : MonoBehaviour
 
     private void DestroyEffect()
     {
-        Shared.objectPoolManager.ReturnObject(this.gameObject.name, this.gameObject);
+        pool.ReturnEffect(EEffect.MAGE, this.gameObject);
     }
 }

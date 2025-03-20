@@ -6,10 +6,9 @@ public class RocketTurret : Defender
 {
     TableTurret.Info info;
 
-    private void Awake()
+    private void Start()
     {
         info = DataManager.instance.TableTurret.GetTurretData(402);
-
         base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.ImgPath, true);
     }
 }

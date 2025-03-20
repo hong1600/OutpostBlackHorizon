@@ -6,7 +6,10 @@ using UnityEngine.UIElements;
 
 public abstract class Defender : MonoBehaviour
 {
+    Enemy enemy;
+
     protected DefenderAI defenderAI;
+    protected BulletPool bulletPool;
     protected EffectPool effectPool;
 
     public EDefenderAI curState;
@@ -44,6 +47,7 @@ public abstract class Defender : MonoBehaviour
         isAttack = false;
         attackCoroutine = null;
 
+        bulletPool = Shared.objectPoolManager.BulletPool;
         effectPool = Shared.objectPoolManager.EffectPool;
     }
 
@@ -64,7 +68,7 @@ public abstract class Defender : MonoBehaviour
 
         foreach (Collider coll in colls)
         {
-            Enemy enemy = coll.GetComponentInParent<Enemy>();
+            enemy = coll.GetComponentInParent<Enemy>();
 
             if (enemy == null || enemy.isDie == true)
                 continue;
@@ -95,8 +99,6 @@ public abstract class Defender : MonoBehaviour
     {
         isAttack = true;
 
-        Enemy enemy = target.GetComponentInParent<Enemy>();
-
         StartCoroutine(OnDamageEvent(enemy, attackDamage));
 
         if (enemy.isDie)
@@ -107,7 +109,7 @@ public abstract class Defender : MonoBehaviour
             Attack();
         }
 
-        yield return new WaitForSeconds(1 / attackSpeed);
+        yield return new WaitForSeconds(1 * attackSpeed);
 
         attackCoroutine = null;
         isAttack = false;
@@ -132,7 +134,11 @@ public abstract class Defender : MonoBehaviour
     {
         if (target != null)
         {
-            Vector3 dir = (target.transform.position - transform.position).normalized;
+            Vector3 enemyVelocity = enemy.GetComponent<Rigidbody>().velocity;
+
+            Vector3 predictionPos = target.transform.position + enemyVelocity * 2f;
+
+            Vector3 dir = (predictionPos - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
 
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);

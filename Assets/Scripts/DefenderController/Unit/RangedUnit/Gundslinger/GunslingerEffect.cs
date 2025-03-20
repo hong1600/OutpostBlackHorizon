@@ -5,11 +5,17 @@ using UnityEngine;
 public class GunslingerEffect : MonoBehaviour
 {
     SphereCollider sphere;
+    EffectPool pool;
 
     [SerializeField] GameObject effect;
     float speed;
     int dmg;
     Transform target;
+
+    private void Awake()
+    {
+        pool = Shared.objectPoolManager.EffectPool;
+    }
 
     public void Init(Transform _target, int _dmg, float _speed)
     {
@@ -44,7 +50,7 @@ public class GunslingerEffect : MonoBehaviour
 
                 yield return new WaitForSeconds(1);
 
-                Shared.objectPoolManager.ReturnObject(this.gameObject.name, this.gameObject);
+                pool.ReturnEffect(EEffect.GUNSLINGER, this.gameObject);
 
                 yield break;
             }

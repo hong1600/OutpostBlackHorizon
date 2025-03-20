@@ -29,9 +29,9 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3571459081854902430}
   - {fileID: 2855399345660245443}
   - {fileID: 2179193440206697043}
-  - {fileID: 3571459081854902430}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,14 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233b1e83b43373d42a8dc0b2cce2bf7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curState: 0
   defenderID: 0
   defenderName: 
   attackDamage: 0
   attackSpeed: 0
   attackRange: 0
   defenderImg: {fileID: 0}
-  target: {fileID: 0}
-  isAttack: 0
 --- !u!1001 &6492058000287900634
 PrefabInstance:
   m_ObjectHideFlags: 0

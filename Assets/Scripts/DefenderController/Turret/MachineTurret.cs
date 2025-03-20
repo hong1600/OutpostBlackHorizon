@@ -6,10 +6,10 @@ public class MachineTurret : Defender
 {
     TableTurret.Info info;
 
-    [SerializeField] GameObject gunLine;
     [SerializeField] Transform fireTrs;
+    [SerializeField] float bulletSpd;
 
-    private void Awake()
+    private void Start()
     {
         info = DataManager.instance.TableTurret.GetTurretData(401);
         base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.ImgPath, true);
@@ -17,11 +17,9 @@ public class MachineTurret : Defender
 
     protected override IEnumerator OnDamageEvent(Enemy _enemy, int _dmg)
     {
-        GameObject effect = effectPool.FindEffect(EEffect.LASER);
-        LaserEffect laserEffect = effect.GetComponent<LaserEffect>();
-        laserEffect.Init(fireTrs, Color.yellow);
-        laserEffect.Fire(target.transform.position);
-
-        return base.OnDamageEvent(_enemy, _dmg);
+        GameObject bulletObj = bulletPool.FindBullet(EBullet.MACHINEBULLET, fireTrs.position, fireTrs.rotation);
+        MachineBullet bullet = bulletObj.GetComponent<MachineBullet>();
+        bullet.Init(null, attackDamage, bulletSpd);
+        yield return null;
     }
 }

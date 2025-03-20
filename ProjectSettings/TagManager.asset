@@ -8,6 +8,7 @@ TagManager:
   - Body
   - UnitField
   - TurretField
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - EnemySensor
   - BluePrint
   - Screenshot
-  - 
+  - Bullet
   - 
   - 
   - 

@@ -9,9 +9,9 @@ public class EnemyPool : ObjectPool<EEnemy>
         Init();
     }
 
-    public GameObject FindEnemy(EEnemy _type)
+    public GameObject FindEnemy(EEnemy _type, Vector3 _pos, Quaternion _rot)
     {
-        return FindObject(_type);
+        return FindObject(_type, _pos, _rot);
     }
 
     public void ReturnEnemy(EEnemy _type, GameObject _obj)

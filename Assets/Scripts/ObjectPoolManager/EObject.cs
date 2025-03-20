@@ -9,9 +9,9 @@ public enum EEffect
     KNIGHT,
     GUNSLINGER,
     MAGE,
-    GUNHIT,
+    GUNSPARK,
     PLASMA,
-    LASER,
+    EXPLOSION
 }
 
 public enum EHpBar
@@ -26,9 +26,13 @@ public enum EEnemy
     ROBOT1,
     ROBOT2
 }
+
 public enum EBullet
 {
-    BULLET,
-    GRENADE
+    PLAYERBULLET,
+    PLAYERGRENADE,
+    MACHINEBULLET,
+    ROCKETGRENADE,
+    LASERBULLET,
+    ROBOT2BULLET,
 }
-

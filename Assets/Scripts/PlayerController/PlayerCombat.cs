@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     BulletPool bulletPool;
+    CameraFpsShake cameraFpsShake;
 
     public event Action onUseBullet;
 
@@ -13,15 +14,18 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] GunMovement gunMovement;
     [SerializeField] internal bool isAttack = false;
     [SerializeField] GameObject muzzleFlash;
+    [SerializeField] Transform fireTrs;
 
-    [SerializeField] float bulletSpeed;
-    [SerializeField] float grenadeSpeed;
+    [SerializeField] float bulletDmg;
+    [SerializeField] float bulletSpd;
+    [SerializeField] float grenadeSpd;
 
     public float cumulativeDmg { get; set; } = 0f;
 
     private void Start()
     {
         bulletPool = Shared.objectPoolManager.BulletPool;
+        cameraFpsShake = Shared.cameraManager.CameraFpsShake;
     }
 
     private void Update()
@@ -44,11 +48,11 @@ public class PlayerCombat : MonoBehaviour
         gunManager.UseBullet();
         muzzleFlash.SetActive(true);
         gunMovement.RecoilGun();
-        GameObject obj = bulletPool.FindBullet(EBullet.BULLET);
-        Bullet bullet = obj.GetComponent<Bullet>();
-        bullet.InitBullet(null, 30, bulletSpeed, EBullet.BULLET);
+        GameObject obj = bulletPool.FindBullet(EBullet.PLAYERBULLET, fireTrs.position, fireTrs.rotation);
+        PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
+        bullet.Init(null, bulletDmg, bulletSpd);
 
-        Shared.cameraManager.CameraFpsShake.Shake();
+        cameraFpsShake.Shake();
         onUseBullet?.Invoke();
 
         yield return new WaitForSeconds(0.1f);
@@ -64,11 +68,11 @@ public class PlayerCombat : MonoBehaviour
         gunManager.UseGrenade();
         muzzleFlash.SetActive(true);
         gunMovement.RecoilGun();
-        GameObject obj = bulletPool.FindBullet(EBullet.GRENADE);
-        Bullet bullet = obj.GetComponent<Bullet>();
-        bullet.InitBullet(null, 100, grenadeSpeed, EBullet.GRENADE);
+        GameObject obj = bulletPool.FindBullet(EBullet.PLAYERGRENADE, fireTrs.position, fireTrs.rotation);
+        PlayerGrenade bullet = obj.GetComponent<PlayerGrenade>();
+        bullet.Init(null, 100, grenadeSpd);
 
-        Shared.cameraManager.CameraFpsShake.Shake();
+        cameraFpsShake.Shake();
         onUseBullet?.Invoke();
 
         yield return new WaitForSeconds(0.1f);

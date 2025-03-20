@@ -5,21 +5,22 @@ using UnityEngine;
 
 public class Robot2 : NormalEnemy
 {
-    [SerializeField] Transform firePos;
+    [SerializeField] Transform fireTrs;
     [SerializeField] float bulletSpeed = 500f;
 
-    private void Start()
+    protected override void Awake()
     {
-        base.InitEnemyData(DataManager.instance.TableEnemy.Get(202));
+        base.Awake();
+        base.InitEnemyData(DataManager.instance.TableEnemy.Get(202), EEnemy.ROBOT2);
     }
 
     protected override IEnumerator StartAttack()
     {
         isAttack = true;
 
-        GameObject bulletObj = bulletPool.FindBullet(EBullet.BULLET);
+        GameObject bulletObj = bulletPool.FindBullet(EBullet.ROBOT2BULLET, fireTrs.position, fireTrs.rotation);
         Bullet bullet = bulletObj.GetComponent<Bullet>();
-        bullet.InitBullet(myTarget, attackDmg, bulletSpeed, EBullet.BULLET);
+        bullet.Init(myTarget, attackDmg, bulletSpeed);
 
         yield return new WaitForSeconds(1f);
 

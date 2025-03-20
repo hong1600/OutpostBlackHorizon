@@ -8,6 +8,8 @@ public class EnemyAI
 
     public EEnemyAI aiState = EEnemyAI.CREATE;
 
+    public bool isDie;
+
     public void Init(Enemy _enemy)
     {
         enemy = _enemy;
@@ -100,9 +102,10 @@ public class EnemyAI
 
     public virtual void Die()
     {
-        if(enemy.isDie) 
+        if(enemy.isDie && isDie == false) 
         {
             enemy.Die();
+            isDie = true;
         }
         else
         {

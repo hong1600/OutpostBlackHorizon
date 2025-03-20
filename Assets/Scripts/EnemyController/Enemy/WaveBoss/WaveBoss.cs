@@ -10,7 +10,7 @@ public abstract class WaveBoss : Enemy
     [SerializeField] float waveBossDelay;
     [SerializeField] TextMeshProUGUI waveBossText;
 
-    private void Awake()
+    protected override void Awake()
     {
         waveBossDelay = 25f;
     }

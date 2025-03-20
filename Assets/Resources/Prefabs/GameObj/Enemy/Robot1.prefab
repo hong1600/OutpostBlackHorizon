@@ -1507,6 +1507,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc5b0311519cf4429e0000e5e04b2ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  render: {fileID: 137276531836346760}
+  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
   sensor: {fileID: 8755128622380913693}
   box: {fileID: 401580923112423202}
 --- !u!95 &95259621755087314

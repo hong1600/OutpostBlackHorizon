@@ -8,7 +8,7 @@ public class Boss : Enemy
     [SerializeField] TextMeshProUGUI bossTimeText;
     [SerializeField] float bossTime;
 
-    private void Awake()
+    protected override void Awake()
     {
         bossTime = 60f;
     }

@@ -11,7 +11,6 @@ public class CustomMouse : MonoBehaviour
 
     [SerializeField] Image customCursor;
     [SerializeField] float mouseSpeed;
-    [SerializeField] LayerMask objLayer;
 
     Vector2 mousePos;
 
@@ -131,6 +130,8 @@ public class CustomMouse : MonoBehaviour
         {
             RaycastResult result = resultList[i];
 
+            if (result.gameObject.name.Contains("Caret")) continue;
+
             if (result.distance < minDistance)
             {
                 minDistance = result.distance;
@@ -158,6 +159,7 @@ public class CustomMouse : MonoBehaviour
         if (lastEventObj != null)
         {
             ExecuteEvents.Execute(lastEventObj, eventData, ExecuteEvents.pointerClickHandler);
+            Debug.Log(lastEventObj);
         }
     }
 

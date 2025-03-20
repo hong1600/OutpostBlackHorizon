@@ -2,9 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public abstract class Enemy : MonoBehaviour, ITakeDmg
@@ -12,20 +10,29 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     public event Action onTakeDamage;
 
     EEnemyAI aiState;
+    EEnemy eEnemy;
+
+    Rigidbody rigid;
+    Animator anim;
+    [SerializeField] Renderer render;
+    [SerializeField] Material hitMat;
+    Material originMat;
 
     EnemyAI enemyAI;
     EnemyHpBar enemyHpBar;
+    EnemyPool enemyPool;
     HpBarPool hpBarPool;
+    EffectPool effectPool;
+    Rewarder rewarder;
+
+    [SerializeField] SphereCollider sensor;
+    [SerializeField] BoxCollider box;
+
     protected EnemySpawner enemySpawner;
     protected GoldCoin goldCoin;
     protected Round round;
     protected SpawnTimer spawnTimer;
     protected BulletPool bulletPool;
-
-    Rigidbody rigid;
-    [SerializeField] SphereCollider sensor;
-    [SerializeField] BoxCollider box;
-    Animator anim;
 
 
     public string enemyName { get; private set; }
@@ -35,10 +42,6 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     public float rotationSpeed { get; private set; }
     public float attackRange { get; private set; }
     public int attackDmg { get; private set; }
-
-    GameObject hitAim;
-    Image hitAimImg;
-    Coroutine hitAimCoroutine;
 
     protected Transform[] targetPoints;
     protected Transform myTarget;
@@ -51,17 +54,17 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     protected Coroutine attackCoroutine;
 
-
-    private void Awake()
+    protected virtual void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        anim = this.GetComponent<Animator>();
+        anim = GetComponent<Animator>();
+        originMat = render.material;
 
         enemyAI = new EnemyAI();
         enemyAI.Init(this);
     }
 
-    public void InitEnemyData(TableEnemy.Info _enemyData)
+    public void InitEnemyData(TableEnemy.Info _enemyData, EEnemy _eEnemy)
     {
         enemySpawner = Shared.enemyManager.EnemySpawner;
         goldCoin = Shared.gameManager.GoldCoin;
@@ -69,6 +72,11 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         spawnTimer = Shared.gameManager.SpawnTimer;
         bulletPool = Shared.objectPoolManager.BulletPool;
         hpBarPool = Shared.objectPoolManager.HpBarPool;
+        enemyPool = Shared.objectPoolManager.EnemyPool;
+        effectPool = Shared.objectPoolManager.EffectPool;
+        rewarder = Shared.gameManager.Rewarder;
+
+        eEnemy = _eEnemy;
 
         enemyName = _enemyData.Name;
         enemyHp = _enemyData.MaxHp;
@@ -81,16 +89,15 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         targetPoints = enemySpawner.GetTargetPoint();
         int rand = Random.Range(0, targetPoints.Length);
         myTarget = targetPoints[rand];
-
-        hitAim = Shared.gameUI.HitAim;
-        hitAimImg = hitAim.GetComponent<Image>();
     }
 
     private void OnEnable()
     {
         curhp = enemyHp;
+        enemyAI.isDie = false;
 
-        GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL);
+        GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, 
+            gameObject.transform.position + new Vector3(0,1,0), Quaternion.identity);
         enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
         enemyHpBar.Init(this);
 
@@ -102,6 +109,8 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     private void Update()
     {
+        if (enemyAI == null) return;
+
         aiState = enemyAI.aiState;
 
         if (enemyAI != null)
@@ -110,6 +119,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
             ChangeAnim(enemyAI.aiState);
         }
     }
+
     protected internal void Move()
     {
         targetPointDir = (myTarget.transform.position - transform.position).normalized;
@@ -192,11 +202,8 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     public void TakeDmg(float _dmg, bool _isHead)
     {
         curhp -= _dmg;
-
-        hitAimImg.color = _isHead ? Color.red : Color.white;
-        hitAim.SetActive(true);
-        Invoke(nameof(HideHitAim), 0.3f);
-
+        render.material = hitMat;
+        Invoke(nameof(UpdateMat), 0.2f);
         onTakeDamage?.Invoke();
 
         if (curhp <= 0)
@@ -205,9 +212,9 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         }
     }
 
-    private void HideHitAim()
+    private void UpdateMat()
     {
-        hitAim.SetActive(false);
+        render.material = originMat;
     }
 
     protected internal void StayEnemy(float _time)
@@ -232,15 +239,18 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     IEnumerator StartDie()
     {
-        Shared.gameManager.Rewarder.SetReward(EReward.GOLD, 50);
-        Shared.gameManager.Rewarder.SetReward(EReward.GEM, 10);
-        Shared.gameManager.Rewarder.SetReward(EReward.PAPER, 20);
-        Shared.gameManager.Rewarder.SetReward(EReward.EXP, 1);
+        GameObject explosionObj = effectPool.FindEffect(EEffect.EXPLOSION, transform.position, Quaternion.identity);
+
+        rewarder.SetReward(EReward.GOLD, 50);
+        rewarder.SetReward(EReward.GEM, 10);
+        rewarder.SetReward(EReward.PAPER, 20);
+        rewarder.SetReward(EReward.EXP, 1);
 
         yield return new WaitForSeconds(1f);
 
-        Shared.objectPoolManager.ReturnObject(enemyHpBar.gameObject.name, enemyHpBar.gameObject);
-        Shared.objectPoolManager.ReturnObject(this.gameObject.name, this.gameObject);
+        effectPool.ReturnEffect(EEffect.EXPLOSION, explosionObj);
+        hpBarPool.ReturnHpBar(EHpBar.NORMAL, enemyHpBar.gameObject);
+        enemyPool.ReturnEnemy(eEnemy, this.gameObject);
     }
 
     protected void ChangeAnim(EEnemyAI _curState)

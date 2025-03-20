@@ -9,9 +9,9 @@ public class BulletPool : ObjectPool<EBullet>
         Init();
     }
 
-    public GameObject FindBullet(EBullet _type)
+    public GameObject FindBullet(EBullet _type, Vector3 _pos, Quaternion _rot)
     {
-        return FindObject(_type);
+        return FindObject(_type, _pos, _rot);
     }
 
     public void ReturnBullet(EBullet _type, GameObject _obj)
