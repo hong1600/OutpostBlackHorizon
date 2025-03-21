@@ -14,9 +14,12 @@ public class PlayerBullet : Bullet
 
     protected override IEnumerator StartHitBullet(Vector3 _hitPos, Collider _hitObj)
     {
-        hitAimImg.color = isHead ? Color.red : Color.white;
-        hitAim.SetActive(true);
-        hitAim.transform.DOScale(2f, 0.1f).OnKill(HideAim);
+        if (_hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            hitAimImg.color = isHead ? Color.red : Color.white;
+            hitAim.SetActive(true);
+            hitAim.transform.DOScale(2f, 0.1f).OnKill(HideAim);
+        }
 
         return base.StartHitBullet(_hitPos, _hitObj);
     }

@@ -6,7 +6,7 @@ public class MachineTurret : Defender
 {
     TableTurret.Info info;
 
-    [SerializeField] Transform fireTrs;
+    [SerializeField] Transform[] fireTrs;
     [SerializeField] float bulletSpd;
 
     private void Start()
@@ -17,9 +17,14 @@ public class MachineTurret : Defender
 
     protected override IEnumerator OnDamageEvent(Enemy _enemy, int _dmg)
     {
-        GameObject bulletObj = bulletPool.FindBullet(EBullet.MACHINEBULLET, fireTrs.position, fireTrs.rotation);
-        MachineBullet bullet = bulletObj.GetComponent<MachineBullet>();
-        bullet.Init(null, attackDamage, bulletSpd);
+        for (int i = 0; i < fireTrs.Length; i++)
+        {
+            GameObject bulletObj = bulletPool.FindBullet(EBullet.MACHINEBULLET, fireTrs[i].position, fireTrs[i].rotation);
+            MachineBullet bullet = bulletObj.GetComponent<MachineBullet>();
+            bullet.Init(null, attackDamage, bulletSpd);
+
+            yield return new WaitForSeconds(0.1f);
+        }
         yield return null;
     }
 }

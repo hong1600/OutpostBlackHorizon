@@ -357,7 +357,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 299fe182083b2cd4f8a345589cdc3ef5, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 299fe182083b2cd4f8a345589cdc3ef5, type: 3}
       propertyPath: m_LocalScale.x
@@ -1872,9 +1872,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 299fe182083b2cd4f8a345589cdc3ef5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1548209038692609687}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 299fe182083b2cd4f8a345589cdc3ef5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 650115268245059044}
   m_SourcePrefab: {fileID: 100100000, guid: 299fe182083b2cd4f8a345589cdc3ef5, type: 3}
 --- !u!1 &228957423270188141 stripped
 GameObject:
@@ -1893,9 +1890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f506507a212c0409f39d6b45e87def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovement: {fileID: 5483608167955504675}
-  playerCombat: {fileID: 6027729548193102565}
-  playerStat: {fileID: 0}
 --- !u!114 &5483608167955504675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1908,9 +1902,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559c777c1cdcb5c4e97b9fd91f426648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStat: {fileID: 0}
   walkSpeed: 5
   runSpeed: 10
+  walkInterval: 0.5
+  runInterval: 0.4
   jumpForce: 20
   jumpCount: 0
   gravity: -9.81
@@ -1932,12 +1927,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f0f6748550490648800682b91b67679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunManager: {fileID: 0}
   gunMovement: {fileID: 6705250870356823188}
   isAttack: 0
-  fireTrs: {fileID: 3945635598419898538}
   muzzleFlash: {fileID: 5133192477321511211}
-  rifleSpeed: 150
-  grenadeSpeed: 10
+  fireTrs: {fileID: 3945635598419898538}
+  bulletDmg: 0
+  bulletSpd: 0
+  grenadeSpd: 0
 --- !u!114 &5567202133803379884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2000,22 +1997,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &650115268245059044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228957423270188141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RigLayers:
-  - m_Rig: {fileID: 194136408824625727}
-    m_Active: 1
-  m_Effectors: []
 --- !u!4 &605377068985028311 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 299fe182083b2cd4f8a345589cdc3ef5, type: 3}
@@ -2138,9 +2119,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1296605364670726625, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5069071927968456716}
-    - targetCorrespondingSourceObject: {fileID: 1296605364670726625, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6705250870356823188}
   m_SourcePrefab: {fileID: 100100000, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
 --- !u!1 &49210259921248928 stripped
@@ -2148,18 +2126,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1296605364670726625, guid: 9bac10e691f2b134e8a762aac4cb9231, type: 3}
   m_PrefabInstance: {fileID: 1247677201453261633}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5069071927968456716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49210259921248928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48948dfe9d76b07488dacd46a7955fa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6705250870356823188
 MonoBehaviour:
   m_ObjectHideFlags: 0

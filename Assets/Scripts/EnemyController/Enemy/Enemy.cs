@@ -239,7 +239,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     IEnumerator StartDie()
     {
-        GameObject explosionObj = effectPool.FindEffect(EEffect.EXPLOSION, transform.position, Quaternion.identity);
+        GameObject explosionObj = effectPool.FindEffect(EEffect.ENEMYEXPLOSION, box.bounds.center, Quaternion.identity);
 
         rewarder.SetReward(EReward.GOLD, 50);
         rewarder.SetReward(EReward.GEM, 10);
@@ -248,7 +248,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
         yield return new WaitForSeconds(1f);
 
-        effectPool.ReturnEffect(EEffect.EXPLOSION, explosionObj);
+        effectPool.ReturnEffect(EEffect.ENEMYEXPLOSION, explosionObj);
         hpBarPool.ReturnHpBar(EHpBar.NORMAL, enemyHpBar.gameObject);
         enemyPool.ReturnEnemy(eEnemy, this.gameObject);
     }

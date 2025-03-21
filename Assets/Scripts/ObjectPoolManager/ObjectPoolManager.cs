@@ -65,7 +65,6 @@ public class ObjectPoolManager : MonoBehaviour
                         obj.transform.position = _pos;
                         obj.transform.rotation = _rot;
                         obj.SetActive(true);
-                        Debug.Log("ÃÑ¾Ë»ý¼º");
                         return obj;
                     }
                 }

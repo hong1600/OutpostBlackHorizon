@@ -102,7 +102,6 @@ public class CameraTopToFps : MonoBehaviour
         {
             rifle.transform.SetParent(mainCam.transform, true);
             rifle.transform.localPosition = new Vector3(0.07f, -0.27f, 0.29f);
-            rifle.transform.localRotation = Quaternion.Euler(180, 0, 180);
             rifle.GetComponent<GunMovement>().InitPos();
             fpsMove.SetActive(true);
             fpsShake.SetActive(true);

@@ -6,13 +6,12 @@ using UnityEngine.UIElements;
 
 public abstract class Defender : MonoBehaviour
 {
-    Enemy enemy;
+    EDefenderAI curState;
 
+    protected Enemy enemy;
     protected DefenderAI defenderAI;
     protected BulletPool bulletPool;
     protected EffectPool effectPool;
-
-    public EDefenderAI curState;
 
     public int defenderID;
     public string defenderName;
@@ -20,12 +19,13 @@ public abstract class Defender : MonoBehaviour
     public float attackSpeed;
     public float attackRange;
     public Sprite defenderImg;
-
-    public GameObject target { get; private set; }
-
     protected float rotationSpeed;
     protected bool isAttack;
     protected Coroutine attackCoroutine;
+
+    public GameObject target { get; private set; }
+    protected Collider[] targetColls;
+    protected float targetHeight;
 
     protected virtual void Init(int _id, string _name, int _dmg, 
         float _spd, float _range, string _imgPath, bool _isAI)
@@ -63,6 +63,7 @@ public abstract class Defender : MonoBehaviour
              LayerMask.GetMask("Enemy"));
 
         target = null;
+        targetColls = null;
 
         float minDistance = Mathf.Infinity;
 
@@ -99,7 +100,7 @@ public abstract class Defender : MonoBehaviour
     {
         isAttack = true;
 
-        StartCoroutine(OnDamageEvent(enemy, attackDamage));
+        yield return StartCoroutine(OnDamageEvent(enemy, attackDamage));
 
         if (enemy.isDie)
         {
@@ -130,17 +131,31 @@ public abstract class Defender : MonoBehaviour
         yield return null;
     }
 
-    protected internal void LookEnemy()
+    protected internal virtual void LookTarget()
     {
         if (target != null)
         {
-            Vector3 enemyVelocity = enemy.GetComponent<Rigidbody>().velocity;
+            if (targetColls == null)
+            {
+                targetColls = target.GetComponentsInChildren<Collider>();
 
-            Vector3 predictionPos = target.transform.position + enemyVelocity * 2f;
+                for (int i = 0; i < targetColls.Length; i++)
+                {
+                    if (targetColls[i].gameObject.CompareTag("Body"))
+                    {
+                        targetHeight = targetColls[i].bounds.center.y;
+                        break;
+                    }
+                }
+            }
+
+            Vector3 targetVelocity = enemy.GetComponent<Rigidbody>().velocity;
+
+            Vector3 predictionPos = new Vector3
+                (target.transform.position.x, targetHeight, target.transform.position.z) + targetVelocity * 2f;
 
             Vector3 dir = (predictionPos - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
-
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
     }

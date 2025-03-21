@@ -27,12 +27,3 @@ public enum EUnitGrade
     S,
     SS
 }
-
-public enum EUnitName
-{
-    SWORDMAN = 101,
-    SHIELDMAN = 102,
-    KNIGHT = 103,
-    GUNSLINGER = 104,
-    MAGE = 105,
-}

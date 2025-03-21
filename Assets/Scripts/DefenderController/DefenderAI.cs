@@ -60,13 +60,13 @@ public class DefenderAI
         }
 
         defender.Attack();
-        defender.LookEnemy();
+        defender.LookTarget();
     }
 
     public virtual void Skill()
     {
         defender.Attack();
-        defender.LookEnemy();
+        defender.LookTarget();
     }
 
     public virtual void Reset()

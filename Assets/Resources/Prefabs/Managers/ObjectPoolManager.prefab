@@ -451,6 +451,37 @@ Transform:
   m_Father: {fileID: 7672675419605550537}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5108280706626180596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6081148205308655725}
+  m_Layer: 0
+  m_Name: RocketExplosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6081148205308655725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108280706626180596}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7672675419605550537}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5277515982482754885
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +581,7 @@ Transform:
   - {fileID: 1491634102913715474}
   - {fileID: 7204975858367596865}
   - {fileID: 1760600540159869067}
+  - {fileID: 6081148205308655725}
   m_Father: {fileID: 2548385118938775885}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -573,7 +605,8 @@ MonoBehaviour:
   - {fileID: 6108195706035121270, guid: 6f692cd2d2d5eb84ab790976eccc0bae, type: 3}
   - {fileID: 1000011945391522, guid: 78b71003e8b357d4bbf89c8b5e5e4f0e, type: 3}
   - {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9, type: 3}
-  - {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
+  - {fileID: 1000011797152326, guid: 68a6ce37667dad345a8b403e08f4678e, type: 3}
+  - {fileID: 1000011797152326, guid: 784c95c222a1df94d96d47fd270190d1, type: 3}
   parentList:
   - {fileID: 1323026624750079068}
   - {fileID: 8383525631141396778}
@@ -583,6 +616,7 @@ MonoBehaviour:
   - {fileID: 1491634102913715474}
   - {fileID: 7204975858367596865}
   - {fileID: 1760600540159869067}
+  - {fileID: 6081148205308655725}
 --- !u!1 &6333296405989404459
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,7 +627,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1760600540159869067}
   m_Layer: 0
-  m_Name: Explosion
+  m_Name: EnemyExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -698,9 +732,17 @@ MonoBehaviour:
   objectList:
   - {fileID: 8585542772986347399, guid: f1c24dc36b65de24ab16093f518a7397, type: 3}
   - {fileID: 5919220286410709334, guid: 487dbb68ef818f247a229a25fa68bcac, type: 3}
+  - {fileID: 8585542772986347399, guid: ed584a3a263a70f45a8b773d04e236f2, type: 3}
+  - {fileID: 5919220286410709334, guid: e533f57d82b2e914d92b6707d7ce13f1, type: 3}
+  - {fileID: 8585542772986347399, guid: 522b4b7f4ffb9c64a9bb9e157deced05, type: 3}
+  - {fileID: 8585542772986347399, guid: d01e84db012c8254cb1017528c1c2b9e, type: 3}
   parentList:
-  - {fileID: 7706449401180681986}
+  - {fileID: 6947296450054780848}
   - {fileID: 8323507301724532191}
+  - {fileID: 2990449693441139153}
+  - {fileID: 8586308254039745600}
+  - {fileID: 5919845444949062936}
+  - {fileID: 7706449401180681986}
 --- !u!1 &6787059791617698517
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,7 +894,7 @@ Transform:
   - {fileID: 8620563964629511826}
   - {fileID: 6958266394992732561}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6578691636034576417
 MonoBehaviour:

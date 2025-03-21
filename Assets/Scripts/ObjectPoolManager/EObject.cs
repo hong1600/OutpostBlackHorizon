@@ -11,7 +11,8 @@ public enum EEffect
     MAGE,
     GUNSPARK,
     PLASMA,
-    EXPLOSION
+    ENEMYEXPLOSION,
+    ROCKETEXPLOSION,
 }
 
 public enum EHpBar
@@ -32,7 +33,7 @@ public enum EBullet
     PLAYERBULLET,
     PLAYERGRENADE,
     MACHINEBULLET,
-    ROCKETGRENADE,
+    ROCKETMISSILE,
     LASERBULLET,
     ROBOT2BULLET,
 }

@@ -7,7 +7,7 @@ public class LaserTurret : Defender
     TableTurret.Info info;
 
     [SerializeField] float bulletSpd;
-    [SerializeField] Transform fireTrs;
+    [SerializeField] Transform[] fireTrs;
 
     private void Start()
     {
@@ -17,9 +17,15 @@ public class LaserTurret : Defender
 
     protected override IEnumerator OnDamageEvent(Enemy _enemy, int _dmg)
     {
-        GameObject bulletObj = bulletPool.FindBullet(EBullet.LASERBULLET, fireTrs.position, fireTrs.rotation);
-        LaserBullet bullet = bulletObj.GetComponent<LaserBullet>();
-        bullet.Init(null, attackDamage, bulletSpd);
+        for (int i = 0; i < fireTrs.Length; i++)
+        {
+            GameObject bulletObj = bulletPool.FindBullet
+                (EBullet.LASERBULLET, fireTrs[i].position, fireTrs[i].rotation);
+            LaserBullet bullet = bulletObj.GetComponent<LaserBullet>();
+            bullet.Init(null, attackDamage, bulletSpd);
+
+            yield return new WaitForSeconds(0.2f);
+        }
 
         yield return null;
     }
