@@ -1,5 +1,5 @@
 ﻿ID,NameKey,Speed,MaxHp,HpBarPrefab,AttackRange,AttackDmg,Desc
-201,enemy_201_name,3,100,Prefabs/GamePlay/Monster/EnemyHpBar,1,5,enemy_201_desc
-202,enemy_202_name,2,200,Prefabs/GamePlay/Monster/EnemyHpBar,5,3,enemy_202_desc
-203,enemy_203_name,1,1000,Prefabs/GamePlay/Monster/EnemyHpBar,1,10,enemy_203_desc
-204,enemy_204_name,0,10000,Prefabs/GamePlay/Monster/EnemyHpBar,100,10,enemy_204_desc
+201,enemy_201_name,3,150,Prefabs/GamePlay/Monster/EnemyHpBar,2,5,enemy_201_desc
+202,enemy_202_name,2,300,Prefabs/GamePlay/Monster/EnemyHpBar,5,5,enemy_202_desc
+203,enemy_203_name,3,100,Prefabs/GamePlay/Monster/EnemyHpBar,2,5,enemy_203_desc
+204,enemy_204_name,2,200,Prefabs/GamePlay/Monster/EnemyHpBar,2,5,enemy_204_desc

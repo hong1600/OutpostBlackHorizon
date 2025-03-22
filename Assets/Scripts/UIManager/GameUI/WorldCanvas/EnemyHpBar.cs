@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyHpBar : MonoBehaviour
 {
-    [SerializeField] Enemy enemy;
+    Enemy enemy;
 
     [SerializeField] GameObject hpBack;
     [SerializeField] Image hpValue;
@@ -13,16 +13,18 @@ public class EnemyHpBar : MonoBehaviour
     [SerializeField] Image smoothHpValue;
     [SerializeField] float smoothSpeed = 0.5f;
 
-    [SerializeField] Vector3 offset = new Vector3(0f, 1f, 0f);
+    SkinnedMeshRenderer skinRender;
+    Vector3 hpBarPos;
 
     private void OnDisable()
     {
         enemy.onTakeDamage -= UpdateHpBar;
     }
 
-    public void Init(Enemy _enemy)
+    public void Init(Enemy _enemy, SkinnedMeshRenderer _skin)
     {
         enemy = _enemy;
+        skinRender = _skin;
 
         enemy.onTakeDamage += UpdateHpBar;
         hpValue.fillAmount = 1;
@@ -31,7 +33,8 @@ public class EnemyHpBar : MonoBehaviour
 
     private void Update()
     {
-        this.gameObject.transform.position = enemy.transform.position + offset;
+        this.gameObject.transform.position = 
+            skinRender.bounds.center + new Vector3(0, skinRender.bounds.extents.y + 0.5f, 0);
 
         this.gameObject.transform.LookAt(Camera.main.transform);
     }

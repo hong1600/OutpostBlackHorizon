@@ -10,11 +10,6 @@ public abstract class WaveBoss : Enemy
     [SerializeField] float waveBossDelay;
     [SerializeField] TextMeshProUGUI waveBossText;
 
-    protected override void Awake()
-    {
-        waveBossDelay = 25f;
-    }
-
     private void Start()
     {
         waveBossSpawner = Shared.enemyManager.WaveBossSpawner;

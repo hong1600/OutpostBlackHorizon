@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class Robot2 : NormalEnemy
 {
+    TableEnemy.Info info;
+
     [SerializeField] Transform fireTrs;
     [SerializeField] float bulletSpeed = 500f;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-        base.InitEnemyData(DataManager.instance.TableEnemy.Get(202), EEnemy.ROBOT2);
+        info = DataManager.instance.TableEnemy.Get(202);
+
+        base.InitEnemyData(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, EEnemy.ROBOT2);
     }
 
     protected override IEnumerator StartAttack()

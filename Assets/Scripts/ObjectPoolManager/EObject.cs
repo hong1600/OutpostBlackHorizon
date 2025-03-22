@@ -25,7 +25,9 @@ public enum EHpBar
 public enum EEnemy
 {
     ROBOT1,
-    ROBOT2
+    ROBOT2,
+    ROBOT3,
+    ROBOT4
 }
 
 public enum EBullet

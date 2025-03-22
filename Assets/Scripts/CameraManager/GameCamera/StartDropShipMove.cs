@@ -8,8 +8,8 @@ using UnityEngine;
 public class StartDropShipMove : MonoBehaviour
 {
     Camera mainCam;
-    Cinemachine.CinemachineVirtualCamera virtualCam;
-    Cinemachine.CinemachineTransposer virtualTransposer;
+    //Cinemachine.CinemachineVirtualCamera virtualCam;
+    //Cinemachine.CinemachineTransposer virtualTransposer;
 
     [Header("Movement Settings")]
     [SerializeField] Transform pos1;
@@ -41,8 +41,8 @@ public class StartDropShipMove : MonoBehaviour
     private void Awake()
     {
         mainCam = Camera.main;
-        virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
-        virtualTransposer = virtualCam.GetCinemachineComponent<CinemachineTransposer>();
+        //virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
+        //virtualTransposer = virtualCam.GetCinemachineComponent<CinemachineTransposer>();
     }
 
     private void Start()
@@ -65,7 +65,7 @@ public class StartDropShipMove : MonoBehaviour
         camMng.SetActive(false);
         HUDCanvas.SetActive(false);
         TextPanel.SetActive(true);
-        virtualTransposer.m_FollowOffset = dropShipCamPos;
+        //virtualTransposer.m_FollowOffset = dropShipCamPos;
     }
 
     IEnumerator StartMove()
@@ -97,21 +97,21 @@ public class StartDropShipMove : MonoBehaviour
 
         if (Vector3.Distance(transform.position, pos2.position) <= 0.1f)
         {
-            virtualCam.Follow = null;
-            virtualCam.LookAt = null;
+            //virtualCam.Follow = null;
+            //virtualCam.LookAt = null;
 
-            Vector3[] path = new Vector3[]
-            {
-            virtualCam.transform.position,
-            ((virtualCam.transform.localPosition + hatchCamTrs.localPosition) * 0.5f) + Vector3.back * 20,
-            hatchCamTrs.position
-            };
+            //Vector3[] path = new Vector3[]
+            //{
+            //virtualCam.transform.position,
+            //((virtualCam.transform.localPosition + hatchCamTrs.localPosition) * 0.5f) + Vector3.back * 20,
+            //hatchCamTrs.position
+            //};
 
 
-            virtualCam.transform.DOPath
-                (path, 3f, PathType.CatmullRom).SetEase(Ease.InOutSine);
-            virtualCam.transform.DORotateQuaternion
-                (hatchCamTrs.rotation, 3f).SetEase(Ease.InOutSine);
+            //virtualCam.transform.DOPath
+            //    (path, 3f, PathType.CatmullRom).SetEase(Ease.InOutSine);
+            //virtualCam.transform.DORotateQuaternion
+            //    (hatchCamTrs.rotation, 3f).SetEase(Ease.InOutSine);
 
             yield return new WaitForSeconds(3);
 
@@ -135,17 +135,17 @@ public class StartDropShipMove : MonoBehaviour
 
     IEnumerator StartClosePlayer()
     {
-        Vector3[] path = new Vector3[]
-        {
-            virtualCam.transform.position,
-            (virtualCam.transform.position + playerCamTrs.position) * 0.5f + Vector3.left * 3,
-            playerCamTrs.position
-        };
-
-        virtualCam.transform.DOPath(path, 3f, PathType.CatmullRom)
-            .SetEase(Ease.InOutSine);
-        virtualCam.transform.DORotateQuaternion
-            (playerCamTrs.rotation, 3f).SetEase(Ease.InOutSine);
+        //Vector3[] path = new Vector3[]
+        //{
+        //    virtualCam.transform.position,
+        //    (virtualCam.transform.position + playerCamTrs.position) * 0.5f + Vector3.left * 3,
+        //    playerCamTrs.position
+        //};
+        //
+        //virtualCam.transform.DOPath(path, 3f, PathType.CatmullRom)
+        //    .SetEase(Ease.InOutSine);
+        //virtualCam.transform.DORotateQuaternion
+        //    (playerCamTrs.rotation, 3f).SetEase(Ease.InOutSine);
 
         yield return new WaitForSeconds(3);
 
@@ -155,7 +155,7 @@ public class StartDropShipMove : MonoBehaviour
     IEnumerator StartChangePlayer()
     {
         AudioManager.instance.PlayBgm(EBgm.DESERT);
-        virtualCam.enabled = false;
+        //virtualCam.enabled = false;
         camMng.SetActive(true);
 
         yield return new WaitForSeconds(1.5f);

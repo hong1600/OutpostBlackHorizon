@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Robot1 : NormalEnemy
 {
-    protected override void Awake()
+    TableEnemy.Info info;
+
+    private void Awake()
     {
-        base.Awake();
-        base.InitEnemyData(DataManager.instance.TableEnemy.Get(201), EEnemy.ROBOT1);
+        info = DataManager.instance.TableEnemy.Get(201);
+
+        base.InitEnemyData(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, EEnemy.ROBOT1);
     }
 
     protected override IEnumerator StartAttack()

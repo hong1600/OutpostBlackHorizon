@@ -27,6 +27,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     [SerializeField] SphereCollider sensor;
     [SerializeField] BoxCollider box;
+    SkinnedMeshRenderer skinRender;
 
     protected EnemySpawner enemySpawner;
     protected GoldCoin goldCoin;
@@ -34,18 +35,18 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     protected SpawnTimer spawnTimer;
     protected BulletPool bulletPool;
 
-
     public string enemyName { get; private set; }
     public float enemyHp { get; private set; }
     public float curhp { get; private set; }
     public float enemySpeed { get; private set; }
     public float rotationSpeed { get; private set; }
     public float attackRange { get; private set; }
-    public int attackDmg { get; private set; }
+    public float attackDmg { get; private set; }
 
     protected Transform[] targetPoints;
     protected Transform myTarget;
     protected Vector3 targetPointDir;
+    Vector3 hpBarPos;
 
     internal bool isDie { get; private set; }
     internal bool isStay { get; private set; }
@@ -54,18 +55,17 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     protected Coroutine attackCoroutine;
 
-    protected virtual void Awake()
+    protected virtual void InitEnemyData(string _name, float _maxHp, float _spd,
+        float _range, float _dmg, EEnemy _eEnemy)
     {
+        enemyAI = new EnemyAI();
+        enemyAI.Init(this);
+
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         originMat = render.material;
+        skinRender = GetComponentInChildren<SkinnedMeshRenderer>();
 
-        enemyAI = new EnemyAI();
-        enemyAI.Init(this);
-    }
-
-    public void InitEnemyData(TableEnemy.Info _enemyData, EEnemy _eEnemy)
-    {
         enemySpawner = Shared.enemyManager.EnemySpawner;
         goldCoin = Shared.gameManager.GoldCoin;
         round = Shared.gameManager.Round;
@@ -76,13 +76,12 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         effectPool = Shared.objectPoolManager.EffectPool;
         rewarder = Shared.gameManager.Rewarder;
 
-        eEnemy = _eEnemy;
 
-        enemyName = _enemyData.Name;
-        enemyHp = _enemyData.MaxHp;
-        enemySpeed = _enemyData.Speed;
-        attackRange = _enemyData.AttackRange;
-        attackDmg = _enemyData.AttackDmg;
+        enemyName = _name;
+        enemyHp = _maxHp;
+        enemySpeed = _spd;
+        attackRange = _range;
+        attackDmg = _dmg;
         curhp = enemyHp;
         rotationSpeed = 5;
 
@@ -96,10 +95,10 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         curhp = enemyHp;
         enemyAI.isDie = false;
 
-        GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, 
-            gameObject.transform.position + new Vector3(0,1,0), Quaternion.identity);
+        GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, skinRender.bounds.center + 
+            new Vector3(0, skinRender.bounds.extents.y + 0.5f, 0), Quaternion.identity);
         enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
-        enemyHpBar.Init(this);
+        enemyHpBar.Init(this, skinRender);
 
         attackReady = false;
         isAttack = false;
