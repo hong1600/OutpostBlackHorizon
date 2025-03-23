@@ -9,29 +9,33 @@ public abstract class Missile : Projectile
     private void FixedUpdate()
     {
         MoveMissile();
-        CheckTarget();
     }
 
     protected virtual void MoveMissile()
     {
-        Vector3 predictPos = target.position + target.GetComponentInParent<Rigidbody>().velocity * 1;
+        CheckTarget();
 
-        Vector3 dir = (predictPos - transform.position).normalized;
+        if (target != null)
+        {
+            Vector3 predictPos = target.position + target.GetComponentInParent<Rigidbody>().velocity * 1;
 
-        Quaternion targetRot = Quaternion.LookRotation(dir);
+            Vector3 dir = (predictPos - transform.position).normalized;
 
-        float targetDistance = Vector3.Distance(transform.position, target.position);
-        float dynamicRot = Mathf.Lerp(rotSpd, rotSpd * 2f, targetDistance / 10f);
+            Quaternion targetRot = Quaternion.LookRotation(dir);
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpd * Time.fixedDeltaTime);
+            float targetDistance = Vector3.Distance(transform.position, target.position);
+            float dynamicRot = Mathf.Lerp(rotSpd, rotSpd * 2f, targetDistance / 10f);
 
-        rigid.velocity = transform.forward * speed;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpd * Time.fixedDeltaTime);
+
+            rigid.velocity = transform.forward * speed;
+
+        }
     }
 
     private void CheckTarget()
     {
-        if (!target.gameObject.activeInHierarchy || 
-            Vector3.Distance(transform.position, target.transform.position) < 0.1f)
+        if (!target.gameObject.activeSelf || Vector3.Distance(transform.position, target.transform.position) < 0.1f)
         {
             Explode();
         }

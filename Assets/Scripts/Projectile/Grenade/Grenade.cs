@@ -7,7 +7,10 @@ public abstract class Grenade : Projectile
     private void OnTriggerEnter(Collider coll)
     {
         if (coll.gameObject.layer == LayerMask.NameToLayer("EnemySensor") ||
-            coll.gameObject.layer == LayerMask.NameToLayer("Bullet")) return;
+            coll.gameObject.layer == LayerMask.NameToLayer("Bullet") ||
+            coll.gameObject.layer == LayerMask.NameToLayer("Effect"))
+
+                return;
 
         Vector3 hitPos = coll.ClosestPoint(transform.position);
 

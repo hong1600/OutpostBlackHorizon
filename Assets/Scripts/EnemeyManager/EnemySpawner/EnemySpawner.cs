@@ -27,10 +27,10 @@ public class EnemySpawner : MonoBehaviour
         enemyPool = Shared.objectPoolManager.EnemyPool;
         enemySpawnDelay = 0;
 
-        enemySpawnPos[0] = new Vector3(-3f, 0, 0);
-        enemySpawnPos[1] = new Vector3(-1f, 0, 0);
-        enemySpawnPos[2] = new Vector3(1f, 0, 0);
-        enemySpawnPos[3] = new Vector3(3f, 0, 0);
+        enemySpawnPos[0] = new Vector3(-6f, 0, 0);
+        enemySpawnPos[1] = new Vector3(-2f, 0, 0);
+        enemySpawnPos[2] = new Vector3(2f, 0, 0);
+        enemySpawnPos[3] = new Vector3(6f, 0, 0);
     }
 
     public void SpawnEnemy()
@@ -51,15 +51,12 @@ public class EnemySpawner : MonoBehaviour
 
             for (int i = 0; i < 1; i++)
             {
-                //적 초기위치
                 Vector3 spawnPos1 = enemySpawnPointList[firstSpawnPoint].transform.position + (enemySpawnPos[i]);
                 Vector3 spawnPos2 = enemySpawnPointList[secondSpawnPoint].transform.position + (enemySpawnPos[i]);
 
-                //터레인 지면 높이
                 spawnPos1.y = terrain.SampleHeight(spawnPos1);
                 spawnPos2.y = terrain.SampleHeight(spawnPos2);
 
-                //적 가져오기
                 GameObject obj1 = enemyPool.FindEnemy(eEnemy1, spawnPos1, Quaternion.identity);
                 GameObject obj2 = enemyPool.FindEnemy(eEnemy2, spawnPos2, Quaternion.identity);
 
