@@ -17,6 +17,11 @@ public class PlayerMovement : MonoBehaviour
     float footstepTimer = 0f;
     Vector3 moveDir;
 
+    [SerializeField] float energyInterval = 0.1f;
+    [SerializeField] float energyRecovery = 30;
+    float energyTimer;
+    bool isCanRun = true;
+
     [SerializeField] float jumpForce = 5f;
     [SerializeField] int jumpCount = 0;
 
@@ -45,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         CheckInput();
+        Run();
         CheckGround();
     }
 
@@ -56,9 +62,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckInput()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) isRun = true;
-        if (Input.GetKeyUp(KeyCode.LeftShift)) isRun = false;
-
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
             jumpCount++;
@@ -155,6 +158,41 @@ public class PlayerMovement : MonoBehaviour
         {
             Shared.playerManager.anim.SetFloat("Horizontal", moveX);
             Shared.playerManager.anim.SetFloat("Vertical", moveZ);
+        }
+    }
+
+    private void Run()
+    {
+        if(Input.GetKey(KeyCode.LeftShift) && playerStatus.curEnergy > 0 && isCanRun)
+        {
+            isRun = true;
+
+            if(Time.time > energyTimer) 
+            {
+                playerStatus.UseEnergy(1);
+                energyTimer = Time.time + energyInterval;
+
+                if (playerStatus.curEnergy <= 0)
+                {
+                    isCanRun = false;
+                    isRun = false;
+                }
+            }
+        }
+        else
+        {
+            isRun = false;
+
+            if(playerStatus.curEnergy >= energyRecovery) 
+            {
+                isCanRun = true;
+            }
+        }
+
+        if (Time.time > energyTimer && playerStatus.curEnergy < 100 && !isRun)
+        {
+            playerStatus.FillEnergy(1);
+            energyTimer = Time.time + energyInterval;
         }
     }
 

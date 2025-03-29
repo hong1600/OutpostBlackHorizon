@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] SpawnTimer spawnTimer;
+    [SerializeField] Timer timer;
     [SerializeField] Round round;
     [SerializeField] GameState gameState;
     [SerializeField] GoldCoin goldCoin;
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        SpawnTimer = spawnTimer;
+        Timer = timer;
         Round = round;
         GameState = gameState;
         GoldCoin = goldCoin;
@@ -45,22 +45,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (!round.GetIsBossRound())
+        if (!round.isBossRound)
         {
-            if (spawnTimer.GetIsSpawnTime())
+            if (enemySpawner.IsSpawn)
             {
                 enemySpawner.SpawnEnemy();
             }
         }
-        else if (round.GetIsBossRound())
-        {
-            bossSpawner.SpawnBoss();
-        }
-
-        waveBossSpawner.SpawnWaveBossTime();
     }
 
-    public SpawnTimer SpawnTimer { get; private set; }
+    public Timer Timer { get; private set; }
     public Round Round { get; private set; }
     public GameState GameState { get; private set; }
     public GoldCoin GoldCoin { get; private set; }

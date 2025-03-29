@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerStatus : MonoBehaviour, ITakeDmg
 {
     public event Action onTakeDmg;
+    public event Action onUseEnergy;
 
     public float maxHp { get; private set; }
     public float curHp { get; private set; }
@@ -35,6 +36,18 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
             isDie = true;
             StartCoroutine(StartDie());
         }
+    }
+
+    public void UseEnergy(float _energy)
+    {
+        curEnergy -= _energy;
+        onUseEnergy?.Invoke();
+    }
+
+    public void FillEnergy(float _energy)
+    {
+        curEnergy += _energy;
+        onUseEnergy?.Invoke();
     }
 
     IEnumerator StartDie()

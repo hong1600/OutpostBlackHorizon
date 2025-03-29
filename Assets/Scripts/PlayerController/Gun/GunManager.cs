@@ -19,6 +19,8 @@ public class GunManager : MonoBehaviour
         maxBulletCount = 30;
         haveBulletCount = 150;
         curGrenadeCount = 10;
+
+        Shared.gunManager = this;
     }
 
     private void Update()

@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class GunMovement : MonoBehaviour
 {
+    ViewState viewState;
+    CameraTopToFps cameraTopToFps;
+
     Vector3 originPos;
     Quaternion originRot;
-
-    //[SerializeField] float swayAmount = 0.02f;
-    //[SerializeField] float smoothFactor = 2f;
 
     [SerializeField] float walkSwaySpeed = 10f;
     [SerializeField] float walkSwayAmount = 0.01f;
     float timer = 0f;
 
-    [SerializeField] float recoilAmount = 2f;
-    [SerializeField] float recoilDuration = 0.1f;
-    [SerializeField] float recoilRecovery = 5f;
+    [Header("RifleSetting")]
+    [SerializeField] float recoilAmount = 0.015f;
+    [SerializeField] float recoilDuration = 0.01f;
+    [SerializeField] float recoilRecovery = 10f;
     bool isRecoil;
 
     private void Start()
     {
         InputManager.instance.onInputKey += WalkSwayGun;
+        cameraTopToFps = Shared.cameraManager.CameraTopToFps;
+        viewState = Shared.gameManager.ViewState;
     }
 
     private void OnDisable()
@@ -35,22 +38,10 @@ public class GunMovement : MonoBehaviour
         originRot = transform.localRotation;
     }
 
-    //private void SwayGun(Vector2 _inputMouse)
-    //{
-    //    if (Shared.gameMng.iViewState.GetViewState() == EViewState.TOP || !Shared.cameraMng.isArrive) return;
-
-    //    float moveX = _inputMouse.x * swayAmount;
-    //    float moveY = _inputMouse.y * swayAmount;
-
-    //    Vector3 swayPos = new Vector3(-moveX, -moveY, 0);
-    //    transform.localPosition = Vector3.Lerp(transform.localPosition,
-    //        originPos + swayPos, Time.deltaTime * smoothFactor);
-    //}
-
     private void WalkSwayGun(Vector2 _inputKey)
     {
-        if (Shared.gameManager.ViewState.GetViewState() == 
-            EViewState.TOP || !Shared.cameraManager.CameraTopToFps.isArrive) return;
+        if (viewState.GetViewState() == 
+            EViewState.TOP || !cameraTopToFps.isArrive) return;
 
         if (_inputKey.x != 0 || _inputKey.y != 0)
         {

@@ -6,10 +6,18 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance;
+    public static UIManager instance { get; private set; }
 
+    [Header("UIStack")]
     Stack<GameObject> uiStack = new Stack<GameObject>();
     Dictionary<GameObject, UIData> uiDataDic = new Dictionary<GameObject, UIData>();
+
+    [Header("SceneUI")]
+    [SerializeField] List<GameObject> uiSceneList = new List<GameObject>();
+    Dictionary<EScene, List<GameObject>> uiSceneDic = new Dictionary<EScene, List<GameObject>>();
+
+    [Header("Cursor")]
+    [SerializeField] CustomCursor cursor;
 
     [SerializeField] PanelOpen panelOpen;
     [SerializeField] VideoSelector videoSelector;
@@ -30,29 +38,55 @@ public class UIManager : MonoBehaviour
 
         PanelOpen = panelOpen;
         VideoSelector = videoSelector;
+        InitSceneUI();
     }
 
     private void Start()
     {
+        InitSceneUI();
+
         InputManager.instance.onInputEsc += ClosePanel;
+    }
+
+    private void InitSceneUI()
+    {
+        for (int i = 0; i < uiSceneList.Count; i++)
+        {
+            GameObject ui = uiSceneList[i];
+            UISceneType type = ui.GetComponent<UISceneType>();
+            EScene eScene = type.uiSceneType;
+
+            if (!uiSceneDic.ContainsKey(eScene))
+            {
+                uiSceneDic[eScene] = new List<GameObject>();
+            }
+
+            uiSceneDic[eScene].Add(uiSceneList[i]);
+        }
+    }
+
+    public void UpdateSceneUI(EScene _eScene)
+    {
+        foreach(EScene key in uiSceneDic.Keys) 
+        {
+            foreach (GameObject ui in uiSceneDic[key])
+            {
+                ui.SetActive(false);
+            }
+        }
+
+        if (uiSceneDic.ContainsKey(_eScene))
+        {
+            foreach (GameObject ui in uiSceneDic[_eScene])
+            {
+                ui.SetActive(true);
+            }
+        }
     }
 
     public void OpenPanel(GameObject _panel, RectTransform[] _rect, 
         Vector2[] _onPos, Vector2[] _offPos, bool _isEffect)
     {
-        //if (uiStack.Count > 0)
-        //{
-        //    GameObject lastPanel = uiStack.Peek();
-        //    CanvasGroup lastCanvasGroup = lastPanel.GetComponent<CanvasGroup>();
-
-        //    if (lastCanvasGroup == null)
-        //    {
-        //        lastPanel.AddComponent<CanvasGroup>();
-        //        lastCanvasGroup = lastPanel.GetComponent<CanvasGroup>();
-        //    }
-
-        //    lastCanvasGroup.blocksRaycasts = false;
-        //}
         if (!uiStack.Contains(_panel))
         {
             uiStack.Push(_panel);
@@ -84,17 +118,6 @@ public class UIManager : MonoBehaviour
             {
                 topPanel.SetActive(false);
             }
-
-            //if (uiStack.Count > 0)
-            //{
-            //    GameObject newTopPanel = uiStack.Peek();
-            //    CanvasGroup newTopCanvasGroup = newTopPanel.GetComponent<CanvasGroup>();
-
-            //    if (newTopCanvasGroup != null)
-            //    {
-            //        newTopCanvasGroup.blocksRaycasts = true;
-            //    }
-            //}
         }
     }
 
@@ -135,7 +158,6 @@ public class UIManager : MonoBehaviour
         _color.a = 100;
         _ui.color = _color;
     }
-
 
     public void SetAlpha(Graphic _ui, float _alpha)
     {

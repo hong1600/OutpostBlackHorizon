@@ -40,8 +40,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Start()
     {
-        enemySpawner.UnEnemySpawn(EnemyCount);
-        enemySpawner.SubEnemySpawn(EnemyCount);
+        enemySpawner.onEnemySpawn += EnemyCount;
     }
 
     private void EnemyCount()

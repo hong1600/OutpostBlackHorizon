@@ -9,12 +9,14 @@ public class CameraManager : MonoBehaviour
     [SerializeField] CameraTopMove cameraTopMove;
     [SerializeField] CameraTopZoom cameraTopZoom;
     [SerializeField] CameraTopToFps cameraTopToFps;
+    [SerializeField] CutScene cutScene;
 
     public CameraFpsShake CameraFpsShake { get; private set; }
     public CameraFpsZoom CameraFpsZoom { get; private set; }
     public CameraTopMove CameraTopMove { get; private set; }
     public CameraTopZoom CameraTopZoom { get; private set; }
     public CameraTopToFps CameraTopToFps { get; private set; }
+    public CutScene CutScene { get; private set; }
 
 
     private void Awake()
@@ -26,6 +28,7 @@ public class CameraManager : MonoBehaviour
         CameraTopMove = cameraTopMove;
         CameraTopZoom = cameraTopZoom;
         CameraTopToFps = cameraTopToFps;
+        CutScene = cutScene;
     }
 
     private void Update()

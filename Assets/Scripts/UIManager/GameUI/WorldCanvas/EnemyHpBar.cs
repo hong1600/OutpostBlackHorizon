@@ -48,7 +48,7 @@ public class EnemyHpBar : MonoBehaviour
     IEnumerator StartHpBar()
     {
         float curHp = enemy.curhp;
-        float maxHp = enemy.enemyHp;
+        float maxHp = enemy.maxHp;
         hpValue.fillAmount = curHp / maxHp;
 
         while (hpValue.fillAmount < smoothHpValue.fillAmount)

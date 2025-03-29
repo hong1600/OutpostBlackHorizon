@@ -3,22 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IRound 
-{
-    event Action onRoundEvent;
-    bool GetIsBossRound();
-    void SetBossRound(bool _value);
-    int GetCurRound();
-    void SetCurRound(int _value);
-    void RoundCheck();
-}
-
-public class Round : MonoBehaviour, IRound
+public class Round : MonoBehaviour
 {
     public event Action onRoundEvent;
+    public event Action onBossRound;
 
-    [SerializeField] bool isBossRound;
-    [SerializeField] int curRound;
+    CutScene cutScene;
+
+    public bool isBossRound;
+    public int curRound;
 
     private void Awake()
     {
@@ -26,20 +19,28 @@ public class Round : MonoBehaviour, IRound
         curRound = 0;
     }
 
+    private void Start()
+    {
+        cutScene = Shared.cameraManager.CutScene;
+    }
+
     public void RoundCheck()
     {
-        if (curRound == 10)
+        if(curRound == 1) 
+        {
+            Shared.cameraManager.CutScene.PlayCutScene(ECutScene.ENEMYDROPSHIP);
+        }
+
+        if (curRound == 3)
         {
             isBossRound = true;
+            onBossRound?.Invoke();
         }
         else
         {
             isBossRound = false;
         }
-    }
 
-    public bool GetIsBossRound() { return isBossRound; }
-    public void SetBossRound(bool value) { isBossRound = value;}
-    public int GetCurRound() {  return curRound; }
-    public void SetCurRound(int _value) { curRound += _value; onRoundEvent?.Invoke(); }
+        onRoundEvent?.Invoke();
+    }
 }

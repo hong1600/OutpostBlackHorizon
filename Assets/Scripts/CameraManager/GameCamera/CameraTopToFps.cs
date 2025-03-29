@@ -24,14 +24,12 @@ public class CameraTopToFps : MonoBehaviour
     private void Awake()
     {
         mainCam = Camera.main;
+        Shared.gameManager.ViewState.onViewStateChange += SetCameraMode;
     }
 
     private void Start()
     {
         isArrive = true;
-
-        Shared.gameManager.ViewState.onViewStateChange += SetCameraMode;
-        Shared.gameManager.ViewState.SetViewState(Shared.gameManager.ViewState.GetViewState());
     }
 
     private void Update()
@@ -58,10 +56,14 @@ public class CameraTopToFps : MonoBehaviour
             mainCam.transform.SetParent(playerObj.transform);
             MoveCamera();
         }
-        else
+        else if( _eGameState == EViewState.TOP)
         {
             rifle.transform.SetParent(playerObj.transform);
             MoveCamera();
+        }
+        else
+        {
+            return;
         }
     }
 
@@ -102,6 +104,7 @@ public class CameraTopToFps : MonoBehaviour
         {
             rifle.transform.SetParent(mainCam.transform, true);
             rifle.transform.localPosition = new Vector3(0.07f, -0.27f, 0.29f);
+            rifle.transform.localRotation = Quaternion.identity;
             rifle.GetComponent<GunMovement>().InitPos();
             fpsMove.SetActive(true);
             fpsShake.SetActive(true);

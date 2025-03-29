@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,18 +8,23 @@ public class ViewState : MonoBehaviour
 {
     public event Action<EViewState> onViewStateChange;
 
+    [Header("FpsComponent")]
     PlayerMovement playerMovement;
     PlayerCombat playerCombat;
+    [SerializeField] GunManager gunManager;
+    [SerializeField] GunMovement gunMovement;
+
+    [Header("TopComponent")]
     FieldBuild fieldBuild;
 
     [SerializeField] EViewState curViewState;
 
-    [SerializeField] List<GameObject> fpsUI;
-    [SerializeField] List<GameObject> TopUI;
+    [SerializeField] List<GameObject> fpsObj;
+    [SerializeField] List<GameObject> topObj;
 
     private void Awake()
     {
-        curViewState = EViewState.TOP;
+        curViewState = EViewState.FPS;
     }
 
     private void Start()
@@ -28,6 +34,7 @@ public class ViewState : MonoBehaviour
         fieldBuild = Shared.fieldManager.FieldBuild;
 
         UpdateState(curViewState);
+        onViewStateChange?.Invoke(curViewState);
     }
 
     public void SetViewState(EViewState _state)
@@ -49,43 +56,71 @@ public class ViewState : MonoBehaviour
         switch (_state) 
         {
             case EViewState.FPS:
-                SwitchFPS();
+                SwitchFps();
                 break;
             case EViewState.TOP:
-                SwitchTOP();
+                SwitchTop();
+                break;
+            case EViewState.NONE:
+                SwitchNone();
                 break;
         }
     }
 
-    private void SwitchFPS()
+    private void SwitchFps()
     {
         playerMovement.enabled = true;
         playerCombat.enabled = true;
+        gunMovement.enabled = true;
+        gunManager.enabled = true;
         fieldBuild.enabled = false;
 
-        for(int i = 0; i < TopUI.Count; i++) 
+        for(int i = 0; i < topObj.Count; i++) 
         {
-            TopUI[i].SetActive(false);
+            topObj[i].SetActive(false);
         }
-        for (int i = 0; i < fpsUI.Count; i++)
+        for (int i = 0; i < topObj.Count; i++)
         {
-            fpsUI[i].SetActive(true);
+            topObj[i].SetActive(true);
         }
+        Shared.gameUI.SwitchFps();
     }
 
-    private void SwitchTOP()
+    private void SwitchTop()
     {
         playerMovement.enabled = false;
         playerCombat.enabled = false;
+        gunMovement.enabled = false;
+        gunManager.enabled = false;
         fieldBuild.enabled = true;
 
-        for (int i = 0; i < fpsUI.Count; i++)
+        for (int i = 0; i < fpsObj.Count; i++)
         {
-            fpsUI[i].SetActive(false);
+            fpsObj[i].SetActive(false);
         }
-        for (int i = 0; i < TopUI.Count; i++)
+        for (int i = 0; i < fpsObj.Count; i++)
         {
-            TopUI[i].SetActive(true);
+            fpsObj[i].SetActive(true);
         }
+        Shared.gameUI.SwitchTop();
+    }
+
+    private void SwitchNone()
+    {
+        playerMovement.enabled = false;
+        playerCombat.enabled = false;
+        gunMovement.enabled = false;
+        gunManager.enabled = false;
+        fieldBuild.enabled = false;
+
+        for (int i = 0; i < fpsObj.Count; i++)
+        {
+            fpsObj[i].SetActive(false);
+        }
+        for (int i = 0; i < topObj.Count; i++)
+        {
+            topObj[i].SetActive(false);
+        }
+        Shared.gameUI.SwitchNone();
     }
 }

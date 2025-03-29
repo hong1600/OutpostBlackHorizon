@@ -7,15 +7,19 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public event Action onEnemySpawn;
+
     Terrain terrain;
     EnemyPool enemyPool;
+    Round round;
 
-    event Action onEnemySpawn;
-
+    public Vector3[] enemySpawnPos { get; private set; } = new Vector3[4];
     [SerializeField] List<Transform> enemySpawnPointList;
-    [SerializeField] Vector3[] enemySpawnPos = new Vector3[4];
     [SerializeField] Transform[] targetPoints;
     [SerializeField] float enemySpawnDelay;
+
+    bool isSpawn = false;
+    bool firstSpawn = true;
 
     private void Awake()
     {
@@ -25,6 +29,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         enemyPool = Shared.objectPoolManager.EnemyPool;
+        round = Shared.gameManager.Round;
         enemySpawnDelay = 0;
 
         enemySpawnPos[0] = new Vector3(-6f, 0, 0);
@@ -35,44 +40,67 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        if (Shared.gameManager.Round.GetCurRound() == 0 || Shared.gameManager.Round.GetIsBossRound()) { return; }
-
+        if (!isSpawn || round.curRound == 0 || round.isBossRound) { return; }
+        
         if (enemySpawnDelay <= 0)
         {
-            int firstSpawnPoint = Random.Range(0, enemySpawnPointList.Count);
-            int secondSpawnPoint;
-            do
+            int spawnPoint;
+
+            if (firstSpawn)
             {
-                secondSpawnPoint = Random.Range(0, enemySpawnPointList.Count);
-            } while (firstSpawnPoint == secondSpawnPoint);
-
-            EEnemy eEnemy1 = (EEnemy)Random.Range(0, 4);
-            EEnemy eEnemy2 = (EEnemy)Random.Range(0, 4);
-
-            for (int i = 0; i < 1; i++)
+                spawnPoint = 1;
+                firstSpawn = false;
+            }
+            else
             {
-                Vector3 spawnPos1 = enemySpawnPointList[firstSpawnPoint].transform.position + (enemySpawnPos[i]);
-                Vector3 spawnPos2 = enemySpawnPointList[secondSpawnPoint].transform.position + (enemySpawnPos[i]);
-
-                spawnPos1.y = terrain.SampleHeight(spawnPos1);
-                spawnPos2.y = terrain.SampleHeight(spawnPos2);
-
-                GameObject obj1 = enemyPool.FindEnemy(eEnemy1, spawnPos1, Quaternion.identity);
-                GameObject obj2 = enemyPool.FindEnemy(eEnemy2, spawnPos2, Quaternion.identity);
-
-                onEnemySpawn?.Invoke();
+                spawnPoint = Random.Range(0, enemySpawnPointList.Count);
             }
 
-            enemySpawnDelay = 2f;
+            StartCoroutine(StartSpawn(spawnPoint));
+
+            enemySpawnDelay = 8f;
         }
 
         enemySpawnDelay -= Time.deltaTime;
     }
 
-    public void SubEnemySpawn(Action _listener) { onEnemySpawn += _listener; }
-    public void UnEnemySpawn(Action _listener) { onEnemySpawn -= _listener; }
-    public float GetEnemySpawnDelay() { return enemySpawnDelay; }
-    public void SetEnemySpawnDelay(float _value) { enemySpawnDelay = _value; }
-    public Transform[] GetTargetPoint() { return targetPoints; }
-    public List<Transform> GetEnemySpawnPointList() { return enemySpawnPointList; }
+    IEnumerator StartSpawn(int _spawnPoint)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            EEnemy eEnemy = (EEnemy)Random.Range(0, 4);
+
+            Vector3 spawnPos1 = enemySpawnPointList[_spawnPoint].transform.position + (enemySpawnPos[0]);
+            Vector3 spawnPos2 = enemySpawnPointList[_spawnPoint].transform.position + (enemySpawnPos[1]);
+            Vector3 spawnPos3 = enemySpawnPointList[_spawnPoint].transform.position + (enemySpawnPos[2]);
+            Vector3 spawnPos4 = enemySpawnPointList[_spawnPoint].transform.position + (enemySpawnPos[3]);
+
+            spawnPos1.y = terrain.SampleHeight(spawnPos1);
+            spawnPos2.y = terrain.SampleHeight(spawnPos2);
+            spawnPos3.y = terrain.SampleHeight(spawnPos3);
+            spawnPos4.y = terrain.SampleHeight(spawnPos4);
+
+            GameObject obj1 = enemyPool.FindEnemy(eEnemy, spawnPos1, Quaternion.identity);
+            GameObject obj2 = enemyPool.FindEnemy(eEnemy, spawnPos2, Quaternion.identity);
+            GameObject obj3 = enemyPool.FindEnemy(eEnemy, spawnPos3, Quaternion.identity);
+            GameObject obj4 = enemyPool.FindEnemy(eEnemy, spawnPos4, Quaternion.identity);
+
+            onEnemySpawn?.Invoke();
+
+            yield return new WaitForSeconds(2f);
+        }
+    }
+
+    public List<Transform> EnemySpawnPointList() { return enemySpawnPointList; }
+    public Transform[] TargetPoint() { return targetPoints; }
+    public float EnemySpawnDelay
+    {
+        get { return enemySpawnDelay; }
+        set { enemySpawnDelay = value; }
+    }
+    public bool IsSpawn
+    {
+        get { return isSpawn; }
+        set { isSpawn = value; }
+    }
 }

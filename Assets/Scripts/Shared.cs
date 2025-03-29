@@ -13,4 +13,5 @@ public class Shared : MonoBehaviour
     static public CameraManager cameraManager;
     static public PlayerManager playerManager;
     static public FieldManager fieldManager;
+    static public GunManager gunManager;
 }

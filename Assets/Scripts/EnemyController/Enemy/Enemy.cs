@@ -9,21 +9,21 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 {
     public event Action onTakeDamage;
 
-    EEnemyAI aiState;
-    EEnemy eEnemy;
+    protected EEnemyAI aiState;
+    protected EEnemy eEnemy;
 
-    Rigidbody rigid;
-    Animator anim;
+    protected Rigidbody rigid;
+    protected Animator anim;
     [SerializeField] Renderer render;
     [SerializeField] Material hitMat;
     Material originMat;
 
-    EnemyAI enemyAI;
-    EnemyHpBar enemyHpBar;
-    EnemyPool enemyPool;
-    HpBarPool hpBarPool;
-    EffectPool effectPool;
-    Rewarder rewarder;
+    protected EnemyAI enemyAI;
+    protected EnemyHpBar enemyHpBar;
+    protected EnemyPool enemyPool;
+    protected HpBarPool hpBarPool;
+    protected EffectPool effectPool;
+    protected Rewarder rewarder;
 
     [SerializeField] SphereCollider sensor;
     [SerializeField] BoxCollider box;
@@ -32,11 +32,11 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     protected EnemySpawner enemySpawner;
     protected GoldCoin goldCoin;
     protected Round round;
-    protected SpawnTimer spawnTimer;
+    protected Timer timer;
     protected BulletPool bulletPool;
 
     public string enemyName { get; private set; }
-    public float enemyHp { get; private set; }
+    public float maxHp { get; private set; }
     public float curhp { get; private set; }
     public float enemySpeed { get; private set; }
     public float rotationSpeed { get; private set; }
@@ -63,13 +63,13 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        originMat = render.material;
+        if(render != null) originMat = render.material;
         skinRender = GetComponentInChildren<SkinnedMeshRenderer>();
 
         enemySpawner = Shared.enemyManager.EnemySpawner;
         goldCoin = Shared.gameManager.GoldCoin;
         round = Shared.gameManager.Round;
-        spawnTimer = Shared.gameManager.SpawnTimer;
+        timer = Shared.gameManager.Timer;
         bulletPool = Shared.objectPoolManager.BulletPool;
         hpBarPool = Shared.objectPoolManager.HpBarPool;
         enemyPool = Shared.objectPoolManager.EnemyPool;
@@ -78,27 +78,32 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
 
         enemyName = _name;
-        enemyHp = _maxHp;
+        maxHp = _maxHp;
         enemySpeed = _spd;
         attackRange = _range;
         attackDmg = _dmg;
-        curhp = enemyHp;
+        curhp = maxHp;
         rotationSpeed = 5;
 
-        targetPoints = enemySpawner.GetTargetPoint();
+        targetPoints = enemySpawner.TargetPoint();
         int rand = Random.Range(0, targetPoints.Length);
         myTarget = targetPoints[rand];
     }
 
     private void OnEnable()
     {
-        curhp = enemyHp;
+        curhp = maxHp;
         enemyAI.isDie = false;
 
-        GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, skinRender.bounds.center + 
-            new Vector3(0, skinRender.bounds.extents.y + 0.5f, 0), Quaternion.identity);
-        enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
-        enemyHpBar.Init(this, skinRender);
+        if (skinRender != null)
+        {
+            GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, skinRender.bounds.center +
+                new Vector3(0, skinRender.bounds.extents.y + 0.5f, 0), Quaternion.identity);
+
+            enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
+
+            enemyHpBar.Init(this, skinRender);
+        }
 
         attackReady = false;
         isAttack = false;
@@ -201,8 +206,13 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     public void TakeDmg(float _dmg, bool _isHead)
     {
         curhp -= _dmg;
-        render.material = hitMat;
-        Invoke(nameof(UpdateMat), 0.2f);
+
+        if(hitMat != null && render != null) 
+        {
+            render.material = hitMat;
+            Invoke(nameof(UpdateMat), 0.2f);
+        }
+
         onTakeDamage?.Invoke();
 
         if (curhp <= 0)
@@ -252,7 +262,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         enemyPool.ReturnEnemy(eEnemy, this.gameObject);
     }
 
-    protected void ChangeAnim(EEnemyAI _curState)
+    protected virtual void ChangeAnim(EEnemyAI _curState)
     {
         _curState = aiState;
 
@@ -273,7 +283,6 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
             case EEnemyAI.DIE:
                 anim.SetInteger("EnemyAnim", (int)EEnemyAnim.DIE);
                 break;
-
         }
     }
 }

@@ -17,7 +17,7 @@ public class InputManager : MonoBehaviour
     public event Action onInputB;
 
     [SerializeField] FieldSelector fieldSelector;
-    public CustomMouse customMouse;
+    public CustomCursor cursor;
 
     public FieldSelector FieldSelector { get; private set; }
 
@@ -62,7 +62,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            startMousePos = customMouse.GetMousePos();
+            startMousePos = cursor.GetMousePos();
             onLeftClickDown?.Invoke(startMousePos);
         }
     }
@@ -71,8 +71,8 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            curMousePos = customMouse.GetMousePos();
-            onLeftClickDrag?.Invoke(customMouse.GetMousePos());
+            curMousePos = cursor.GetMousePos();
+            onLeftClickDrag?.Invoke(cursor.GetMousePos());
         }
     }
 
@@ -80,8 +80,8 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            endMousePos = customMouse.GetMousePos();
-            onLeftClickUp?.Invoke(customMouse.GetMousePos());
+            endMousePos = cursor.GetMousePos();
+            onLeftClickUp?.Invoke(cursor.GetMousePos());
         }
     }
 

@@ -8,7 +8,7 @@ public class FieldBuild : MonoBehaviour
 {
     public event Action onDecreaseField;
 
-    CustomMouse customMouse;
+    CustomCursor cursor;
     Terrain terrain;
     BoxCollider box;
     FieldManager fieldManager;
@@ -28,10 +28,12 @@ public class FieldBuild : MonoBehaviour
     GameObject previewObj;
     FieldData fieldData;
 
+    Vector2 mousePos;
+
     private void Start()
     {
         terrain = Terrain.activeTerrain;
-        customMouse = Shared.gameUI.CustomMouse;
+        cursor = InputManager.instance.cursor;
         fieldManager = Shared.fieldManager;
         goldCoin = Shared.gameManager.GoldCoin;
         viewState = Shared.gameManager.ViewState;
@@ -40,11 +42,14 @@ public class FieldBuild : MonoBehaviour
 
     private void Update()
     {
-        Vector3 mousePos = customMouse.GetMousePos();
+        if(cursor != null) 
+        {
+            mousePos = cursor.GetMousePos();
+        }
 
         if (previewObj != null)
         {
-            MovePreview(customMouse.GetMousePos());
+            MovePreview(mousePos);
             UpdatePreviewColor();
 
             if (Input.GetMouseButtonDown(0) && CanBuild())

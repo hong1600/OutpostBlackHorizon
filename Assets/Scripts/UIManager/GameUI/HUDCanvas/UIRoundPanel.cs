@@ -16,6 +16,6 @@ public class UIRoundPanel : MonoBehaviour
     private void RoundPanel()
     {
         if (roundText == null) return;
-        roundText.text = $"WAVE {Shared.gameManager.Round.GetCurRound().ToString()}";
+        roundText.text = $"WAVE {Shared.gameManager.Round.curRound.ToString()}";
     }
 }

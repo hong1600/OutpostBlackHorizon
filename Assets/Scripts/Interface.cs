@@ -6,3 +6,8 @@ public interface ITakeDmg
 {
     void TakeDmg(float _dmg, bool _isHead);
 }
+
+public interface ICutScene
+{
+    void Play();
+}

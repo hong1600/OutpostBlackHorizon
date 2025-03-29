@@ -3,34 +3,24 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Boss : Enemy
+public abstract class Boss : Enemy
 {
-    [SerializeField] TextMeshProUGUI bossTimeText;
-    [SerializeField] float bossTime;
+    [SerializeField] UIBossHpbar hpbar;
+
+    protected override void InitEnemyData(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy)
+    {
+        //hpbar.Init(this);
+    }
 
     protected internal override void Die()
     {
         Die();
         goldCoin.SetGold(300);
         goldCoin.SetCoin(4);
-        round.SetBossRound(false);
-        spawnTimer.SetSec(15f);
-        enemySpawner.SetEnemySpawnDelay(0.85f);
-    }
+        round.isBossRound = false;
+        timer.SetSec(15f);
+        enemySpawner.EnemySpawnDelay = 0.85f;
 
-    public void bossTimer()
-    {
-        bossTime -= Time.deltaTime;
-        bossTimeText.text = bossTime.ToString("F1") + "s";
-
-        if (bossTime <= 0)
-        {
-            //gameState = EGameState.GAMEOVER;
-        }
-    }
-
-    protected override IEnumerator StartAttack()
-    {
-        throw new System.NotImplementedException();
+        Shared.gameManager.GameState.SetGameState(EGameState.GAMECLEAR);
     }
 }

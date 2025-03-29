@@ -6,26 +6,26 @@ public class CameraFpsZoom : MonoBehaviour
 {
     Camera mainCam;
     [SerializeField] GameObject rifle;
-    [SerializeField] GameObject scope;
     [SerializeField] float normalFOV = 60;
     [SerializeField] float zoomFOV = 40f;
     [SerializeField] float zoomSpeed = 10f;
     [SerializeField] bool isZoom = false;
     [SerializeField] bool isZooming = false;
+    GameObject scope;
 
     private void Awake()
     {
         mainCam = Camera.main;
     }
 
+    private void Start()
+    {
+        scope = Shared.gameUI.scope;
+    }
+
     private void OnEnable()
     {
         InputManager.instance.onRightClickDown += ZoomCamera;
-    }
-
-    private void OnDisable()
-    {
-        InputManager.instance.onRightClickDown -= ZoomCamera;
     }
 
     private void ZoomCamera()

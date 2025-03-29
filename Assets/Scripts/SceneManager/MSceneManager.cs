@@ -22,6 +22,13 @@ public class MSceneManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        string curSceneName = SceneManager.GetActiveScene().name;
+
+        UIManager.instance.UpdateSceneUI(GetSceneName(curSceneName));
+    }
+
     public void ChangeScene(EScene _eScene, bool _loading = false)
     {
         if (scene == _eScene)
@@ -56,6 +63,25 @@ public class MSceneManager : MonoBehaviour
                     SceneManager.LoadScene("End");
                     break;
             }
+        }
+
+        UIManager.instance.UpdateSceneUI(_eScene);
+    }
+
+    private EScene GetSceneName(string sceneName)
+    {
+        switch (sceneName)
+        {
+            case "Login":
+                return EScene.LOGIN;
+            case "Lobby":
+                return EScene.LOBBY;
+            case "Waiting":
+                return EScene.WAITING;
+            case "Game":
+                return EScene.GAME;
+            default:
+                return 0;
         }
     }
 }

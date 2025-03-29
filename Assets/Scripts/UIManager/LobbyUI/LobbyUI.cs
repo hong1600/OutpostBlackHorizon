@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class LobbyUI : MonoBehaviour
 {
+    public EScene eScene { get; private set; } = EScene.LOBBY;
+
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] GameObject blackPanel;
     UserData userData;
