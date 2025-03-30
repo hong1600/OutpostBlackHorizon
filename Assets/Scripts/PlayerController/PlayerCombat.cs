@@ -30,7 +30,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && !isAttack && !gunManager.isReloading) 
+        if (Input.GetMouseButton(0) && cameraFpsShake.enabled == true && !isAttack && !gunManager.isReloading) 
         {
             StartCoroutine(StartAttackRifle());
         }

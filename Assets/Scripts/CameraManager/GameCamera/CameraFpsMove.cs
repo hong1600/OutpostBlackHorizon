@@ -31,7 +31,7 @@ public class CameraFpsMove : MonoBehaviour
 
     private void LookMouse()
     {
-        if (viewState.GetViewState() == EViewState.FPS && topToFps.isArrive)
+        if (viewState.CurViewState == EViewState.FPS && topToFps.isArrive)
         {
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");

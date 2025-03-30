@@ -8,22 +8,16 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance { get; private set; }
 
-    [Header("UIStack")]
+    [Header("UI STACK")]
     Stack<GameObject> uiStack = new Stack<GameObject>();
     Dictionary<GameObject, UIData> uiDataDic = new Dictionary<GameObject, UIData>();
 
-    [Header("SceneUI")]
-    [SerializeField] List<GameObject> uiSceneList = new List<GameObject>();
-    Dictionary<EScene, List<GameObject>> uiSceneDic = new Dictionary<EScene, List<GameObject>>();
+    [Header("CURSOR")]
+    [SerializeField] GameObject cursor;
 
-    [Header("Cursor")]
-    [SerializeField] CustomCursor cursor;
-
+    [Header("COMMON FUNCTION")]
     [SerializeField] PanelOpen panelOpen;
     [SerializeField] VideoSelector videoSelector;
-
-    public PanelOpen PanelOpen { get; private set; }
-    public VideoSelector VideoSelector { get; private set; }
 
     private void Awake()
     {
@@ -38,50 +32,11 @@ public class UIManager : MonoBehaviour
 
         PanelOpen = panelOpen;
         VideoSelector = videoSelector;
-        InitSceneUI();
     }
 
     private void Start()
     {
-        InitSceneUI();
-
         InputManager.instance.onInputEsc += ClosePanel;
-    }
-
-    private void InitSceneUI()
-    {
-        for (int i = 0; i < uiSceneList.Count; i++)
-        {
-            GameObject ui = uiSceneList[i];
-            UISceneType type = ui.GetComponent<UISceneType>();
-            EScene eScene = type.uiSceneType;
-
-            if (!uiSceneDic.ContainsKey(eScene))
-            {
-                uiSceneDic[eScene] = new List<GameObject>();
-            }
-
-            uiSceneDic[eScene].Add(uiSceneList[i]);
-        }
-    }
-
-    public void UpdateSceneUI(EScene _eScene)
-    {
-        foreach(EScene key in uiSceneDic.Keys) 
-        {
-            foreach (GameObject ui in uiSceneDic[key])
-            {
-                ui.SetActive(false);
-            }
-        }
-
-        if (uiSceneDic.ContainsKey(_eScene))
-        {
-            foreach (GameObject ui in uiSceneDic[_eScene])
-            {
-                ui.SetActive(true);
-            }
-        }
     }
 
     public void OpenPanel(GameObject _panel, RectTransform[] _rect, 
@@ -165,4 +120,9 @@ public class UIManager : MonoBehaviour
         color.a = _alpha;
         _ui.color = color;
     }
+
+    public GameObject Cursor { get { return cursor; } }
+    public PanelOpen PanelOpen { get; private set; }
+    public VideoSelector VideoSelector { get; private set; }
+
 }

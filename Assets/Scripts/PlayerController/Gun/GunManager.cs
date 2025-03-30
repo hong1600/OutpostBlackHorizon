@@ -6,12 +6,14 @@ using UnityEngine;
 public class GunManager : MonoBehaviour
 {
     public event Action onReloading;
+
     public int curBulletCount { get; private set; }
     public int maxBulletCount { get; private set; }
     public int haveBulletCount { get; private set; }
     public int curGrenadeCount { get; private set; }
-    public bool isReloading { get; private set; } = false;  
+    public bool isReloading { get; private set; } = false;
 
+    [SerializeField] GunMovement gunMovemnet;
 
     private void Awake()
     {
@@ -71,4 +73,6 @@ public class GunManager : MonoBehaviour
 
         isReloading = false;
     }
+
+    public GunMovement GunMovement { get { return gunMovemnet; } }
 }

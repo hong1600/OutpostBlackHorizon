@@ -36,7 +36,7 @@ public class CameraTopToFps : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && isArrive)
         {
-            if (Shared.gameManager.ViewState.GetViewState() == EViewState.FPS)
+            if (Shared.gameManager.ViewState.CurViewState == EViewState.FPS)
             {
                 Shared.gameManager.ViewState.SetViewState(EViewState.TOP);
             }
@@ -54,12 +54,12 @@ public class CameraTopToFps : MonoBehaviour
         if (_eGameState == EViewState.FPS)
         {
             mainCam.transform.SetParent(playerObj.transform);
-            MoveCamera();
+            MoveCamera(_eGameState);
         }
         else if( _eGameState == EViewState.TOP)
         {
             rifle.transform.SetParent(playerObj.transform);
-            MoveCamera();
+            MoveCamera(_eGameState);
         }
         else
         {
@@ -67,19 +67,19 @@ public class CameraTopToFps : MonoBehaviour
         }
     }
 
-    private void MoveCamera()
+    private void MoveCamera(EViewState _eGameState)
     {
         isArrive = false;
 
-        Vector3 targetTrs = (Shared.gameManager.ViewState.GetViewState() == EViewState.FPS) ?
+        Vector3 targetTrs = (Shared.gameManager.ViewState.CurViewState == EViewState.FPS) ?
             playerEyeTrs.position : topTrs.position;
-        Quaternion targetRot = (Shared.gameManager.ViewState.GetViewState() == EViewState.FPS) ?
+        Quaternion targetRot = (Shared.gameManager.ViewState.CurViewState == EViewState.FPS) ?
             playerObj.transform.rotation : topTrs.rotation;
 
-        StartCoroutine(StartMoveCamera(targetTrs, targetRot));
+        StartCoroutine(StartMoveCamera(targetTrs, targetRot, _eGameState));
     }
 
-    private IEnumerator StartMoveCamera(Vector3 _targetTrs, Quaternion _targetRot)
+    private IEnumerator StartMoveCamera(Vector3 _targetTrs, Quaternion _targetRot, EViewState _eGameState)
     {
         mainCam.transform.DOMove(_targetTrs, 1.5f)
         .SetEase(Ease.InOutSine);
@@ -93,12 +93,13 @@ public class CameraTopToFps : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
+        Shared.gameManager.ViewState.UpdateState(_eGameState);
         isArrive = true;
     }
 
     private void SwitchMode()
     {
-        bool isFPS = Shared.gameManager.ViewState.GetViewState() == EViewState.FPS;
+        bool isFPS = Shared.gameManager.ViewState.CurViewState == EViewState.FPS;
 
         if(isFPS) 
         {
@@ -106,16 +107,10 @@ public class CameraTopToFps : MonoBehaviour
             rifle.transform.localPosition = new Vector3(0.07f, -0.27f, 0.29f);
             rifle.transform.localRotation = Quaternion.identity;
             rifle.GetComponent<GunMovement>().InitPos();
-            fpsMove.SetActive(true);
-            fpsShake.SetActive(true);
-            fpsZoom.SetActive(true);
         }
         else
         {
             mainCam.transform.SetParent(null);
-            fpsMove.SetActive(false);
-            fpsShake.SetActive(false);
-            fpsZoom.SetActive(false);
         }
     }
 }

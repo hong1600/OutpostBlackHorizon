@@ -21,10 +21,6 @@ public class CameraFpsZoom : MonoBehaviour
     private void Start()
     {
         scope = Shared.gameUI.scope;
-    }
-
-    private void OnEnable()
-    {
         InputManager.instance.onRightClickDown += ZoomCamera;
     }
 
@@ -34,6 +30,7 @@ public class CameraFpsZoom : MonoBehaviour
         {
             StartCoroutine(StartZoom());
         }
+        
     }
 
     IEnumerator StartZoom()

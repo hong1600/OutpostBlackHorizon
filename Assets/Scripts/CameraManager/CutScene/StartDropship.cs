@@ -33,9 +33,6 @@ public class StartDropship : MonoBehaviour
     [SerializeField] GameObject enemyManager;
     [SerializeField] GameObject fieldManager;
 
-    [Header("UI Elements")]
-    [SerializeField] GameObject TextPanel;
-
     private void Start()
     {
         playerMovement = Shared.playerManager.playerMovement;
@@ -47,10 +44,13 @@ public class StartDropship : MonoBehaviour
 
     private void Init()
     {
-        CinemachineTrackedDolly dolly = cam.GetComponent<CinemachineTrackedDolly>();
+        CinemachineTrackedDolly dolly = cam.GetCinemachineComponent<CinemachineTrackedDolly>();
+        CinemachineBasicMultiChannelPerlin noise = cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         dolly.m_Path = track;
         dolly.m_PathPosition = 0f;
+
+        noise.m_AmplitudeGain = 0;
 
         gameManager.SetActive(false);
         fieldManager.SetActive(false);
@@ -64,14 +64,12 @@ public class StartDropship : MonoBehaviour
         camMng.SetActive(false);
         Shared.gameManager.ViewState.enabled = false;
 
+        Shared.cameraManager.CutScene.PlayClip(clip);
         cam.enabled = true;
-
-        TextPanel.SetActive(true);
     }
 
     IEnumerator StartMove()
     {
-        Shared.cameraManager.CutScene.PlayClip(clip);
         yield return StartCoroutine(StartMoveToTarget(pos1));
 
         moveSpeed = 40f;
@@ -94,8 +92,6 @@ public class StartDropship : MonoBehaviour
 
             yield return null;
         }
-
-        TextPanel.SetActive(false);
 
         if (Vector3.Distance(dropship.transform.position, pos2.position) <= 0.1f)
         {

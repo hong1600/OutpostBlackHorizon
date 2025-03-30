@@ -15,6 +15,6 @@ public class Robot3 : NormalEnemy
 
     protected override IEnumerator StartAttack()
     {
-        throw new System.NotImplementedException();
+        yield return null;
     }
 }

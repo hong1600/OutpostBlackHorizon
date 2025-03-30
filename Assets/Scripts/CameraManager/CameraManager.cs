@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    [SerializeField] CameraFpsMove cameraFpsMove;
     [SerializeField] CameraFpsShake cameraFpsShake;
     [SerializeField] CameraFpsZoom cameraFpsZoom;
     [SerializeField] CameraTopMove cameraTopMove;
@@ -11,24 +12,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField] CameraTopToFps cameraTopToFps;
     [SerializeField] CutScene cutScene;
 
-    public CameraFpsShake CameraFpsShake { get; private set; }
-    public CameraFpsZoom CameraFpsZoom { get; private set; }
-    public CameraTopMove CameraTopMove { get; private set; }
-    public CameraTopZoom CameraTopZoom { get; private set; }
-    public CameraTopToFps CameraTopToFps { get; private set; }
-    public CutScene CutScene { get; private set; }
-
-
     private void Awake()
     {
         Shared.cameraManager = this;
-
-        CameraFpsShake = cameraFpsShake;
-        CameraFpsZoom = cameraFpsZoom;
-        CameraTopMove = cameraTopMove;
-        CameraTopZoom = cameraTopZoom;
-        CameraTopToFps = cameraTopToFps;
-        CutScene = cutScene;
     }
 
     private void Update()
@@ -53,4 +39,12 @@ public class CameraManager : MonoBehaviour
             }
         }
     }
+
+    public CameraFpsMove CameraFpsMove { get { return cameraFpsMove; } }
+    public CameraFpsShake CameraFpsShake { get { return cameraFpsShake; } }
+    public CameraFpsZoom CameraFpsZoom { get { return cameraFpsZoom; } }
+    public CameraTopMove CameraTopMove { get { return cameraTopMove; } }
+    public CameraTopZoom CameraTopZoom { get { return cameraTopZoom; } }
+    public CameraTopToFps CameraTopToFps { get { return cameraTopToFps; } }
+    public CutScene CutScene { get { return cutScene; } }
 }

@@ -19,6 +19,7 @@ public class FinishDropship : MonoBehaviour
     [Header("Dropship Setting")]
     [SerializeField] GameObject dropShip;
     [SerializeField] GameObject hatch;
+    [SerializeField] GameObject finishBox;
     [SerializeField] float hatchSpeed = 2f;
 
     [Header("Player Setting")]
@@ -30,11 +31,6 @@ public class FinishDropship : MonoBehaviour
     [SerializeField] List<Transform> movePosList;
     Vector3 dropShipUpOffset = new Vector3(-15, 20, 30);
     Vector3 playerPos;
-
-    [Header("UI Elements")]
-    [SerializeField] GameObject HUDCanvas;
-    [SerializeField] GameObject finishBox;
-    [SerializeField] Transform hatchCamTrs;
 
     private void Awake()
     {
@@ -54,7 +50,6 @@ public class FinishDropship : MonoBehaviour
             camManager.enabled = false;
             cam.enabled = true;
             rifle.transform.SetParent(playerObj.transform);
-            HUDCanvas.SetActive(false);
             playerObj.transform.SetParent(transform);
             player.enabled = false;
             playerPos = playerObj.transform.localPosition;

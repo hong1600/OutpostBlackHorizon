@@ -37,6 +37,7 @@ public abstract class Projectile : MonoBehaviour
     {
         bulletPool = Shared.objectPoolManager.BulletPool;
         effectPool = Shared.objectPoolManager.EffectPool;
+
         hitAim = Shared.gameUI.HitAim;
         hitAimImg = hitAim.GetComponent<Image>();
     }

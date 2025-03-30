@@ -1,4 +1,4 @@
 ID,NameKey,Damage,AttackSpeed,AttackRange,Img,Cost,Desc
-401,turret_101_name,5,0.1,20,Assets/Sprites/Obj/MachineTurret,100,
-402,turret_102_name,50,4,40,Assets/Sprites/Obj/RocketTurret,250,
-403,turret_103_name,30,2,30,Assets/Sprites/Obj/RazerTurret,500,
+401,turret_101_name,5,0.1,50,Assets/Sprites/Obj/MachineTurret,100,
+402,turret_102_name,50,4,50,Assets/Sprites/Obj/RocketTurret,250,
+403,turret_103_name,30,2,50,Assets/Sprites/Obj/RazerTurret,500,

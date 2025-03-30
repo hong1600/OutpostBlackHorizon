@@ -8,19 +8,10 @@ public class ViewState : MonoBehaviour
 {
     public event Action<EViewState> onViewStateChange;
 
-    [Header("FpsComponent")]
-    PlayerMovement playerMovement;
-    PlayerCombat playerCombat;
-    [SerializeField] GunManager gunManager;
-    [SerializeField] GunMovement gunMovement;
-
-    [Header("TopComponent")]
-    FieldBuild fieldBuild;
-
     [SerializeField] EViewState curViewState;
 
-    [SerializeField] List<GameObject> fpsObj;
-    [SerializeField] List<GameObject> topObj;
+    List<MonoBehaviour> topComponent = new List<MonoBehaviour>();
+    List<MonoBehaviour> fpsComponent = new List<MonoBehaviour>();
 
     private void Awake()
     {
@@ -29,11 +20,20 @@ public class ViewState : MonoBehaviour
 
     private void Start()
     {
-        playerMovement = Shared.playerManager.playerMovement;
-        playerCombat = Shared.playerManager.playerCombat;
-        fieldBuild = Shared.fieldManager.FieldBuild;
+        //fps
+        fpsComponent.Add(Shared.playerManager.playerMovement);
+        fpsComponent.Add(Shared.playerManager.playerCombat);
+        fpsComponent.Add(Shared.gunManager);
+        fpsComponent.Add(Shared.gunManager.GunMovement);
+        fpsComponent.Add(Shared.cameraManager.CameraFpsMove);
+        fpsComponent.Add(Shared.cameraManager.CameraFpsShake);
+        fpsComponent.Add(Shared.cameraManager.CameraFpsZoom);
 
-        UpdateState(curViewState);
+        //top
+        topComponent.Add(Shared.fieldManager.FieldBuild);
+        topComponent.Add(Shared.cameraManager.CameraTopMove);
+        topComponent.Add(Shared.cameraManager.CameraTopZoom);
+
         onViewStateChange?.Invoke(curViewState);
     }
 
@@ -42,16 +42,10 @@ public class ViewState : MonoBehaviour
         if (curViewState == _state) return;
 
         curViewState = _state;
-        UpdateState(_state);
         onViewStateChange?.Invoke(_state);
     }
 
-    public EViewState GetViewState()
-    {
-        return curViewState;
-    }
-
-    private void UpdateState(EViewState _state)
+    public void UpdateState(EViewState _state)
     {
         switch (_state) 
         {
@@ -69,58 +63,44 @@ public class ViewState : MonoBehaviour
 
     private void SwitchFps()
     {
-        playerMovement.enabled = true;
-        playerCombat.enabled = true;
-        gunMovement.enabled = true;
-        gunManager.enabled = true;
-        fieldBuild.enabled = false;
-
-        for(int i = 0; i < topObj.Count; i++) 
+        for(int i = 0; i < topComponent.Count; i++) 
         {
-            topObj[i].SetActive(false);
+            topComponent[i].enabled = false;
         }
-        for (int i = 0; i < topObj.Count; i++)
+        for (int i = 0; i < fpsComponent.Count; i++)
         {
-            topObj[i].SetActive(true);
+            fpsComponent[i].enabled = true;
         }
         Shared.gameUI.SwitchFps();
     }
 
     private void SwitchTop()
     {
-        playerMovement.enabled = false;
-        playerCombat.enabled = false;
-        gunMovement.enabled = false;
-        gunManager.enabled = false;
-        fieldBuild.enabled = true;
+        for (int i = 0; i < fpsComponent.Count; i++)
+        {
+            fpsComponent[i].enabled = false;
+        }
+        for (int i = 0; i < topComponent.Count; i++)
+        {
+            topComponent[i].enabled = true;
+        }
 
-        for (int i = 0; i < fpsObj.Count; i++)
-        {
-            fpsObj[i].SetActive(false);
-        }
-        for (int i = 0; i < fpsObj.Count; i++)
-        {
-            fpsObj[i].SetActive(true);
-        }
         Shared.gameUI.SwitchTop();
     }
 
     private void SwitchNone()
     {
-        playerMovement.enabled = false;
-        playerCombat.enabled = false;
-        gunMovement.enabled = false;
-        gunManager.enabled = false;
-        fieldBuild.enabled = false;
+        for (int i = 0; i < topComponent.Count; i++)
+        {
+            topComponent[i].enabled = false;
+        }
+        for (int i = 0; i < fpsComponent.Count; i++)
+        {
+            fpsComponent[i].enabled = false;
+        }
 
-        for (int i = 0; i < fpsObj.Count; i++)
-        {
-            fpsObj[i].SetActive(false);
-        }
-        for (int i = 0; i < topObj.Count; i++)
-        {
-            topObj[i].SetActive(false);
-        }
         Shared.gameUI.SwitchNone();
     }
+
+    public EViewState CurViewState { get { return curViewState; } }
 }

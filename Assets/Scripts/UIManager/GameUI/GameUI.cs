@@ -1,16 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
     public EScene eScene { get; private set; } = EScene.GAME;
-
-    [Header("COMPONENTS")]
-    [SerializeField] UIMixRightSlot uiMixRightSlot;
-    [SerializeField] UIFusionBtn uiFusionBtn;
-    [SerializeField] GameObject hitAim;
 
     [Header("BLACK OUT")]
     [SerializeField] Image blackImg;
@@ -22,7 +18,7 @@ public class GameUI : MonoBehaviour
 
     [Header("SCOPE")]
     [SerializeField] GameObject scopeObj;
-    public GameObject scope { get { return scopeObj; } }
+    [SerializeField] GameObject hitAim;
 
     private void Awake()
     {
@@ -34,10 +30,13 @@ public class GameUI : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
 
-        UIMixRightSlot = uiMixRightSlot;
-        UIFusionBtn = uiFusionBtn;
-        HitAim = hitAim;
+    private void Start()
+    {
+        GameObject cursor = UIManager.instance.Cursor;
+        topUI.Add(cursor);
+        NoneUI.Add(cursor);
     }
 
     public IEnumerator StartBlackout(float _duration)
@@ -81,8 +80,8 @@ public class GameUI : MonoBehaviour
         }
     }
 
-
     public UIFusionBtn UIFusionBtn { get; private set; }
     public UIMixRightSlot UIMixRightSlot { get; private set; }
-    public GameObject HitAim { get; private set; }
+    public GameObject HitAim { get { return hitAim; } }
+    public GameObject scope { get { return scopeObj; } }
 }

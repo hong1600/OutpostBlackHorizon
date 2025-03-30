@@ -61,7 +61,7 @@ public class FieldBuild : MonoBehaviour
 
     public void BuildPreview(GameObject _fieldObj, FieldData _fieldData)
     {
-        if(previewObj == null && viewState.GetViewState() == EViewState.TOP) 
+        if(previewObj == null && viewState.CurViewState == EViewState.TOP) 
         {
             buildingPre = _fieldObj;
             fieldData = _fieldData;
