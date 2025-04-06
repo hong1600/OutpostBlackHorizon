@@ -23,7 +23,7 @@ public class Center : MonoBehaviour, ITakeDmg
 
     void Start()
     {
-        gameState = Shared.gameManager.GameState;
+        gameState = GameManager.instance.GameState;
         DrawCircle();
     }
 

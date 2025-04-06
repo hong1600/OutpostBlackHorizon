@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IFieldSelector
+public class FieldSelector : MonoBehaviour
 {
-    GameObject GetStartSelectField();
-    GameObject GetCurSelectField();
-}
+    GameUI gameUI;
+    UnitMoveField unitMoveField;
 
-public class FieldSelector : MonoBehaviour, IFieldSelector
-{
     [SerializeField] Material originMat;
     [SerializeField] Material selectMat;
     [SerializeField] GameObject startSelectField;
@@ -20,9 +17,9 @@ public class FieldSelector : MonoBehaviour, IFieldSelector
 
     private void Start()
     {
-        InputManager.instance.onLeftClickDown -= OnFieldClickDown;
-        InputManager.instance.onLeftClickDrag -= OnFieldDrag;
-        InputManager.instance.onLeftClickUp -= OnFieldClickUp;
+        gameUI = GameUI.instance;
+        unitMoveField = UnitManager.instance.UnitMoveField;
+
         InputManager.instance.onLeftClickDown += OnFieldClickDown;
         InputManager.instance.onLeftClickDrag += OnFieldDrag;
         InputManager.instance.onLeftClickUp += OnFieldClickUp;
@@ -73,30 +70,30 @@ public class FieldSelector : MonoBehaviour, IFieldSelector
         {
             if (startFieldRenderer != null) { startFieldRenderer.material = originMat; }
             if (curFieldRenderer != null) { curFieldRenderer.material = originMat; }
-            Shared.gameUI.UIFusionBtn.HideFusionBtn();
+            gameUI.UIFusionBtn.HideFusionBtn();
         }
         else if (startSelectField != curSelectField)
         {
             if (startFieldRenderer != null) { startFieldRenderer.material = originMat; }
             if (curFieldRenderer != null) { curFieldRenderer.material = originMat; }
 
-            Shared.unitManager.UnitMoveField.CheckUnitField(
+            unitMoveField.CheckUnitField(
                 startSelectField.transform.GetChild(0).gameObject,
                 curSelectField.transform.GetChild(0).gameObject);
         }
         else if(startSelectField == curSelectField)
         {
-            Shared.gameUI.UIFusionBtn.HideFusionBtn();
+            gameUI.UIFusionBtn.HideFusionBtn();
 
             if (startSelectField != null)
             {
-                Shared.gameUI.UIFusionBtn.ShowFusionBtn(startSelectField.transform.position);
+                gameUI.UIFusionBtn.ShowFusionBtn(startSelectField.transform.position);
             }
             else
             {
                 startSelectField = curSelectField;
 
-                Shared.gameUI.UIFusionBtn.ShowFusionBtn(startSelectField.transform.position);
+                gameUI.UIFusionBtn.ShowFusionBtn(startSelectField.transform.position);
             }
         }
         else return;

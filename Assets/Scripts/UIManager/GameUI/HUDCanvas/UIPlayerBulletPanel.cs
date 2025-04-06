@@ -13,10 +13,10 @@ public class UIPlayerBulletPanel : MonoBehaviour
 
     private void Start()
     {
-        gunManager = Shared.gunManager;
+        gunManager = GunManager.instance;
 
         gunManager.onReloading += UpdateBullet;
-        Shared.playerManager.playerCombat.onUseBullet += UpdateBullet;
+        PlayerManager.instance.playerCombat.onUseBullet += UpdateBullet;
 
         UpdateBullet();
     }

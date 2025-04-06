@@ -21,14 +21,14 @@ public class Round : MonoBehaviour
 
     private void Start()
     {
-        cutScene = Shared.cameraManager.CutScene;
+        cutScene = CameraManager.instance.CutScene;
     }
 
     public void RoundCheck()
     {
         if(curRound == 1) 
         {
-            Shared.cameraManager.CutScene.PlayCutScene(ECutScene.ENEMYDROPSHIP);
+            cutScene.PlayCutScene(ECutScene.ENEMYDROPSHIP);
         }
 
         if (curRound == 3)

@@ -14,7 +14,7 @@ public abstract class ObjectPool<T> : MonoBehaviour
 
     protected virtual void Init()
     {
-        poolManager = Shared.objectPoolManager;
+        poolManager = ObjectPoolManager.instance;
 
         for (int i = 0; i < objectList.Count; i++)
         {

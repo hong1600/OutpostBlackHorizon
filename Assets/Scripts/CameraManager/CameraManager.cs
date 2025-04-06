@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : Singleton<CameraManager>
 {
     [SerializeField] CameraFpsMove cameraFpsMove;
     [SerializeField] CameraFpsShake cameraFpsShake;
@@ -12,9 +12,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField] CameraTopToFps cameraTopToFps;
     [SerializeField] CutScene cutScene;
 
-    private void Awake()
+    protected override void Awake()
     {
-        Shared.cameraManager = this;
+        base.Awake();
     }
 
     private void Update()

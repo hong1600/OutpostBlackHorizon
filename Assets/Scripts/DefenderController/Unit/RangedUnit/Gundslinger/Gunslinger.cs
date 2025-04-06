@@ -12,7 +12,7 @@ public class Gunslinger : RangedUnit
     {
         info = DataManager.instance.TableUnit.GetUnitData(104);
 
-        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.ImgPath, false);
+        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.SpriteName, false);
         base.UnitInit(info.Grade);
     }
 

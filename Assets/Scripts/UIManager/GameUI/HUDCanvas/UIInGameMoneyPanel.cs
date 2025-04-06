@@ -6,6 +6,7 @@ using UnityEngine;
 public class UIInGameMoneyPanel : MonoBehaviour
 {
     UnitData unitData;
+    GoldCoin goldCoin;
 
     [SerializeField] TextMeshProUGUI myGoldText;
     [SerializeField] TextMeshProUGUI myCoinText;
@@ -13,11 +14,12 @@ public class UIInGameMoneyPanel : MonoBehaviour
 
     private void Start()
     {
-        unitData = Shared.unitManager.UnitData;
+        goldCoin = GameManager.instance.GoldCoin;
+        unitData = UnitManager.instance.UnitData;
 
-        Shared.gameManager.GoldCoin.onGoldChanged += InGameMoneyPanel;
-        Shared.gameManager.GoldCoin.onCoinChanged += InGameMoneyPanel;
-        Shared.unitManager.UnitData.onUnitCountEvent += UnitCounterPanel;
+        goldCoin.onGoldChanged += InGameMoneyPanel;
+        goldCoin.onCoinChanged += InGameMoneyPanel;
+        unitData.onUnitCountEvent += UnitCounterPanel;
 
         InGameMoneyPanel();
         UnitCounterPanel();
@@ -25,8 +27,8 @@ public class UIInGameMoneyPanel : MonoBehaviour
 
     private void InGameMoneyPanel()
     {
-        myGoldText.text = Shared.gameManager.GoldCoin.GetGold().ToString();
-        myCoinText.text = Shared.gameManager.GoldCoin.GetCoin().ToString();
+        myGoldText.text = goldCoin.GetGold().ToString();
+        myCoinText.text = goldCoin.GetCoin().ToString();
     }
 
     private void UnitCounterPanel()

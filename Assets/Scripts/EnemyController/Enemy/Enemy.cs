@@ -66,16 +66,15 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         if(render != null) originMat = render.material;
         skinRender = GetComponentInChildren<SkinnedMeshRenderer>();
 
-        enemySpawner = Shared.enemyManager.EnemySpawner;
-        goldCoin = Shared.gameManager.GoldCoin;
-        round = Shared.gameManager.Round;
-        timer = Shared.gameManager.Timer;
-        bulletPool = Shared.objectPoolManager.BulletPool;
-        hpBarPool = Shared.objectPoolManager.HpBarPool;
-        enemyPool = Shared.objectPoolManager.EnemyPool;
-        effectPool = Shared.objectPoolManager.EffectPool;
-        rewarder = Shared.gameManager.Rewarder;
-
+        enemySpawner = EnemyManager.instance.EnemySpawner;
+        goldCoin = GameManager.instance.GoldCoin;
+        round = GameManager.instance.Round;
+        timer = GameManager.instance.Timer;
+        rewarder = GameManager.instance.Rewarder;
+        bulletPool = ObjectPoolManager.instance.BulletPool;
+        hpBarPool = ObjectPoolManager.instance.HpBarPool;
+        enemyPool = ObjectPoolManager.instance.EnemyPool;
+        effectPool = ObjectPoolManager.instance.EffectPool;
 
         enemyName = _name;
         maxHp = _maxHp;

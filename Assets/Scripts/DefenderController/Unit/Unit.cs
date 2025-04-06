@@ -33,23 +33,23 @@ public abstract class Unit : Defender
         switch (eUnitGrade)
         {
             case EUnitGrade.C
-            : lastUpgrade = Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[0]; 
+            : lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[0]; 
                 break;
             case EUnitGrade.B: 
-                lastUpgrade = Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[0]; 
+                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[0]; 
                 break;
             case EUnitGrade.A:
-                lastUpgrade = Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[1];
+                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[1];
                 break;
             case EUnitGrade.S: 
-                lastUpgrade = Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[2]; 
+                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[2]; 
                 break;
             case EUnitGrade.SS: 
-                lastUpgrade = Shared.unitManager.UnitUpgrader.GetUpgradeLevel()[2];
+                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[2];
                 break;
         }
 
-        Shared.unitManager.UnitUpgrader.MissUpgrade(lastUpgrade, this);
+        UnitManager.instance.UnitUpgrader.MissUpgrade(lastUpgrade, this);
 
         isSkill = false;
         skillCouroutine = null;

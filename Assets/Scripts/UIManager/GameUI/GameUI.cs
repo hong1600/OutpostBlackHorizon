@@ -4,7 +4,7 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUI : MonoBehaviour
+public class GameUI : Singleton<GameUI>
 {
     public EScene eScene { get; private set; } = EScene.GAME;
 
@@ -20,16 +20,9 @@ public class GameUI : MonoBehaviour
     [SerializeField] GameObject scopeObj;
     [SerializeField] GameObject hitAim;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (Shared.gameUI == null)
-        {
-            Shared.gameUI = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        base.Awake();
     }
 
     private void Start()

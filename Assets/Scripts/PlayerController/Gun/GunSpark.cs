@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GunSpark : MonoBehaviour
 {
-    EffectPool pool;
+    EffectPool effectPool;
 
     private void Start()
     {
-        pool = Shared.objectPoolManager.EffectPool;
+        effectPool = ObjectPoolManager.instance.EffectPool;
     }
 
     private void OnEnable()
@@ -18,6 +18,6 @@ public class GunSpark : MonoBehaviour
 
     private void Return()
     {
-        pool.ReturnEffect(EEffect.GUNSPARK, gameObject);
+        effectPool.ReturnEffect(EEffect.GUNSPARK, gameObject);
     }
 }

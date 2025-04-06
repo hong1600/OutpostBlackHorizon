@@ -52,7 +52,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
     IEnumerator StartDie()
     {
-        Shared.gameManager.GameState.SetGameState(EGameState.GAMEOVER);
+        GameManager.instance.GameState.SetGameState(EGameState.GAMEOVER);
         yield return null;
     }
 

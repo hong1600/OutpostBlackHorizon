@@ -8,6 +8,7 @@ public class WaveBossSpawner : MonoBehaviour
 
     EnemyManager enemyManager;
     EnemySpawner enemySpawner;
+    ObjectPoolManager poolManager;
 
     private void Awake()
     {
@@ -16,10 +17,11 @@ public class WaveBossSpawner : MonoBehaviour
 
     private void Start()
     {
-        enemyManager = Shared.enemyManager;
-        enemySpawner = Shared.enemyManager.EnemySpawner;
+        enemyManager = EnemyManager.instance;
+        enemySpawner = enemyManager.EnemySpawner;
+        poolManager = ObjectPoolManager.instance;
 
-        Shared.gameManager.Round.onRoundEvent += SpawnDelay;
+        GameManager.instance.Round.onRoundEvent += SpawnDelay;
     }
 
     private void SpawnDelay()
@@ -33,11 +35,11 @@ public class WaveBossSpawner : MonoBehaviour
         int spawnPoint = Random.Range(0, enemySpawner.EnemySpawnPointList().Count);
 
         Vector3 spawnPos =
-            Shared.enemyManager.EnemySpawner.EnemySpawnPointList()[spawnPoint].transform.position;
+            enemySpawner.EnemySpawnPointList()[spawnPoint].transform.position;
 
         spawnPos.y = terrain.SampleHeight(spawnPos);
 
         GameObject waveBoss =
-            Shared.objectPoolManager.EnemyPool.FindEnemy(EEnemy.ROBOT5, spawnPos, Quaternion.identity);
+            poolManager.EnemyPool.FindEnemy(EEnemy.ROBOT5, spawnPos, Quaternion.identity);
     }
 }

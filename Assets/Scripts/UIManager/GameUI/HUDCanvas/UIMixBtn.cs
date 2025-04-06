@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class UIMixBtn : MonoBehaviour
 {
+    UnitMixer unitMixer;
+
     [SerializeField] GameObject mixPanel;
     [SerializeField] GameObject upgradePanel;
     [SerializeField] GameObject randomPanel;
 
+    private void Start()
+    {
+        unitMixer = UnitManager.instance.UnitMixer;
+    }
 
     public void ClickMixPanelBtn()
     {
@@ -19,6 +25,6 @@ public class UIMixBtn : MonoBehaviour
 
     public void ClickMixSpawnBtn()
     {
-        StartCoroutine(Shared.unitManager.UnitMixer.StartUnitMixSpawn());
+        StartCoroutine(unitMixer.StartUnitMixSpawn());
     }
 }

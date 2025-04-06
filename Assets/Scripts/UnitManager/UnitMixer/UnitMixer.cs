@@ -8,14 +8,17 @@ public class UnitMixer : MonoBehaviour
     UnitData unitData;
     UnitSpawner unitSpawner;
 
+    GameUI gameUI;
+
     public List<Unit> unitToMixList = new List<Unit>();
 
     public GameObject mixPanel;
 
     private void Start()
     {
-        unitData = Shared.unitManager.UnitData;
-        unitSpawner = Shared.unitManager.UnitSpawner;
+        gameUI = GameUI.instance;
+        unitData = UnitManager.instance.UnitData;
+        unitSpawner = UnitManager.instance.UnitSpawner;
     }
 
     public bool IsUnitCanMix()
@@ -23,7 +26,7 @@ public class UnitMixer : MonoBehaviour
         unitToMixList.Clear();
 
         List<GameObject> allUnitList = unitData.GetAllUnitList();
-        List<TableUnit.Info> sacUnitList = Shared.gameUI.UIMixRightSlot.GetUnitList();
+        List<TableUnit.Info> sacUnitList = gameUI.UIMixRightSlot.GetUnitList();
 
         foreach (GameObject fieldUnit in allUnitList)
         {
@@ -39,7 +42,7 @@ public class UnitMixer : MonoBehaviour
             }
         }
 
-        if(unitToMixList.Count > 0 && unitToMixList.Count == Shared.gameUI.UIMixRightSlot.GetUnitList().Count) 
+        if(unitToMixList.Count > 0 && unitToMixList.Count == gameUI.UIMixRightSlot.GetUnitList().Count) 
         {
             return true;
         }
@@ -59,7 +62,7 @@ public class UnitMixer : MonoBehaviour
             yield return new WaitForEndOfFrame();
 
             GameObject spawnUnit =
-                unitData.GetUnitByGradeList(EUnitGrade.SS)[Shared.gameUI.UIMixRightSlot.GetCurMixUnit()];
+                unitData.GetUnitByGradeList(EUnitGrade.SS)[gameUI.UIMixRightSlot.GetCurMixUnit()];
 
             unitSpawner.InstantiateUnit(spawnUnit);
 

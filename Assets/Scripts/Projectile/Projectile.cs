@@ -35,10 +35,10 @@ public abstract class Projectile : MonoBehaviour
 
     private void Start()
     {
-        bulletPool = Shared.objectPoolManager.BulletPool;
-        effectPool = Shared.objectPoolManager.EffectPool;
+        bulletPool = ObjectPoolManager.instance.BulletPool;
+        effectPool = ObjectPoolManager.instance.EffectPool;
 
-        hitAim = Shared.gameUI.HitAim;
+        hitAim = GameUI.instance.HitAim;
         hitAimImg = hitAim.GetComponent<Image>();
     }
 

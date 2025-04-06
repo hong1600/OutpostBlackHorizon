@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
-    public static UIManager instance { get; private set; }
-
     [Header("UI STACK")]
     Stack<GameObject> uiStack = new Stack<GameObject>();
     Dictionary<GameObject, UIData> uiDataDic = new Dictionary<GameObject, UIData>();
@@ -19,16 +17,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] PanelOpen panelOpen;
     [SerializeField] VideoSelector videoSelector;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        base.Awake();
 
         PanelOpen = panelOpen;
         VideoSelector = videoSelector;

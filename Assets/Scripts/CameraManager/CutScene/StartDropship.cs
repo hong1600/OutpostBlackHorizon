@@ -10,7 +10,6 @@ public class StartDropship : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera cam;
     [SerializeField] CinemachineSmoothPath track;
     [SerializeField] AnimationClip clip;
-    [SerializeField] GameObject camMng;
 
     [Header("Movement Settings")]
     [SerializeField] Transform pos1;
@@ -28,15 +27,10 @@ public class StartDropship : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerCombat playerCombat;
 
-    [Header("Managers")]
-    [SerializeField] GameObject gameManager;
-    [SerializeField] GameObject enemyManager;
-    [SerializeField] GameObject fieldManager;
-
     private void Start()
     {
-        playerMovement = Shared.playerManager.playerMovement;
-        playerCombat = Shared.playerManager.playerCombat;
+        playerMovement = PlayerManager.instance.playerMovement;
+        playerCombat = PlayerManager.instance.playerCombat;
         AudioManager.instance.PlayBgm(EBgm.GAMESTART);
         Init();
         StartCoroutine(StartMove());
@@ -52,19 +46,19 @@ public class StartDropship : MonoBehaviour
 
         noise.m_AmplitudeGain = 0;
 
-        gameManager.SetActive(false);
-        fieldManager.SetActive(false);
-        enemyManager.SetActive(false);
+        GameManager.instance.enabled = false;
+        FieldManager.instance.enabled = false;
+        EnemyManager.instance.enabled = false;
+        GameManager.instance.ViewState.enabled = false;
+        CameraManager.instance.enabled = false;
         playerMovement.enabled = false;
         playerCombat.enabled = false;
         player.transform.SetParent(transform);
         player.transform.position = playerStartPos.position;
         player.transform.rotation = Quaternion.Euler(0, 45, 0);
         hatch.transform.localRotation = Quaternion.identity;
-        camMng.SetActive(false);
-        Shared.gameManager.ViewState.enabled = false;
 
-        Shared.cameraManager.CutScene.PlayClip(clip);
+        CameraManager.instance.CutScene.PlayClip(clip);
         cam.enabled = true;
     }
 
@@ -120,17 +114,17 @@ public class StartDropship : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         AudioManager.instance.PlayBgm(EBgm.DESERT);
-        camMng.SetActive(true);
-        gameManager.SetActive(true);
-        fieldManager.SetActive(true);
-        enemyManager.SetActive(true);
+        GameManager.instance.enabled = true;
+        FieldManager.instance.enabled = true;
+        EnemyManager.instance.enabled = true;
+        CameraManager.instance.enabled = true;
 
         cam.enabled = false;
 
         yield return new WaitForSeconds(1f);
 
         this.enabled = false;
-        Shared.gameManager.ViewState.enabled = true;
+        GameManager.instance.ViewState.enabled = true;
         playerMovement.enabled = true;
         playerCombat.enabled = true;
     }

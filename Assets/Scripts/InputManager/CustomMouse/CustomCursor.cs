@@ -138,6 +138,7 @@ public class CustomCursor : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
+            Debug.Log(hit.collider.gameObject);
             return hit.collider.gameObject;
         }
         return null;

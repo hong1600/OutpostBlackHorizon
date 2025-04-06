@@ -18,7 +18,7 @@ public abstract class Defender : MonoBehaviour
     public int attackDamage;
     public float attackSpeed;
     public float attackRange;
-    public Sprite defenderImg;
+    public Sprite defenderSprite;
     protected float rotationSpeed;
     protected bool isAttack;
     protected Coroutine attackCoroutine;
@@ -28,7 +28,7 @@ public abstract class Defender : MonoBehaviour
     protected float targetHeight;
 
     protected virtual void Init(int _id, string _name, int _dmg, 
-        float _spd, float _range, string _imgPath, bool _isAI)
+        float _spd, float _range, string _sprite, bool _isAI)
     {
         if (_isAI)
         {
@@ -41,14 +41,14 @@ public abstract class Defender : MonoBehaviour
         attackDamage = _dmg;
         attackSpeed = _spd;
         attackRange = _range;
-        defenderImg = Resources.Load<Sprite>(_imgPath);
+        defenderSprite = SpriteManager.instance.GetSprite(_sprite);
 
         rotationSpeed = 2.5f;
         isAttack = false;
         attackCoroutine = null;
 
-        bulletPool = Shared.objectPoolManager.BulletPool;
-        effectPool = Shared.objectPoolManager.EffectPool;
+        bulletPool = ObjectPoolManager.instance.BulletPool;
+        effectPool = ObjectPoolManager.instance.EffectPool;
     }
 
     private void Update()

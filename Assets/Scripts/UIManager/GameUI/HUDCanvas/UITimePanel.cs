@@ -13,7 +13,7 @@ public class UITimePanel : MonoBehaviour
 
     private void Start()
     {
-        timer = Shared.gameManager.Timer;
+        timer = GameManager.instance.Timer;
         timer.onTimeEvent += UpdateTimePanel;
     }
 

@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class DataManager : MonoBehaviour
+public class DataManager : Singleton<DataManager>
 {
-    public static DataManager instance;
-
     [SerializeField] UserDataLoader userDataLoader;
 
     TableUnit tableUnit;
@@ -15,16 +13,9 @@ public class DataManager : MonoBehaviour
     TableItem tableItem;
     TableTurret tableTurret;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        base.Awake();
 
         UserDataLoader = userDataLoader;
 

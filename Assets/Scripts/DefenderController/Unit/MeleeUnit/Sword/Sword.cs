@@ -12,7 +12,7 @@ public class Sword : MeleeUnit
     {
         info = DataManager.instance.TableUnit.GetUnitData(101);
 
-        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.ImgPath, false);
+        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.SpriteName, false);
         base.UnitInit(info.Grade);
     }
 
@@ -24,7 +24,7 @@ public class Sword : MeleeUnit
 
         if (rand < 5)
         {
-            Shared.gameManager.GoldCoin.SetGold(10);
+            GameManager.instance.GoldCoin.SetGold(10);
 
             EEffect eEffect = (EEffect)EEffect.SWORD;
             GameObject effect = effectPool.FindEffect(eEffect, gameObject.transform.position, Quaternion.identity);

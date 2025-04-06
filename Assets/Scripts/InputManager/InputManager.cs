@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<InputManager>
 {
-    public static InputManager instance;
-
     public event Action<Vector2> onLeftClickDown;
     public event Action<Vector2> onLeftClickDrag;
     public event Action<Vector2> onLeftClickUp;
@@ -29,16 +27,9 @@ public class InputManager : MonoBehaviour
 
     public Vector3 keyDelta { get; private set; }
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else 
-        {
-            Destroy(this.gameObject);
-        }
+        base.Awake();
 
         if (fieldSelector != null)
         {

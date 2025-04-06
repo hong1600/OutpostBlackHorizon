@@ -34,10 +34,10 @@ public class FieldBuild : MonoBehaviour
     {
         terrain = Terrain.activeTerrain;
         cursor = InputManager.instance.cursor;
-        fieldManager = Shared.fieldManager;
-        goldCoin = Shared.gameManager.GoldCoin;
-        viewState = Shared.gameManager.ViewState;
-        unitFieldData = Shared.unitManager.UnitFieldData;
+        fieldManager = FieldManager.instance;
+        goldCoin = GameManager.instance.GoldCoin;
+        viewState = GameManager.instance.ViewState;
+        unitFieldData = UnitManager.instance.UnitFieldData;
     }
 
     private void Update()

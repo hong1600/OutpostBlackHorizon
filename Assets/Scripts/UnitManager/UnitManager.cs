@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UnitManager : MonoBehaviour
+public class UnitManager : Singleton<UnitManager>
 {
     [SerializeField] UnitFusion unitFusion;
     [SerializeField] UnitMixer unitMixer;
@@ -15,16 +15,9 @@ public class UnitManager : MonoBehaviour
     [SerializeField] UnitData unitData;
     [SerializeField] UnitFieldData unitFieldData;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (Shared.unitManager == null)
-        {
-            Shared.unitManager = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        base.Awake();
 
         UnitFusion = unitFusion;
         UnitMixer = unitMixer;

@@ -6,6 +6,7 @@ using UnityEngine;
 public partial class UnitUpgrader : MonoBehaviour
 {
     UnitData unitData;
+    GoldCoin goldCoin;
 
     public event Action onUpgradeCostChange;
     public event Action onUpgradeLevelChange;
@@ -32,7 +33,8 @@ public partial class UnitUpgrader : MonoBehaviour
 
     private void Start()
     {
-        unitData = Shared.unitManager.UnitData;
+        unitData = UnitManager.instance.UnitData;
+        goldCoin = GameManager.instance.GoldCoin;
     }
 
     public void UnitUpgrade(int _index)
@@ -79,13 +81,13 @@ public partial class UnitUpgrader : MonoBehaviour
 
     public void UpgradeGrade(int _index, int _cost, int _amount, List<EUnitGrade> _grades, string _type)
     {
-        if (_type == "Gold" && Shared.gameManager.GoldCoin.GetGold() >= _cost)
+        if (_type == "Gold" && goldCoin.GetGold() >= _cost)
         {
             UnitUpgradeCost(ref upgradeCosts[_index], _cost, _type, _index);
 
             upgradeLevels[_index]++;
         }
-        else if (_type == "Coin" && Shared.gameManager.GoldCoin.GetGold() >= _cost)
+        else if (_type == "Coin" && goldCoin.GetGold() >= _cost)
         {
             UnitUpgradeCost(ref upgradeCosts[_index], _cost, _type, _index);
 
@@ -109,9 +111,9 @@ public partial class UnitUpgrader : MonoBehaviour
     public void UnitUpgradeCost(ref int _cost, int _amount, string _type, int _index)
     {
         if (_type == "Gold")
-            Shared.gameManager.GoldCoin.UseGold(_cost);
+            goldCoin.UseGold(_cost);
         else if (_type == "Coin")
-            Shared.gameManager.GoldCoin.UseGold(_cost);
+            goldCoin.UseGold(_cost);
 
         if (upgradeLevels[_index] < 5)
         {

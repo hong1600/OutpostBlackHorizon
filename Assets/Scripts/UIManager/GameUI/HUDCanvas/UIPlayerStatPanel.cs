@@ -15,7 +15,7 @@ public class UIPlayerStatPanel : MonoBehaviour
 
     private void Start()
     {
-        playerStatus = Shared.playerManager.playerStatus;
+        playerStatus = PlayerManager.instance.playerStatus;
         playerStatus.onTakeDmg += UpdateHp;
         playerStatus.onUseEnergy += UpdateEnergy;
 

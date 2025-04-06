@@ -13,14 +13,14 @@ public class UnitSpawner : MonoBehaviour
     UnitUpgrader unitUpgrader;
 
     [SerializeField] float[][] selectWeights = new float[][]
-{
-    new float[] { 0.72f, 0.15f, 0.10f, 0.03f },
-    new float[] { 0.65f, 0.18f, 0.12f, 0.05f },
-    new float[] { 0.58f, 0.21f, 0.14f, 0.07f },
-    new float[] { 0.51f, 0.24f, 0.16f, 0.09f },
-    new float[] { 0.44f, 0.27f, 0.18f, 0.11f },
-    new float[] { 0.37f, 0.30f, 0.20f, 0.13f }
-};
+    {
+        new float[] { 0.72f, 0.15f, 0.10f, 0.03f },
+        new float[] { 0.65f, 0.18f, 0.12f, 0.05f },
+        new float[] { 0.58f, 0.21f, 0.14f, 0.07f },
+        new float[] { 0.51f, 0.24f, 0.16f, 0.09f },
+        new float[] { 0.44f, 0.27f, 0.18f, 0.11f },
+        new float[] { 0.37f, 0.30f, 0.20f, 0.13f }
+    };
     [SerializeField] string[] selectOptions = { "C", "B", "A", "S" };
     [SerializeField] int spawnGold;
     [SerializeField] GameObject selectSpawnUnit;
@@ -36,10 +36,10 @@ public class UnitSpawner : MonoBehaviour
 
     private void Start()
     {
-        unitFieldData = Shared.unitManager.UnitFieldData;
-        unitData = Shared.unitManager.UnitData;
-        goldCoin = Shared.gameManager.GoldCoin;
-        unitUpgrader = Shared.unitManager.UnitUpgrader;
+        unitFieldData = UnitManager.instance.UnitFieldData;
+        unitData = UnitManager.instance.UnitData;
+        goldCoin = GameManager.instance.GoldCoin;
+        unitUpgrader = UnitManager.instance.UnitUpgrader;
     }
 
     public void InstantiateUnit(GameObject _unit)

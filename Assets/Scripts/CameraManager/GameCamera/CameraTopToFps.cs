@@ -8,6 +8,8 @@ public class CameraTopToFps : MonoBehaviour
 {
     Camera mainCam;
 
+    GameManager gameManager;
+
     [SerializeField] GameObject fpsMove;
     [SerializeField] GameObject fpsShake;
     [SerializeField] GameObject fpsZoom;
@@ -24,7 +26,9 @@ public class CameraTopToFps : MonoBehaviour
     private void Awake()
     {
         mainCam = Camera.main;
-        Shared.gameManager.ViewState.onViewStateChange += SetCameraMode;
+
+        gameManager = GameManager.instance;
+        gameManager.ViewState.onViewStateChange += SetCameraMode;
     }
 
     private void Start()
@@ -36,13 +40,13 @@ public class CameraTopToFps : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && isArrive)
         {
-            if (Shared.gameManager.ViewState.CurViewState == EViewState.FPS)
+            if (gameManager.ViewState.CurViewState == EViewState.FPS)
             {
-                Shared.gameManager.ViewState.SetViewState(EViewState.TOP);
+                gameManager.ViewState.SetViewState(EViewState.TOP);
             }
             else
             {
-                Shared.gameManager.ViewState.SetViewState(EViewState.FPS);
+                gameManager.ViewState.SetViewState(EViewState.FPS);
             }
         }
     }
@@ -71,9 +75,9 @@ public class CameraTopToFps : MonoBehaviour
     {
         isArrive = false;
 
-        Vector3 targetTrs = (Shared.gameManager.ViewState.CurViewState == EViewState.FPS) ?
+        Vector3 targetTrs = (gameManager.ViewState.CurViewState == EViewState.FPS) ?
             playerEyeTrs.position : topTrs.position;
-        Quaternion targetRot = (Shared.gameManager.ViewState.CurViewState == EViewState.FPS) ?
+        Quaternion targetRot = (gameManager.ViewState.CurViewState == EViewState.FPS) ?
             playerObj.transform.rotation : topTrs.rotation;
 
         StartCoroutine(StartMoveCamera(targetTrs, targetRot, _eGameState));
@@ -93,13 +97,13 @@ public class CameraTopToFps : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        Shared.gameManager.ViewState.UpdateState(_eGameState);
+        gameManager.ViewState.UpdateState(_eGameState);
         isArrive = true;
     }
 
     private void SwitchMode()
     {
-        bool isFPS = Shared.gameManager.ViewState.CurViewState == EViewState.FPS;
+        bool isFPS = gameManager.ViewState.CurViewState == EViewState.FPS;
 
         if(isFPS) 
         {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FieldManager : MonoBehaviour
+public class FieldManager : Singleton<FieldManager>
 {
     [SerializeField] FieldBuild fieldBuild;
     [SerializeField] FieldSelector fieldSelector;
@@ -10,9 +10,9 @@ public class FieldManager : MonoBehaviour
     [SerializeField] List<FieldData> fieldDataList = new List<FieldData>(); 
     Dictionary<FieldData, int> fieldAmountDic = new Dictionary<FieldData, int>();
 
-    private void Awake()
+    protected override void Awake()
     {
-        Shared.fieldManager = this;
+        base.Awake();
 
         FieldBuild = fieldBuild;
         FieldSelector = fieldSelector;

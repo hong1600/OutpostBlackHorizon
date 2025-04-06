@@ -21,6 +21,6 @@ public abstract class Boss : Enemy
         timer.SetSec(15f);
         enemySpawner.EnemySpawnDelay = 0.85f;
 
-        Shared.gameManager.GameState.SetGameState(EGameState.GAMECLEAR);
+        GameManager.instance.GameState.SetGameState(EGameState.GAMECLEAR);
     }
 }

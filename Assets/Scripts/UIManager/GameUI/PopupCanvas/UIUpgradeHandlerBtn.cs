@@ -6,6 +6,6 @@ public class UIUpgradeHandlerBtn : MonoBehaviour
 {
     public void ClickUpgradeBtn(int _index)
     {
-        Shared.unitManager.UnitUpgrader.UnitUpgrade(_index);
+        UnitManager.instance.UnitUpgrader.UnitUpgrade(_index);
     }
 }

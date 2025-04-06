@@ -11,8 +11,8 @@ public class UnitFusion : MonoBehaviour
 
     private void Start()
     {
-        unitData = Shared.unitManager.UnitData;
-        unitSpawner = Shared.unitManager.UnitSpawner;
+        unitData = UnitManager.instance.UnitData;
+        unitSpawner = UnitManager.instance.UnitSpawner;
     }
 
     public void UnitFusionSpawn()

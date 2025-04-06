@@ -5,7 +5,7 @@ using UnityEngine;
 public class Plasma : MonoBehaviour
 {
     SphereCollider sphere;
-    EffectPool pool;
+    EffectPool effectPool;
 
     HashSet<Collider> targetList = new HashSet<Collider>();
 
@@ -21,7 +21,7 @@ public class Plasma : MonoBehaviour
 
     private void Start()
     {
-        pool = Shared.objectPoolManager.EffectPool;
+        effectPool = ObjectPoolManager.instance.EffectPool;
     }
 
     private void OnEnable()
@@ -74,6 +74,6 @@ public class Plasma : MonoBehaviour
 
     private void Return()
     {
-        pool.ReturnEffect(EEffect.PLASMA, gameObject);
+        effectPool.ReturnEffect(EEffect.PLASMA, gameObject);
     }
 }

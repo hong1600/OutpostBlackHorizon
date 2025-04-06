@@ -9,7 +9,7 @@ public abstract class WaveBoss : Enemy
 
     private void Start()
     {
-        waveBossSpawner = Shared.enemyManager.WaveBossSpawner;
+        waveBossSpawner = EnemyManager.instance.WaveBossSpawner;
     }
 
     protected internal override void Die()

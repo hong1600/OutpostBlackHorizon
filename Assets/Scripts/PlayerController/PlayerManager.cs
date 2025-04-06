@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : Singleton<PlayerManager>
 {
     public PlayerAI playerAI { get; private set; }
     public CapsuleCollider cap { get; private set; }
@@ -13,9 +13,10 @@ public class PlayerManager : MonoBehaviour
     public PlayerCombat playerCombat { get; private set; }
     public PlayerStatus playerStatus { get; private set; }
 
-    private void Awake()
+    protected override void Awake()
     {
-        Shared.playerManager = this;
+        base.Awake();
+
         cap = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
 
@@ -26,6 +27,7 @@ public class PlayerManager : MonoBehaviour
         playerAI = new PlayerAI();
         playerAI.Init(this);
     }
+
 
     internal void ChangeAnim(EPlayer _ePlayer)
     {

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     [SerializeField] Timer timer;
     [SerializeField] Round round;
@@ -17,16 +17,9 @@ public class GameManager : MonoBehaviour
     WaveBossSpawner waveBossSpawner;
     BossSpawner bossSpawner;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (Shared.gameManager == null)
-        {
-            Shared.gameManager = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        base.Awake();
 
         Timer = timer;
         Round = round;
@@ -38,9 +31,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        enemySpawner = Shared.enemyManager.EnemySpawner;
-        waveBossSpawner = Shared.enemyManager.WaveBossSpawner;
-        bossSpawner = Shared.enemyManager.BossSpawner;
+        enemySpawner = EnemyManager.instance.EnemySpawner;
+        waveBossSpawner = EnemyManager.instance.WaveBossSpawner;
+        bossSpawner = EnemyManager.instance.BossSpawner;
     }
 
     private void Update()

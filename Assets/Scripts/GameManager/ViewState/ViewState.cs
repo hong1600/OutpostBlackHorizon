@@ -10,6 +10,8 @@ public class ViewState : MonoBehaviour
 
     [SerializeField] EViewState curViewState;
 
+    GameUI gameUI;
+
     List<MonoBehaviour> topComponent = new List<MonoBehaviour>();
     List<MonoBehaviour> fpsComponent = new List<MonoBehaviour>();
 
@@ -20,19 +22,19 @@ public class ViewState : MonoBehaviour
 
     private void Start()
     {
-        //fps
-        fpsComponent.Add(Shared.playerManager.playerMovement);
-        fpsComponent.Add(Shared.playerManager.playerCombat);
-        fpsComponent.Add(Shared.gunManager);
-        fpsComponent.Add(Shared.gunManager.GunMovement);
-        fpsComponent.Add(Shared.cameraManager.CameraFpsMove);
-        fpsComponent.Add(Shared.cameraManager.CameraFpsShake);
-        fpsComponent.Add(Shared.cameraManager.CameraFpsZoom);
+        fpsComponent.Add(PlayerManager.instance.playerMovement);
+        fpsComponent.Add(PlayerManager.instance.playerCombat);
+        fpsComponent.Add(GunManager.instance);
+        fpsComponent.Add(GunManager.instance.GunMovement);
+        fpsComponent.Add(CameraManager.instance.CameraFpsMove);
+        fpsComponent.Add(CameraManager.instance.CameraFpsShake);
+        fpsComponent.Add(CameraManager.instance.CameraFpsZoom);
 
-        //top
-        topComponent.Add(Shared.fieldManager.FieldBuild);
-        topComponent.Add(Shared.cameraManager.CameraTopMove);
-        topComponent.Add(Shared.cameraManager.CameraTopZoom);
+        topComponent.Add(FieldManager.instance.FieldBuild);
+        topComponent.Add(CameraManager.instance.CameraTopMove);
+        topComponent.Add(CameraManager.instance.CameraTopZoom);
+
+        gameUI = GameUI.instance;
 
         onViewStateChange?.Invoke(curViewState);
     }
@@ -71,7 +73,7 @@ public class ViewState : MonoBehaviour
         {
             fpsComponent[i].enabled = true;
         }
-        Shared.gameUI.SwitchFps();
+        gameUI.SwitchFps();
     }
 
     private void SwitchTop()
@@ -85,7 +87,7 @@ public class ViewState : MonoBehaviour
             topComponent[i].enabled = true;
         }
 
-        Shared.gameUI.SwitchTop();
+        gameUI.SwitchTop();
     }
 
     private void SwitchNone()
@@ -99,7 +101,7 @@ public class ViewState : MonoBehaviour
             fpsComponent[i].enabled = false;
         }
 
-        Shared.gameUI.SwitchNone();
+        gameUI.SwitchNone();
     }
 
     public EViewState CurViewState { get { return curViewState; } }

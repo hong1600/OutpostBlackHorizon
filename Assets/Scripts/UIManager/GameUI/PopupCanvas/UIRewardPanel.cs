@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class UIRewardPanel : MonoBehaviour
 {
+    Rewarder rewarder;
+
     [Header("Finish")]
     [SerializeField] GameObject finishPanel;
     [SerializeField] Image BackGround;
@@ -30,7 +32,8 @@ public class UIRewardPanel : MonoBehaviour
 
     private void Start()
     {
-        Shared.gameManager.GameState.onGameFinish += UpdateRewardPanel;
+        rewarder = GameManager.instance.Rewarder;
+        GameManager.instance.GameState.onGameFinish += UpdateRewardPanel;
     }
 
     IEnumerator StartAnim()
@@ -84,9 +87,7 @@ public class UIRewardPanel : MonoBehaviour
             userNameText.text = "";
         }
 
-        dmgText.text = Shared.playerManager.playerCombat.cumulativeDmg.ToString();
-
-        rewardText.text = Shared.gameManager.Rewarder.GetReward(EReward.GOLD).ToString();
+        rewardText.text = GameManager.instance.Rewarder.GetReward(EReward.GOLD).ToString();
 
         if (_state == EGameState.GAMECLEAR)
         {

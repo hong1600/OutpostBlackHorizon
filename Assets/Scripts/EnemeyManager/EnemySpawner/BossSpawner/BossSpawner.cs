@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class BossSpawner : MonoBehaviour
 {
+    ObjectPoolManager poolManager;
+
     [SerializeField] Transform bossSpawnPos;
     [SerializeField] UIBossHpbar hpbar;
 
     private void Start()
     {
-        Shared.gameManager.Round.onBossRound += SpawnBoss;
+        GameManager.instance.Round.onBossRound += SpawnBoss;
+        poolManager = ObjectPoolManager.instance;
     }
 
     public void SpawnBoss()
     {
         //hpbar.ShowHpBar();
 
-        GameObject boss = Shared.objectPoolManager.EnemyPool.FindEnemy
+        GameObject boss = poolManager.EnemyPool.FindEnemy
             (EEnemy.ROBOT6, bossSpawnPos.position, Quaternion.Euler(0,180,0));
     }
 }

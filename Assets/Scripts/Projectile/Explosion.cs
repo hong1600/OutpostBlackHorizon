@@ -11,7 +11,7 @@ public class Explosion : MonoBehaviour
 
     private void Awake()
     {
-        effectPool = Shared.objectPoolManager.EffectPool;
+        effectPool = ObjectPoolManager.instance.EffectPool;
         sphere = GetComponent<SphereCollider>();
     }
 

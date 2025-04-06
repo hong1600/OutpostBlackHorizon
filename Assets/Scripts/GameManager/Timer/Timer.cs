@@ -23,10 +23,10 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
-        gameState = Shared.gameManager.GameState;
-        round = Shared.gameManager.Round;
-        enemySpawner = Shared.enemyManager.EnemySpawner;
-        waveBossSpawner = Shared.enemyManager.WaveBossSpawner;
+        gameState = GameManager.instance.GameState;
+        round = GameManager.instance.Round;
+        enemySpawner = EnemyManager.instance.EnemySpawner;
+        waveBossSpawner = EnemyManager.instance.WaveBossSpawner;
 
         enemySpawner.IsSpawn = false;
         sec = 120f;

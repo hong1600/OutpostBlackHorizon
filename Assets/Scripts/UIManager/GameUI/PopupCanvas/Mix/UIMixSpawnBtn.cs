@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class UIMixSpawnBtn : MonoBehaviour
 {
+    UnitMixer unitMixer;
+
+    private void Start()
+    {
+        unitMixer = UnitManager.instance.UnitMixer;
+    }
+
     public void ClickMixSpawn()
     {
-        StartCoroutine(Shared.unitManager.UnitMixer.StartUnitMixSpawn());
+        StartCoroutine(unitMixer.StartUnitMixSpawn());
     }
 }

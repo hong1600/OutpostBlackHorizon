@@ -20,8 +20,8 @@ public class CameraFpsMove : MonoBehaviour
 
     private void Start()
     {
-        viewState = Shared.gameManager.ViewState;
-        topToFps = Shared.cameraManager.CameraTopToFps;
+        viewState = GameManager.instance.ViewState;
+        topToFps = CameraManager.instance.CameraTopToFps;
     }
 
     private void LateUpdate()

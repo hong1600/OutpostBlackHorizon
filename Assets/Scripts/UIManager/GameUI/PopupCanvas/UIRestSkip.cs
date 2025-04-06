@@ -12,7 +12,7 @@ public class UIRestSkip : MonoBehaviour
 
     private void Start()
     {
-        timer = Shared.gameManager.Timer;
+        timer = GameManager.instance.Timer;
         timer.onRestTime += ShowBtn;
     }
     public void ClickSkipRestTime()

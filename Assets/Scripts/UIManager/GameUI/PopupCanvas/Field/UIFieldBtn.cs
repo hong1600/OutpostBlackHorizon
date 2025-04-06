@@ -4,40 +4,39 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UISelectFieldBtn : MonoBehaviour
+public class UIFieldBtn : MonoBehaviour
 {
     FieldData fieldData;
     FieldBuild fieldBuild;
+    FieldManager fieldManager;
     
     GameObject field;
     [SerializeField] TextMeshProUGUI priceText;
     [SerializeField] TextMeshProUGUI amountText;
     [SerializeField] Image img;
 
-    private void Start()
+    public void InitFieldBtn(FieldData _fieldData)
     {
-        fieldBuild = Shared.fieldManager.FieldBuild;
+        fieldManager = FieldManager.instance;
+        fieldBuild = fieldManager.FieldBuild;
 
-        Shared.fieldManager.FieldBuild.onDecreaseField += UpdateBtn;
-    }
+        fieldManager.FieldBuild.onDecreaseField += UpdateBtn;
 
-    public void Init(FieldData _fieldData)
-    {
         field = _fieldData.field;
         fieldData = _fieldData;
         priceText.text = $"{_fieldData.fieldPrice}";
-        amountText.text = $"{Shared.fieldManager.GetFieldAmount(_fieldData)}/{_fieldData.fieldAmount}";
+        amountText.text = $"{fieldManager.GetFieldAmount(_fieldData)}/{_fieldData.fieldAmount}";
         img.sprite = _fieldData.fieldImg;
     }
 
     private void UpdateBtn()
     {
-        amountText.text = $"{Shared.fieldManager.GetFieldAmount(fieldData)}/{fieldData.fieldAmount}";
+        amountText.text = $"{fieldManager.GetFieldAmount(fieldData)}/{fieldData.fieldAmount}";
     }
 
     public void ClickFieldBtn()
     {
-        if (Shared.fieldManager.GetFieldAmount(fieldData) > 0)
+        if (fieldManager.GetFieldAmount(fieldData) > 0)
         {
             fieldBuild.BuildPreview(field, fieldData);
         }

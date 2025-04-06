@@ -5,17 +5,22 @@ using UnityEngine;
 
 public class UIRandomPanel : MonoBehaviour
 {
+    GoldCoin goldCoin;
+
     [SerializeField] TextMeshProUGUI myCoinText;
+
     private void Start()
     {
-    Shared.gameManager.GoldCoin.onCoinChanged -= randomPanel;
-    Shared.gameManager.GoldCoin.onCoinChanged += randomPanel;
+        goldCoin = GameManager.instance.GoldCoin;
 
-    myCoinText.text = Shared.gameManager.GoldCoin.GetCoin().ToString();
+        goldCoin.onCoinChanged -= randomPanel;
+        goldCoin.onCoinChanged += randomPanel;
+
+        myCoinText.text = goldCoin.GetCoin().ToString();
     }
 
     private void randomPanel()
     {
-        myCoinText.text = Shared.gameManager.GoldCoin.GetCoin().ToString();
+        myCoinText.text = goldCoin.GetCoin().ToString();
     }
 }

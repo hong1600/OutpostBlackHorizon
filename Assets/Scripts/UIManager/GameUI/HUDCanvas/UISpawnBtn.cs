@@ -5,18 +5,27 @@ using UnityEngine;
 
 public class UISpawnBtn : MonoBehaviour
 {
+    UnitSpawner unitSpawner;
+    GoldCoin goldCoin;
+
     [SerializeField] TextMeshProUGUI spawnGoldText;
+
+    private void Start()
+    {
+        unitSpawner = UnitManager.instance.UnitSpawner;
+        goldCoin = GameManager.instance.GoldCoin;
+    }
 
     public void SpawnBtnText()
     {
-        spawnGoldText.text = Shared.unitManager.UnitSpawner.GetSpawnGold().ToString();
+        spawnGoldText.text = unitSpawner.GetSpawnGold().ToString();
     }
 
     public void ClickSpawnBtn()
     {
-        if (Shared.gameManager.GoldCoin.GetGold() > Shared.unitManager.UnitSpawner.GetSpawnGold())
+        if (goldCoin.GetGold() > unitSpawner.GetSpawnGold())
         {
-            Shared.unitManager.UnitSpawner.SpawnUnit();
+            unitSpawner.SpawnUnit();
         }
     }
 }

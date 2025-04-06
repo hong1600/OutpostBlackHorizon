@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class TableUnit : TableBase
 {
@@ -14,7 +15,7 @@ public class TableUnit : TableBase
         public int Damage;
         public int AttackSpeed;
         public int AttackRange;
-        public string ImgPath;
+        public string SpriteName;
         public string Skill1Name;
         public string Skill2Name;
         public int Level;
@@ -100,7 +101,7 @@ public class TableUnit : TableBase
         _Reader.getInt(_Row, ref _Info.Damage);
         _Reader.getInt(_Row, ref _Info.AttackSpeed);
         _Reader.getInt(_Row, ref _Info.AttackRange);
-        _Reader.getString(_Row, ref _Info.ImgPath);
+        _Reader.getString(_Row, ref _Info.SpriteName);
         _Reader.getString(_Row, ref _Info.Skill1Name);
         _Reader.getString(_Row, ref _Info.Skill2Name);
         _Reader.getInt(_Row, ref _Info.Level);
@@ -157,25 +158,6 @@ public class TableUnit : TableBase
             }
         }
     }
-
-    //public void ConvertStringToArray(UnitData _unitData, Table_Unit.Info _info)
-    //{
-    //    string[] unitNames = _unitData.unitMixNeedUnit.Split(',');
-    //    _unitData.unitMixNeedUnits = new UnitData[unitNames.Length];
-
-    //    for (int i = 0; i < unitNames.Length; i++)
-    //    {
-    //        string unitName = unitNames[i].Trim();
-
-    //        UnitData mixUnitData = unitDataBase.GetUnitName(unitName);
-
-    //        if (mixUnitData != null)
-    //        {
-    //            _unitData.unitMixNeedUnits[i] = mixUnitData;
-    //        }
-    //    }
-    //}
-
 
     //System.Func<object, bool> UpdateAction = null;
     //UpdateAction = 함수연결

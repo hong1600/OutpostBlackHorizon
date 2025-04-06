@@ -20,12 +20,10 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] float bulletSpd;
     [SerializeField] float grenadeSpd;
 
-    public float cumulativeDmg { get; set; } = 0f;
-
     private void Start()
     {
-        bulletPool = Shared.objectPoolManager.BulletPool;
-        cameraFpsShake = Shared.cameraManager.CameraFpsShake;
+        bulletPool = ObjectPoolManager.instance.BulletPool;
+        cameraFpsShake = CameraManager.instance.CameraFpsShake;
     }
 
     private void Update()

@@ -51,3 +51,25 @@ public enum EBullet
     LASERBULLET,
     ROBOT2BULLET,
 }
+
+public enum EBgm
+{
+    LOGIN,
+    LOBBYWAITING,
+    GAMESTART,
+    DESERT,
+    WATER,
+    GAMEFINISH,
+}
+
+public enum ESfx
+{
+    FOOTSTEP,
+    JUMP,
+    GUNSHOT,
+    GUNRELOAD,
+    GRENADESHOT,
+    EXPLOSION,
+    MOSTERATTACK,
+}
+

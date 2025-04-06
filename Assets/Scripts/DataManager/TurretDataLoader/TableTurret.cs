@@ -13,7 +13,7 @@ public class TableTurret : TableBase
         public int Damage;
         public float AttackSpeed;
         public int AttackRange;
-        public string ImgPath;
+        public string SpriteName;
         public int Cost;
         public string Desc;
     }
@@ -42,10 +42,9 @@ public class TableTurret : TableBase
 
             if (Read(reader, info, row, _StartCol) == false)
                 break ;
-             
+
             Dictionary.Add(info.ID, info);
         }
-
     }
 
     public bool Read(CSVReader _Reader, Info _Info, int _Row, int _Col)
@@ -58,7 +57,7 @@ public class TableTurret : TableBase
         _Reader.getInt(_Row, ref _Info.Damage);
         _Reader.getFloat(_Row, ref _Info.AttackSpeed);
         _Reader.getInt(_Row, ref _Info.AttackRange);
-        _Reader.getString(_Row, ref _Info.ImgPath);
+        _Reader.getString(_Row, ref _Info.SpriteName);
         _Reader.getInt(_Row, ref _Info.Cost);
         _Reader.getString(_Row, ref _Info.Desc);
 

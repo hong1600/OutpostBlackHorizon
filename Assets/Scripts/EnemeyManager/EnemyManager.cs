@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : Singleton<EnemyManager>
 {
     public event Action onEnemyCountEvent;
 
@@ -20,16 +20,10 @@ public class EnemyManager : MonoBehaviour
     public WaveBossSpawner WaveBossSpawner { get; private set; }
     public BossSpawner BossSpawner { get; private set; }
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (Shared.enemyManager == null)
-        {
-            Shared.enemyManager = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        base.Awake();
+
         maxEnemy = 100;
         curEnemy = 0;
 

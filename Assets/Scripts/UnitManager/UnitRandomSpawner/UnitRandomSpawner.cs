@@ -10,6 +10,7 @@ public class UnitRandomSpawner : MonoBehaviour
     UnitData unitData;
     UnitSpawner unitSpawner;
     UnitFieldData unitFieldData;
+    GoldCoin goldCoin;
 
     [SerializeField] GameObject randomUnit;
     [SerializeField] bool randomDelay;
@@ -22,9 +23,10 @@ public class UnitRandomSpawner : MonoBehaviour
 
     private void Start()
     {
-        unitData = Shared.unitManager.UnitData;
-        unitSpawner = Shared.unitManager.UnitSpawner;
-        unitFieldData = Shared.unitManager.UnitFieldData;
+        unitData = UnitManager.instance.UnitData;
+        unitSpawner = UnitManager.instance.UnitSpawner;
+        unitFieldData = UnitManager.instance.UnitFieldData;
+        goldCoin = GameManager.instance.GoldCoin;
 
         randomDelay = false;
         fadeTime = 1;
@@ -57,13 +59,13 @@ public class UnitRandomSpawner : MonoBehaviour
                 switch (_index)
                 {
                     case 0:
-                        return spawnCoin0 <= Shared.gameManager.GoldCoin.GetCoin();
+                        return spawnCoin0 <= goldCoin.GetCoin();
 
                     case 1:
-                        return spawnCoin1 <= Shared.gameManager.GoldCoin.GetCoin();
+                        return spawnCoin1 <= goldCoin.GetCoin();
 
                     case 2:
-                        return spawnCoin2 <= Shared.gameManager.GoldCoin.GetCoin();
+                        return spawnCoin2 <= goldCoin.GetCoin();
 
                     default:
                         return false;
@@ -133,13 +135,13 @@ public class UnitRandomSpawner : MonoBehaviour
         switch (_index)
         {
             case 0:
-                return unitData.GetUnitByGradeList(EUnitGrade.B)[_randB].GetComponent<Unit>().defenderImg;
+                return unitData.GetUnitByGradeList(EUnitGrade.B)[_randB].GetComponent<Unit>().defenderSprite;
 
             case 1:
-                return unitData.GetUnitByGradeList(EUnitGrade.A)[_randA].GetComponent<Unit>().defenderImg;
+                return unitData.GetUnitByGradeList(EUnitGrade.A)[_randA].GetComponent<Unit>().defenderSprite;
 
             case 2:
-                return unitData.GetUnitByGradeList(EUnitGrade.S)[_randS].GetComponent<Unit>().defenderImg;
+                return unitData.GetUnitByGradeList(EUnitGrade.S)[_randS].GetComponent<Unit>().defenderSprite;
         }
         return null;
     }

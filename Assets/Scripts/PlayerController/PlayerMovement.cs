@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    PlayerManager playerManager;
     PlayerStatus playerStatus;
     Camera mainCam;
     Rigidbody rigid;
@@ -44,7 +45,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        playerStatus = Shared.playerManager.playerStatus;
+        playerManager = PlayerManager.instance;
+        playerStatus = playerManager.playerStatus;
     }
 
     private void Update()
@@ -154,10 +156,10 @@ public class PlayerMovement : MonoBehaviour
             moveDir = Vector3.zero;
         }
 
-        if (Shared.playerManager.anim != null)
+        if (playerManager.anim != null)
         {
-            Shared.playerManager.anim.SetFloat("Horizontal", moveX);
-            Shared.playerManager.anim.SetFloat("Vertical", moveZ);
+            playerManager.anim.SetFloat("Horizontal", moveX);
+            playerManager.anim.SetFloat("Vertical", moveZ);
         }
     }
 

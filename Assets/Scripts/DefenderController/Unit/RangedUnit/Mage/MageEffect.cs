@@ -16,7 +16,7 @@ public class MageEffect : MonoBehaviour
 
     private void Start()
     {
-        pool = Shared.objectPoolManager.EffectPool;
+        pool = ObjectPoolManager.instance.EffectPool;
     }
 
     private void OnEnable()

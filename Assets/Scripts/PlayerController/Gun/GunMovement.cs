@@ -23,13 +23,8 @@ public class GunMovement : MonoBehaviour
     private void Start()
     {
         InputManager.instance.onInputKey += WalkSwayGun;
-        cameraTopToFps = Shared.cameraManager.CameraTopToFps;
-        viewState = Shared.gameManager.ViewState;
-    }
-
-    private void OnDisable()
-    {
-        InputManager.instance.onInputKey -= WalkSwayGun;
+        cameraTopToFps = CameraManager.instance.CameraTopToFps;
+        viewState = GameManager.instance.ViewState;
     }
 
     public void InitPos()

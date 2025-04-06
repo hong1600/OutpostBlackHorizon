@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class ObjectPoolManager : MonoBehaviour
+public class ObjectPoolManager : Singleton<ObjectPoolManager>
 {
     [SerializeField] EnemyPool enemyPool;
     [SerializeField] EffectPool effectPool;
@@ -19,16 +19,9 @@ public class ObjectPoolManager : MonoBehaviour
     [SerializeField] Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
     [SerializeField] Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (Shared.objectPoolManager == null)
-        {
-            Shared.objectPoolManager = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        base.Awake();
 
         EnemyPool = enemyPool;
         EffectPool = effectPool;

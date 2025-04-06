@@ -28,8 +28,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        enemyPool = Shared.objectPoolManager.EnemyPool;
-        round = Shared.gameManager.Round;
+        enemyPool = ObjectPoolManager.instance.EnemyPool;
+        round = GameManager.instance.Round;
         enemySpawnDelay = 0;
 
         enemySpawnPos[0] = new Vector3(-6f, 0, 0);

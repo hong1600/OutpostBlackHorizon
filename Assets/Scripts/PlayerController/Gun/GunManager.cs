@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunManager : MonoBehaviour
+public class GunManager : Singleton<GunManager>
 {
     public event Action onReloading;
 
@@ -15,15 +15,16 @@ public class GunManager : MonoBehaviour
 
     [SerializeField] GunMovement gunMovemnet;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         curBulletCount = 30;
         maxBulletCount = 30;
         haveBulletCount = 150;
         curGrenadeCount = 10;
-
-        Shared.gunManager = this;
     }
+
 
     private void Update()
     {

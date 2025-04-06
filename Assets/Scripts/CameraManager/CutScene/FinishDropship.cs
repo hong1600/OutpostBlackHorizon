@@ -60,7 +60,7 @@ public class FinishDropship : MonoBehaviour
 
     IEnumerator StartFarPlayer()
     {
-        Shared.cameraManager.CutScene.PlayClip(clip);
+        CameraManager.instance.CutScene.PlayClip(clip);
 
         yield return new WaitForSeconds(3f);
 

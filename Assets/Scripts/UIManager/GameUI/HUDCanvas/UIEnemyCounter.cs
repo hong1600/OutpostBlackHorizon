@@ -6,22 +6,26 @@ using UnityEngine.UI;
 
 public class UIEnemyCounter : MonoBehaviour
 {
+    EnemyManager enemyManager;
+
     [SerializeField] TextMeshProUGUI enemyCountText;
     [SerializeField] Image sliderValue;
 
     private void Start()
     {
-        Shared.enemyManager.onEnemyCountEvent -= EnemyCounterPanel;
-        Shared.enemyManager.onEnemyCountEvent += EnemyCounterPanel;
+        enemyManager = EnemyManager.instance;
 
-        enemyCountText.text = $"{Shared.enemyManager.GetCurEnemy()}  /  {Shared.enemyManager.GetMaxEnemy()}";
+        enemyManager.onEnemyCountEvent -= EnemyCounterPanel;
+        enemyManager.onEnemyCountEvent += EnemyCounterPanel;
+
+        enemyCountText.text = $"{enemyManager.GetCurEnemy()}  /  {enemyManager.GetMaxEnemy()}";
         sliderValue.fillAmount = 0;
     }
 
     private void EnemyCounterPanel()
     {
-        float curEnemy = Shared.enemyManager.GetCurEnemy();
-        float maxEnemy = Shared.enemyManager.GetMaxEnemy();
+        float curEnemy = enemyManager.GetCurEnemy();
+        float maxEnemy = enemyManager.GetMaxEnemy();
 
         enemyCountText.text = $"{curEnemy}  /  {maxEnemy}";
         sliderValue.fillAmount = curEnemy / maxEnemy;

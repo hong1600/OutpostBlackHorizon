@@ -7,10 +7,17 @@ public class UnitData : MonoBehaviour
 {
     public event Action onUnitCountEvent;
 
+    UnitFieldData unitFieldData;
+
     [SerializeField] List<GameObject> unitObj = new List<GameObject>();
     [SerializeField] List<GameObject> allFieldUnitList = new List<GameObject>();
     Dictionary<EUnitGrade, List<GameObject>> unitByGradeDic = new Dictionary<EUnitGrade, List<GameObject>>();
     Dictionary<int, List<GameObject>> unitByGroundDic = new Dictionary<int, List<GameObject>>();
+
+    private void Start()
+    {
+        unitFieldData = UnitManager.instance.UnitFieldData;
+    }
 
     public Dictionary<int, List<GameObject>> getUnitByGroundDic 
     {
@@ -42,7 +49,7 @@ public class UnitData : MonoBehaviour
     {
         allFieldUnitList.Add(_unit);
 
-        unitByGroundDic[Shared.unitManager.UnitFieldData.fieldNum].Add(_unit);
+        unitByGroundDic[unitFieldData.fieldNum].Add(_unit);
 
         onUnitCountEvent?.Invoke();
     }
@@ -50,12 +57,12 @@ public class UnitData : MonoBehaviour
     public void RemoveUnitData(GameObject _unit)
     {
         Transform groundTrs = _unit.transform.parent.parent;
-        Shared.unitManager.UnitFieldData.fieldNum = Shared.unitManager.UnitFieldData.GetSelectGroundNum(groundTrs);
+        unitFieldData.fieldNum = unitFieldData.GetSelectGroundNum(groundTrs);
 
         allFieldUnitList.Remove(_unit);
         Destroy(_unit);
 
-        unitByGroundDic[Shared.unitManager.UnitFieldData.fieldNum].Clear();
+        unitByGroundDic[unitFieldData.fieldNum].Clear();
 
         onUnitCountEvent?.Invoke();
     }

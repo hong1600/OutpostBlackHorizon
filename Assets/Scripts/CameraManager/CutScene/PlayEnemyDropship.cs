@@ -47,7 +47,7 @@ public class PlayEnemyDropship : MonoBehaviour, ICutScene
             }
         }
 
-        Shared.gameUI.SwitchNone();
+        GameUI.instance.SwitchNone();
         StartCoroutine(StartCutScene());
     }
 
@@ -67,13 +67,13 @@ public class PlayEnemyDropship : MonoBehaviour, ICutScene
         cam.m_Follow = dropshipList[1].transform;
         cam.m_LookAt = dropshipList[1].transform;
 
-        Shared.gameManager.Timer.SetTimer(false);
-        StartCoroutine(Shared.gameUI.StartBlackout(1));
-        Shared.gameManager.ViewState.SetViewState(EViewState.NONE);
+        GameManager.instance.Timer.SetTimer(false);
+        StartCoroutine(GameUI.instance.StartBlackout(1));
+        GameManager.instance.ViewState.SetViewState(EViewState.NONE);
 
         yield return new WaitForSeconds(1);
 
-        Shared.cameraManager.CutScene.PlayClip(clip);
+        CameraManager.instance.CutScene.PlayClip(clip);
 
         yield return new WaitForSeconds(8);
 
@@ -81,7 +81,7 @@ public class PlayEnemyDropship : MonoBehaviour, ICutScene
 
         yield return new WaitForSeconds(1);
 
-        Shared.gameManager.Timer.SetTimer(true);
-        Shared.gameManager.ViewState.SetViewState(EViewState.FPS);
+        GameManager.instance.Timer.SetTimer(true);
+        GameManager.instance.ViewState.SetViewState(EViewState.FPS);
     }
 }

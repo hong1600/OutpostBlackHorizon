@@ -3,31 +3,8 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public enum EBgm
+public class AudioManager : Singleton<AudioManager>
 {
-    LOGIN,
-    LOBBYWAITING,
-    GAMESTART,
-    DESERT,
-    WATER,
-    GAMEFINISH,
-}
-
-public enum ESfx
-{
-    FOOTSTEP,
-    JUMP,
-    GUNSHOT,
-    GUNRELOAD,
-    GRENADESHOT,
-    EXPLOSION,
-    MOSTERATTACK,
-}
-
-public class AudioManager : MonoBehaviour
-{
-    public static AudioManager instance { get; private set; }
-
     AudioSource sfxSource;
     AudioSource bgmSource;
 
@@ -45,16 +22,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] float maxDistance = 100f;
     [SerializeField] AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        base.Awake();
 
         bgmSource = gameObject.AddComponent<AudioSource>();
         sfxSource = gameObject.AddComponent<AudioSource>();

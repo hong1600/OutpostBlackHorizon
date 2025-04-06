@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class UIFusionBtn : MonoBehaviour
 {
+    UnitFusion unitFusion;
+
     [SerializeField] Vector3 offset;
 
     private void Start()
     {
+        unitFusion = UnitManager.instance.UnitFusion;
+
         this.gameObject.SetActive(false);
         offset = new Vector3(0, 3, -1);
     }
@@ -17,7 +21,7 @@ public class UIFusionBtn : MonoBehaviour
         if (InputManager.instance.FieldSelector.GetStartSelectField().
             transform.GetChild(0).transform.childCount == 3)
         {
-            Shared.unitManager.UnitFusion.UnitFusionSpawn();
+            unitFusion.UnitFusionSpawn();
 
             this.gameObject.SetActive(false);
         }
