@@ -5,12 +5,14 @@ using UnityEngine;
 public class UIFusionBtn : MonoBehaviour
 {
     UnitFusion unitFusion;
+    FieldSelector fieldSelector;
 
     [SerializeField] Vector3 offset;
 
     private void Start()
     {
         unitFusion = UnitManager.instance.UnitFusion;
+        fieldSelector = InputManager.instance.fieldSelector;
 
         this.gameObject.SetActive(false);
         offset = new Vector3(0, 3, -1);
@@ -18,7 +20,7 @@ public class UIFusionBtn : MonoBehaviour
 
     public void ClickFusion()
     {
-        if (InputManager.instance.FieldSelector.GetStartSelectField().
+        if (fieldSelector.GetStartSelectField().
             transform.GetChild(0).transform.childCount == 3)
         {
             unitFusion.UnitFusionSpawn();
@@ -29,11 +31,11 @@ public class UIFusionBtn : MonoBehaviour
 
     public void ShowFusionBtn(Vector3 _fieldPos)
     {
-        if (InputManager.instance.FieldSelector.GetStartSelectField().
+        if (fieldSelector.GetStartSelectField().
             transform.GetChild(0).transform.childCount == 0) return;
 
-        if (InputManager.instance.FieldSelector.GetStartSelectField().transform.GetChild(0).transform.childCount == 3
-            || InputManager.instance.FieldSelector.GetStartSelectField().transform.GetChild(0).transform.GetChild(0).
+        if (fieldSelector.GetStartSelectField().transform.GetChild(0).transform.childCount == 3
+            || fieldSelector.GetStartSelectField().transform.GetChild(0).transform.GetChild(0).
             GetComponent<Unit>().eUnitGrade != EUnitGrade.S)
         {
             this.gameObject.transform.position = _fieldPos + offset;

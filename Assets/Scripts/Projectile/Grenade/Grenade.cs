@@ -9,12 +9,9 @@ public abstract class Grenade : Projectile
         if (coll.gameObject.layer == LayerMask.NameToLayer("EnemySensor") ||
             coll.gameObject.layer == LayerMask.NameToLayer("Bullet") ||
             coll.gameObject.layer == LayerMask.NameToLayer("Effect"))
-
                 return;
 
-        Vector3 hitPos = coll.ClosestPoint(transform.position);
-
-        GameObject plasma = effectPool.FindEffect(EEffect.PLASMA, hitPos,
+        GameObject plasma = effectPool.FindEffect(EEffect.PLASMA, transform.position,
             Quaternion.LookRotation(-transform.forward));
         AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
 

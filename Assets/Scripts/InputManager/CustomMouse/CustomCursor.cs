@@ -14,10 +14,13 @@ public class CustomCursor : MonoBehaviour
 
     Vector2 mousePos;
 
-    private void Start()
+    private void Awake()
     {
         InputManager.instance.cursor = this;
+    }
 
+    private void Start()
+    {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         InputManager.instance.onInputMouse += CheckUIOrObj;
@@ -138,7 +141,6 @@ public class CustomCursor : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
-            Debug.Log(hit.collider.gameObject);
             return hit.collider.gameObject;
         }
         return null;

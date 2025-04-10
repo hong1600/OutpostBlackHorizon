@@ -18,7 +18,6 @@ public class UIBuild : MonoBehaviour
     [SerializeField] Transform fieldParent;
     [SerializeField] Transform turretParent;
 
-
     private void Start()
     {
         InputManager.instance.onInputB += OpenPanel;
@@ -30,6 +29,7 @@ public class UIBuild : MonoBehaviour
     private void OpenPanel()
     {
         fieldPanel.SetActive(!fieldPanel.activeSelf);
+        turretPanel.SetActive(!turretPanel.activeSelf);
     }
 
     private void CreateFieldBtn()

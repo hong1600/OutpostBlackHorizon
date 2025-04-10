@@ -14,10 +14,8 @@ public class InputManager : Singleton<InputManager>
     public event Action onInputEsc;
     public event Action onInputB;
 
-    [SerializeField] FieldSelector fieldSelector;
+    public FieldSelector fieldSelector;
     public CustomCursor cursor;
-
-    public FieldSelector FieldSelector { get; private set; }
 
     Vector2 startMousePos;
     Vector2 curMousePos;
@@ -30,11 +28,6 @@ public class InputManager : Singleton<InputManager>
     protected override void Awake()
     {
         base.Awake();
-
-        if (fieldSelector != null)
-        {
-            FieldSelector = fieldSelector;
-        }
     }
 
     private void Update()

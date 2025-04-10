@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TurretFieldData
   m_EditorClassIdentifier: 
   fieldID: 1
-  field: {fileID: 6257800485735965347, guid: cf8443763fc34314490f8a3e2f94dd37, type: 3}
+  field: {fileID: 1123282431698027457, guid: de57d922459427f4992810e0902317ef, type: 3}
   fieldName: "\uD3EC\uD0D1\uD544\uB4DC"
   fieldAmount: 5
   fieldPrice: 50

@@ -16,6 +16,7 @@ public class TableTurret : TableBase
         public string SpriteName;
         public int Cost;
         public string Desc;
+        public string PrefabPath;
     }
 
     public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
@@ -60,6 +61,7 @@ public class TableTurret : TableBase
         _Reader.getString(_Row, ref _Info.SpriteName);
         _Reader.getInt(_Row, ref _Info.Cost);
         _Reader.getString(_Row, ref _Info.Desc);
+        _Reader.getString(_Row, ref _Info.PrefabPath);
 
         return true;
     }

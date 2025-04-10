@@ -26,7 +26,6 @@ public class SpriteManager : Singleton<SpriteManager>
             {
                 string spriteName = sprites[j].name.Replace("(Clone)", "").Trim();
                 Sprite spriteRef = sprites[j];
-                Debug.Log($"[{atlasList[i].name}] index:{j}, name: {spriteName}, full: {spriteRef}");
 
                 if (!spriteDic.ContainsKey(spriteName))
                 {

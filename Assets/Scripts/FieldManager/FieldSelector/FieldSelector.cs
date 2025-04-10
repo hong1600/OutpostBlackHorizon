@@ -17,6 +17,7 @@ public class FieldSelector : MonoBehaviour
 
     private void Start()
     {
+        InputManager.instance.fieldSelector = this;
         gameUI = GameUI.instance;
         unitMoveField = UnitManager.instance.UnitMoveField;
 

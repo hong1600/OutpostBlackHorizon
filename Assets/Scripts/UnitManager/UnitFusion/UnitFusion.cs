@@ -8,16 +8,18 @@ public class UnitFusion : MonoBehaviour
 {
     UnitData unitData;
     UnitSpawner unitSpawner;
+    FieldSelector fieldSelector;
 
     private void Start()
     {
         unitData = UnitManager.instance.UnitData;
         unitSpawner = UnitManager.instance.UnitSpawner;
+        fieldSelector = InputManager.instance.fieldSelector;
     }
 
     public void UnitFusionSpawn()
     {
-        GameObject selectGround = InputManager.instance.FieldSelector.GetStartSelectField().
+        GameObject selectGround = fieldSelector.GetStartSelectField().
             transform.GetChild(0).gameObject;
         GameObject selectUnit = selectGround.transform.GetChild(0).gameObject;
         EUnitGrade grade = selectUnit.GetComponent<Unit>().eUnitGrade;

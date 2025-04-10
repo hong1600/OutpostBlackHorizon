@@ -10,7 +10,7 @@ public class UIFieldBtn : MonoBehaviour
     FieldBuild fieldBuild;
     FieldManager fieldManager;
     
-    GameObject field;
+    GameObject fieldObj;
     [SerializeField] TextMeshProUGUI priceText;
     [SerializeField] TextMeshProUGUI amountText;
     [SerializeField] Image img;
@@ -22,7 +22,7 @@ public class UIFieldBtn : MonoBehaviour
 
         fieldManager.FieldBuild.onDecreaseField += UpdateBtn;
 
-        field = _fieldData.field;
+        fieldObj = _fieldData.field;
         fieldData = _fieldData;
         priceText.text = $"{_fieldData.fieldPrice}";
         amountText.text = $"{fieldManager.GetFieldAmount(_fieldData)}/{_fieldData.fieldAmount}";
@@ -38,7 +38,7 @@ public class UIFieldBtn : MonoBehaviour
     {
         if (fieldManager.GetFieldAmount(fieldData) > 0)
         {
-            fieldBuild.BuildPreview(field, fieldData);
+            fieldBuild.BuildPreview(fieldObj, fieldData.fieldAmount, fieldData.fieldPrice);
         }
     }
 }

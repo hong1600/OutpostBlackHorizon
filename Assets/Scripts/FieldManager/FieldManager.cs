@@ -5,6 +5,7 @@ using UnityEngine;
 public class FieldManager : Singleton<FieldManager>
 {
     [SerializeField] FieldBuild fieldBuild;
+    [SerializeField] TurretBuild turretBuild;
     [SerializeField] FieldSelector fieldSelector;
 
     [SerializeField] List<FieldData> fieldDataList = new List<FieldData>(); 
@@ -15,6 +16,7 @@ public class FieldManager : Singleton<FieldManager>
         base.Awake();
 
         FieldBuild = fieldBuild;
+        TurretBuild = turretBuild;
         FieldSelector = fieldSelector;
 
         InitField(fieldDataList);
@@ -34,14 +36,15 @@ public class FieldManager : Singleton<FieldManager>
         return fieldAmountDic.ContainsKey(_fieldData) ? fieldAmountDic[_fieldData] : 0;
     }
 
-    public void DecreaseFieldAmount(FieldData _fieldData)
+    public void DecreaseFieldAmount(int _fieldAmount)
     {
-        if(fieldAmountDic.ContainsKey(_fieldData) && fieldAmountDic[_fieldData] > 0)
+        if (_fieldAmount > 0)
         {
-            fieldAmountDic[_fieldData]--;
+            _fieldAmount--;
         }
     }
 
     public FieldBuild FieldBuild { get; private set; }
+    public TurretBuild TurretBuild { get; private set; }
     public FieldSelector FieldSelector { get; private set; }
 }

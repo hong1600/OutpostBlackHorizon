@@ -8,6 +8,7 @@ public class UnitAI : DefenderAI
 
     public void Init(Unit _unit)
     {
+        base.Init(_unit);
         unit = _unit;
     }
 
