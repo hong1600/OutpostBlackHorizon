@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FieldBuild : BuildBase
 {
-    protected override bool CheckCanBuild(Vector3 position)
+    protected override bool CheckCanBuild(Vector3 _position)
     {
-        return base.CheckCanBuild(position);
+        return base.CheckCanBuild(_position);
     }
 }

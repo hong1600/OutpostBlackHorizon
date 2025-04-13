@@ -8,6 +8,7 @@ public class UIFieldBtn : MonoBehaviour
 {
     FieldData fieldData;
     FieldBuild fieldBuild;
+    TurretBuild turretBuild;
     FieldManager fieldManager;
     
     GameObject fieldObj;
@@ -19,6 +20,7 @@ public class UIFieldBtn : MonoBehaviour
     {
         fieldManager = FieldManager.instance;
         fieldBuild = fieldManager.FieldBuild;
+        turretBuild = fieldManager.TurretBuild;
 
         fieldManager.FieldBuild.onDecreaseField += UpdateBtn;
 
@@ -38,7 +40,8 @@ public class UIFieldBtn : MonoBehaviour
     {
         if (fieldManager.GetFieldAmount(fieldData) > 0)
         {
-            fieldBuild.BuildPreview(fieldObj, fieldData.fieldAmount, fieldData.fieldPrice);
+            turretBuild.CancleBuild();
+            fieldBuild.CreatePreview(fieldObj, fieldData.fieldAmount, fieldData.fieldPrice);
         }
     }
 }

@@ -15,11 +15,6 @@ public class ViewState : MonoBehaviour
     List<MonoBehaviour> topComponent = new List<MonoBehaviour>();
     List<MonoBehaviour> fpsComponent = new List<MonoBehaviour>();
 
-    private void Awake()
-    {
-        curViewState = EViewState.FPS;
-    }
-
     private void Start()
     {
         fpsComponent.Add(PlayerManager.instance.playerMovement);

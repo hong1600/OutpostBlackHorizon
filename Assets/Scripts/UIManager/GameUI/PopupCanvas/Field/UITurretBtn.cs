@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class UITurretBtn : MonoBehaviour
 {
     TableTurret.Info info;
+    TurretBuild turretBuild;
     FieldBuild fieldBuild;
 
     [SerializeField] TextMeshProUGUI priceText;
@@ -14,6 +16,7 @@ public class UITurretBtn : MonoBehaviour
 
     private void Start()
     {
+        turretBuild = FieldManager.instance.TurretBuild;
         fieldBuild = FieldManager.instance.FieldBuild;
     }
 
@@ -26,6 +29,7 @@ public class UITurretBtn : MonoBehaviour
 
     public void ClickTurretBtn()
     {
-        fieldBuild.BuildPreview(Resources.Load<GameObject>(info.PrefabPath), 0, info.Cost);
+        fieldBuild.CancleBuild();
+        turretBuild.CreatePreview(Resources.Load<GameObject>(info.PrefabPath), 0, info.Cost);
     }
 }

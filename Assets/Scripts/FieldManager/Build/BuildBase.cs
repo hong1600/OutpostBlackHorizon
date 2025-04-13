@@ -10,7 +10,7 @@ public abstract class BuildBase : MonoBehaviour
 
     Terrain terrain;
     CustomCursor cursor;
-    BoxCollider box;
+    protected BoxCollider box;
     FieldManager fieldManager;
     GoldCoin goldCoin;
     ViewState viewState;
@@ -18,18 +18,20 @@ public abstract class BuildBase : MonoBehaviour
 
     [SerializeField] Center center;
     [SerializeField] Transform centerBuilding;
+    [SerializeField] protected GameObject prefabObj;
+    [SerializeField] protected GameObject previewObj;
 
-    [SerializeField] GameObject prefabObj;
-    [SerializeField] Material preview;
+    Renderer[] rends;
+    protected float gridSize = 1.0f;
     [SerializeField] Transform parent;
     [SerializeField] LayerMask canBuildLayer;
-    [SerializeField] protected float gridSize = 1.0f;
 
-    GameObject previewObj;
+    Transform hitTrs;
     Vector3 gridPos;
     float offsetY;
     int amount;
     int cost;
+    bool isBuilding = false;
 
     Vector2 mousePos;
 
@@ -60,23 +62,35 @@ public abstract class BuildBase : MonoBehaviour
                 Build();
             }
         }
+
+        if(isBuilding && Input.GetKeyDown(KeyCode.B)) 
+        {
+            CancleBuild();
+        }
     }
 
-    public void BuildPreview(GameObject _prefabObj, int _amount, int _cost)
+    public void CreatePreview(GameObject _prefabObj, int _amount, int _cost)
     {
+        CancleBuild();
+
         if(previewObj == null && viewState.CurViewState == EViewState.TOP) 
         {
-            prefabObj = _prefabObj;
+            isBuilding = true;
 
             if (_amount != 0)
             {
                 amount = _amount;
             }
             cost = _cost;
+
+            prefabObj = _prefabObj;
+
             previewObj = Instantiate(prefabObj, parent);
+
             previewObj.layer = LayerMask.NameToLayer("BluePrint");
 
-            Renderer rend = previewObj.GetComponent<Renderer>();
+            rends = previewObj.GetComponentsInChildren<Renderer>();
+
             if (previewObj.GetComponent<BoxCollider>() != null)
             {
                 box = previewObj.GetComponent<BoxCollider>();
@@ -87,16 +101,11 @@ public abstract class BuildBase : MonoBehaviour
             }
             box.isTrigger = true;
 
-            if (rend != null)
-            {
-                rend.material = preview;
-            }
-
             float terrainY = terrain.SampleHeight(gridPos);
 
             if (prefabObj != null)
             {
-                float pivotY = prefabObj.transform.position.y;
+                float pivotY = previewObj.transform.position.y;
                 float bottomY = box.bounds.min.y;
                 offsetY = pivotY - bottomY;
             }
@@ -112,12 +121,26 @@ public abstract class BuildBase : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, canBuildLayer))
         {
-            gridPos = GetGridPos(hit.point);
+            if (hit.transform != hitTrs)
+            {
+                offsetY = GetGridPosY(hit);
+
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Field"))
+                {
+                    gridPos = new Vector3(hit.collider.transform.position.x, offsetY, hit.collider.transform.position.z);
+                }
+            }
+            else if(hit.transform == hitTrs && hit.collider.gameObject.layer != LayerMask.NameToLayer("Field"))
+            {
+                gridPos = GetGridPos(hit.point);
+            }
 
             if (Vector3.Distance(previewObj.transform.position, gridPos) > 0.01f)
             {
                 previewObj.transform.position = gridPos;
             }
+
+            hitTrs = hit.transform;
         }
     }
 
@@ -127,6 +150,37 @@ public abstract class BuildBase : MonoBehaviour
         float z = Mathf.Round(_originPos.z / gridSize) * gridSize;
 
         return new Vector3(x, offsetY, z);
+    }
+
+    private float GetGridPosY(RaycastHit _hit)
+    {
+        float y;
+
+        float pivotY = previewObj.transform.position.y;
+        float bottomY = box.bounds.min.y;
+
+        offsetY = pivotY - bottomY;
+
+        if (_hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            float terrainY = terrain.SampleHeight(_hit.point);
+
+            y = terrainY + offsetY;
+        }
+        else
+        {
+            BoxCollider box;
+            box = _hit.collider.gameObject.GetComponent<BoxCollider>();
+
+            if (box == null)
+            {
+                box = _hit.collider.gameObject.GetComponentInChildren<BoxCollider>();
+            }
+
+            y = box.bounds.max.y + offsetY;
+        }
+
+        return y;
     }
 
     private bool CanBuild()
@@ -153,11 +207,19 @@ public abstract class BuildBase : MonoBehaviour
 
         for (int i = 0; i < colls.Length; i++)
         {
-            if (colls[i].gameObject != prefabObj &&
-                colls[i].gameObject.layer != LayerMask.NameToLayer("Ground") &&
-                colls[i].gameObject.layer != LayerMask.NameToLayer("BluePrint"))
+            if (colls[i].gameObject != previewObj)
             {
                 return false;
+            }
+
+            if (Physics.Raycast
+                (box.bounds.center, Vector3.down, out RaycastHit hit, box.bounds.extents.y + 0.1f))
+            {
+                if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Ground") &&
+                    hit.collider.gameObject.layer != LayerMask.NameToLayer("BluePrint"))
+                {
+                    return false;
+                }
             }
         }
 
@@ -167,18 +229,11 @@ public abstract class BuildBase : MonoBehaviour
     private void UpdatePreviewColor()
     {
         Color color = CanBuild() ? new Color(0,1,0,0.5f) : new Color(1,0,0,0.5f);
-        Renderer rend;
 
-        if (previewObj.GetComponent<Renderer>() != null)
+        for (int i = 0; i < rends.Length; i++)
         {
-            rend = previewObj.GetComponent<Renderer>();
+            rends[i].material.color = color;
         }
-        else
-        {
-            rend = previewObj.GetComponentInChildren<Renderer>();
-        }
-
-        rend.material.color = color;
     }
 
     private void Build()
@@ -202,5 +257,16 @@ public abstract class BuildBase : MonoBehaviour
         }
 
         onDecreaseField?.Invoke();
+    }
+
+    public void CancleBuild()
+    {
+        Destroy(previewObj);
+        prefabObj = null;
+        previewObj = null;
+        box = null;
+        amount = 0;
+        cost = 0;
+        isBuilding = false;
     }
 }

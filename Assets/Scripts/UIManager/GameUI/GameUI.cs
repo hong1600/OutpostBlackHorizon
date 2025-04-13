@@ -8,17 +8,21 @@ public class GameUI : Singleton<GameUI>
 {
     public EScene eScene { get; private set; } = EScene.GAME;
 
-    [Header("BLACK OUT")]
+    [Header("BlackOut")]
     [SerializeField] Image blackImg;
 
-    [Header("SWITCH")]
+    [Header("Switch")]
     [SerializeField] List<GameObject> fpsUI;
     [SerializeField] List<GameObject> topUI;
     [SerializeField] List<GameObject> NoneUI;
 
-    [Header("SCOPE")]
+    [Header("Scope")]
     [SerializeField] GameObject scopeObj;
     [SerializeField] GameObject hitAim;
+
+    [Header("Components")]
+    [SerializeField] UIFusionBtn uiFusionBtn;
+    [SerializeField] UIMixRightSlot uiMixRightSlot;
 
     protected override void Awake()
     {
@@ -73,8 +77,8 @@ public class GameUI : Singleton<GameUI>
         }
     }
 
-    public UIFusionBtn UIFusionBtn { get; private set; }
-    public UIMixRightSlot UIMixRightSlot { get; private set; }
+    public UIFusionBtn UIFusionBtn { get { return uiFusionBtn; } }
+    public UIMixRightSlot UIMixRightSlot { get { return uiMixRightSlot; } }
     public GameObject HitAim { get { return hitAim; } }
     public GameObject scope { get { return scopeObj; } }
 }

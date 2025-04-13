@@ -26,7 +26,7 @@ public class UIBuild : MonoBehaviour
         CreateTurretBtn();
     }
 
-    private void OpenPanel()
+    public void OpenPanel()
     {
         fieldPanel.SetActive(!fieldPanel.activeSelf);
         turretPanel.SetActive(!turretPanel.activeSelf);
