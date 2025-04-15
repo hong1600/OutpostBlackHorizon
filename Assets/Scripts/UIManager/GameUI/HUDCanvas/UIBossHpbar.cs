@@ -11,14 +11,10 @@ public class UIBossHpbar : MonoBehaviour
 
     [SerializeField] Image hpValue;
 
-    private void Start()
-    {
-        //boss.onTakeDamage += UpdateHpBar;
-    }
-
     public void Init(Boss _boss)
     {
         boss = _boss;
+        boss.onTakeDamage += UpdateHpBar;
     }
 
     public void ShowHpBar()

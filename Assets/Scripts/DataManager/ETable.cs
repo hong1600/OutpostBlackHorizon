@@ -11,4 +11,6 @@ public enum ETable
     ENEMYDATA,
     ENEMYLOCAL,
     TURRETDATA,
+    FIELDDATA,
+    MAPDATA,
 }

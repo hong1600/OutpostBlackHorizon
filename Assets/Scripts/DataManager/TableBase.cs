@@ -69,6 +69,12 @@ public class TableBase
             case ETable.TURRETDATA:
                 path = GetTablePath() + "/Resources/Data/Document/Turret/";
                 break;
+            case ETable.FIELDDATA:
+                path = GetTablePath() + "/Resources/Data/Document/Field/";
+                break;
+            case ETable.MAPDATA:
+                path = GetTablePath() + "/Resources/Data/Document/Map/";
+                break;
         }
 
         FileStream file = new FileStream(path + _eTable + ext, FileMode.Open,

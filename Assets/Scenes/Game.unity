@@ -270,6 +270,7 @@ MonoBehaviour:
   - {fileID: 100100200, guid: 63b99eebd2aad394a97789c7e8545650, type: 3}
   - {fileID: 4343727234628468602, guid: 90edda3e12d82fc48b60d76316da25a6, type: 2}
   - {fileID: 4343727234628468602, guid: a2c3b55750ea1304889ffbb04f3af72e, type: 2}
+  - {fileID: 4343727234628468602, guid: 76d2298f18c2b4d49a8b4993eaf56e67, type: 2}
 --- !u!4 &76373104
 Transform:
   m_ObjectHideFlags: 0
@@ -1212,6 +1213,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 545405665311230253, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 979234594352448581, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1296,6 +1301,10 @@ PrefabInstance:
       propertyPath: uiBuild
       value: 
       objectReference: {fileID: 1103863883}
+    - target: {fileID: 4121573079517919737, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
+      propertyPath: uiBossHpbar
+      value: 
+      objectReference: {fileID: 1420184424}
     - target: {fileID: 4121573079517919737, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
       propertyPath: uiMixRightSlot
       value: 
@@ -1634,6 +1643,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7934372923694165216, guid: 5144d4d648ab8db458c1f7698ee52bca, type: 3}
   m_PrefabInstance: {fileID: 7812456658533501484}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1420184424 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2394978269098324588, guid: f2d1fc89b0ce2ef4d996d73e49e292ba, type: 3}
+  m_PrefabInstance: {fileID: 916668294}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2a46e084c834e64f80e1c67672e9157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1431317677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2561,7 +2581,7 @@ PrefabInstance:
     - target: {fileID: 7831183156502761659, guid: a2eadc086f17a274a9e8f6a03161eef3, type: 3}
       propertyPath: hpbar
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1420184424}
     - target: {fileID: 7831183156502761659, guid: a2eadc086f17a274a9e8f6a03161eef3, type: 3}
       propertyPath: bossSpawnPos
       value: 

@@ -5,11 +5,13 @@ using UnityEngine;
 
 public abstract class Boss : Enemy
 {
-    [SerializeField] UIBossHpbar hpbar;
+    UIBossHpbar hpbar;
 
-    protected override void InitEnemyData(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy)
+    private void Start()
     {
-        //hpbar.Init(this);
+        hpbar = GameUI.instance.UIBossHpbar;
+
+        hpbar.Init(this);
     }
 
     protected internal override void Die()

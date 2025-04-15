@@ -58,4 +58,16 @@ public class TableEditor : MonoBehaviour
     {
         ParseTableCsv(ETable.TURRETDATA);
     }
+
+    [MenuItem("CSV_Util/Table/FieldData/Parse Turret CSV &F7", false, 1)]
+    static public void ParserFieldCsv()
+    {
+        ParseTableCsv(ETable.FIELDDATA);
+    }
+
+    [MenuItem("CSV_Util/Table/MapData/Parse Turret CSV &F8", false, 1)]
+    static public void ParserMapCsv()
+    {
+        ParseTableCsv(ETable.MAPDATA);
+    }
 }

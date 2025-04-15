@@ -6,14 +6,15 @@ using UnityEngine;
 public class UIBuild : MonoBehaviour
 {
     TableTurret tableTurret;
+    TableField tableField;
+
+    Dictionary<int, UIFieldBtn> btnDic = new Dictionary<int, UIFieldBtn>();
 
     [SerializeField] GameObject fieldPanel;
     [SerializeField] GameObject turretPanel;
 
     [SerializeField] GameObject fieldBtn;
     [SerializeField] GameObject turretBtn;
-
-    [SerializeField] List<FieldData> fieldData;
 
     [SerializeField] Transform fieldParent;
     [SerializeField] Transform turretParent;
@@ -22,8 +23,8 @@ public class UIBuild : MonoBehaviour
     {
         InputManager.instance.onInputB += OpenPanel;
         tableTurret = DataManager.instance.TableTurret;
-        CreateFieldBtn();
-        CreateTurretBtn();
+        tableField = DataManager.instance.TableField;
+        CreateBtn();
     }
 
     public void OpenPanel()
@@ -32,26 +33,34 @@ public class UIBuild : MonoBehaviour
         turretPanel.SetActive(!turretPanel.activeSelf);
     }
 
-    private void CreateFieldBtn()
+    private void CreateBtn()
     {
-        for (int i = 0; i < fieldData.Count; i++) 
+        List<int> fieldKeyList = tableField.Dictionary.Keys.ToList();
+        List<int> turretKeyList = tableTurret.Dictionary.Keys.ToList();
+
+        for (int i = 0; i < fieldKeyList.Count; i++)
         {
+            TableField.Info info = tableField.Dictionary[fieldKeyList[i]];
             GameObject slot = Instantiate(fieldBtn, fieldParent);
             UIFieldBtn btn = slot.GetComponent<UIFieldBtn>();
-            btn.InitFieldBtn(fieldData[i]);
+            btnDic.Add(info.ID, btn);
+            btn.InitFieldBtn(info);
         }
-    }
 
-    private void CreateTurretBtn()
-    {
-        List<int> keys = tableTurret.Dictionary.Keys.ToList();
-
-        for (int i = 0; i < keys.Count; i++)
+        for (int i = 0; i < turretKeyList.Count; i++)
         {
-            TableTurret.Info info = tableTurret.Dictionary[keys[i]];
+            TableTurret.Info info = tableTurret.Dictionary[turretKeyList[i]];
             GameObject slot = Instantiate(turretBtn, turretParent);
             UITurretBtn btn = slot.GetComponent<UITurretBtn>();
             btn.InitTurretBtn(info);
+        }
+    }
+
+    public void DecreaseFieldAmount(int _id, int _amount)
+    {
+        if (btnDic.ContainsKey(_id))
+        {
+            btnDic[_id].DecreaseAmount(_amount);
         }
     }
 }

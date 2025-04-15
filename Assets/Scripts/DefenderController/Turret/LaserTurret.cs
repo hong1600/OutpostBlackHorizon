@@ -12,7 +12,7 @@ public class LaserTurret : Defender
     private void Start()
     {
         info = DataManager.instance.TableTurret.GetTurretData(403);
-        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.SpriteName, true);
+        base.Init(info.ID, info.Name, info.Damage, info.AttackSpeed, info.AttackRange, info.ImgName, true);
     }
 
     protected override IEnumerator OnDamageEvent(Enemy _enemy, int _dmg)

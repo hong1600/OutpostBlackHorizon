@@ -1,0 +1,3 @@
+ID,NameKey,ImgName,Cost,Desc,Prefab
+501,field_101_name,UnitField,100,해당 필드에 유닛을 생성할 수 있다.,PreFabs/Obj/Field/UnitField
+502,field_102_name,TurretField,250,해당 필드에 포탑을 생성할 수 있다,PreFabs/Obj/Field/TurretField

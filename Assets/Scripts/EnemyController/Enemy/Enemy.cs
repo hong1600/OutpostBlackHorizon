@@ -37,7 +37,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     public string enemyName { get; private set; }
     public float maxHp { get; private set; }
-    public float curhp { get; private set; }
+    public float curhp { get; protected set; }
     public float enemySpeed { get; private set; }
     public float rotationSpeed { get; private set; }
     public float attackRange { get; private set; }
@@ -48,7 +48,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     protected Vector3 targetPointDir;
     Vector3 hpBarPos;
 
-    internal bool isDie { get; private set; }
+    protected internal bool isDie { get; protected set; }
     internal bool isStay { get; private set; }
     protected internal bool attackReady { get; private set; }
     protected bool isAttack;
@@ -202,7 +202,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     protected abstract IEnumerator StartAttack();
 
-    public void TakeDmg(float _dmg, bool _isHead)
+    public virtual void TakeDmg(float _dmg, bool _isHead)
     {
         curhp -= _dmg;
 
@@ -218,6 +218,11 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         {
             isDie = true;
         }
+    }
+
+    protected void TakeDmgEvent()
+    {
+        onTakeDamage?.Invoke();
     }
 
     private void UpdateMat()

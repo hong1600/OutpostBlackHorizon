@@ -12,6 +12,8 @@ public class DataManager : Singleton<DataManager>
     TableEnemy tableEnemy;
     TableItem tableItem;
     TableTurret tableTurret;
+    TableField tableField;
+    TableMap tableMap;
 
     protected override void Awake()
     {
@@ -34,6 +36,14 @@ public class DataManager : Singleton<DataManager>
         tableTurret = new TableTurret();
         tableTurret.Init_Binary("TurretData");
         TableTurret = tableTurret;
+
+        tableField = new TableField();
+        tableField.Init_Binary("fieldData");
+        TableField = tableField;
+
+        tableMap = new TableMap();
+        tableMap.Init_Binary("mapData");
+        TableMap = tableMap;
     }
 
     public UserDataLoader UserDataLoader { get; private set; }
@@ -41,5 +51,7 @@ public class DataManager : Singleton<DataManager>
     public TableEnemy TableEnemy { get; private set; }
     public TableItem TableItem { get; private set; }
     public TableTurret TableTurret { get; private set; }
+    public TableField TableField { get; private set; }
+    public TableMap TableMap { get; private set; }
 }
 

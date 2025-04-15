@@ -8,4 +8,11 @@ public class FieldBuild : BuildBase
     {
         return base.CheckCanBuild(_position);
     }
+
+    protected override void Build()
+    {
+        uiBuild.DecreaseFieldAmount(id, 1);
+
+        base.Build();
+    }
 }

@@ -6,42 +6,72 @@ using UnityEngine.UI;
 
 public class UIFieldBtn : MonoBehaviour
 {
-    FieldData fieldData;
+    Button btn;
+
+    TableField.Info info;
     FieldBuild fieldBuild;
     TurretBuild turretBuild;
-    FieldManager fieldManager;
-    
-    GameObject fieldObj;
-    [SerializeField] TextMeshProUGUI priceText;
+    UIBuild uiBuild;
+
+    GameObject prefab;
+    [SerializeField] TextMeshProUGUI costText;
     [SerializeField] TextMeshProUGUI amountText;
     [SerializeField] Image img;
 
-    public void InitFieldBtn(FieldData _fieldData)
+    int maxAmount;
+    int curAmount;
+
+    public void InitFieldBtn(TableField.Info _info)
     {
-        fieldManager = FieldManager.instance;
-        fieldBuild = fieldManager.FieldBuild;
-        turretBuild = fieldManager.TurretBuild;
+        info = _info;
+        fieldBuild = FieldManager.instance.FieldBuild;
+        turretBuild = FieldManager.instance.TurretBuild;
+        uiBuild = GameUI.instance.UIBuild;
 
-        fieldManager.FieldBuild.onDecreaseField += UpdateBtn;
+        curAmount = info.Amount;
+        maxAmount = info.Amount;
 
-        fieldObj = _fieldData.field;
-        fieldData = _fieldData;
-        priceText.text = $"{_fieldData.fieldPrice}";
-        amountText.text = $"{fieldManager.GetFieldAmount(_fieldData)}/{_fieldData.fieldAmount}";
-        img.sprite = _fieldData.fieldImg;
-    }
+        prefab = Resources.Load<GameObject>(info.PrefabPath);
+        img.sprite = SpriteManager.instance.GetSprite(info.ImgName);
 
-    private void UpdateBtn()
-    {
-        amountText.text = $"{fieldManager.GetFieldAmount(fieldData)}/{fieldData.fieldAmount}";
+        costText.text = $"{info.Cost}";
+        amountText.text = $"{curAmount}/{maxAmount}";
+
+        btn = GetComponent<Button>();
     }
 
     public void ClickFieldBtn()
     {
-        if (fieldManager.GetFieldAmount(fieldData) > 0)
+        if (curAmount > 0)
         {
             turretBuild.CancleBuild();
-            fieldBuild.CreatePreview(fieldObj, fieldData.fieldAmount, fieldData.fieldPrice);
+            fieldBuild.CreatePreview(prefab, info.Cost, info.ID);
+        }
+    }
+
+    public void DecreaseAmount(int amount)
+    {
+        curAmount = Mathf.Max(0, curAmount - amount);
+        amountText.text = $"{curAmount}/{maxAmount}";
+
+        UpdateFieldBtn();
+    }
+
+    private void UpdateFieldBtn()
+    {
+        amountText.text = $"{curAmount}/{maxAmount}";
+
+        if (curAmount <= 0)
+        {
+            Color color = new Color(0.3f, 0, 0, 0.7f);
+
+            ColorBlock cb = btn.colors;
+
+            cb.normalColor = color;
+            cb.highlightedColor = color;
+            cb.selectedColor = color;
+            cb.pressedColor = color;
+            btn.colors = cb;
         }
     }
 }

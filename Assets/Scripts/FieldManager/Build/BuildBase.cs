@@ -6,20 +6,21 @@ using UnityEngine;
 
 public abstract class BuildBase : MonoBehaviour
 {
-    public event Action onDecreaseField;
-
     Terrain terrain;
-    CustomCursor cursor;
     protected BoxCollider box;
+
+    CustomCursor cursor;
     FieldManager fieldManager;
     GoldCoin goldCoin;
     ViewState viewState;
     UnitFieldData unitFieldData;
+    protected UIBuild uiBuild;
 
     [SerializeField] Center center;
     [SerializeField] Transform centerBuilding;
     [SerializeField] protected GameObject prefabObj;
     [SerializeField] protected GameObject previewObj;
+    protected int id;
 
     Renderer[] rends;
     protected float gridSize = 1.0f;
@@ -29,7 +30,6 @@ public abstract class BuildBase : MonoBehaviour
     Transform hitTrs;
     Vector3 gridPos;
     float offsetY;
-    int amount;
     int cost;
     bool isBuilding = false;
 
@@ -43,6 +43,7 @@ public abstract class BuildBase : MonoBehaviour
         goldCoin = GameManager.instance.GoldCoin;
         viewState = GameManager.instance.ViewState;
         unitFieldData = UnitManager.instance.UnitFieldData;
+        uiBuild = GameUI.instance.UIBuild;
     }
 
     private void Update()
@@ -69,7 +70,7 @@ public abstract class BuildBase : MonoBehaviour
         }
     }
 
-    public void CreatePreview(GameObject _prefabObj, int _amount, int _cost)
+    public void CreatePreview(GameObject _prefabObj, int _cost, int _id)
     {
         CancleBuild();
 
@@ -77,13 +78,9 @@ public abstract class BuildBase : MonoBehaviour
         {
             isBuilding = true;
 
-            if (_amount != 0)
-            {
-                amount = _amount;
-            }
             cost = _cost;
-
             prefabObj = _prefabObj;
+            id = _id;
 
             previewObj = Instantiate(prefabObj, parent);
 
@@ -236,7 +233,7 @@ public abstract class BuildBase : MonoBehaviour
         }
     }
 
-    private void Build()
+    protected virtual void Build()
     {
         box.isTrigger = false;
 
@@ -247,16 +244,12 @@ public abstract class BuildBase : MonoBehaviour
 
         previewObj = null;
 
-        fieldManager.DecreaseFieldAmount(amount);
-
         goldCoin.UseGold(cost);
 
         if (prefabObj.CompareTag("UnitField"))
         {
             unitFieldData.SetUnitSpawnPointList(Obj.transform);
         }
-
-        onDecreaseField?.Invoke();
     }
 
     public void CancleBuild()
@@ -264,8 +257,8 @@ public abstract class BuildBase : MonoBehaviour
         Destroy(previewObj);
         prefabObj = null;
         previewObj = null;
+        id = 0;
         box = null;
-        amount = 0;
         cost = 0;
         isBuilding = false;
     }

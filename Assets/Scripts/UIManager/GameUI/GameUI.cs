@@ -14,7 +14,6 @@ public class GameUI : Singleton<GameUI>
     [Header("Switch")]
     [SerializeField] List<GameObject> fpsUI;
     [SerializeField] List<GameObject> topUI;
-    [SerializeField] List<GameObject> NoneUI;
 
     [Header("Scope")]
     [SerializeField] GameObject scopeObj;
@@ -23,6 +22,8 @@ public class GameUI : Singleton<GameUI>
     [Header("Components")]
     [SerializeField] UIFusionBtn uiFusionBtn;
     [SerializeField] UIMixRightSlot uiMixRightSlot;
+    [SerializeField] UIBuild uiBuild;
+    [SerializeField] UIBossHpbar uiBossHpbar;
 
     protected override void Awake()
     {
@@ -33,7 +34,6 @@ public class GameUI : Singleton<GameUI>
     {
         GameObject cursor = UIManager.instance.Cursor;
         topUI.Add(cursor);
-        NoneUI.Add(cursor);
     }
 
     public IEnumerator StartBlackout(float _duration)
@@ -71,14 +71,20 @@ public class GameUI : Singleton<GameUI>
 
     public void SwitchNone()
     {
-        for (int i = 0; i < NoneUI.Count; i++)
+        for (int i = 0; i < fpsUI.Count; i++)
         {
-            NoneUI[i].SetActive(false);
+            fpsUI[i].SetActive(false);
+        }
+        for (int i = 0; i < topUI.Count; i++)
+        {
+            topUI[i].SetActive(false);
         }
     }
 
     public UIFusionBtn UIFusionBtn { get { return uiFusionBtn; } }
     public UIMixRightSlot UIMixRightSlot { get { return uiMixRightSlot; } }
+    public UIBuild UIBuild { get { return uiBuild; } }
+    public UIBossHpbar UIBossHpbar { get { return uiBossHpbar; } }
     public GameObject HitAim { get { return hitAim; } }
     public GameObject scope { get { return scopeObj; } }
 }

@@ -17,7 +17,7 @@ public class BossSpawner : MonoBehaviour
 
     public void SpawnBoss()
     {
-        //hpbar.ShowHpBar();
+        hpbar.ShowHpBar();
 
         GameObject boss = poolManager.EnemyPool.FindEnemy
             (EEnemy.ROBOT6, bossSpawnPos.position, Quaternion.Euler(0,180,0));

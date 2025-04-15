@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 878051036033320344}
   - component: {fileID: 6435300568887832098}
   m_Layer: 5
-  m_Name: PriceText
+  m_Name: CostText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f22628b5ccc625458aef7095d49b4e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  priceText: {fileID: 6435300568887832098}
+  costText: {fileID: 6435300568887832098}
   amountText: {fileID: 265015481947031446}
   img: {fileID: 6849675445578950711}
 --- !u!1 &5166961148557593832

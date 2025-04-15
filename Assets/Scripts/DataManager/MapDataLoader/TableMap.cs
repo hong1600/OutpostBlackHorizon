@@ -1,22 +1,17 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
-public class TableTurret : TableBase
+public class TableMap : TableBase
 {
     [Serializable]
     public class Info
     {
         public int ID;
         public string Name;
-        public int Damage;
-        public float AttackSpeed;
-        public int AttackRange;
-        public string ImgName;
-        public int Cost;
         public string Desc;
-        public string PrefabPath;
+        public int fieldAmount;
     }
 
     public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
@@ -42,7 +37,7 @@ public class TableTurret : TableBase
             Info info = new Info();
 
             if (Read(reader, info, row, _StartCol) == false)
-                break ;
+                break;
 
             Dictionary.Add(info.ID, info);
         }
@@ -55,13 +50,8 @@ public class TableTurret : TableBase
 
         _Reader.getInt(_Row, ref _Info.ID);
         _Reader.getString(_Row, ref _Info.Name);
-        _Reader.getInt(_Row, ref _Info.Damage);
-        _Reader.getFloat(_Row, ref _Info.AttackSpeed);
-        _Reader.getInt(_Row, ref _Info.AttackRange);
-        _Reader.getString(_Row, ref _Info.ImgName);
-        _Reader.getInt(_Row, ref _Info.Cost);
         _Reader.getString(_Row, ref _Info.Desc);
-        _Reader.getString(_Row, ref _Info.PrefabPath);
+        _Reader.getInt(_Row, ref _Info.fieldAmount);
 
         return true;
     }

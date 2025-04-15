@@ -9,6 +9,8 @@ TagManager:
   - UnitField
   - TurretField
   - Bullet
+  - LeftHand
+  - RightHand
   layers:
   - Default
   - TransparentFX

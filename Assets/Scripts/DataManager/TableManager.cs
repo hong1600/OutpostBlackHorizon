@@ -14,6 +14,8 @@ public class TableManager
     public TableEnemy enemy = new TableEnemy();
     public TableItem item = new TableItem();
     public TableTurret turret = new TableTurret();
+    public TableField field = new TableField();
+    public TableMap map = new TableMap();
 
     public void Init(ETable _name)
     {
@@ -22,7 +24,6 @@ public class TableManager
             case ETable.UNITDATA:
 #if UNITY_EDITOR
                 unit.Init_Csv(ETable.UNITDATA, 1, 0);
-                unit.LinkUnitName(unitName);
 #else
         unit.Init_Binary($"{_name}");
 #endif
@@ -62,7 +63,20 @@ public class TableManager
         unit.Init_Binary($"{_name}");
 #endif
                 break;
-
+            case ETable.FIELDDATA:
+#if UNITY_EDITOR
+                field.Init_Csv(ETable.FIELDDATA, 1, 0);
+#else
+        unit.Init_Binary($"{_name}");
+#endif
+                break;
+            case ETable.MAPDATA:
+#if UNITY_EDITOR
+                map.Init_Csv(ETable.MAPDATA, 1, 0);
+#else
+        unit.Init_Binary($"{_name}");
+#endif
+                break;
         }
     }
 
@@ -87,6 +101,12 @@ public class TableManager
                 break;
             case ETable.TURRETDATA:
                 turret.Save_Binary("TurretData");
+                break;
+            case ETable.FIELDDATA:
+                field.Save_Binary("FieldData");
+                break;
+            case ETable.MAPDATA:
+                map.Save_Binary("MapData");
                 break;
         }
 

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection.Emit;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +10,7 @@ public class UITurretBtn : MonoBehaviour
     TurretBuild turretBuild;
     FieldBuild fieldBuild;
 
+    GameObject prefab;
     [SerializeField] TextMeshProUGUI priceText;
     [SerializeField] Image img;
 
@@ -24,12 +24,13 @@ public class UITurretBtn : MonoBehaviour
     {
         info = _info;
         priceText.text = _info.Cost.ToString();
-        img.sprite = SpriteManager.instance.GetSprite(_info.SpriteName);
+        img.sprite = SpriteManager.instance.GetSprite(_info.ImgName);
+        prefab = Resources.Load<GameObject>(info.PrefabPath);
     }
 
     public void ClickTurretBtn()
     {
         fieldBuild.CancleBuild();
-        turretBuild.CreatePreview(Resources.Load<GameObject>(info.PrefabPath), 0, info.Cost);
+        turretBuild.CreatePreview(prefab, info.Cost, info.ID);
     }
 }
