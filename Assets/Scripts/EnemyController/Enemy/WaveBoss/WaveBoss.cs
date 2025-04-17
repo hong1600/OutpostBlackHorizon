@@ -12,7 +12,7 @@ public abstract class WaveBoss : Enemy
         waveBossSpawner = EnemyManager.instance.WaveBossSpawner;
     }
 
-    protected internal override void Die()
+    protected override void Die()
     {
         Die();
         goldCoin.SetCoin(2);

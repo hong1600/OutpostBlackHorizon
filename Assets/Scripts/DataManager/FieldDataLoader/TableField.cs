@@ -15,6 +15,7 @@ public class TableField : TableBase
         public string Desc;
         public string PrefabPath;
         public int Amount = 10;
+        public int Hp;
     }
 
     public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
@@ -57,6 +58,7 @@ public class TableField : TableBase
         _Reader.getInt(_Row, ref _Info.Cost);
         _Reader.getString(_Row, ref _Info.Desc);
         _Reader.getString(_Row, ref _Info.PrefabPath);
+        _Reader.getInt(_Row, ref _Info.Hp);
 
         return true;
     }

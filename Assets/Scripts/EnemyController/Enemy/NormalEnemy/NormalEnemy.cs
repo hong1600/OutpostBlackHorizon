@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class NormalEnemy : Enemy
 {
-    protected internal override void Die()
+    protected override void Die()
     {
         base.Die();
         goldCoin.SetGold(1);

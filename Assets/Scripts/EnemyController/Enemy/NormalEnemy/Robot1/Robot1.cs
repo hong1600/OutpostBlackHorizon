@@ -12,18 +12,4 @@ public class Robot1 : NormalEnemy
 
         base.InitEnemyData(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, EEnemy.ROBOT1);
     }
-
-    protected override IEnumerator StartAttack()
-    {
-        isAttack = true;
-
-        ITakeDmg iTakeDmg = myTarget.gameObject.GetComponent<ITakeDmg>();
-
-        iTakeDmg.TakeDmg(attackDmg, false);
-
-        yield return new WaitForSeconds(1f);
-
-        isAttack = false;
-        attackCoroutine = null;
-    }
 }

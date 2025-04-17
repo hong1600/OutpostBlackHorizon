@@ -16,7 +16,7 @@ public abstract class Bullet : Projectile
 
         RaycastHit hit;
         if (Physics.SphereCast(transform.position, sphere.radius, transform.forward,
-            out hit, speed * Time.fixedDeltaTime, ~LayerMask.GetMask("EnemySensor", "Bullet")))
+            out hit, speed * Time.fixedDeltaTime, ~LayerMask.GetMask("EnemySensor", "Bullet", "Turret")))
         {
             StartCoroutine(StartHitBullet(hit.point, hit.collider));
             isHit = true;

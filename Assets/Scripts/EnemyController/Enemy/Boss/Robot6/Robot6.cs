@@ -50,8 +50,6 @@ public class Robot6 : Boss
 
     public void TakePartDmg(EBossPart _ePart, float _dmg)
     {
-        curhp -= _dmg;
-
         switch (_ePart)
         {
             case EBossPart.BODY:
@@ -76,10 +74,14 @@ public class Robot6 : Boss
                 break;
         }
 
+        curhp = bodyHp + leftHandHp + rightHandHp;
+
         TakeDmgEvent();
 
         if (curhp <= 0)
         {
+            AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
+
             isDie = true;
         }
     }
@@ -88,6 +90,8 @@ public class Robot6 : Boss
     {
         if (_hp <= 0)
         {
+            AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
+
             if (_part == EBossPart.LEFT)
             {
                 leftHandEffect.SetActive(true);

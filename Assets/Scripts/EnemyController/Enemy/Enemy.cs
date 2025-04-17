@@ -12,29 +12,30 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     protected EEnemyAI aiState;
     protected EEnemy eEnemy;
 
-    protected Rigidbody rigid;
-    protected Animator anim;
+    //Components
+    [SerializeField] SphereCollider sensor;
+    [SerializeField] BoxCollider box;
     [SerializeField] Renderer render;
     [SerializeField] Material hitMat;
+    protected Rigidbody rigid;
+    protected Animator anim;
     Material originMat;
+    SkinnedMeshRenderer skinRender;
 
+    //Systems
     protected EnemyAI enemyAI;
     protected EnemyHpBar enemyHpBar;
     protected EnemyPool enemyPool;
     protected HpBarPool hpBarPool;
     protected EffectPool effectPool;
     protected Rewarder rewarder;
-
-    [SerializeField] SphereCollider sensor;
-    [SerializeField] BoxCollider box;
-    SkinnedMeshRenderer skinRender;
-
     protected EnemySpawner enemySpawner;
     protected GoldCoin goldCoin;
     protected Round round;
     protected Timer timer;
     protected BulletPool bulletPool;
 
+    //Stats
     public string enemyName { get; private set; }
     public float maxHp { get; private set; }
     public float curhp { get; protected set; }
@@ -43,17 +44,19 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     public float attackRange { get; private set; }
     public float attackDmg { get; private set; }
 
-    protected Transform[] targetPoints;
+    //Target
+    int targetRand;
+    Transform[] targetPoints;
     protected Transform myTarget;
     protected Vector3 targetPointDir;
-    Vector3 hpBarPos;
 
-    protected internal bool isDie { get; protected set; }
-    internal bool isStay { get; private set; }
-    protected internal bool attackReady { get; private set; }
+    //State
+    public bool isStay { get; private set; }
+    public bool attackReady { get; private set; }
+    public bool isDie { get; protected set; }
     protected bool isAttack;
-
     protected Coroutine attackCoroutine;
+    Vector3 hpBarPos;
 
     protected virtual void InitEnemyData(string _name, float _maxHp, float _spd,
         float _range, float _dmg, EEnemy _eEnemy)
@@ -85,15 +88,12 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         rotationSpeed = 5;
 
         targetPoints = enemySpawner.TargetPoint();
-        int rand = Random.Range(0, targetPoints.Length);
-        myTarget = targetPoints[rand];
+        targetRand = Random.Range(0, targetPoints.Length);
+        myTarget = targetPoints[targetRand];
     }
 
     private void OnEnable()
     {
-        curhp = maxHp;
-        enemyAI.isDie = false;
-
         if (skinRender != null)
         {
             GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, skinRender.bounds.center +
@@ -104,6 +104,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
             enemyHpBar.Init(this, skinRender);
         }
 
+        curhp = maxHp;
         attackReady = false;
         isAttack = false;
         isDie = false;
@@ -123,21 +124,23 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         }
     }
 
-    protected internal void Move()
+    protected void Move()
     {
+        if (myTarget == null) return;
+
         targetPointDir = (myTarget.transform.position - transform.position).normalized;
 
         rigid.MovePosition(transform.position + targetPointDir * enemySpeed * Time.fixedDeltaTime);
     }
 
-    protected internal void Turn()
+    protected void Turn()
     {
         Quaternion rotation = Quaternion.LookRotation(new Vector3(targetPointDir.x, 0, targetPointDir.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
             rotationSpeed * Time.deltaTime);
     }
 
-    protected internal virtual void CheckTarget()
+    protected virtual void CheckTarget()
     {
         Collider[] colls = Physics.OverlapSphere(transform.position,
             sensor.radius, LayerMask.GetMask("Player", "Field"));
@@ -163,6 +166,10 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
                 myTarget = highTargetTrs;
             }
         }
+        else
+        {
+            myTarget = null;
+        }
     }
 
     protected virtual int GetTargetPriority(Collider _target)
@@ -172,7 +179,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         return 0;
     }
 
-    protected internal void ReadyAttack()
+    protected void ReadyAttack()
     {
         if(myTarget == null) return;
 
@@ -192,7 +199,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         }
     }
 
-    protected internal virtual void Attack()
+    protected virtual void Attack()
     {
         if (attackCoroutine == null && !isAttack)
         {
@@ -200,7 +207,25 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         }
     }
 
-    protected abstract IEnumerator StartAttack();
+    protected virtual IEnumerator StartAttack()
+    {
+        isAttack = true;
+
+        if (myTarget != null)
+        {
+            ITakeDmg iTakeDmg = myTarget.gameObject.GetComponent<ITakeDmg>();
+
+            if (iTakeDmg != null)
+            {
+                iTakeDmg.TakeDmg(attackDmg, false);
+            }
+        }
+
+        yield return new WaitForSeconds(1);
+
+        isAttack = false;
+        attackCoroutine = null;
+    }
 
     public virtual void TakeDmg(float _dmg, bool _isHead)
     {
@@ -230,7 +255,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         render.material = originMat;
     }
 
-    protected internal void StayEnemy(float _time)
+    public void StayEnemy(float _time)
     {
         StartCoroutine(StartStay(_time));
     }
@@ -245,7 +270,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         isStay = false;
     }
 
-    protected internal virtual void Die()
+    protected virtual void Die()
     {
         StartCoroutine(StartDie());
     }
@@ -288,5 +313,40 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
                 anim.SetInteger("EnemyAnim", (int)EEnemyAnim.DIE);
                 break;
         }
+    }
+
+    public void MoveAI()
+    {
+        if (myTarget == null)
+        {
+            myTarget = targetPoints[targetRand];
+        }
+
+        CheckTarget();
+        ReadyAttack();
+
+        if (isDie)
+            return;
+
+        Move();
+        Turn();
+    }
+
+    public void AttackAI()
+    {
+        ReadyAttack();
+
+        if (myTarget == null || !myTarget.gameObject.activeInHierarchy || !attackReady)
+        {
+            enemyAI.aiState = EEnemyAI.MOVE;
+            return;
+        }
+
+        Attack();
+    }
+
+    public void DieAI()
+    {
+        Die();
     }
 }

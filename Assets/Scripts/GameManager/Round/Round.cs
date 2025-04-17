@@ -16,7 +16,7 @@ public class Round : MonoBehaviour
     private void Awake()
     {
         isBossRound = false;
-        curRound = 0;
+        curRound = 1;
     }
 
     private void Start()

@@ -5,6 +5,8 @@ using UnityEngine.UIElements;
 
 public class TurretBuild : BuildBase
 {
+    Collider floorColl;
+
     protected override bool CheckCanBuild(Vector3 _position)
     {
         Vector3 size = box.size;
@@ -25,6 +27,8 @@ public class TurretBuild : BuildBase
             if (Physics.Raycast
                 (box.bounds.center, Vector3.down, out RaycastHit hit, box.bounds.extents.y + 0.1f))
             {
+                if (hit.collider != null) floorColl = hit.collider;
+
                 if (hit.collider.gameObject.CompareTag("TurretField"))
                 {
                     return true;
@@ -33,5 +37,15 @@ public class TurretBuild : BuildBase
         }
 
         return false;
+    }
+
+    protected override void Build()
+    {
+        Transform turretParent = floorColl.transform;
+
+        GameObject Obj =
+            Instantiate(prefabObj, previewObj.transform.position, Quaternion.identity, turretParent);
+
+        base.Build();
     }
 }

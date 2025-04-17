@@ -9,11 +9,12 @@ public abstract class BuildBase : MonoBehaviour
     Terrain terrain;
     protected BoxCollider box;
 
+    Defender defender;
     CustomCursor cursor;
     FieldManager fieldManager;
     GoldCoin goldCoin;
     ViewState viewState;
-    UnitFieldData unitFieldData;
+    protected UnitFieldData unitFieldData;
     protected UIBuild uiBuild;
 
     [SerializeField] Center center;
@@ -83,6 +84,12 @@ public abstract class BuildBase : MonoBehaviour
             id = _id;
 
             previewObj = Instantiate(prefabObj, parent);
+
+            if (previewObj.GetComponentInChildren<Defender>() != null)
+            {
+                defender = previewObj.GetComponentInChildren<Defender>();
+                defender.enabled = false;
+            }
 
             previewObj.layer = LayerMask.NameToLayer("BluePrint");
 
@@ -200,7 +207,8 @@ public abstract class BuildBase : MonoBehaviour
         Vector3 scale = prefabObj.transform.lossyScale;
         Vector3 halfExtents = Vector3.Scale(size, scale) * 0.49f;
 
-        Collider[] colls = Physics.OverlapBox(_position, halfExtents, prefabObj.transform.rotation);
+        Collider[] colls = Physics.OverlapBox
+            (_position, halfExtents, prefabObj.transform.rotation, ~LayerMask.GetMask("EnemySensor"));
 
         for (int i = 0; i < colls.Length; i++)
         {
@@ -208,16 +216,20 @@ public abstract class BuildBase : MonoBehaviour
             {
                 return false;
             }
+        }
 
-            if (Physics.Raycast
-                (box.bounds.center, Vector3.down, out RaycastHit hit, box.bounds.extents.y + 0.1f))
+        if (Physics.Raycast
+            (box.bounds.center, Vector3.down, out RaycastHit hit, box.bounds.extents.y + 0.1f))
+        {
+            if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Ground") &&
+                hit.collider.gameObject.layer != LayerMask.NameToLayer("BluePrint"))
             {
-                if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Ground") &&
-                    hit.collider.gameObject.layer != LayerMask.NameToLayer("BluePrint"))
-                {
-                    return false;
-                }
+                return false;
             }
+        }
+        else
+        {
+            return false;
         }
 
         return true;
@@ -237,19 +249,11 @@ public abstract class BuildBase : MonoBehaviour
     {
         box.isTrigger = false;
 
-        GameObject Obj =
-            Instantiate(prefabObj, previewObj.transform.position, Quaternion.identity, parent.transform);
-
         Destroy(previewObj);
 
         previewObj = null;
 
         goldCoin.UseGold(cost);
-
-        if (prefabObj.CompareTag("UnitField"))
-        {
-            unitFieldData.SetUnitSpawnPointList(Obj.transform);
-        }
     }
 
     public void CancleBuild()

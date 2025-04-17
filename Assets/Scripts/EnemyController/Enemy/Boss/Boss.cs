@@ -14,7 +14,7 @@ public abstract class Boss : Enemy
         hpbar.Init(this);
     }
 
-    protected internal override void Die()
+    protected override void Die()
     {
         Die();
         goldCoin.SetGold(300);

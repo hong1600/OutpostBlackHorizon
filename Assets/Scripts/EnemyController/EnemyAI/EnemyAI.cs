@@ -8,8 +8,6 @@ public class EnemyAI
 
     public EEnemyAI aiState = EEnemyAI.CREATE;
 
-    public bool isDie;
-
     public void Init(Enemy _enemy)
     {
         enemy = _enemy;
@@ -44,24 +42,19 @@ public class EnemyAI
 
     public virtual void Move()
     {
-        if (enemy.isDie == false)
-        {
-            enemy.Move();
-            enemy.Turn();
-            enemy.CheckTarget();
-            enemy.ReadyAttack();
-        }
-        else
+        if (enemy.isDie)
         {
             aiState = EEnemyAI.DIE;
+            enemy.MoveAI();
         }
 
-        if (enemy.isStay == true)
+        enemy.MoveAI();
+
+        if (enemy.isStay)
         {
             aiState = EEnemyAI.STAY;
         }
-
-        if (enemy.attackReady == true)
+        else if (enemy.attackReady)
         {
             aiState = EEnemyAI.ATTACK;
         }
@@ -69,11 +62,11 @@ public class EnemyAI
 
     public virtual void Stay()
     {
-        if (enemy.isStay == false && enemy.isDie == false)
+        if (!enemy.isStay && !enemy.isDie)
         {
             aiState = EEnemyAI.MOVE;
         }
-        if (enemy.isStay == true && enemy.isDie == true)
+        else if (enemy.isStay && enemy.isDie)
         {
             aiState = EEnemyAI.DIE;
         }
@@ -81,20 +74,13 @@ public class EnemyAI
 
     public virtual void Attack()
     {
-        if (enemy.attackReady)
-        {
-            enemy.ReadyAttack();
-            enemy.Attack();
-        }
-        else if(enemy.attackReady == false && enemy.isDie == false) 
-        {
-            aiState = EEnemyAI.MOVE;
-        }
-        if (enemy.isStay == true)
+        enemy.AttackAI();
+
+        if (enemy.isStay)
         {
             aiState = EEnemyAI.STAY;
         }
-        if (enemy.isDie == true)
+        if (enemy.isDie)
         {
             aiState = EEnemyAI.DIE;
         }
@@ -102,10 +88,9 @@ public class EnemyAI
 
     public virtual void Die()
     {
-        if(enemy.isDie && isDie == false) 
+        if(enemy.isDie) 
         {
-            enemy.Die();
-            isDie = true;
+            enemy.DieAI();
         }
         else
         {

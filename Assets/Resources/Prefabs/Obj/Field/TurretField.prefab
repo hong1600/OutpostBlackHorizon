@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7886351002416976792}
   - component: {fileID: 8300987634133165641}
+  - component: {fileID: -7483117916763731602}
   m_Layer: 8
   m_Name: TurretField
   m_TagString: TurretField
@@ -54,6 +55,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6, y: 0.25, z: 6}
   m_Center: {x: 0, y: -0.125, z: 0}
+--- !u!114 &-7483117916763731602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123282431698027457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b260f3f72c29ad64cb7efd56ee30c8e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4876248563677952964
 GameObject:
   m_ObjectHideFlags: 0

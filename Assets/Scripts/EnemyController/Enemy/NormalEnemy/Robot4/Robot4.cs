@@ -12,9 +12,4 @@ public class Robot4 : NormalEnemy
 
         base.InitEnemyData(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, EEnemy.ROBOT4);
     }
-
-    protected override IEnumerator StartAttack()
-    {
-        throw new System.NotImplementedException();
-    }
 }

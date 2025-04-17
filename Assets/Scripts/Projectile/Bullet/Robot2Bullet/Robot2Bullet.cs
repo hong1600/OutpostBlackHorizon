@@ -12,6 +12,6 @@ public class Robot2Bullet : Bullet
 
     protected override void ReturnPool()
     {
-        throw new System.NotImplementedException();
+        bulletPool.ReturnBullet(EBullet.ROBOT2BULLET, this.gameObject);
     }
 }
