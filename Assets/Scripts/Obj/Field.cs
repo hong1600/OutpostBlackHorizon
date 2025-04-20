@@ -12,6 +12,8 @@ public class Field : MonoBehaviour, ITakeDmg
 
     GameObject explosionEffect;
 
+    bool isDestroy = false;
+
     private void Start()
     {
         info = DataManager.instance.TableField.GetFieldData(501);
@@ -25,15 +27,13 @@ public class Field : MonoBehaviour, ITakeDmg
     {
         curHp -= _dmg;
 
-        if (curHp <= 0)
+        if (curHp <= 0 && !isDestroy)
         {
+            isDestroy = true;
+
             AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
 
             explosionEffect = effectPool.FindEffect(EEffect.ENEMYEXPLOSION, transform.position, Quaternion.identity);
-
-            effectPool.ReturnEffect(EEffect.ENEMYEXPLOSION, explosionEffect);
-
-            Destroy(this.gameObject);
 
             Invoke(nameof(ReturnEffect), 1);
         }
@@ -42,5 +42,7 @@ public class Field : MonoBehaviour, ITakeDmg
     private void ReturnEffect()
     {
         effectPool.ReturnEffect(EEffect.ENEMYEXPLOSION, explosionEffect);
+
+        Destroy(this.gameObject);
     }
 }

@@ -30,8 +30,6 @@ public class ViewState : MonoBehaviour
         topComponent.Add(CameraManager.instance.CameraTopZoom);
 
         gameUI = GameUI.instance;
-
-        onViewStateChange?.Invoke(curViewState);
     }
 
     public void SetViewState(EViewState _state)
@@ -85,8 +83,10 @@ public class ViewState : MonoBehaviour
         gameUI.SwitchTop();
     }
 
-    private void SwitchNone()
+    public void SwitchNone()
     {
+        curViewState = EViewState.NONE;
+
         for (int i = 0; i < topComponent.Count; i++)
         {
             topComponent[i].enabled = false;

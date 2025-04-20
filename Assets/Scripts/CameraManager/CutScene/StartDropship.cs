@@ -26,6 +26,7 @@ public class StartDropship : MonoBehaviour
     [SerializeField] Transform playerStartPos;
     PlayerMovement playerMovement;
     PlayerCombat playerCombat;
+    Rigidbody playerRigid;
 
     private void Start()
     {
@@ -39,21 +40,20 @@ public class StartDropship : MonoBehaviour
     private void Init()
     {
         CinemachineTrackedDolly dolly = cam.GetCinemachineComponent<CinemachineTrackedDolly>();
-        CinemachineBasicMultiChannelPerlin noise = cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         dolly.m_Path = track;
         dolly.m_PathPosition = 0f;
 
-        noise.m_AmplitudeGain = 0;
-
         GameManager.instance.enabled = false;
         FieldManager.instance.enabled = false;
         EnemyManager.instance.enabled = false;
-        GameManager.instance.ViewState.enabled = false;
+        GameManager.instance.ViewState.SwitchNone();
         CameraManager.instance.enabled = false;
+        playerRigid = player.GetComponent<Rigidbody>();
+        playerRigid.isKinematic = true;
         playerMovement.enabled = false;
         playerCombat.enabled = false;
-        player.transform.SetParent(transform);
+        player.transform.SetParent(dropship.transform);
         player.transform.position = playerStartPos.position;
         player.transform.rotation = Quaternion.Euler(0, 45, 0);
         hatch.transform.localRotation = Quaternion.identity;
@@ -124,7 +124,8 @@ public class StartDropship : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         this.enabled = false;
-        GameManager.instance.ViewState.enabled = true;
+        GameManager.instance.ViewState.SetViewState(EViewState.FPS);
+        playerRigid.isKinematic = false;
         playerMovement.enabled = true;
         playerCombat.enabled = true;
     }

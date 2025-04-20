@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public abstract class Boss : Enemy
 {
@@ -14,15 +15,14 @@ public abstract class Boss : Enemy
         hpbar.Init(this);
     }
 
+    protected override IEnumerator StartDie()
+    {
+        yield return null;
+    }
+
     protected override void Die()
     {
-        Die();
-        goldCoin.SetGold(300);
-        goldCoin.SetCoin(4);
-        round.isBossRound = false;
-        timer.SetSec(15f);
-        enemySpawner.EnemySpawnDelay = 0.85f;
-
         GameManager.instance.GameState.SetGameState(EGameState.GAMECLEAR);
+        base.Die();
     }
 }

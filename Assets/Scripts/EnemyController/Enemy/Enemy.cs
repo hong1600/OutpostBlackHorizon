@@ -47,13 +47,14 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     //Target
     int targetRand;
     Transform[] targetPoints;
-    protected Transform myTarget;
+    [SerializeField] protected Transform myTarget;
     protected Vector3 targetPointDir;
 
     //State
     public bool isStay { get; private set; }
     public bool attackReady { get; private set; }
     public bool isDie { get; protected set; }
+    bool isOneShot = true;
     protected bool isAttack;
     protected Coroutine attackCoroutine;
     Vector3 hpBarPos;
@@ -86,6 +87,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         attackDmg = _dmg;
         curhp = maxHp;
         rotationSpeed = 5;
+        eEnemy = _eEnemy;
 
         targetPoints = enemySpawner.TargetPoint();
         targetRand = Random.Range(0, targetPoints.Length);
@@ -108,6 +110,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         attackReady = false;
         isAttack = false;
         isDie = false;
+        isOneShot = true;
         isStay = false;
     }
 
@@ -165,10 +168,6 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
             {
                 myTarget = highTargetTrs;
             }
-        }
-        else
-        {
-            myTarget = null;
         }
     }
 
@@ -229,6 +228,8 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     public virtual void TakeDmg(float _dmg, bool _isHead)
     {
+        if (isDie) return;
+
         curhp -= _dmg;
 
         if(hitMat != null && render != null) 
@@ -275,7 +276,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         StartCoroutine(StartDie());
     }
 
-    IEnumerator StartDie()
+    protected virtual IEnumerator StartDie()
     {
         GameObject explosionObj = effectPool.FindEffect(EEffect.ENEMYEXPLOSION, box.bounds.center, Quaternion.identity);
 
@@ -284,10 +285,14 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         rewarder.SetReward(EReward.PAPER, 20);
         rewarder.SetReward(EReward.EXP, 1);
 
+        if (enemyHpBar != null)
+        {
+            hpBarPool.ReturnHpBar(EHpBar.NORMAL, enemyHpBar.gameObject);
+        }
+
         yield return new WaitForSeconds(1f);
 
         effectPool.ReturnEffect(EEffect.ENEMYEXPLOSION, explosionObj);
-        hpBarPool.ReturnHpBar(EHpBar.NORMAL, enemyHpBar.gameObject);
         enemyPool.ReturnEnemy(eEnemy, this.gameObject);
     }
 
@@ -319,6 +324,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     {
         if (myTarget == null)
         {
+            attackReady = false;
             myTarget = targetPoints[targetRand];
         }
 
@@ -347,6 +353,14 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     public void DieAI()
     {
-        Die();
+        if (isDie && isOneShot)
+        {
+            Die();
+            isOneShot = false;
+        }
+        else
+        {
+            aiState = EEnemyAI.CREATE;
+        }
     }
 }

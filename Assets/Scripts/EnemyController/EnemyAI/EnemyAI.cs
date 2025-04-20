@@ -88,13 +88,9 @@ public class EnemyAI
 
     public virtual void Die()
     {
-        if(enemy.isDie) 
+        if (enemy.isDie)
         {
             enemy.DieAI();
-        }
-        else
-        {
-            aiState = EEnemyAI.CREATE;
         }
     }
 }
