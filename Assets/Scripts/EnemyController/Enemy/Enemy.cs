@@ -12,7 +12,6 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     protected EEnemyAI aiState;
     protected EEnemy eEnemy;
 
-    //Components
     [SerializeField] SphereCollider sensor;
     [SerializeField] BoxCollider box;
     [SerializeField] Renderer render;
@@ -22,7 +21,6 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     Material originMat;
     SkinnedMeshRenderer skinRender;
 
-    //Systems
     protected EnemyAI enemyAI;
     protected EnemyHpBar enemyHpBar;
     protected EnemyPool enemyPool;
@@ -35,7 +33,6 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     protected Timer timer;
     protected BulletPool bulletPool;
 
-    //Stats
     public string enemyName { get; private set; }
     public float maxHp { get; private set; }
     public float curhp { get; protected set; }
@@ -44,13 +41,11 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     public float attackRange { get; private set; }
     public float attackDmg { get; private set; }
 
-    //Target
     int targetRand;
     Transform[] targetPoints;
     [SerializeField] protected Transform myTarget;
     protected Vector3 targetPointDir;
 
-    //State
     public bool isStay { get; private set; }
     public bool attackReady { get; private set; }
     public bool isDie { get; protected set; }
@@ -146,7 +141,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     protected virtual void CheckTarget()
     {
         Collider[] colls = Physics.OverlapSphere(transform.position,
-            sensor.radius, LayerMask.GetMask("Player", "Field"));
+            sensor.radius * transform.localScale.x, LayerMask.GetMask("Player", "Field"));
 
         if(colls.Length > 0) 
         {
@@ -220,7 +215,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
             }
         }
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(10);
 
         isAttack = false;
         attackCoroutine = null;

@@ -14,7 +14,7 @@ public abstract class WaveBoss : Enemy
 
     protected override void Die()
     {
-        Die();
+        base.Die();
         goldCoin.SetCoin(2);
     }
 }

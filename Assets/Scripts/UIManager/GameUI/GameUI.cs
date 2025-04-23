@@ -25,6 +25,9 @@ public class GameUI : Singleton<GameUI>
     [SerializeField] UIBuild uiBuild;
     [SerializeField] UIBossHpbar uiBossHpbar;
 
+    [Header("Canvas")]
+    [SerializeField] Transform skillBarParent;
+
     protected override void Awake()
     {
         base.Awake();
@@ -81,6 +84,7 @@ public class GameUI : Singleton<GameUI>
         }
     }
 
+    public Transform SkillBarParent { get { return skillBarParent; } }
     public UIFusionBtn UIFusionBtn { get { return uiFusionBtn; } }
     public UIMixRightSlot UIMixRightSlot { get { return uiMixRightSlot; } }
     public UIBuild UIBuild { get { return uiBuild; } }

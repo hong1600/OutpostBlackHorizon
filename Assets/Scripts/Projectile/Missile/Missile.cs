@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EMissile { PLAYER, ENEMY }
+
 public abstract class Missile : Projectile
 {
-    [SerializeField] float rotSpd;
+    protected EMissile eMissile;
 
-    private void FixedUpdate()
+    [SerializeField] protected float rotSpd;
+
+    protected virtual void FixedUpdate()
     {
         MoveMissile();
     }
@@ -15,27 +19,33 @@ public abstract class Missile : Projectile
     {
         CheckTarget();
 
-        if (target != null)
+        if (target == null) return;
+
+        Rigidbody targetRigid = target.GetComponentInParent<Rigidbody>();
+        Vector3 targetPos = target.position;
+
+        if (targetRigid != null)
         {
-            Vector3 predictPos = target.position + target.GetComponentInParent<Rigidbody>().velocity * 1;
-
-            Vector3 dir = (predictPos - transform.position).normalized;
-
-            Quaternion targetRot = Quaternion.LookRotation(dir);
-
-            float targetDistance = Vector3.Distance(transform.position, target.position);
-            float dynamicRot = Mathf.Lerp(rotSpd, rotSpd * 2f, targetDistance / 10f);
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpd * Time.fixedDeltaTime);
-
-            rigid.velocity = transform.forward * speed;
-
+            targetPos += targetRigid.velocity * 2;
         }
+
+        Vector3 dir = (targetPos - transform.position).normalized;
+
+        Quaternion targetRot = Quaternion.LookRotation(dir);
+
+        float distance = Vector3.Distance(transform.position, targetPos);
+        float dynamicSpeed = Mathf.Lerp(rotSpd, rotSpd * 2f, distance / 10f);
+
+        transform.rotation = Quaternion.RotateTowards
+            (transform.rotation, targetRot, dynamicSpeed * Time.fixedDeltaTime);
+
+        rigid.velocity = transform.forward * speed;
     }
 
-    private void CheckTarget()
+    protected void CheckTarget()
     {
-        if (!target.gameObject.activeSelf || Vector3.Distance(transform.position, target.transform.position) < 0.1f)
+        if (target == null || !target.gameObject.activeSelf || 
+            Vector3.Distance(transform.position, target.transform.position) < 0.1f)
         {
             Explode();
         }
@@ -46,7 +56,7 @@ public abstract class Missile : Projectile
         GameObject explosionEffect = effectPool.FindEffect
             (EEffect.ROCKETEXPLOSION, transform.position, Quaternion.identity);
         Explosion explosion = explosionEffect.GetComponent<Explosion>();
-        explosion.Init(dmg);
+        explosion.Init(dmg, eMissile);
         AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
 
         ReturnPool();
@@ -54,8 +64,9 @@ public abstract class Missile : Projectile
 
     private void OnTriggerEnter(Collider coll)
     {
-        if (coll.gameObject.layer != LayerMask.NameToLayer("EnemySensor") ||
-            coll.gameObject.layer != LayerMask.NameToLayer("Bullet"))
+        if (coll.gameObject.layer != LayerMask.NameToLayer("EnemySensor") &&
+            coll.gameObject.layer != LayerMask.NameToLayer("Bullet") &&
+            coll.gameObject.layer != LayerMask.NameToLayer("Effect"))
         {
             Explode ();
         }

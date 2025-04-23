@@ -6,7 +6,7 @@ public class Robot1 : NormalEnemy
 {
     TableEnemy.Info info;
 
-    private void Awake()
+    private void Start()
     {
         info = DataManager.instance.TableEnemy.Get(201);
 

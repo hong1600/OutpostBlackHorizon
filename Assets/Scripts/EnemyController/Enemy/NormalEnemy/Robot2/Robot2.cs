@@ -10,7 +10,7 @@ public class Robot2 : NormalEnemy
     [SerializeField] Transform fireTrs;
     [SerializeField] float bulletSpeed = 500f;
 
-    private void Awake()
+    private void Start()
     {
         info = DataManager.instance.TableEnemy.Get(202);
 

@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class RocketMissile : Missile
 {
-    public override void Init(Transform _target, float _dmg, float _speed)
+    public void Init(Transform _target, float _dmg, float _speed, EMissile _eMissile)
     {
-        target = _target;
-        dmg = _dmg;
-        speed = _speed;
-        time = 10;
+        base.Init(_target, _dmg, _speed);
+
+        eMissile = _eMissile;
+
+        time = 20;
     }
 
     protected override void ReturnPool()

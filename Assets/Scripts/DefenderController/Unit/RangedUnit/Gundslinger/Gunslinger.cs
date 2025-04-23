@@ -18,7 +18,7 @@ public class Gunslinger : RangedUnit
 
     protected override IEnumerator StartAttack()
     {
-        if (skillBar.GetComponent<UnitSkillBar>().isSkillCast && skillCouroutine == null)
+        if (unitSkillBar.isSkillCast && skillCouroutine == null)
         {
             StartCoroutine(StartSkill());
         }
@@ -39,7 +39,7 @@ public class Gunslinger : RangedUnit
         GameObject effect = effectPool.FindEffect(eEffect, bulletTrs.position, Quaternion.identity);
         effect.GetComponent<GunslingerEffect>().Init(enemy.gameObject.transform, 100, 150f);
         skillCouroutine = null;
-        skillBar.GetComponent<UnitSkillBar>().ResetSkillBar();
+        unitSkillBar.ResetSkillBar();
 
         yield return new WaitForSeconds(2f);
 

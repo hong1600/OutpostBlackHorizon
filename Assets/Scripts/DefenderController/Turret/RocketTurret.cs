@@ -23,7 +23,7 @@ public class RocketTurret : Defender
 
             GameObject missileObj = bulletPool.FindBullet(EBullet.ROCKETMISSILE, fireTrs[i].position, fireTrs[i].rotation);
             RocketMissile missile = missileObj.GetComponent<RocketMissile>();
-            missile.Init(target.transform, attackDamage, bulletSpd);
+            missile.Init(target.transform, attackDamage, bulletSpd, EMissile.PLAYER);
 
             yield return new WaitForSeconds(1f);
         }

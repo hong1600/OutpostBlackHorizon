@@ -16,7 +16,7 @@ public class Mage : RangedUnit
 
     protected override IEnumerator StartAttack()
     {
-        if (skillBar.GetComponent<UnitSkillBar>().isSkillCast && skillCouroutine == null)
+        if (unitSkillBar.isSkillCast && skillCouroutine == null)
         {
             StartCoroutine(StartSkill());
         }
@@ -37,7 +37,7 @@ public class Mage : RangedUnit
         GameObject effect = effectPool.FindEffect(eEffect, 
             enemy.transform.position + new Vector3(0, 0.1f, 0), Quaternion.identity);
         skillCouroutine = null;
-        skillBar.GetComponent<UnitSkillBar>().ResetSkillBar();
+        unitSkillBar.ResetSkillBar();
 
         yield return new WaitForSeconds(1f);
 

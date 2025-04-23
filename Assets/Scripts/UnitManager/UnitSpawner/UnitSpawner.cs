@@ -25,10 +25,6 @@ public class UnitSpawner : MonoBehaviour
     [SerializeField] int spawnGold;
     [SerializeField] GameObject selectSpawnUnit;
 
-    [SerializeField] GameObject unitSkillBar;
-    [SerializeField] Transform unitSkillBarParent;
-
-
     private void Awake()
     {
         spawnGold = 20;
@@ -107,20 +103,6 @@ public class UnitSpawner : MonoBehaviour
             unitScale.x * (1 / fieldScale.x),
             unitScale.y * (1 / fieldScale.y),
             unitScale.z * (1 / fieldScale.z));
-
-
-        if (instantiateUnit.GetComponent<Unit>().eUnitGrade == EUnitGrade.SS ||
-            instantiateUnit.GetComponent<Unit>().eUnitGrade == EUnitGrade.S)
-        {
-            GameObject skillBar = Instantiate(unitSkillBar, instantiateUnit.transform.position,
-                Quaternion.identity, unitSkillBarParent);
-
-            Unit unit = instantiateUnit.GetComponent<Unit>();
-            UnitSkillBar UnitSkillBar = skillBar.GetComponent<UnitSkillBar>();
-
-            UnitSkillBar.Init(unit);
-            unit.skillBar = skillBar;
-        }
 
         unitData.AddUnitData(instantiateUnit);
     }

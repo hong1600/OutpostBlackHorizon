@@ -50,6 +50,7 @@ public enum EBullet
     ROCKETMISSILE,
     LASERBULLET,
     ROBOT2BULLET,
+    BOSSMISSILE
 }
 
 public enum EBgm

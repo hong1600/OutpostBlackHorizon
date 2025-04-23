@@ -14,7 +14,10 @@ public abstract class Unit : Defender
     TableUnit tableUnit;
     Animator anim;
     BoxCollider box;
-    public GameObject skillBar;
+
+    [SerializeField] GameObject skillBar;
+    Transform skillBarParent;
+    protected UnitSkillBar unitSkillBar;
 
     [SerializeField] protected internal bool isSkill;
     [SerializeField] protected internal Coroutine skillCouroutine;
@@ -30,29 +33,19 @@ public abstract class Unit : Defender
         eUnitGrade = _eUnitGrade;
         skillDamage = 50;
 
-        switch (eUnitGrade)
-        {
-            case EUnitGrade.C
-            : lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[0]; 
-                break;
-            case EUnitGrade.B: 
-                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[0]; 
-                break;
-            case EUnitGrade.A:
-                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[1];
-                break;
-            case EUnitGrade.S: 
-                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[2]; 
-                break;
-            case EUnitGrade.SS: 
-                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[2];
-                break;
-        }
+        skillBarParent = GameUI.instance.SkillBarParent;
+
+        UpdateUpgrade();
 
         UnitManager.instance.UnitUpgrader.MissUpgrade(lastUpgrade, this);
 
         isSkill = false;
         skillCouroutine = null;
+    }
+
+    private void OnEnable()
+    {
+        InitSkillBar();
     }
 
     private void Update()
@@ -71,6 +64,44 @@ public abstract class Unit : Defender
     protected virtual IEnumerator StartSkill()
     {
         yield return null;
+    }
+
+    private void UpdateUpgrade()
+    {
+        switch (eUnitGrade)
+        {
+            case EUnitGrade.C
+    :
+                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[0];
+                break;
+            case EUnitGrade.B:
+                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[0];
+                break;
+            case EUnitGrade.A:
+                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[1];
+                break;
+            case EUnitGrade.S:
+                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[2];
+                break;
+            case EUnitGrade.SS:
+                lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[2];
+                break;
+        }
+    }
+
+    private void InitSkillBar()
+    {
+        if (unitSkillBar != null) return;
+
+        if (eUnitGrade == EUnitGrade.SS || eUnitGrade == EUnitGrade.S)
+        {
+            skillBar = Instantiate(skillBar, transform.position,
+                Quaternion.identity, skillBarParent);
+
+            unitSkillBar = skillBar.GetComponent<UnitSkillBar>();
+
+            unitSkillBar.Init(this);
+        }
     }
 
     protected internal void ChangeAnim(EDefenderAI _curState)

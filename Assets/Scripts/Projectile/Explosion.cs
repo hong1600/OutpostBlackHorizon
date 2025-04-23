@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
+    EMissile eMissile;
+
     SphereCollider sphere;
     EffectPool effectPool;
 
@@ -20,20 +22,45 @@ public class Explosion : MonoBehaviour
         Invoke(nameof(Return), 1.5f);
     }
 
-    public void Init(float _dmg)
+    public void Init(float _dmg, EMissile _eMissile)
     {
         dmg = _dmg;
+        eMissile = _eMissile;
     }
 
     private void OnTriggerEnter(Collider coll)
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, sphere.radius, LayerMask.GetMask("Enemy"));
+        Collider[] hits;
 
-        if (hits.Length > 0)
+        if (eMissile == EMissile.PLAYER)
         {
-            for (int i = 0; i < hits.Length; i++)
+            hits = Physics.OverlapSphere
+                (transform.position, sphere.radius * transform.localScale.x, LayerMask.GetMask("Enemy"));
+
+            if (hits.Length > 0)
             {
-                if (hits[i].gameObject.CompareTag("Body"))
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    if (hits[i].gameObject.CompareTag("Body"))
+                    {
+                        ITakeDmg iTakeDmg = hits[i].GetComponentInParent<ITakeDmg>();
+
+                        if (iTakeDmg != null)
+                        {
+                            iTakeDmg.TakeDmg(dmg, false);
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            hits = Physics.OverlapSphere
+                (transform.position, sphere.radius * transform.localScale.x, LayerMask.GetMask("Player", "Field"));
+
+            if (hits.Length > 0)
+            {
+                for (int i = 0; i < hits.Length; i++)
                 {
                     ITakeDmg iTakeDmg = hits[i].GetComponentInParent<ITakeDmg>();
 
