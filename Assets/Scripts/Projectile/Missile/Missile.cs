@@ -10,6 +10,8 @@ public abstract class Missile : Projectile
 
     [SerializeField] protected float rotSpd;
 
+    float randomExplotionTime;
+
     protected virtual void FixedUpdate()
     {
         MoveMissile();
@@ -44,11 +46,24 @@ public abstract class Missile : Projectile
 
     protected void CheckTarget()
     {
-        if (target == null || !target.gameObject.activeSelf || 
-            Vector3.Distance(transform.position, target.transform.position) < 0.1f)
+        if (target == null || !target.gameObject.activeSelf)
+        {
+            UpdateRandomExplosion();
+
+            Invoke(nameof(Explode), randomExplotionTime);
+
+            return;
+        }
+
+        if (Vector3.Distance(transform.position, target.transform.position) < 0.1f)
         {
             Explode();
         }
+    }
+
+    private void UpdateRandomExplosion()
+    {
+        randomExplotionTime = Random.Range(0, 5);
     }
 
     private void Explode()

@@ -6,6 +6,7 @@ public class WaitingStartBtn : MonoBehaviour
 {
     public void OnClickStartBtn()
     {
+        AudioManager.instance.StopBgm();
         MSceneManager.Instance.ChangeScene(EScene.GAME, true);
     }
 }

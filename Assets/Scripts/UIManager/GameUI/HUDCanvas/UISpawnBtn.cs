@@ -23,7 +23,7 @@ public class UISpawnBtn : MonoBehaviour
 
     public void ClickSpawnBtn()
     {
-        if (goldCoin.GetGold() > unitSpawner.GetSpawnGold())
+        if (goldCoin.GetGold() >= unitSpawner.GetSpawnGold())
         {
             unitSpawner.SpawnUnit();
         }

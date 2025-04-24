@@ -135,13 +135,13 @@ public class UnitRandomSpawner : MonoBehaviour
         switch (_index)
         {
             case 0:
-                return unitData.GetUnitByGradeList(EUnitGrade.B)[_randB].GetComponent<Unit>().defenderSprite;
+                return SpriteManager.instance.GetSprite(DataManager.instance.TableUnit.GetUnitData(102).SpriteName);
 
             case 1:
-                return unitData.GetUnitByGradeList(EUnitGrade.A)[_randA].GetComponent<Unit>().defenderSprite;
+                return SpriteManager.instance.GetSprite(DataManager.instance.TableUnit.GetUnitData(103).SpriteName);
 
             case 2:
-                return unitData.GetUnitByGradeList(EUnitGrade.S)[_randS].GetComponent<Unit>().defenderSprite;
+                return SpriteManager.instance.GetSprite(DataManager.instance.TableUnit.GetUnitData(104).SpriteName);
         }
         return null;
     }

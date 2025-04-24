@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UnitAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: a68af43d809060b4d9244c179db6e215, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 05fa5ac142357a245830078064aa4a60: 21300000
+    - 1a16ea64c88571f46ac32536b160e146: 21300000
+    - b034db55ba476c04895efa27f7479481: 21300000
+    - e54616da1a83862408a39956ebb1c827: 21300000
+    - 6f91e92c356803d4c8e14eb58b6d8d61: 21300000
+    - 80622f6d70ad25a428ead87602dcaa0d: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 05fa5ac142357a245830078064aa4a60, type: 3}
+  - {fileID: 21300000, guid: 1a16ea64c88571f46ac32536b160e146, type: 3}
+  - {fileID: 21300000, guid: b034db55ba476c04895efa27f7479481, type: 3}
+  - {fileID: 21300000, guid: e54616da1a83862408a39956ebb1c827, type: 3}
+  - {fileID: 21300000, guid: 6f91e92c356803d4c8e14eb58b6d8d61, type: 3}
+  - {fileID: 21300000, guid: 80622f6d70ad25a428ead87602dcaa0d, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Mage
+  - Gunslinger
+  - Shieldman
+  - Swordman
+  - User
+  - Knight
+  m_RenderDataMap: {}
+  m_Tag: UnitAtlas
+  m_IsVariant: 0

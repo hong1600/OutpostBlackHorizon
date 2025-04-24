@@ -6,7 +6,7 @@ SpriteAtlas:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UIAtals
+  m_Name: UIAtlas
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -1286,5 +1286,5 @@ SpriteAtlas:
   - Free Flat Media Right Double Icon
   - Free Flat Volume 5 Icon
   m_RenderDataMap: {}
-  m_Tag: UIAtals
+  m_Tag: UIAtlas
   m_IsVariant: 0

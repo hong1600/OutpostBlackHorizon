@@ -6,7 +6,12 @@ using UnityEngine;
 public class PlayerStatus : MonoBehaviour, ITakeDmg
 {
     public event Action onTakeDmg;
+    public event Action onFillHp;
     public event Action onUseEnergy;
+
+    float hptimer;
+
+    bool isTakeDmg = false;
 
     public float maxHp { get; private set; }
     public float curHp { get; private set; }
@@ -17,10 +22,15 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     private void Awake()
     {
         maxHp = 100;
-        curHp = maxHp;
+        curHp = 5;
         maxEnergy = 100;
         curEnergy = 100;
         isDie = false;
+    }
+
+    private void Update()
+    {
+        //FillHp(5);
     }
 
     public void TakeDmg(float _dmg, bool _isHead)
@@ -29,6 +39,8 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         {
             curHp -= _dmg;
             curHp = Mathf.Clamp(curHp, 0, maxHp);
+            isTakeDmg = true;
+            hptimer = 0;
             onTakeDmg?.Invoke();
         }
         if (curHp <= 0)
@@ -36,6 +48,30 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
             isDie = true;
             StartCoroutine(StartDie());
         }
+    }
+
+    private void FillHp(float _hp)
+    {
+        if (isTakeDmg)
+        {
+            hptimer += Time.deltaTime;
+
+            if (hptimer > 5)
+            {
+                isTakeDmg = false;
+            }
+        }
+        else
+        {
+            curHp += _hp * Time.deltaTime;
+            curHp = Mathf.Clamp(curHp, 0, maxHp);
+            onFillHp?.Invoke();
+        }
+    }
+
+    IEnumerator StartFillHp()
+    {
+        yield return null;
     }
 
     public void UseEnergy(float _energy)
@@ -55,5 +91,4 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         GameManager.instance.GameState.SetGameState(EGameState.GAMEOVER);
         yield return null;
     }
-
 }

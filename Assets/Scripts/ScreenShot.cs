@@ -17,7 +17,7 @@ public class ScreenShot : MonoBehaviour
 
     private void Start()
     {
-        filePath = Application.dataPath + "/Sprites/Obj/screenshot.png";
+        filePath = Application.dataPath + "/Sprites/Screenshot/screenshot.png";
         Capture();
     }
 

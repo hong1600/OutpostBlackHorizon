@@ -41,9 +41,10 @@ public class UnitSpawner : MonoBehaviour
     public void InstantiateUnit(GameObject _unit)
     {
         List<Transform> SpawnPointList = unitFieldData.GetUnitSpawnPointList();
-        int fieldNum = unitFieldData.fieldNum;
 
         if (!unitFieldData.IsCheckGround(_unit)) return;
+
+        int fieldNum = unitFieldData.fieldNum;
 
         if (fieldNum < 0 || fieldNum > SpawnPointList.Count || _unit == null) return;
 
@@ -160,14 +161,7 @@ public class UnitSpawner : MonoBehaviour
 
     public string SelectRandom(string[] _options, float[] _weights)
     {
-        float totalWeight = 0f;
-
-        foreach (float weight in _weights)
-        {
-            totalWeight += weight;
-        }
-
-        float randomValue = Random.Range(0, totalWeight);
+        float randomValue = Random.value;
         float cumulativeWeight = 0f;
 
         for (int i = 0; i < _options.Length; i++)

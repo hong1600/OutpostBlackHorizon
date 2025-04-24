@@ -109,7 +109,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         isStay = false;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (enemyAI == null) return;
 

@@ -30,6 +30,8 @@ public class UIRewardPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI stateText;
     [SerializeField] GameObject rewardPanel;
 
+    bool isOneshot = false;
+
     private void Start()
     {
         rewarder = GameManager.instance.Rewarder;
@@ -38,6 +40,10 @@ public class UIRewardPanel : MonoBehaviour
 
     IEnumerator StartAnim()
     {
+        if (isOneshot) yield break;
+
+        isOneshot = true;
+
         finishBackRect.DOSizeDelta(new Vector2(finishBackRect.sizeDelta.x, 400), 0.5f)
             .SetEase(Ease.OutSine);
         finishPanelRect2.DOSizeDelta (new Vector2(finishPanelRect2.sizeDelta.x, 15), 0.5f)
@@ -74,6 +80,10 @@ public class UIRewardPanel : MonoBehaviour
             .SetEase(Ease.Linear).WaitForCompletion();
 
         finishText.enabled = true;
+
+        yield return new WaitForSeconds(5f);
+
+        MSceneManager.Instance.ChangeScene(EScene.LOBBY);
     }
 
     public void UpdateRewardPanel(EGameState _state)

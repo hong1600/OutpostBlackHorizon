@@ -211,14 +211,12 @@ public class PlayerMovement : MonoBehaviour
 
             rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
             rigid.AddForce(jumpDir * jumpForce, ForceMode.Impulse);
-            AudioManager.instance.PlaySfx(ESfx.JUMP, transform.position);
         }
         else if (jumpCount == 1)
         {
             fallGravity = 0.5f;
             rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
             rigid.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            AudioManager.instance.PlaySfx(ESfx.JUMP, transform.position);
         }
     }
 }

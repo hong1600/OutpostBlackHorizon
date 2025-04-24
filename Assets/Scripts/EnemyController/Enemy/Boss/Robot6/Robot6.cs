@@ -15,20 +15,27 @@ public class Robot6 : Boss
     bool isLeftHand = true;
     bool isRightHand = true;
 
+    int pattonNum;
+
     [Header("Missile")]
     [SerializeField] float speed = 50;
-    [SerializeField] float spacing = 3f;
+    [SerializeField] float spacing = 10f;
     [SerializeField] Transform leftMissileTrs;
     [SerializeField] Transform rightMissileTrs;
     Vector3[] fireTrsOffset;
 
     [Header("Laser")]
     [SerializeField] Transform laserFireTrs;
+    [SerializeField] GameObject laserEffect;
+    [SerializeField] LineRenderer laserLine;
     [SerializeField] GameObject chargeLaserEffect;
     [SerializeField] LineRenderer chargeLaserLine;
-    [SerializeField] GameObject laserEffect;
-
-    int pattonNum;
+    Material laserMat;
+    Material chargeMat;
+    Vector3 smoothLaserEnd;
+    float emissionPower = 0f;
+    float maxEmission = 2f;
+    float laserTimer = 1f;
 
     public float bodyHp { get; private set; }
     public float leftHandHp { get; private set; }
@@ -52,6 +59,9 @@ public class Robot6 : Boss
                 index++;
             }
         }
+
+        chargeMat = chargeLaserLine.material;
+        laserMat = laserLine.material;
     }
 
     private void Start()
@@ -65,19 +75,19 @@ public class Robot6 : Boss
         rightHandHp = info.MaxHp / 3; 
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if(chargeLaserEffect.activeInHierarchy) 
-        {
-            UpdateChargeLaserLine();
-        }
+        base.Update();
+
+        UpdateChargeLaserLine();
+        UpdateLaserLine();
     }
 
     protected override IEnumerator StartAttack()
     {
         isAttack = true;
 
-        pattonNum = 1;
+        ChangePatton();
 
         switch (pattonNum)
         {
@@ -93,14 +103,16 @@ public class Robot6 : Boss
 
         yield return new WaitForSeconds(5f);
 
+        base.CheckTarget();
+
         isAttack = false;
 
         attackCoroutine = null;
     }
 
-    private void AttackPatton()
+    private void ChangePatton()
     {
-        int pattonNum = Random.Range(0, 1);
+        pattonNum = Random.Range(0, 2);
     }
 
     private void AttackMissile()
@@ -152,33 +164,96 @@ public class Robot6 : Boss
         Quaternion targetRot = Quaternion.LookRotation(targetDir);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, 1);
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
 
         chargeLaserEffect.SetActive(false);
         laserEffect.SetActive(true);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4);
 
         laserEffect.SetActive(false);
     }
 
+    private void UpdateLaserLine()
+    {
+        if(laserEffect.activeSelf) 
+        {
+            if (myTarget == null)
+            {
+                base.CheckTarget();
+            }
+
+            if (myTarget == null) return;
+
+
+            Vector3 start = laserFireTrs.position;
+            Vector3 dir = (myTarget.position - laserFireTrs.position).normalized;
+            Vector3 end = start + dir * 2000;
+
+            if (smoothLaserEnd == Vector3.zero)
+                smoothLaserEnd = end;
+
+            smoothLaserEnd = Vector3.Lerp(smoothLaserEnd, end, Time.deltaTime * 2.5f);
+
+            laserLine.SetPosition(0, start);
+            laserLine.SetPosition(1, smoothLaserEnd);
+
+            Ray ray = new Ray(start, smoothLaserEnd);
+
+            RaycastHit[] hits = Physics.SphereCastAll(ray, 2f, 2000f, LayerMask.GetMask("Player", "Field"));
+
+            laserTimer -= Time.deltaTime;
+
+            if (laserTimer <= 0)
+            {
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    if (hits[i].collider.gameObject.GetComponent<ITakeDmg>() != null)
+                    {
+                        ITakeDmg iTakeDmg = hits[i].collider.gameObject.GetComponent<ITakeDmg>();
+
+                        iTakeDmg.TakeDmg(attackDmg, false);
+                    }
+                }
+
+                laserTimer = 1f;
+            }
+        }
+    }
+
     private void UpdateChargeLaserLine()
     {
-        Vector3 start = laserFireTrs.position;
-        Vector3 dir = laserFireTrs.forward;
-
-        Ray ray = new Ray(start, dir);
-        Vector3 end = start + dir * 10;
-
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        if (chargeLaserEffect.activeSelf)
         {
-            end = hit.point;
+            if (myTarget == null)
+            {
+                base.CheckTarget();
+            }
+
+            if (myTarget == null) return;
+
+            emissionPower = Mathf.Min(maxEmission, emissionPower + Time.deltaTime);
+
+            Vector3 start = laserFireTrs.position;
+            Vector3 dir = (myTarget.position - laserFireTrs.position).normalized;
+            Vector3 end = start + dir * 2000;
+
+            if (smoothLaserEnd == Vector3.zero)
+                smoothLaserEnd = end;
+
+            smoothLaserEnd = Vector3.Lerp(smoothLaserEnd, end, Time.deltaTime * 4f);
+
+            chargeLaserLine.SetPosition(0, start);
+            chargeLaserLine.SetPosition(1, smoothLaserEnd);
+        }
+        else
+        {
+            emissionPower = 0f;
         }
 
-        chargeLaserLine.SetPosition(0, start);
-        chargeLaserLine.SetPosition(1, end);
-
+        chargeMat.SetColor("_EmissionColor", Color.red * emissionPower);
     }
+
 
     public override void TakeDmg(float _dmg, bool _isHead)
     {

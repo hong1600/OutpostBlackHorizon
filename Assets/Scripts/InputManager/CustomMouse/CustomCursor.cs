@@ -30,15 +30,6 @@ public class CustomCursor : MonoBehaviour
         cursorImg.rectTransform.position = mousePos;
     }
 
-    private void OnEnable()
-    {
-        if (InputManager.instance != null)
-        {
-            InputManager.instance.onInputMouse += CheckUIOrObj;
-            InputManager.instance.onLeftClickUp += ClickMouseEvent;
-        }
-    }
-
     private void Update()
     {
         UpdateCursorLock();
@@ -153,6 +144,7 @@ public class CustomCursor : MonoBehaviour
         if (lastEventObj != null)
         {
             ExecuteEvents.Execute(lastEventObj, eventData, ExecuteEvents.pointerClickHandler);
+            //Debug.Log(lastEventObj);
         }
     }
 
