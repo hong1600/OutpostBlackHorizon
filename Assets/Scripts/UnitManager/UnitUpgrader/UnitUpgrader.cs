@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public partial class UnitUpgrader : MonoBehaviour
@@ -127,6 +128,8 @@ public partial class UnitUpgrader : MonoBehaviour
 
         for (int i = 0; i < unitList.Count; i++)
         {
+            if (unitList[i] == null) return;
+
             if (unitList[i].GetComponent<Unit>().eUnitGrade == _grade)
             {
                 Upgrade(unitList[i].GetComponent<Unit>(), _grade);

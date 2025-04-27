@@ -144,6 +144,7 @@ public class CustomCursor : MonoBehaviour
         if (lastEventObj != null)
         {
             ExecuteEvents.Execute(lastEventObj, eventData, ExecuteEvents.pointerClickHandler);
+            Debug.Log(lastEventObj);
         }
     }
 

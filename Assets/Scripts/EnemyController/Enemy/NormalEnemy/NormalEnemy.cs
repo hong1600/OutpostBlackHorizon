@@ -7,6 +7,6 @@ public abstract class NormalEnemy : Enemy
     protected override void Die()
     {
         base.Die();
-        goldCoin.SetGold(1);
+        goldCoin.SetGold(10);
     }
 }

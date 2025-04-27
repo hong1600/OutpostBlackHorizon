@@ -7,18 +7,18 @@ public class UIMixRightSlot : MonoBehaviour
     [SerializeField] Transform mixRightContent;
     [SerializeField] int curMixUnit;
 
-    [SerializeField] GameObject[] unitPanels;
-    Dictionary<EUnitGrade, GameObject> unitPanelDic = new Dictionary<EUnitGrade, GameObject>();
+    [SerializeField] GameObject unitPanel;
 
     [SerializeField] List<TableUnit.Info> unitList = new List<TableUnit.Info>();
+
+    [SerializeField] List<TableUnit.Info> unitDataList = new List<TableUnit.Info>();
 
 
     private void Start()
     {
-        unitPanelDic[EUnitGrade.C] = unitPanels[0];
-        unitPanelDic[EUnitGrade.B] = unitPanels[1];
-        unitPanelDic[EUnitGrade.A] = unitPanels[2];
-        unitPanelDic[EUnitGrade.S] = unitPanels[3];
+        unitDataList.Add(DataManager.instance.TableUnit.GetUnitData(101));
+        unitDataList.Add(DataManager.instance.TableUnit.GetUnitData(102));
+        unitDataList.Add(DataManager.instance.TableUnit.GetUnitData(103));
 
         LoadRightUnit(0);
     }
@@ -40,21 +40,20 @@ public class UIMixRightSlot : MonoBehaviour
         if (_num >= curUnitList.Count) return;
 
         TableUnit.Info unitData = curUnitList[_num];
+
         TableUnit.Info[] mixUnits = unitData.mixNeedUnits;
 
         int j = 0;
-        while (j < mixUnits.Length)
+        while (j < unitDataList.Count)
         {
-            TableUnit.Info unit = mixUnits[j];
+            TableUnit.Info unit = unitDataList[j];
 
-            if (unitPanelDic.ContainsKey(unit.Grade))
-            {
-                GameObject panel = Instantiate(unitPanelDic[0]);
-                GameObject newSlot = Instantiate(panel, mixRightContent);
-                UISetRightSlot setRightSlot = newSlot.GetComponent<UISetRightSlot>();
-                setRightSlot.SetUnit(unit);
-                unitList.Add(unit);
-            }
+            GameObject panel = Instantiate(unitPanel);
+            GameObject newSlot = Instantiate(panel, mixRightContent);
+            UISetRightSlot setRightSlot = newSlot.GetComponent<UISetRightSlot>();
+            setRightSlot.SetUnit(unit);
+            unitList.Add(unit);
+
             j++;
         }
     }

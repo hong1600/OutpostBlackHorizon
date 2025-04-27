@@ -18,7 +18,8 @@ public class UIRewardPanel : MonoBehaviour
     [SerializeField] GameObject finishBack;
     [SerializeField] GameObject finishPanel1;
     [SerializeField] GameObject finishPanel2;
-    [SerializeField] TextMeshProUGUI finishText;
+    [SerializeField] TextMeshProUGUI finishText1;
+    [SerializeField] TextMeshProUGUI finishText2;
     [SerializeField] GameObject finishImg;
     [SerializeField] Transform movePos1;
     [SerializeField] Transform movePos2;
@@ -51,8 +52,8 @@ public class UIRewardPanel : MonoBehaviour
 
         yield return new WaitForSeconds(0.15f);
 
-        finishText.DOFade(0,0.03f).SetEase(Ease.InOutSine).SetLoops(5, LoopType.Yoyo)
-            .OnComplete(() => finishText.alpha = 1);
+        finishText2.DOFade(0,0.03f).SetEase(Ease.InOutSine).SetLoops(5, LoopType.Yoyo)
+            .OnComplete(() => finishText2.alpha = 1);
 
         yield return new WaitForSeconds(1f);
 
@@ -61,7 +62,7 @@ public class UIRewardPanel : MonoBehaviour
         yield return finishPanelRect2.DOSizeDelta(new Vector2(finishPanelRect2.sizeDelta.x, 90), 0.5f)
             .SetEase(Ease.OutSine).WaitForCompletion();
 
-        finishText.enabled = false;
+        finishText2.enabled = false;
         finishImg.SetActive(true);
         finishPanelRect1.DOSizeDelta(new Vector2(150, finishPanelRect1.sizeDelta.y), 0.5f)
             .SetEase(Ease.OutSine);
@@ -79,7 +80,7 @@ public class UIRewardPanel : MonoBehaviour
         yield return finishPanel2.transform.DOMove(movePos2.position, 0.5f)
             .SetEase(Ease.Linear).WaitForCompletion();
 
-        finishText.enabled = true;
+        finishText2.enabled = true;
 
         yield return new WaitForSeconds(5f);
 
@@ -103,10 +104,12 @@ public class UIRewardPanel : MonoBehaviour
 
         if (_state == EGameState.GAMECLEAR)
         {
+            finishText1.text = "정찰 성공";
             stateText.text = "생존";
         }
         else if (_state == EGameState.GAMEOVER)
         {
+            finishText1.text = "정찰 실패";
             stateText.text = "실종";
         }
 

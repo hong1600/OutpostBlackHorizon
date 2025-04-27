@@ -8,6 +8,8 @@ public class GameUI : Singleton<GameUI>
 {
     public EScene eScene { get; private set; } = EScene.GAME;
 
+    [SerializeField] List<GameObject> functionUI;
+
     [Header("BlackOut")]
     [SerializeField] Image blackImg;
 
@@ -37,6 +39,17 @@ public class GameUI : Singleton<GameUI>
     {
         GameObject cursor = UIManager.instance.Cursor;
         topUI.Add(cursor);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            for (int i = 0; functionUI.Count > i; i++)
+            {
+                functionUI[i].SetActive(false);
+            }
+        }
     }
 
     public IEnumerator StartBlackout(float _duration)

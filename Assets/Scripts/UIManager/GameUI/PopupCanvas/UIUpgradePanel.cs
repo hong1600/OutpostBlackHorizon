@@ -76,13 +76,13 @@ public class UIUpgradePanel : MonoBehaviour
         spawnPerTexts[0].text =
             $"ÀÏ¹Ý : {unitSpawner.GetSelectWeight()[level][0]}%";
         spawnPerTexts[1].text =
-            $"<color=blue>Èñ±Í : " +
-            $"{unitSpawner.GetSelectWeight()[level][1]}%</color>%";
+            $"Èñ±Í : " +
+            $"{unitSpawner.GetSelectWeight()[level][1]}%";
         spawnPerTexts[2].text =
-            $"<color=purple>¿µ¿õ : " +
-            $"{unitSpawner.GetSelectWeight()[level][2]}%</color>";
+            $"¿µ¿õ : " +
+            $"{unitSpawner.GetSelectWeight()[level][2]}%";
         spawnPerTexts[3].text =
-            $"<color=yellow>Àü¼³ : " +
-            $"{unitSpawner.GetSelectWeight()[level][3]}%</color>";
+            $"Àü¼³ : " +
+            $"{unitSpawner.GetSelectWeight()[level][3]}%";
     }
 }

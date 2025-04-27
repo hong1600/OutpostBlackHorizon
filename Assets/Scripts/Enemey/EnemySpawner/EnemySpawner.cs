@@ -66,7 +66,7 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator StartSpawn(int _spawnPoint)
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 2; i++)
         {
             EEnemy eEnemy = (EEnemy)Random.Range(0, 4);
 

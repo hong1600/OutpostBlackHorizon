@@ -15,6 +15,17 @@ public class UIRestSkip : MonoBehaviour
         timer = GameManager.instance.Timer;
         timer.onRestTime += ShowBtn;
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            timer.SetSec(0.1f);
+            restSkipBtn.SetActive(false);
+            timerDescText.SetActive(false);
+        }
+    }
+
     public void ClickSkipRestTime()
     {
         timer.SetSec(0.1f);
@@ -24,8 +35,15 @@ public class UIRestSkip : MonoBehaviour
 
     private void ShowBtn()
     {
-        restSkipBtn.SetActive(true);
-        timerDescText.SetActive(true);
+        if (timer.isRestTime)
+        {
+            restSkipBtn.SetActive(true);
+            timerDescText.SetActive(true);
+        }
+        else
+        {
+            restSkipBtn.SetActive(false);
+        }
     }
 
 }

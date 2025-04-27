@@ -14,11 +14,11 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     [SerializeField] SphereCollider sensor;
     [SerializeField] BoxCollider box;
-    [SerializeField] Renderer render;
     [SerializeField] Material hitMat;
+    [SerializeField] Renderer render;
+    Material originMat;
     protected Rigidbody rigid;
     protected Animator anim;
-    Material originMat;
     SkinnedMeshRenderer skinRender;
 
     protected EnemyAI enemyAI;
@@ -62,7 +62,12 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        if(render != null) originMat = render.material;
+
+        if (render != null)
+        {
+            originMat = render.material;
+        }
+
         skinRender = GetComponentInChildren<SkinnedMeshRenderer>();
 
         enemySpawner = EnemyManager.instance.EnemySpawner;
@@ -230,6 +235,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         if(hitMat != null && render != null) 
         {
             render.material = hitMat;
+
             Invoke(nameof(UpdateMat), 0.2f);
         }
 

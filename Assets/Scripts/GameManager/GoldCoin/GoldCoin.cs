@@ -25,8 +25,8 @@ public class GoldCoin : MonoBehaviour, IGoldCoin
 
     private void Awake()
     {
-        myGold = 10000;
-        myCoin = 50;
+        myGold = 5000;
+        myCoin = 10;
     }
 
     public bool UseGold(int _amount)

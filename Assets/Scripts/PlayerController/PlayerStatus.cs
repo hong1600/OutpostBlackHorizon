@@ -14,14 +14,14 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     bool isTakeDmg = false;
 
     public float maxHp { get; private set; } = 100f;
-    public float curHp { get; private set; } = 100f;
+    public float curHp { get; private set; } = 5f;
     public float maxEnergy { get; private set; } = 100f;
     public float curEnergy { get; private set; } = 100f;
     public bool isDie { get; private set; } = false;
 
     private void Update()
     {
-        FillHp(5);
+        //FillHp(5);
     }
 
     public void TakeDmg(float _dmg, bool _isHead)

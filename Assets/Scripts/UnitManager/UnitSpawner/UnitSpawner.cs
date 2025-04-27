@@ -73,6 +73,7 @@ public class UnitSpawner : MonoBehaviour
                 break;
 
             case 1:
+                
                 curGroundUnit[0].transform.localPosition = twoUnit1Pos;
 
                 instantiateUnit = Instantiate(_unit, SpawnPointList[fieldNum].transform.position + twoUnit2Pos,

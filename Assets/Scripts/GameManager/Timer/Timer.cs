@@ -21,6 +21,8 @@ public class Timer : MonoBehaviour
     [SerializeField] float spawnTime = 30;
     [SerializeField] float restTime = 30;
 
+    public bool isRestTime { get; private set; }
+
     private void Start()
     {
         gameState = GameManager.instance.GameState;
@@ -90,6 +92,8 @@ public class Timer : MonoBehaviour
         enemySpawner.IsSpawn = true;
         sec = spawnTime;
         maxSec = spawnTime;
+        isRestTime = false;
+        onRestTime?.Invoke();
     }
 
     private void ChangeRestTime()
@@ -97,6 +101,7 @@ public class Timer : MonoBehaviour
         enemySpawner.IsSpawn = false;
         sec = restTime;
         maxSec = restTime;
+        isRestTime = true;
         onRestTime?.Invoke();
     }
 

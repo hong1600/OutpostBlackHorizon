@@ -22,7 +22,7 @@ public class GunManager : Singleton<GunManager>
         curBulletCount = 30;
         maxBulletCount = 30;
         haveBulletCount = 150;
-        curGrenadeCount = 10;
+        curGrenadeCount = 1;
     }
 
 

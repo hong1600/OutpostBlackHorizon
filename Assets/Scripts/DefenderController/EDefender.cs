@@ -20,7 +20,6 @@ public enum EUnitAnim
 
 public enum EUnitGrade
 {
-    NONE,
     C,
     B,
     A,

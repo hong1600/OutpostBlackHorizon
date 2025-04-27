@@ -48,6 +48,7 @@ public class StartDropship : MonoBehaviour
         dolly.m_PathPosition = 0f;
 
         GameManager.instance.enabled = false;
+        GameManager.instance.Timer.enabled = false;
         FieldManager.instance.enabled = false;
         EnemyManager.instance.enabled = false;
         restBtn.SetActive(false);
@@ -119,6 +120,7 @@ public class StartDropship : MonoBehaviour
 
         AudioManager.instance.PlayBgm(EBgm.DESERT);
         GameManager.instance.enabled = true;
+        GameManager.instance.Timer.enabled = true;
         FieldManager.instance.enabled = true;
         EnemyManager.instance.enabled = true;
         CameraManager.instance.enabled = true;

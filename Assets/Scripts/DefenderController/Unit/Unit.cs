@@ -91,7 +91,7 @@ public abstract class Unit : Defender
 
     private void InitSkillBar()
     {
-        if (unitSkillBar != null) return;
+        if (unitSkillBar == null) return;
 
         if (eUnitGrade == EUnitGrade.SS || eUnitGrade == EUnitGrade.S)
         {
