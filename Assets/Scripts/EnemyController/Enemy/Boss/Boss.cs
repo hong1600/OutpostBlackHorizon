@@ -8,7 +8,7 @@ public abstract class Boss : Enemy
 {
     UIBossHpbar hpbar;
 
-    private void Start()
+    protected virtual void Start()
     {
         hpbar = GameUI.instance.UIBossHpbar;
 

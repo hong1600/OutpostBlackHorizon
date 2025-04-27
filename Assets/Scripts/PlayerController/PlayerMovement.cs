@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rigid;
     CapsuleCollider cap;
 
+    public bool isMove { get; private set; }
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float runSpeed = 10f;
     [SerializeField] float walkInterval = 0.5f;
@@ -133,6 +134,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (inputDir.magnitude > 0)
         {
+            isMove = true;
+
             Quaternion cameraRot = Quaternion.Euler(0, mainCam.transform.eulerAngles.y, 0);
             moveDir = cameraRot * inputDir;
 
@@ -154,6 +157,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             moveDir = Vector3.zero;
+            isMove = false;
         }
 
         if (playerManager.anim != null)

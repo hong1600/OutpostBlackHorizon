@@ -6,12 +6,17 @@ using UnityEngine.Animations.Rigging;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
+    EPlayer curPlayerState;
+
+    [SerializeField] GameObject rifle;
+
     public PlayerAI playerAI { get; private set; }
     public CapsuleCollider cap { get; private set; }
     public Animator anim { get; private set; }
     public PlayerMovement playerMovement { get; private set; }
     public PlayerCombat playerCombat { get; private set; }
     public PlayerStatus playerStatus { get; private set; }
+    public GameObject Rifle { get { return rifle; } }
 
     protected override void Awake()
     {
@@ -28,27 +33,23 @@ public class PlayerManager : Singleton<PlayerManager>
         playerAI.Init(this);
     }
 
-
-    internal void ChangeAnim(EPlayer _ePlayer)
+    private void Update()
     {
-        _ePlayer = playerAI.aiState;
+        playerAI.State();
+        ChangeAnim(playerAI.aiState);
+    }
+
+
+    private void ChangeAnim(EPlayer _ePlayer)
+    {
+        if (curPlayerState == EPlayer.DIE) return;
+
+        curPlayerState = _ePlayer;
 
         switch (_ePlayer)
         {
-            case EPlayer.WALK:
-                anim.SetInteger("PlayerAnim", (int)EPlayerAnim.WALK);
-                break;
-            case EPlayer.RUN:
-                anim.SetInteger("PlayerAnim", (int)EPlayerAnim.RUN);
-                break;
-            case EPlayer.JUMP:
-                anim.SetInteger("PlayerAnim", (int)EPlayerAnim.JUMP);
-                break;
-            case EPlayer.LAND:
-                anim.SetInteger("PlayerAnim", (int)EPlayerAnim.LAND);
-                break;
-            case EPlayer.ATTACK:
-                anim.SetInteger("PlayerAnim", (int)EPlayerAnim.ATTACK);
+            case EPlayer.MOVE:
+                anim.SetInteger("PlayerAnim", (int)EPlayerAnim.MOVE);
                 break;
             case EPlayer.DIE:
                 anim.SetInteger("PlayerAnim", (int)EPlayerAnim.DIE);

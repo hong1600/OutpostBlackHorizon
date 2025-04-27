@@ -7,6 +7,7 @@ using UnityEngine;
 public class StartDropship : MonoBehaviour
 {
     [Header("Camera")]
+    [SerializeField] GameObject camObj;
     [SerializeField] CinemachineVirtualCamera cam;
     [SerializeField] CinemachineSmoothPath track;
     [SerializeField] AnimationClip clip;
@@ -28,6 +29,8 @@ public class StartDropship : MonoBehaviour
     PlayerCombat playerCombat;
     Rigidbody playerRigid;
 
+    [SerializeField] GameObject restBtn;
+
     private void Start()
     {
         playerMovement = PlayerManager.instance.playerMovement;
@@ -47,6 +50,7 @@ public class StartDropship : MonoBehaviour
         GameManager.instance.enabled = false;
         FieldManager.instance.enabled = false;
         EnemyManager.instance.enabled = false;
+        restBtn.SetActive(false);
         GameManager.instance.ViewState.SwitchNone();
         CameraManager.instance.enabled = false;
         playerRigid = player.GetComponent<Rigidbody>();
@@ -124,9 +128,11 @@ public class StartDropship : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         this.enabled = false;
+        restBtn.SetActive(true);
         GameManager.instance.ViewState.SetViewState(EViewState.FPS);
         playerRigid.isKinematic = false;
         playerMovement.enabled = true;
         playerCombat.enabled = true;
+        camObj.SetActive(false);
     }
 }

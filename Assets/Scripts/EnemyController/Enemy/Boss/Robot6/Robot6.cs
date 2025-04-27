@@ -64,16 +64,19 @@ public class Robot6 : Boss
         laserMat = laserLine.material;
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         info = DataManager.instance.TableEnemy.Get(206);
 
         base.InitEnemyData(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, EEnemy.ROBOT6);
 
-        bodyHp = info.MaxHp / 3; 
-        leftHandHp = info.MaxHp / 3; 
-        rightHandHp = info.MaxHp / 3; 
+        bodyHp = info.MaxHp / 3;
+        leftHandHp = info.MaxHp / 3;
+        rightHandHp = info.MaxHp / 3;
     }
+
 
     protected override void Update()
     {

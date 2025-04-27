@@ -13,24 +13,15 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
     bool isTakeDmg = false;
 
-    public float maxHp { get; private set; }
-    public float curHp { get; private set; }
-    public float maxEnergy { get; private set; }
-    public float curEnergy { get; private set; }
-    public bool isDie { get; private set; }
-
-    private void Awake()
-    {
-        maxHp = 100;
-        curHp = 5;
-        maxEnergy = 100;
-        curEnergy = 100;
-        isDie = false;
-    }
+    public float maxHp { get; private set; } = 100f;
+    public float curHp { get; private set; } = 100f;
+    public float maxEnergy { get; private set; } = 100f;
+    public float curEnergy { get; private set; } = 100f;
+    public bool isDie { get; private set; } = false;
 
     private void Update()
     {
-        //FillHp(5);
+        FillHp(5);
     }
 
     public void TakeDmg(float _dmg, bool _isHead)
@@ -88,6 +79,8 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
     IEnumerator StartDie()
     {
+        PlayerManager.instance.Rifle.SetActive(false);
+        CameraManager.instance.CameraFpsDead.MoveCam();
         GameManager.instance.GameState.SetGameState(EGameState.GAMEOVER);
         yield return null;
     }

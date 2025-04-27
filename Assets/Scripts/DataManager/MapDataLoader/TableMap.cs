@@ -56,7 +56,7 @@ public class TableMap : TableBase
         return true;
     }
 
-    public Info GetTurretData(int _id)
+    public Info GetMapData(int _id)
     {
         if (Dictionary.ContainsKey(_id))
         {

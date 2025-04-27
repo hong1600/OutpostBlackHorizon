@@ -26,14 +26,15 @@ public class CameraTopToFps : MonoBehaviour
     private void Awake()
     {
         mainCam = Camera.main;
-
-        gameManager = GameManager.instance;
-        gameManager.ViewState.onViewStateChange += SetCameraMode;
+        isArrive = true;
     }
 
     private void Start()
     {
         isArrive = true;
+
+        gameManager = GameManager.instance;
+        gameManager.ViewState.onViewStateChange += SetCameraMode;
     }
 
     private void Update()

@@ -4,64 +4,29 @@ using UnityEngine;
 
 public class PlayerAI
 {
-    public PlayerManager playerMng;
+    public PlayerManager playerManager;
 
-    public EPlayer aiState = EPlayer.CREATE;
+    public EPlayer aiState = EPlayer.MOVE;
 
-    public void Init(PlayerManager _playerMng)
+    public void Init(PlayerManager _playerManager)
     {
-        playerMng = _playerMng;
+        playerManager = _playerManager;
     }
 
     public void State()
     {
         switch (aiState)
         {
-            case EPlayer.CREATE:
-                Create();
-                break;
-            case EPlayer.WALK:
-                Walk();
-                break;
-            case EPlayer.RUN:
-                Run();
-                break;
-            case EPlayer.JUMP:
-                Jump();
+            case EPlayer.MOVE:
+                Move();
                 break;
             case EPlayer.DIE:
-                Die();
                 break;
         }
-
-        playerMng.ChangeAnim(aiState);
     }
 
-    public virtual void Create()
+    public virtual void Move()
     {
-        aiState = EPlayer.WALK;
-    }
-
-    public virtual void Walk()
-    {
-        if (playerMng.playerMovement.isRun) aiState = EPlayer.RUN;
-        if (playerMng.playerCombat.isAttack) aiState = EPlayer.ATTACK;
-        if (playerMng.playerStatus.isDie) aiState = EPlayer.DIE;
-    }
-
-    public virtual void Run()
-    {
-        if (!playerMng.playerMovement.isGround) aiState = EPlayer.JUMP;
-        if (playerMng.playerStatus.isDie) aiState = EPlayer.DIE;
-    }
-
-    public virtual void Jump()
-    {
-        if (playerMng.playerMovement.isGround) aiState = EPlayer.WALK;
-        if (playerMng.playerStatus.isDie) aiState = EPlayer.DIE;
-    }
-
-    public virtual void Die()
-    {
+        if (playerManager.playerStatus.isDie) aiState = EPlayer.DIE;
     }
 }

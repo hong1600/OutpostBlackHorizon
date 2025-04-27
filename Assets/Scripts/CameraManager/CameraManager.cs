@@ -7,6 +7,7 @@ public class CameraManager : Singleton<CameraManager>
     [SerializeField] CameraFpsMove cameraFpsMove;
     [SerializeField] CameraFpsShake cameraFpsShake;
     [SerializeField] CameraFpsZoom cameraFpsZoom;
+    [SerializeField] CameraFpsDead cameraFpsDead;
     [SerializeField] CameraTopMove cameraTopMove;
     [SerializeField] CameraTopZoom cameraTopZoom;
     [SerializeField] CameraTopToFps cameraTopToFps;
@@ -43,6 +44,7 @@ public class CameraManager : Singleton<CameraManager>
     public CameraFpsMove CameraFpsMove { get { return cameraFpsMove; } }
     public CameraFpsShake CameraFpsShake { get { return cameraFpsShake; } }
     public CameraFpsZoom CameraFpsZoom { get { return cameraFpsZoom; } }
+    public CameraFpsDead CameraFpsDead { get { return cameraFpsDead; } }
     public CameraTopMove CameraTopMove { get { return cameraTopMove; } }
     public CameraTopZoom CameraTopZoom { get { return cameraTopZoom; } }
     public CameraTopToFps CameraTopToFps { get { return cameraTopToFps; } }

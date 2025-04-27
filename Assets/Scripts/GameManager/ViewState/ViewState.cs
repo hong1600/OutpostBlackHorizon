@@ -10,8 +10,6 @@ public class ViewState : MonoBehaviour
 
     [SerializeField] EViewState curViewState;
 
-    GameUI gameUI;
-
     List<MonoBehaviour> topComponent = new List<MonoBehaviour>();
     List<MonoBehaviour> fpsComponent = new List<MonoBehaviour>();
 
@@ -28,8 +26,6 @@ public class ViewState : MonoBehaviour
         topComponent.Add(FieldManager.instance.FieldBuild);
         topComponent.Add(CameraManager.instance.CameraTopMove);
         topComponent.Add(CameraManager.instance.CameraTopZoom);
-
-        gameUI = GameUI.instance;
     }
 
     public void SetViewState(EViewState _state)
@@ -66,7 +62,7 @@ public class ViewState : MonoBehaviour
         {
             fpsComponent[i].enabled = true;
         }
-        gameUI.SwitchFps();
+        GameUI.instance.SwitchFps();
     }
 
     private void SwitchTop()
@@ -80,7 +76,7 @@ public class ViewState : MonoBehaviour
             topComponent[i].enabled = true;
         }
 
-        gameUI.SwitchTop();
+        GameUI.instance.SwitchTop();
     }
 
     public void SwitchNone()
@@ -96,7 +92,7 @@ public class ViewState : MonoBehaviour
             fpsComponent[i].enabled = false;
         }
 
-        gameUI.SwitchNone();
+        GameUI.instance.SwitchNone();
     }
 
     public EViewState CurViewState { get { return curViewState; } }

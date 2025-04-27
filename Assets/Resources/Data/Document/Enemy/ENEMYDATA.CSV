@@ -4,4 +4,4 @@
 203,enemy_203_name,5,100,Prefabs/GamePlay/Monster/EnemyHpBar,2,3,enemy_203_desc
 204,enemy_204_name,5,200,Prefabs/GamePlay/Monster/EnemyHpBar,2,5,enemy_204_desc
 205,enemy_205_name,5,1000,Prefabs/GamePlay/Monster/EnemyHpBar,5,10,enemy_205_desc
-206,enemy_206_name,0,3000,Prefabs/GamePlay/Monster/EnemyHpBar,1000,5,enemy_206_desc
+206,enemy_206_name,0,300,Prefabs/GamePlay/Monster/EnemyHpBar,1000,5,enemy_206_desc
