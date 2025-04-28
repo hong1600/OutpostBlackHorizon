@@ -31,15 +31,17 @@ public class Gunslinger : RangedUnit
     protected override IEnumerator StartSkill()
     {
         isSkill = true;
-        Enemy enemy = target.GetComponent<Enemy>();
 
         yield return new WaitForSeconds(1.3f);
 
-        EEffect eEffect = (EEffect)EEffect.GUNSLINGER;
-        GameObject effect = effectPool.FindEffect(eEffect, bulletTrs.position, Quaternion.identity);
-        effect.GetComponent<GunslingerEffect>().Init(enemy.gameObject.transform, 100, 150f);
+        if (target != null)
+        {
+            GameObject effect = effectPool.FindEffect(EEffect.GUNSLINGER, bulletTrs.position, Quaternion.identity);
+            effect.GetComponent<GunslingerEffect>().Init(enemy.gameObject.transform, 50, 150f);
+            unitSkillBar.ResetSkillBar();
+        }
+
         skillCouroutine = null;
-        unitSkillBar.ResetSkillBar();
 
         yield return new WaitForSeconds(2f);
 

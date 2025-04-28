@@ -78,6 +78,7 @@ public class PlayEnemyDropship : MonoBehaviour, ICutScene
         yield return new WaitForSeconds(8);
 
         camObj.SetActive(false);
+        EnemyManager.instance.EnemySpawner.IsSpawn = true;
 
         yield return new WaitForSeconds(1);
 

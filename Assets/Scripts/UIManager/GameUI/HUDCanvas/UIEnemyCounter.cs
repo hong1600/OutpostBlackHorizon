@@ -14,15 +14,13 @@ public class UIEnemyCounter : MonoBehaviour
     private void Start()
     {
         enemyManager = EnemyManager.instance;
-
-        enemyManager.onEnemyCountEvent -= EnemyCounterPanel;
-        enemyManager.onEnemyCountEvent += EnemyCounterPanel;
+        ObjectPoolManager.instance.EnemyPool.onEnemyCount += UpdateEnemyCounter;
 
         enemyCountText.text = $"{enemyManager.GetCurEnemy()}  /  {enemyManager.GetMaxEnemy()}";
         sliderValue.fillAmount = 0;
     }
 
-    private void EnemyCounterPanel()
+    public void UpdateEnemyCounter()
     {
         float curEnemy = enemyManager.GetCurEnemy();
         float maxEnemy = enemyManager.GetMaxEnemy();

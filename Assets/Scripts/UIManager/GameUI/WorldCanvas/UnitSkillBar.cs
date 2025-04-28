@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class UnitSkillBar : MonoBehaviour
 {
-    [SerializeField] Unit unit;
+    Unit unit;
 
     [SerializeField] Image skillBarFill;
     [SerializeField] Vector3 offset;
     [SerializeField] float skillValue;
     [SerializeField] Transform parent;
+
 
     public bool isSkillCast;
 
@@ -35,22 +36,23 @@ public class UnitSkillBar : MonoBehaviour
 
     private void skillBar()
     {
-        skillValue = Mathf.Clamp(skillValue, 0, 5);
+        if(unit == null) Destroy(this.gameObject);
 
-        if (skillValue < 5)
+        skillValue = Mathf.Clamp(skillValue, 0, 10);
+
+        if (skillValue < 10)
         {
             skillValue += Time.deltaTime;
         }
-        else if(skillValue >= 5 && !unit.isSkill) 
+        else if(skillValue >= 10 && !unit.isSkill) 
         {
             isSkillCast = true;
         }
 
-        skillBarFill.fillAmount = skillValue / 5;
+        skillBarFill.fillAmount = skillValue / 10;
         this.gameObject.transform.position = unit.transform.position + offset;
 
-        Quaternion rotation = Quaternion.Euler(60f, 0f, 0f);
-        this.gameObject.transform.rotation = rotation;
+        this.gameObject.transform.LookAt(Camera.main.transform);
     }
 
     public void ResetSkillBar()

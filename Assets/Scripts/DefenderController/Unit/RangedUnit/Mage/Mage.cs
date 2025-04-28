@@ -6,6 +6,8 @@ public class Mage : RangedUnit
 {
     TableUnit.Info info;
 
+    Vector3 yOffset = Vector3.up * 0.1f;
+
     private void Awake()
     {
         info = DataManager.instance.TableUnit.GetUnitData(105);
@@ -29,15 +31,17 @@ public class Mage : RangedUnit
     protected override IEnumerator StartSkill()
     {
         isSkill = true;
-        Enemy enemy = target.GetComponent<Enemy>();
 
         yield return new WaitForSeconds(1.5f);
 
-        EEffect eEffect = (EEffect)EEffect.MAGE;
-        GameObject effect = effectPool.FindEffect(eEffect, 
-            enemy.transform.position + new Vector3(0, 0.1f, 0), Quaternion.identity);
+        if (target != null)
+        {
+            GameObject effect = effectPool.FindEffect
+                (EEffect.MAGE, target.transform.position + yOffset, Quaternion.identity);
+            unitSkillBar.ResetSkillBar();
+        }
+
         skillCouroutine = null;
-        unitSkillBar.ResetSkillBar();
 
         yield return new WaitForSeconds(1f);
 

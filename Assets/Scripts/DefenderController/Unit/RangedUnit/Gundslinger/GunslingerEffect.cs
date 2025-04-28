@@ -39,11 +39,12 @@ public class GunslingerEffect : MonoBehaviour
                 effect.SetActive(true);
                 sphere.enabled = true;
 
-                Collider[] colls = Physics.OverlapSphere(transform.position, sphere.radius, LayerMask.GetMask("Enemy"));
+                Collider[] colls = Physics.OverlapSphere
+                    (transform.position, sphere.radius * transform.lossyScale.x, LayerMask.GetMask("Enemy"));
 
                 for (int i = 0; i < colls.Length; i++)
                 {
-                    ITakeDmg iTakeDmg = colls[i].GetComponent<ITakeDmg>();
+                    ITakeDmg iTakeDmg = colls[i].GetComponentInParent<ITakeDmg>();
 
                     iTakeDmg.TakeDmg(dmg, false);
                 }

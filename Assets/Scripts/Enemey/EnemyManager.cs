@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
-    public event Action onEnemyCountEvent;
-
     [SerializeField] EnemySpawner enemySpawner;
     [SerializeField] WaveBossSpawner waveBossSpawner;
     [SerializeField] BossSpawner bossSpawner;
@@ -32,28 +30,14 @@ public class EnemyManager : Singleton<EnemyManager>
         BossSpawner = bossSpawner;
     }
 
-    private void Start()
+    public void OnEnemySpawn()
     {
-        enemySpawner.onEnemySpawn += EnemyCount;
+        curEnemy++;
     }
 
-    private void EnemyCount()
+    public void OnEnemyDie()
     {
-        curEnemy = 0;
-
-        for (int i = 0; i < enemyParentList.Count; i++)
-        {
-            for (int j = 0; j < enemyParentList[i].transform.childCount; j++)
-            {
-                Transform child = enemyParentList[i].transform.GetChild(j);
-
-                if (child.gameObject.activeInHierarchy)
-                {
-                    curEnemy++;
-                    onEnemyCountEvent?.Invoke();
-                }
-            }
-        }
+        curEnemy--;
     }
 
     public int GetMaxEnemy() { return maxEnemy; }

@@ -31,18 +31,17 @@ public class Knight : Unit
 
     protected override IEnumerator StartSkill()
     {
-        Enemy enemy = target.GetComponent<Enemy>();
+        Enemy enemy = target.GetComponentInParent<Enemy>();
 
         yield return new WaitForSeconds(0.85f);
 
-        EEffect eEffect = (EEffect)EEffect.KNIGHT;
-        GameObject effect = effectPool.FindEffect(eEffect, enemy.transform.position, Quaternion.identity);
+        GameObject effect = effectPool.FindEffect(EEffect.KNIGHT, enemy.transform.position, Quaternion.identity);
         yield return base.OnDamageEvent(enemy, skillDamage);
         skillCouroutine = null;
 
         yield return new WaitForSeconds(0.85f);
 
         isSkill = false;
-        effectPool.ReturnEffect(eEffect, effect);
+        effectPool.ReturnEffect(EEffect.KNIGHT, effect);
     }
 }

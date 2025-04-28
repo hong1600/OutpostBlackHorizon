@@ -120,3 +120,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 0
   curHp: 0
+  rend: {fileID: 6749316508569538015}
+  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}

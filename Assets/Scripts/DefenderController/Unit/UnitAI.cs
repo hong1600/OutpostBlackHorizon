@@ -20,7 +20,14 @@ public class UnitAI : DefenderAI
             return;
         }
 
-        base.Attack();
+        if (unit.isAttack)
+        {
+            return;
+        }
+        else
+        {
+            base.Attack();
+        }
     }
 
     public override void Skill()

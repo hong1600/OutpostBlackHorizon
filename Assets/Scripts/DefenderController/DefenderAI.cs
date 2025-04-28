@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class DefenderAI 
 {
@@ -53,6 +52,8 @@ public class DefenderAI
 
     public virtual void Attack()
     {
+        defender.TargetEnemy();
+
         if (defender.target == null || Vector3.Distance
             (defender.target.transform.position, defender.transform.position) > defender.attackRange)
         {

@@ -7,7 +7,7 @@ public class UIRoundPanel : MonoBehaviour
 {
     Round round;
 
-    public TextMeshProUGUI roundText;
+    [SerializeField] TextMeshProUGUI roundText;
 
     private void Start()
     {
@@ -19,7 +19,11 @@ public class UIRoundPanel : MonoBehaviour
 
     private void RoundPanel()
     {
-        if (roundText == null) return;
+        if (round.curRound == 3)
+        {
+            roundText.text = $"BOSS";
+            return;
+        }
         roundText.text = $"WAVE {round.curRound.ToString()}";
     }
 }

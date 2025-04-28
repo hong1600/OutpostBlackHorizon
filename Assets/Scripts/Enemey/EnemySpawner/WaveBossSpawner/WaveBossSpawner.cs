@@ -8,7 +8,7 @@ public class WaveBossSpawner : MonoBehaviour
 
     EnemyManager enemyManager;
     EnemySpawner enemySpawner;
-    ObjectPoolManager poolManager;
+    EnemyPool enemyPool;
 
     private void Awake()
     {
@@ -19,27 +19,30 @@ public class WaveBossSpawner : MonoBehaviour
     {
         enemyManager = EnemyManager.instance;
         enemySpawner = enemyManager.EnemySpawner;
-        poolManager = ObjectPoolManager.instance;
+        enemyPool = ObjectPoolManager.instance.EnemyPool;
 
         GameManager.instance.Round.onRoundEvent += SpawnDelay;
     }
 
     private void SpawnDelay()
     {
-        Invoke(nameof(SpawnWaveBoss), 30);
+        Invoke(nameof(SpawnWaveBoss), 5);
     }
 
     //상속구조 팩토리패턴
     public void SpawnWaveBoss()
     {
-        int spawnPoint = Random.Range(0, enemySpawner.EnemySpawnPointList().Count);
+        if (GameManager.instance.Timer.isSpawnTime)
+        {
+            int spawnPoint = Random.Range(0, enemySpawner.EnemySpawnPointList().Count);
 
-        Vector3 spawnPos =
-            enemySpawner.EnemySpawnPointList()[spawnPoint].transform.position;
+            Vector3 spawnPos =
+                enemySpawner.EnemySpawnPointList()[spawnPoint].transform.position;
 
-        spawnPos.y = terrain.SampleHeight(spawnPos);
+            spawnPos.y = terrain.SampleHeight(spawnPos);
 
-        GameObject waveBoss =
-            poolManager.EnemyPool.FindEnemy(EEnemy.ROBOT5, spawnPos, Quaternion.identity);
+            GameObject waveBoss =
+                enemyPool.FindEnemy(EEnemy.ROBOT5, spawnPos, Quaternion.identity);
+        }
     }
 }

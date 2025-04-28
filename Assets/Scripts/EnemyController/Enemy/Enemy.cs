@@ -9,14 +9,14 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 {
     public event Action onTakeDamage;
 
-    protected EEnemyAI aiState;
+    [SerializeField] protected EEnemyAI aiState;
     protected EEnemy eEnemy;
 
-    [SerializeField] SphereCollider sensor;
-    [SerializeField] BoxCollider box;
-    [SerializeField] Material hitMat;
-    [SerializeField] Renderer render;
-    Material originMat;
+    [SerializeField] protected SphereCollider sensor;
+    [SerializeField] protected BoxCollider box;
+    [SerializeField] protected Material hitMat;
+    [SerializeField] protected Renderer render;
+    protected Material originMat;
     protected Rigidbody rigid;
     protected Animator anim;
     SkinnedMeshRenderer skinRender;
@@ -35,15 +35,14 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     public string enemyName { get; private set; }
     public float maxHp { get; private set; }
-    public float curhp { get; protected set; }
+    public float curhp;
     public float enemySpeed { get; private set; }
     public float rotationSpeed { get; private set; }
     public float attackRange { get; private set; }
     public float attackDmg { get; private set; }
 
-    int targetRand;
-    Transform[] targetPoints;
     [SerializeField] protected Transform myTarget;
+    Transform centerPoint;
     protected Vector3 targetPointDir;
 
     public bool isStay { get; private set; }
@@ -51,6 +50,8 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     public bool isDie { get; protected set; }
     bool isOneShot = true;
     protected bool isAttack;
+    bool isReset;
+
     protected Coroutine attackCoroutine;
     Vector3 hpBarPos;
 
@@ -80,22 +81,6 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         enemyPool = ObjectPoolManager.instance.EnemyPool;
         effectPool = ObjectPoolManager.instance.EffectPool;
 
-        enemyName = _name;
-        maxHp = _maxHp;
-        enemySpeed = _spd;
-        attackRange = _range;
-        attackDmg = _dmg;
-        curhp = maxHp;
-        rotationSpeed = 5;
-        eEnemy = _eEnemy;
-
-        targetPoints = enemySpawner.TargetPoint();
-        targetRand = Random.Range(0, targetPoints.Length);
-        myTarget = targetPoints[targetRand];
-    }
-
-    private void OnEnable()
-    {
         if (skinRender != null)
         {
             GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, skinRender.bounds.center +
@@ -106,17 +91,58 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
             enemyHpBar.Init(this, skinRender);
         }
 
+        enemyName = _name;
+        maxHp = _maxHp;
+        enemySpeed = _spd;
+        attackRange = _range;
+        attackDmg = _dmg;
         curhp = maxHp;
-        attackReady = false;
+        rotationSpeed = 5;
+        eEnemy = _eEnemy;
+        centerPoint = enemySpawner.GetCenterPoint();
+
+        myTarget = centerPoint;
+    }
+
+    private void OnDisable()
+    {
+        ResetState();
+        enemyAI.aiState = EEnemyAI.CREATE;
+    }
+
+    private void OnEnable()
+    {
+        ResetState();
+
+        if (skinRender != null)
+        {
+            GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, skinRender.bounds.center +
+                new Vector3(0, skinRender.bounds.extents.y + 0.5f, 0), Quaternion.identity);
+
+            enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
+
+            enemyHpBar.Init(this, skinRender);
+        }
+    }
+
+    private void ResetState()
+    {
+        isReset = false;
+        myTarget = centerPoint;
+        curhp = maxHp;
         isAttack = false;
         isDie = false;
-        isOneShot = true;
         isStay = false;
+        isOneShot = true;
+        attackReady = false;
+        attackCoroutine = null;
+        StopAllCoroutines();
+        isReset = true;
     }
 
     protected virtual void Update()
     {
-        if (enemyAI == null) return;
+        if (enemyAI == null && isReset) return;
 
         aiState = enemyAI.aiState;
 
@@ -220,7 +246,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
             }
         }
 
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(2);
 
         isAttack = false;
         attackCoroutine = null;
@@ -299,8 +325,6 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     protected virtual void ChangeAnim(EEnemyAI _curState)
     {
-        _curState = aiState;
-
         switch (_curState)
         {
             case EEnemyAI.CREATE:
@@ -326,7 +350,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         if (myTarget == null)
         {
             attackReady = false;
-            myTarget = targetPoints[targetRand];
+            myTarget = centerPoint;
         }
 
         CheckTarget();
@@ -358,10 +382,6 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         {
             Die();
             isOneShot = false;
-        }
-        else
-        {
-            aiState = EEnemyAI.CREATE;
         }
     }
 }

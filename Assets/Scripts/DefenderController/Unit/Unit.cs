@@ -70,8 +70,7 @@ public abstract class Unit : Defender
     {
         switch (eUnitGrade)
         {
-            case EUnitGrade.C
-    :
+            case EUnitGrade.C:
                 lastUpgrade = UnitManager.instance.UnitUpgrader.GetUpgradeLevel()[0];
                 break;
             case EUnitGrade.B:
@@ -91,7 +90,7 @@ public abstract class Unit : Defender
 
     private void InitSkillBar()
     {
-        if (unitSkillBar == null) return;
+        if (skillBar == null) return;
 
         if (eUnitGrade == EUnitGrade.SS || eUnitGrade == EUnitGrade.S)
         {

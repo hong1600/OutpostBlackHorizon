@@ -10,22 +10,38 @@ public class Field : MonoBehaviour, ITakeDmg
     [SerializeField] float maxHp;
     [SerializeField] float curHp;
 
+    [SerializeField] Renderer rend;
+    [SerializeField] Material hitMat;
+    Material originMat;
+
     GameObject explosionEffect;
 
     bool isDestroy = false;
+
+    private void Awake()
+    {
+        originMat = rend.material;
+    }
 
     private void Start()
     {
         info = DataManager.instance.TableField.GetFieldData(501);
         effectPool = ObjectPoolManager.instance.EffectPool;
 
-        maxHp = info.Hp;
-        curHp = info.Hp;
+        if (info != null)
+        {
+            maxHp = info.Hp;
+            curHp = info.Hp;
+        }
     }
 
     public void TakeDmg(float _dmg, bool _isHead)
     {
         curHp -= _dmg;
+
+        rend.material = hitMat;
+
+        Invoke(nameof(UpdateMat), 0.2f);
 
         if (curHp <= 0 && !isDestroy)
         {
@@ -37,6 +53,11 @@ public class Field : MonoBehaviour, ITakeDmg
 
             Invoke(nameof(ReturnEffect), 1);
         }
+    }
+
+    private void UpdateMat()
+    {
+        rend.material = originMat;
     }
 
     private void ReturnEffect()

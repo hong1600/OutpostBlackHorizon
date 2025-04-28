@@ -21,7 +21,7 @@ public class GunManager : Singleton<GunManager>
 
         curBulletCount = 30;
         maxBulletCount = 30;
-        haveBulletCount = 150;
+        haveBulletCount = 20;
         curGrenadeCount = 1;
     }
 
@@ -38,7 +38,10 @@ public class GunManager : Singleton<GunManager>
     {
         if (!isReloading && (curBulletCount < maxBulletCount || curGrenadeCount == 0))
         {
-            StartCoroutine(StartReloading());
+            if (haveBulletCount != 0)
+            {
+                StartCoroutine(StartReloading());
+            }
         }
     }
 
@@ -67,8 +70,21 @@ public class GunManager : Singleton<GunManager>
 
         if (curGrenadeCount == 0) curGrenadeCount = 1;
 
-        haveBulletCount -= (maxBulletCount - curBulletCount);
-        curBulletCount = maxBulletCount;
+        if(haveBulletCount != 0)
+        {
+            int needBullet = maxBulletCount - curBulletCount;
+
+            if (haveBulletCount >= needBullet)
+            {
+                haveBulletCount -= needBullet;
+                curBulletCount = maxBulletCount;
+            }
+            else
+            {
+                curBulletCount += haveBulletCount;
+                haveBulletCount = 0;
+            }
+        }
 
         onReloading?.Invoke();
 

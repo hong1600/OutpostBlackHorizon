@@ -38,12 +38,9 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if (!round.isBossRound)
+        if (enemySpawner.IsSpawn)
         {
-            if (enemySpawner.IsSpawn)
-            {
-                enemySpawner.SpawnEnemy();
-            }
+            enemySpawner.SpawnEnemy();
         }
     }
 

@@ -35,7 +35,7 @@ public class Robot6 : Boss
     Vector3 smoothLaserEnd;
     float emissionPower = 0f;
     float maxEmission = 2f;
-    float laserTimer = 1f;
+    float laserTimer = 0.5f;
 
     public float bodyHp { get; private set; }
     public float leftHandHp { get; private set; }
@@ -82,15 +82,16 @@ public class Robot6 : Boss
     {
         base.Update();
 
-        UpdateChargeLaserLine();
-        UpdateLaserLine();
+        UpdateLaser();
+        UpdateChargeLaser();
     }
 
     protected override IEnumerator StartAttack()
     {
         isAttack = true;
 
-        ChangePatton();
+        //ChangePatton();
+        pattonNum = 1;
 
         switch (pattonNum)
         {
@@ -177,7 +178,7 @@ public class Robot6 : Boss
         laserEffect.SetActive(false);
     }
 
-    private void UpdateLaserLine()
+    private void UpdateLaser()
     {
         if(laserEffect.activeSelf) 
         {
@@ -219,12 +220,12 @@ public class Robot6 : Boss
                     }
                 }
 
-                laserTimer = 1f;
+                laserTimer = 0.5f;
             }
         }
     }
 
-    private void UpdateChargeLaserLine()
+    private void UpdateChargeLaser()
     {
         if (chargeLaserEffect.activeSelf)
         {

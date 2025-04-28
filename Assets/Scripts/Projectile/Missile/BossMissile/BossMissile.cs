@@ -4,25 +4,21 @@ using UnityEngine;
 
 public class BossMissile : Missile
 {
-    enum EMissileState { UP, TRACK }
-    EMissileState curState = EMissileState.UP;
-
-    float upDuration = 3f;
-    float upTimer = 0f;
-
     Vector3 randomOffset;
 
-    protected override void FixedUpdate()
+    public void Init(Transform _target, float _dmg, float _speed, EMissile _eMissile)
     {
-        switch (curState) 
-        {
-            case EMissileState.UP:
-                RiseUp();
-                break;
-            case EMissileState.TRACK:
-                MoveMissile();
-                break;
-        }
+        base.Init(_target, _dmg, _speed);
+
+        eMissile = _eMissile;
+
+        randomOffset = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), Random.Range(-10f, 10f));
+    }
+
+    protected override void RiseUp()
+    {
+        riseDir = (Vector3.up + transform.forward * 0.3f).normalized;
+        base.RiseUp();
     }
 
     protected override void MoveMissile()
@@ -55,28 +51,6 @@ public class BossMissile : Missile
         rigid.velocity = transform.forward * speed;
     }
 
-    private void RiseUp()
-    {
-        Vector3 riseDir = (Vector3.up + transform.forward * 0.3f).normalized;
-
-        rigid.velocity = riseDir * speed;
-
-        upTimer += Time.fixedDeltaTime;
-
-        if(upTimer >= upDuration) 
-        {
-            curState = EMissileState.TRACK;
-        }
-    }
-
-    public void Init(Transform _target, float _dmg, float _speed, EMissile _eMissile)
-    {
-        base.Init(_target, _dmg, _speed);
-
-        eMissile = _eMissile;
-
-        randomOffset = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), Random.Range(-10f, 10f));
-    }
 
     protected override void ReturnPool()
     {

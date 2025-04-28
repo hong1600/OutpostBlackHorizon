@@ -20,7 +20,7 @@ public abstract class Defender : MonoBehaviour
     public float attackRange;
     public Sprite defenderSprite;
     protected float rotationSpeed;
-    protected bool isAttack;
+    public bool isAttack { get; private set; }
     protected Coroutine attackCoroutine;
 
     public GameObject target { get; private set; }
@@ -81,6 +81,11 @@ public abstract class Defender : MonoBehaviour
                 minDistance = distance;
                 target = coll.gameObject;
             }
+        }
+
+        if (target == null)
+        {
+            isAttack = false;
         }
 
         return target;

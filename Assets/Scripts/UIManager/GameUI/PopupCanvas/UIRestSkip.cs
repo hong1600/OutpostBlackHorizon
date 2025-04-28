@@ -35,7 +35,7 @@ public class UIRestSkip : MonoBehaviour
 
     private void ShowBtn()
     {
-        if (timer.isRestTime)
+        if (!timer.isSpawnTime)
         {
             restSkipBtn.SetActive(true);
             timerDescText.SetActive(true);

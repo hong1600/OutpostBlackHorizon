@@ -7,15 +7,13 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public event Action onEnemySpawn;
-
     Terrain terrain;
     EnemyPool enemyPool;
     Round round;
 
     public Vector3[] enemySpawnPos { get; private set; } = new Vector3[4];
     [SerializeField] List<Transform> enemySpawnPointList;
-    [SerializeField] Transform[] targetPoints;
+    [SerializeField] Transform centerPoint;
     [SerializeField] float enemySpawnDelay;
 
     bool isSpawn = false;
@@ -40,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        if (!isSpawn || round.curRound == 0 || round.isBossRound) { return; }
+        if (!isSpawn || round.curRound == 0) { return; }
         
         if (enemySpawnDelay <= 0)
         {
@@ -58,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
 
             StartCoroutine(StartSpawn(spawnPoint));
 
-            enemySpawnDelay = 8f;
+            enemySpawnDelay = 10f;
         }
 
         enemySpawnDelay -= Time.deltaTime;
@@ -85,14 +83,12 @@ public class EnemySpawner : MonoBehaviour
             GameObject obj3 = enemyPool.FindEnemy(eEnemy, spawnPos3, Quaternion.identity);
             GameObject obj4 = enemyPool.FindEnemy(eEnemy, spawnPos4, Quaternion.identity);
 
-            onEnemySpawn?.Invoke();
-
             yield return new WaitForSeconds(2f);
         }
     }
 
     public List<Transform> EnemySpawnPointList() { return enemySpawnPointList; }
-    public Transform[] TargetPoint() { return targetPoints; }
+    public Transform GetCenterPoint() { return centerPoint; }
     public float EnemySpawnDelay
     {
         get { return enemySpawnDelay; }

@@ -29,7 +29,7 @@ public class MageEffect : MonoBehaviour
     {
         while (true)
         {
-            Collider[] colls = Physics.OverlapBox(box.center, box.size,
+            Collider[] colls = Physics.OverlapBox(box.center, box.size * transform.lossyScale.x,
                 Quaternion.identity, LayerMask.GetMask("Enemy"));
 
             for (int i = 0; i < colls.Length; i++)

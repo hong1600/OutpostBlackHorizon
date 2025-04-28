@@ -6,29 +6,28 @@ public class Explosion : MonoBehaviour
 {
     EMissile eMissile;
 
-    SphereCollider sphere;
     EffectPool effectPool;
+
+    [SerializeField] SphereCollider sphere;
 
     float dmg;
 
     private void Awake()
     {
         effectPool = ObjectPoolManager.instance.EffectPool;
-        sphere = GetComponent<SphereCollider>();
-    }
-
-    private void OnEnable()
-    {
-        Invoke(nameof(Return), 1.5f);
     }
 
     public void Init(float _dmg, EMissile _eMissile)
     {
         dmg = _dmg;
         eMissile = _eMissile;
+
+        AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
+        Damage();
+        Invoke(nameof(Return), 1.5f);
     }
 
-    private void OnTriggerEnter(Collider coll)
+    private void Damage()
     {
         Collider[] hits;
 
@@ -71,8 +70,8 @@ public class Explosion : MonoBehaviour
                 }
             }
         }
-    }
 
+    }
     private void Return()
     {
         effectPool.ReturnEffect(EEffect.ROCKETEXPLOSION, gameObject);

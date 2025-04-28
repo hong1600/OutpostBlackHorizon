@@ -8,14 +8,43 @@ public abstract class Missile : Projectile
 {
     protected EMissile eMissile;
 
+    enum EMissileState { UP, TRACK }
+    EMissileState curFlyState = EMissileState.UP;
+
+    [SerializeField] float upDuration;
+    [SerializeField] float upTimer;
+    protected Vector3 riseDir;
+
     [SerializeField] protected float rotSpd;
 
     float randomExplotionTime;
 
     protected virtual void FixedUpdate()
     {
-        MoveMissile();
+        switch (curFlyState)
+        {
+            case EMissileState.UP:
+                RiseUp();
+                break;
+            case EMissileState.TRACK:
+                MoveMissile();
+                break;
+        }
     }
+
+    protected virtual void RiseUp()
+    {
+        rigid.velocity = riseDir * speed;
+
+        upTimer += Time.fixedDeltaTime;
+
+        if (upTimer >= upDuration)
+        {
+            curFlyState = EMissileState.TRACK;
+            upTimer = 0f;
+        }
+    }
+
 
     protected virtual void MoveMissile()
     {
@@ -72,8 +101,8 @@ public abstract class Missile : Projectile
             (EEffect.ROCKETEXPLOSION, transform.position, Quaternion.identity);
         Explosion explosion = explosionEffect.GetComponent<Explosion>();
         explosion.Init(dmg, eMissile);
-        AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
 
+        curFlyState = EMissileState.UP;
         ReturnPool();
     }
 

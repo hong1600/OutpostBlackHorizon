@@ -1,4 +1,4 @@
 ID,NameKey,Damage,AttackSpeed,AttackRange,ImgName,Cost,Desc,Prefab
 401,turret_101_name,5,0.1,50,MachineTurret,100,,PreFabs/Obj/Turret/MachineTurret
-402,turret_102_name,50,4,50,RocketTurret,250,,PreFabs/Obj/Turret/RocketTurret
-403,turret_103_name,30,2,50,RazerTurret,500,,PreFabs/Obj/Turret/LaserTurret
+402,turret_102_name,50,4,100,RocketTurret,250,,PreFabs/Obj/Turret/RocketTurret
+403,turret_103_name,25,2,75,RazerTurret,500,,PreFabs/Obj/Turret/LaserTurret

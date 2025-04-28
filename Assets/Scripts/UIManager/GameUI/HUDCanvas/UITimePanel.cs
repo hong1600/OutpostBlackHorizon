@@ -29,7 +29,7 @@ public class UITimePanel : MonoBehaviour
 
     private void UpdateRestText()
     {
-        if (timer.isRestTime)
+        if (!timer.isSpawnTime)
         {
             timerDescText.text = "방어를 배치하고, 재정비 하기";
         }

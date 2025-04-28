@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3785820fe48fe64e84fa2fea79579be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upDuration: 3
   rotSpd: 100
 --- !u!135 &-8193992022049431076
 SphereCollider:

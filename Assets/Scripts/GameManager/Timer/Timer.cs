@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour
     public event Action onTimeEvent;
     public event Action onRestTime;
 
+    EnemyManager enemyManager;
     GameState gameState;
     Round round;
     EnemySpawner enemySpawner;
@@ -16,21 +17,19 @@ public class Timer : MonoBehaviour
     public float sec;
     public float maxSec { get; private set; }
     bool isTimerRunning = false;
-    bool isSpawnTime = false;
+    public bool isSpawnTime { get; private set; } = false;
 
-    [SerializeField] float spawnTime = 30;
-    [SerializeField] float restTime = 30;
-
-    public bool isRestTime { get; private set; }
+    [SerializeField] float spawnTime;
+    [SerializeField] float restTime;
 
     private void Start()
     {
+        enemyManager = EnemyManager.instance;
         gameState = GameManager.instance.GameState;
         round = GameManager.instance.Round;
         enemySpawner = EnemyManager.instance.EnemySpawner;
         waveBossSpawner = EnemyManager.instance.WaveBossSpawner;
 
-        enemySpawner.IsSpawn = false;
         sec = 120f;
         maxSec = sec;
 
@@ -49,6 +48,7 @@ public class Timer : MonoBehaviour
             yield return null;
         }
     }
+
     private void RunTimer()
     {
         if (round.isBossRound)
@@ -64,44 +64,47 @@ public class Timer : MonoBehaviour
 
         if (sec <= 0f)
         {
-            round.curRound++;
-            round.RoundCheck();
+            enemySpawner.IsSpawn = false;
 
-            if(isSpawnTime == false) 
+            if (!isSpawnTime) 
             {
-                if (round.curRound == 1)
+                if (round.curRound == 0)
                 {
-                    Invoke(nameof(ChangeSpawnTime), 8);
+                    isTimerRunning = false;
+                    ChangeSpawnTime();
                 }
                 else
                 {
                     ChangeSpawnTime();
                 }
             }
-            else
+            else if(isSpawnTime && enemyManager.GetCurEnemy() <= 0)
             {
                 ChangeRestTime();
             }
-
-            isSpawnTime = !isSpawnTime;
         }
     }
 
     private void ChangeSpawnTime()
     {
-        enemySpawner.IsSpawn = true;
+        isSpawnTime = !isSpawnTime;
         sec = spawnTime;
         maxSec = spawnTime;
-        isRestTime = false;
+        if (round.curRound != 0)
+        {
+            enemySpawner.IsSpawn = true;
+        }
+        round.curRound++;
+        round.RoundCheck();
         onRestTime?.Invoke();
     }
 
     private void ChangeRestTime()
     {
+        isSpawnTime = !isSpawnTime;
         enemySpawner.IsSpawn = false;
         sec = restTime;
         maxSec = restTime;
-        isRestTime = true;
         onRestTime?.Invoke();
     }
 
