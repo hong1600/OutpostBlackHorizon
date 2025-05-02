@@ -118,7 +118,6 @@ public class StartDropship : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        AudioManager.instance.PlayBgm(EBgm.DESERT);
         GameManager.instance.enabled = true;
         GameManager.instance.Timer.enabled = true;
         FieldManager.instance.enabled = true;

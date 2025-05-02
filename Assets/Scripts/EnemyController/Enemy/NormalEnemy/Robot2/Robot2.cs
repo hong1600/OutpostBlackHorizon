@@ -23,7 +23,7 @@ public class Robot2 : NormalEnemy
 
         GameObject bulletObj = bulletPool.FindBullet(EBullet.ROBOT2BULLET, fireTrs.position, fireTrs.rotation);
         Robot2Bullet bullet = bulletObj.GetComponent<Robot2Bullet>();
-        bullet.Init(myTarget, attackDmg, bulletSpeed);
+        bullet.Init(myTarget, attackDmg, bulletSpeed, EBulletType.ENEMY);
 
         yield return new WaitForSeconds(1f);
 

@@ -22,6 +22,7 @@ public class MachineTurret : Defender
             GameObject bulletObj = bulletPool.FindBullet(EBullet.MACHINEBULLET, fireTrs[i].position, fireTrs[i].rotation);
             MachineBullet bullet = bulletObj.GetComponent<MachineBullet>();
             bullet.Init(null, attackDamage, bulletSpd);
+            audioManager.PlaySfx(ESfx.MACHINEGUN, transform.position);
 
             yield return new WaitForSeconds(0.1f);
         }

@@ -3,18 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class ObjectPoolManager : Singleton<ObjectPoolManager>
 {
     [SerializeField] EnemyPool enemyPool;
     [SerializeField] EffectPool effectPool;
     [SerializeField] HpBarPool hpBarPool;
     [SerializeField] BulletPool bulletPool;
-
-    public EnemyPool EnemyPool { get; private set; }
-    public EffectPool EffectPool { get; private set; }
-    public HpBarPool HpBarPool { get; private set; }
-    public BulletPool BulletPool { get; private set; }
     
     [SerializeField] Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
     [SerializeField] Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
@@ -81,4 +75,9 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             poolDic[_type].Enqueue(_obj);
         }
     }
+
+    public EnemyPool EnemyPool { get; private set; }
+    public EffectPool EffectPool { get; private set; }
+    public HpBarPool HpBarPool { get; private set; }
+    public BulletPool BulletPool { get; private set; }
 }

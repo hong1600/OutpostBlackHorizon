@@ -6,6 +6,7 @@ public class CameraFpsZoom : MonoBehaviour
 {
     Camera mainCam;
     [SerializeField] GameObject rifle;
+    [SerializeField] GameObject nomalAim;
     [SerializeField] float normalFOV = 60;
     [SerializeField] float zoomFOV = 40f;
     [SerializeField] float zoomSpeed = 10f;
@@ -40,11 +41,13 @@ public class CameraFpsZoom : MonoBehaviour
         if (isZoom)
         {
             rifle.SetActive(true);
+            nomalAim.SetActive(true);
             scope.SetActive(false);
         }
         else
         {
             rifle.SetActive(false);
+            nomalAim.SetActive(false);
             scope.SetActive(true);
         }
 

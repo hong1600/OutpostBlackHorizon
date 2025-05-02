@@ -3,8 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EBulletType { PLAYER, ENEMY}
+
 public abstract class Bullet : Projectile
 {
+    protected EBulletType type;
+
     private void FixedUpdate()
     {
         CheckMoveBullet();
@@ -15,11 +19,26 @@ public abstract class Bullet : Projectile
         if (isHit) return;
 
         RaycastHit hit;
-        if (Physics.SphereCast(transform.position, sphere.radius, transform.forward,
-            out hit, speed * Time.fixedDeltaTime, ~LayerMask.GetMask("EnemySensor", "Bullet", "Turret")))
+
+        if (type == EBulletType.PLAYER)
         {
-            StartCoroutine(StartHitBullet(hit.point, hit.collider));
-            isHit = true;
+            if (Physics.SphereCast(transform.position, sphere.radius, transform.forward,
+                 out hit, speed * Time.fixedDeltaTime, ~LayerMask.GetMask
+                 ("EnemySensor","Effect")))
+            {
+               StartCoroutine(StartHitBullet(hit.point, hit.collider));
+                isHit = true;
+            }
+        }
+        else
+        {
+            if (Physics.SphereCast(transform.position, sphere.radius, transform.forward,
+                out hit, speed * Time.fixedDeltaTime, ~LayerMask.GetMask
+                ("Effect", "Enemy", "EnemySensor")))
+            {
+                StartCoroutine(StartHitBullet(hit.point, hit.collider));
+                isHit = true;
+            }
         }
     }
 
@@ -29,11 +48,24 @@ public abstract class Bullet : Projectile
 
         ITakeDmg iTakeDmg = _hitObj.GetComponentInParent<ITakeDmg>();
 
-        if (_hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy") && iTakeDmg != null)
+        if (type == EBulletType.PLAYER)
         {
-            isHead = _hitObj.CompareTag("Head");
-            float finalDmg = isHead ? dmg * 1.5f : dmg;
-            iTakeDmg.TakeDmg(finalDmg, isHead);
+            if (iTakeDmg != null && 
+                _hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                isHead = _hitObj.CompareTag("Head");
+                float finalDmg = isHead ? dmg * 1.5f : dmg;
+                iTakeDmg.TakeDmg(finalDmg, isHead);
+            }
+        }
+        else
+        {
+            if (iTakeDmg != null && (_hitObj.gameObject.layer == LayerMask.NameToLayer("Player")
+                || _hitObj.gameObject.layer == LayerMask.NameToLayer("Field")
+                || _hitObj.gameObject.layer == LayerMask.NameToLayer("Center")))
+            {
+                iTakeDmg.TakeDmg(dmg, false);
+            }
         }
 
         ReturnPool();

@@ -48,8 +48,7 @@ public class UIMixRightSlot : MonoBehaviour
         {
             TableUnit.Info unit = unitDataList[j];
 
-            GameObject panel = Instantiate(unitPanel);
-            GameObject newSlot = Instantiate(panel, mixRightContent);
+            GameObject newSlot = Instantiate(unitPanel, mixRightContent);
             UISetRightSlot setRightSlot = newSlot.GetComponent<UISetRightSlot>();
             setRightSlot.SetUnit(unit);
             unitList.Add(unit);

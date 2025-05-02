@@ -6,23 +6,18 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    [Header("UI STACK")]
     Stack<GameObject> uiStack = new Stack<GameObject>();
     Dictionary<GameObject, UIData> uiDataDic = new Dictionary<GameObject, UIData>();
 
-    [Header("CURSOR")]
     [SerializeField] GameObject cursor;
 
-    [Header("COMMON FUNCTION")]
+    [SerializeField] Option option;
     [SerializeField] PanelOpen panelOpen;
     [SerializeField] VideoSelector videoSelector;
 
     protected override void Awake()
     {
         base.Awake();
-
-        PanelOpen = panelOpen;
-        VideoSelector = videoSelector;
     }
 
     private void Start()
@@ -57,13 +52,24 @@ public class UIManager : Singleton<UIManager>
 
             if (uiDataDic.TryGetValue(topPanel, out UIData uiData))
             {
-                uiDataDic.Remove(topPanel);
-                StartCoroutine(panelOpen.CloseUI(topPanel, uiData.rects, uiData.offPos));
+                if (uiData.onPos != null)
+                {
+                    uiDataDic.Remove(topPanel);
+                    StartCoroutine(panelOpen.CloseUI(topPanel, uiData.rects, uiData.offPos));
+                }
+                else
+                {
+                    topPanel.SetActive(false);
+                }
             }
             else
             {
                 topPanel.SetActive(false);
             }
+        }
+        else
+        {
+            option.OpenOption();
         }
     }
 
@@ -112,8 +118,9 @@ public class UIManager : Singleton<UIManager>
         _ui.color = color;
     }
 
+    public Option Option { get { return option; } }
     public GameObject Cursor { get { return cursor; } }
-    public PanelOpen PanelOpen { get; private set; }
-    public VideoSelector VideoSelector { get; private set; }
+    public PanelOpen PanelOpen { get { return panelOpen; }}
+    public VideoSelector VideoSelector { get { return videoSelector; }}
 
 }

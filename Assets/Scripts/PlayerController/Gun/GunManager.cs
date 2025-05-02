@@ -21,7 +21,7 @@ public class GunManager : Singleton<GunManager>
 
         curBulletCount = 30;
         maxBulletCount = 30;
-        haveBulletCount = 20;
+        haveBulletCount = 300;
         curGrenadeCount = 1;
     }
 
@@ -32,6 +32,12 @@ public class GunManager : Singleton<GunManager>
         {
             ReloadBullet();
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            haveBulletCount = 210;
+        }
+
     }
 
     private void ReloadBullet()

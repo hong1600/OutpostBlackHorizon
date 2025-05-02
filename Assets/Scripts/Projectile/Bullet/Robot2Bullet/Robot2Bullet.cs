@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Robot2Bullet : Bullet
 {
-    public override void Init(Transform _target, float _dmg, float _speed)
+    public void Init(Transform _target, float _dmg, float _speed, EBulletType _eBulletType)
     {
         base.Init(_target, _dmg, _speed);
+
+        type = _eBulletType;
+
         time = 3;
     }
 

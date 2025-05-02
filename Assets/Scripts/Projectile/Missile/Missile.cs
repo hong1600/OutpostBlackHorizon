@@ -8,7 +8,7 @@ public abstract class Missile : Projectile
 {
     protected EMissile eMissile;
 
-    enum EMissileState { UP, TRACK }
+    enum EMissileState { UP, TRACK, LOST }
     EMissileState curFlyState = EMissileState.UP;
 
     [SerializeField] float upDuration;
@@ -17,7 +17,7 @@ public abstract class Missile : Projectile
 
     [SerializeField] protected float rotSpd;
 
-    float randomExplotionTime;
+    protected bool isTargetLost = false;
 
     protected virtual void FixedUpdate()
     {
@@ -28,6 +28,9 @@ public abstract class Missile : Projectile
                 break;
             case EMissileState.TRACK:
                 MoveMissile();
+                break;
+            case EMissileState.LOST:
+                LostMove();
                 break;
         }
     }
@@ -73,14 +76,16 @@ public abstract class Missile : Projectile
         rigid.velocity = transform.forward * speed;
     }
 
+    protected virtual void LostMove()
+    {
+        rigid.velocity = transform.forward * speed;
+    }
+
     protected void CheckTarget()
     {
         if (target == null || !target.gameObject.activeSelf)
         {
-            UpdateRandomExplosion();
-
-            Invoke(nameof(Explode), randomExplotionTime);
-
+            LostTarget();
             return;
         }
 
@@ -90,9 +95,13 @@ public abstract class Missile : Projectile
         }
     }
 
-    private void UpdateRandomExplosion()
+    protected virtual void LostTarget()
     {
-        randomExplotionTime = Random.Range(0, 5);
+        if (!isTargetLost)
+        {
+            isTargetLost = true;
+            curFlyState = EMissileState.LOST;
+        }
     }
 
     private void Explode()
@@ -102,7 +111,10 @@ public abstract class Missile : Projectile
         Explosion explosion = explosionEffect.GetComponent<Explosion>();
         explosion.Init(dmg, eMissile);
 
+        rigid.velocity = Vector3.zero;
+        isTargetLost = false;
         curFlyState = EMissileState.UP;
+
         ReturnPool();
     }
 

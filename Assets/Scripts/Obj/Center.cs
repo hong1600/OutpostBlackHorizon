@@ -33,6 +33,7 @@ public class Center : MonoBehaviour, ITakeDmg
 
     void Start()
     {
+        effectPool = ObjectPoolManager.instance.EffectPool;
         gameState = GameManager.instance.GameState;
         DrawCircle();
     }

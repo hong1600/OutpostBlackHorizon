@@ -41,17 +41,6 @@ public class GameUI : Singleton<GameUI>
         topUI.Add(cursor);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            for (int i = 0; functionUI.Count > i; i++)
-            {
-                functionUI[i].SetActive(false);
-            }
-        }
-    }
-
     public IEnumerator StartBlackout(float _duration)
     {
         UIManager.instance.SetAlpha(blackImg, 1);

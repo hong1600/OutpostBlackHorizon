@@ -33,6 +33,10 @@ public class EnemyManager : Singleton<EnemyManager>
     public void OnEnemySpawn()
     {
         curEnemy++;
+        if (curEnemy == maxEnemy)
+        {
+            GameManager.instance.GameState.SetGameState(EGameState.GAMEOVER);
+        }
     }
 
     public void OnEnemyDie()

@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2412611820941015907}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4109712552308508648
 MonoBehaviour:
@@ -47,8 +47,8 @@ MonoBehaviour:
   bgmClips:
   - {fileID: 8300000, guid: 87c75a22055b8f8498d26d2e99e9d9d0, type: 3}
   - {fileID: 8300000, guid: 8edf28018510dbd43b8577be68980c36, type: 3}
-  - {fileID: 8300000, guid: a8b60a9d6bdec43e69c48866d033c824, type: 3}
-  - {fileID: 8300000, guid: 57c099d32b9309b48a44841cf189d9eb, type: 3}
+  - {fileID: 8300000, guid: 17811e1cbb2bd2940aa627f8cf6674ae, type: 3}
+  - {fileID: 8300000, guid: 17811e1cbb2bd2940aa627f8cf6674ae, type: 3}
   - {fileID: 8300000, guid: 9c9f2ef57fc9796469968c4ab0e7b2e6, type: 3}
   sfxClips:
   - {fileID: 8300000, guid: 481a2db7df07e684a8745f1de2ea9bb1, type: 3}
@@ -57,9 +57,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 78b63b592d0f98548a944f00ba39fb29, type: 3}
   - {fileID: 8300000, guid: bb768bd56806e054881e0dcb577a71da, type: 3}
   - {fileID: 8300000, guid: 8e3b4236a7258471caabb3542eee992b, type: 3}
+  - {fileID: 8300000, guid: 938c9f6d75e03c14faad7aab8317d3a6, type: 3}
+  - {fileID: 8300000, guid: 3172e23843629994197d1dbf5fd1d375, type: 3}
+  - {fileID: 8300000, guid: 9cfb0fa9a8b64864db99c6a312ad4609, type: 3}
   masterVolume: 0.3
-  bgmVolume: 0.3
-  sfxVolume: 0.3
-  minDistance: 1
-  maxDistance: 100
-  rolloffMode: 0
+  bgmVolume: 0.1
+  sfxVolume: 0.1

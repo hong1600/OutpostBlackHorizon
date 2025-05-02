@@ -11,17 +11,13 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] GameObject blackPanel;
     UserData userData;
 
-
-    private void Awake()
+    private void Start()
     {
         if (DataManager.instance.UserDataLoader.curUserData != null)
         {
             userData = DataManager.instance.UserDataLoader.curUserData;
         }
-    }
 
-    private void Start()
-    {
         Invoke("OffBlackPanel", 1);
         AudioManager.instance.PlayBgm(EBgm.LOBBYWAITING);
 

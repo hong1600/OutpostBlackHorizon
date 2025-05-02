@@ -8,6 +8,8 @@ public abstract class Defender : MonoBehaviour
 {
     EDefenderAI curState;
 
+    protected AudioManager audioManager;
+
     protected Enemy enemy;
     protected DefenderAI defenderAI;
     protected BulletPool bulletPool;
@@ -30,6 +32,8 @@ public abstract class Defender : MonoBehaviour
     protected virtual void Init(int _id, string _name, int _dmg, 
         float _spd, float _range, string _sprite, bool _isAI)
     {
+        audioManager = AudioManager.instance;
+
         if (_isAI)
         {
             defenderAI = new DefenderAI();
@@ -79,7 +83,7 @@ public abstract class Defender : MonoBehaviour
             if (distance < minDistance)
             {
                 minDistance = distance;
-                target = coll.gameObject;
+                target = coll.gameObject.transform.parent.gameObject;
             }
         }
 
@@ -93,12 +97,9 @@ public abstract class Defender : MonoBehaviour
 
     protected internal virtual void Attack()
     {
-        if (isAttack) return;
+        if (isAttack || target == null) return;
 
-        if (target != null && attackCoroutine == null)
-        {
-            attackCoroutine = StartCoroutine(StartAttack());
-        }
+        attackCoroutine = StartCoroutine(StartAttack());
     }
 
     protected virtual IEnumerator StartAttack()
@@ -107,21 +108,10 @@ public abstract class Defender : MonoBehaviour
 
         yield return StartCoroutine(OnDamageEvent(enemy, attackDamage));
 
-        if (enemy.isDie)
-        {
-            target = null;
-            attackCoroutine = null;
-            isAttack = false;
-            Attack();
-        }
-
         yield return new WaitForSeconds(1 * attackSpeed);
 
-        attackCoroutine = null;
         isAttack = false;
-        Attack();
-
-        yield return null;
+        attackCoroutine = null;
     }
 
     protected virtual IEnumerator OnDamageEvent(Enemy _enemy, int _dmg)
@@ -140,24 +130,21 @@ public abstract class Defender : MonoBehaviour
     {
         if (target != null)
         {
-            if (targetColls == null)
-            {
-                targetColls = target.GetComponentsInChildren<Collider>();
+            targetColls = target.GetComponentsInChildren<Collider>();
 
-                for (int i = 0; i < targetColls.Length; i++)
+            for (int i = 0; i < targetColls.Length; i++)
+            {
+                if (targetColls[i].gameObject.CompareTag("Body"))
                 {
-                    if (targetColls[i].gameObject.CompareTag("Body"))
-                    {
-                        targetHeight = targetColls[i].bounds.center.y;
-                        break;
-                    }
+                    targetHeight = targetColls[i].bounds.center.y;
+                    break;
                 }
             }
 
             Vector3 targetVelocity = enemy.GetComponent<Rigidbody>().velocity;
 
             Vector3 predictionPos = new Vector3
-                (target.transform.position.x, targetHeight, target.transform.position.z) + targetVelocity * 2f;
+                (target.transform.position.x, target.transform.position.y + 1, target.transform.position.z) + targetVelocity;
 
             Vector3 dir = (predictionPos - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(dir);

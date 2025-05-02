@@ -145,6 +145,21 @@ public class CustomCursor : MonoBehaviour
         {
             ExecuteEvents.Execute(lastEventObj, eventData, ExecuteEvents.pointerClickHandler);
             //Debug.Log(lastEventObj);
+
+            Vector3 soundPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 1f));
+
+            if (lastEventObj.TryGetComponent<Button>(out Button button))
+            {
+                if (button.interactable) 
+                {
+                    AudioManager.instance.PlaySfxUI(ESfx.CLICK);
+                }
+            }
+            else if (ExecuteEvents.GetEventHandler<IPointerClickHandler>(lastEventObj) != null)
+            {
+                AudioManager.instance.PlaySfxUI(ESfx.CLICK);
+            }
+
         }
     }
 

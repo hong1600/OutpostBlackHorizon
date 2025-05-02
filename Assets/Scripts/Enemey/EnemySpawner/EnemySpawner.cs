@@ -30,10 +30,10 @@ public class EnemySpawner : MonoBehaviour
         round = GameManager.instance.Round;
         enemySpawnDelay = 0;
 
-        enemySpawnPos[0] = new Vector3(-6f, 0, 0);
-        enemySpawnPos[1] = new Vector3(-2f, 0, 0);
-        enemySpawnPos[2] = new Vector3(2f, 0, 0);
-        enemySpawnPos[3] = new Vector3(6f, 0, 0);
+        enemySpawnPos[0] = new Vector3(-9f, 0, 0);
+        enemySpawnPos[1] = new Vector3(-3f, 0, 0);
+        enemySpawnPos[2] = new Vector3(3f, 0, 0);
+        enemySpawnPos[3] = new Vector3(9f, 0, 0);
     }
 
     public void SpawnEnemy()
@@ -56,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
 
             StartCoroutine(StartSpawn(spawnPoint));
 
-            enemySpawnDelay = 10f;
+            enemySpawnDelay = 6f;
         }
 
         enemySpawnDelay -= Time.deltaTime;
@@ -64,7 +64,7 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator StartSpawn(int _spawnPoint)
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             EEnemy eEnemy = (EEnemy)Random.Range(0, 4);
 

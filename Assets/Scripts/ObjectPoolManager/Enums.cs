@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ESfxObj
+{
+    SFX,
+}
+
 public enum EScene
 {
     LOGIN,
@@ -58,19 +63,19 @@ public enum EBgm
     LOGIN,
     LOBBYWAITING,
     GAMESTART,
-    DESERT,
+    GAME,
     WATER,
-    GAMEFINISH,
 }
 
 public enum ESfx
 {
     FOOTSTEP,
-    JUMP,
     GUNSHOT,
     GUNRELOAD,
     GRENADESHOT,
     EXPLOSION,
-    MOSTERATTACK,
+    CLICK,
+    LASER,
+    MACHINEGUN
 }
 

@@ -36,7 +36,12 @@ public class UnitSkillBar : MonoBehaviour
 
     private void skillBar()
     {
-        if(unit == null) Destroy(this.gameObject);
+        if (unit.gameObject == null)
+        {
+            Destroy(this.gameObject);
+        }
+
+        if (unit == null) Destroy(this.gameObject);
 
         skillValue = Mathf.Clamp(skillValue, 0, 10);
 

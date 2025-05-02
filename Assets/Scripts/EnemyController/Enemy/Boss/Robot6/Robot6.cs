@@ -91,12 +91,13 @@ public class Robot6 : Boss
         isAttack = true;
 
         //ChangePatton();
-        pattonNum = 1;
+        pattonNum = 0;
 
         switch (pattonNum)
         {
             case 0:
-                AttackMissile();
+                StartCoroutine(StartAttackMissile(leftMissileTrs));
+                StartCoroutine(StartAttackMissile(rightMissileTrs));
                 break;
 
             case 1:
@@ -119,14 +120,14 @@ public class Robot6 : Boss
         pattonNum = Random.Range(0, 2);
     }
 
-    private void AttackMissile()
+    IEnumerator StartAttackMissile(Transform _fireTrs)
     {
         for (int x = -1; x <= 1; x++)
         {
             for (int z = -1; z <= 1; z++)
             {
-                Vector3 offset = leftMissileTrs.right * x * spacing + leftMissileTrs.forward * z * spacing;
-                Vector3 spawnPos = leftMissileTrs.position + offset;
+                Vector3 offset = _fireTrs.right * x * spacing + _fireTrs.forward * z * spacing;
+                Vector3 spawnPos = _fireTrs.position + offset;
 
                 float randomSpeed = Random.Range(-20f, 10);
                 float missileSpeed = speed + randomSpeed;
@@ -137,25 +138,8 @@ public class Robot6 : Boss
                 BossMissile missile = missileObj.GetComponent<BossMissile>();
 
                 missile.Init(myTarget, attackDmg, missileSpeed, EMissile.ENEMY);
-            }
-        }
 
-        for (int x = -1; x <= 1; x++)
-        {
-            for (int z = -1; z <= 1; z++)
-            {
-                Vector3 offset = rightMissileTrs.right * x * spacing + rightMissileTrs.forward * z * spacing;
-                Vector3 spawnPos = rightMissileTrs.position + offset;
-
-                float randomSpeed = Random.Range(-20f, 10);
-                float missileSpeed = speed + randomSpeed;
-
-                GameObject missileObj = bulletPool.FindBullet
-                    (EBullet.BOSSMISSILE, spawnPos, Quaternion.LookRotation(Vector3.up));
-
-                BossMissile missile = missileObj.GetComponent<BossMissile>();
-
-                missile.Init(myTarget, attackDmg, missileSpeed, EMissile.ENEMY);
+                yield return new WaitForSeconds(0.05f);
             }
         }
     }
@@ -320,26 +304,5 @@ public class Robot6 : Boss
                 isRightHand = false;
             }
         }
-    }
-
-    protected override void ChangeAnim(EEnemyAI _curState)
-    {
-        //_curState = aiState;
-
-        //switch (_curState)
-        //{
-        //    case EEnemyAI.CREATE:
-        //        anim.SetInteger("EnemyAnim", (int)EEnemyAnim.IDLE);
-        //        break;
-        //    case EEnemyAI.ATTACK:
-        //        anim.SetInteger("EnemyAnim", (int)EEnemyAnim.ATTACK);
-        //        break;
-        //    case EEnemyAI.STAY:
-        //        anim.SetInteger("EnemyAnim", (int)EEnemyAnim.IDLE);
-        //        break;
-        //    case EEnemyAI.DIE:
-        //        anim.SetInteger("EnemyAnim", (int)EEnemyAnim.DIE);
-        //        break;
-        //}
     }
 }

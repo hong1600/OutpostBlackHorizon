@@ -48,7 +48,7 @@ public class PlayerCombat : MonoBehaviour
         gunMovement.RecoilGun();
         GameObject obj = bulletPool.FindBullet(EBullet.PLAYERBULLET, fireTrs.position, fireTrs.rotation);
         PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
-        bullet.Init(null, bulletDmg, bulletSpd);
+        bullet.Init(null, bulletDmg, bulletSpd, EBulletType.PLAYER);
 
         cameraFpsShake.Shake();
         onUseBullet?.Invoke();

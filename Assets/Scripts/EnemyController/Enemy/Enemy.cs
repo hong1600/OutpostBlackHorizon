@@ -374,6 +374,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
         }
 
         Attack();
+        Turn();
     }
 
     public void DieAI()
