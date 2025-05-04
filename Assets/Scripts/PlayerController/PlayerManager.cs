@@ -9,6 +9,13 @@ public class PlayerManager : Singleton<PlayerManager>
     EPlayer curPlayerState;
 
     [SerializeField] GameObject rifle;
+    [SerializeField] Transform eyeTrs;
+    [SerializeField] float checkDistance;
+
+    ViewState viewState;
+    UIInteraction uiInteraction;
+
+    bool isInteraction;
 
     public PlayerAI playerAI { get; private set; }
     public CapsuleCollider cap { get; private set; }
@@ -25,6 +32,8 @@ public class PlayerManager : Singleton<PlayerManager>
         cap = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
 
+        viewState = GameManager.instance.ViewState;
+
         playerMovement = GetComponent<PlayerMovement>();
         playerCombat = GetComponent<PlayerCombat>();
         playerStatus = GetComponent<PlayerStatus>();
@@ -37,7 +46,31 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         playerAI.State();
         ChangeAnim(playerAI.aiState);
+        //CheckObject();
     }
+
+    //private void CheckObject()
+    //{
+    //    if (viewState.CurViewState == EViewState.FPS &&
+    //        Physics.Raycast(eyeTrs.position, Camera.main.transform.forward, 
+    //        out RaycastHit hit, checkDistance, LayerMask.GetMask("DropBullet")))
+    //    {
+    //        if (!isInteraction)
+    //        {
+    //            uiInteraction.OpenPanel();
+
+    //            DropBullet dropBullet = hit.collider.gameObject.GetComponent<DropBullet>();
+
+    //            isInteraction = true;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        uiInteraction.ClosePanel();
+
+    //        isInteraction = false;
+    //    }
+    //}
 
 
     private void ChangeAnim(EPlayer _ePlayer)

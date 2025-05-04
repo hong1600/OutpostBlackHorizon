@@ -18,8 +18,7 @@ public class UIRewardPanel : MonoBehaviour
     [SerializeField] GameObject finishBack;
     [SerializeField] GameObject finishPanel1;
     [SerializeField] GameObject finishPanel2;
-    [SerializeField] TextMeshProUGUI finishText1;
-    [SerializeField] TextMeshProUGUI finishText2;
+    [SerializeField] TextMeshProUGUI finishText;
     [SerializeField] GameObject finishImg;
     [SerializeField] Transform movePos1;
     [SerializeField] Transform movePos2;
@@ -52,8 +51,8 @@ public class UIRewardPanel : MonoBehaviour
 
         yield return new WaitForSeconds(0.15f);
 
-        finishText2.DOFade(0,0.03f).SetEase(Ease.InOutSine).SetLoops(5, LoopType.Yoyo)
-            .OnComplete(() => finishText2.alpha = 1);
+        finishText.DOFade(0,0.03f).SetEase(Ease.InOutSine).SetLoops(5, LoopType.Yoyo)
+            .OnComplete(() => finishText.alpha = 1);
 
         yield return new WaitForSeconds(1f);
 
@@ -62,7 +61,7 @@ public class UIRewardPanel : MonoBehaviour
         yield return finishPanelRect2.DOSizeDelta(new Vector2(finishPanelRect2.sizeDelta.x, 90), 0.5f)
             .SetEase(Ease.OutSine).WaitForCompletion();
 
-        finishText2.enabled = false;
+        finishText.enabled = false;
         finishImg.SetActive(true);
         finishPanelRect1.DOSizeDelta(new Vector2(150, finishPanelRect1.sizeDelta.y), 0.5f)
             .SetEase(Ease.OutSine);
@@ -80,7 +79,7 @@ public class UIRewardPanel : MonoBehaviour
         yield return finishPanel2.transform.DOMove(movePos2.position, 0.5f)
             .SetEase(Ease.Linear).WaitForCompletion();
 
-        finishText2.enabled = true;
+        finishText.enabled = true;
 
         yield return new WaitForSeconds(5f);
 
@@ -104,12 +103,12 @@ public class UIRewardPanel : MonoBehaviour
 
         if (_state == EGameState.GAMECLEAR)
         {
-            finishText1.text = "Á¤Âû ¼º°ø";
+            finishText.text = "Á¤Âû ¼º°ø";
             stateText.text = "»ýÁ¸";
         }
         else if (_state == EGameState.GAMEOVER)
         {
-            finishText1.text = "Á¤Âû ½ÇÆÐ";
+            finishText.text = "Á¤Âû ½ÇÆÐ";
             stateText.text = "½ÇÁ¾";
         }
 

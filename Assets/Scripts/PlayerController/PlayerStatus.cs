@@ -14,7 +14,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     bool isTakeDmg = false;
 
     public float maxHp { get; private set; } = 100f;
-    public float curHp { get; private set; } = 100f;
+    public float curHp { get; private set; } = 100;
     public float maxEnergy { get; private set; } = 100f;
     public float curEnergy { get; private set; } = 100f;
     public bool isDie { get; private set; } = false;
@@ -22,7 +22,13 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     private void Update()
     {
         FillHp(5);
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            TakeDmg(100f, false);
+        }
     }
+
 
     public void TakeDmg(float _dmg, bool _isHead)
     {
