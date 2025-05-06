@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     Terrain terrain;
     EnemyPool enemyPool;
     Round round;
+    EnemyFactory enemyFactory;
 
     public Vector3[] enemySpawnPos { get; private set; } = new Vector3[4];
     [SerializeField] List<Transform> enemySpawnPointList;
@@ -27,6 +28,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         enemyPool = ObjectPoolManager.instance.EnemyPool;
+        enemyFactory = FactoryManager.instance.EnemyFactory;
         round = GameManager.instance.Round;
         enemySpawnDelay = 0;
 
@@ -68,20 +70,19 @@ public class EnemySpawner : MonoBehaviour
         {
             EEnemy eEnemy = (EEnemy)Random.Range(0, 4);
 
-            Vector3 spawnPos1 = enemySpawnPointList[_spawnPoint].transform.position + (enemySpawnPos[0]);
-            Vector3 spawnPos2 = enemySpawnPointList[_spawnPoint].transform.position + (enemySpawnPos[1]);
-            Vector3 spawnPos3 = enemySpawnPointList[_spawnPoint].transform.position + (enemySpawnPos[2]);
-            Vector3 spawnPos4 = enemySpawnPointList[_spawnPoint].transform.position + (enemySpawnPos[3]);
+            Vector3[] spawnPos = new Vector3[4];
+            Vector3 basePos = enemySpawnPointList[_spawnPoint].transform.position;
 
-            spawnPos1.y = terrain.SampleHeight(spawnPos1);
-            spawnPos2.y = terrain.SampleHeight(spawnPos2);
-            spawnPos3.y = terrain.SampleHeight(spawnPos3);
-            spawnPos4.y = terrain.SampleHeight(spawnPos4);
+            for (int j = 0; j < 4; j++)
+            {
+                spawnPos[j] = basePos + (enemySpawnPos[j]);
+                spawnPos[j].y = terrain.SampleHeight(spawnPos[j]);
+            }
 
-            GameObject obj1 = enemyPool.FindEnemy(eEnemy, spawnPos1, Quaternion.identity);
-            GameObject obj2 = enemyPool.FindEnemy(eEnemy, spawnPos2, Quaternion.identity);
-            GameObject obj3 = enemyPool.FindEnemy(eEnemy, spawnPos3, Quaternion.identity);
-            GameObject obj4 = enemyPool.FindEnemy(eEnemy, spawnPos4, Quaternion.identity);
+            for (int j = 0; j < 4; j++)
+            {
+                enemyFactory.Create(eEnemy, spawnPos[j], Quaternion.identity, null);
+            }
 
             yield return new WaitForSeconds(2f);
         }

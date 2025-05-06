@@ -10,8 +10,8 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
     [SerializeField] HpBarPool hpBarPool;
     [SerializeField] BulletPool bulletPool;
     
-    [SerializeField] Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
-    [SerializeField] Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
+    public Dictionary<string, Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
+    public Dictionary<string, GameObject> prefabDic = new Dictionary<string, GameObject>();
 
     protected override void Awake()
     {

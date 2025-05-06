@@ -8,18 +8,43 @@ public class EnemyPool : ObjectPool<EEnemy>
     public event Action onEnemyCount;
 
     EnemyManager enemyManager;
+    EnemyFactory enemyFactory;
+
+    Vector3 spawnPos;
+    Quaternion spawnRot;
 
     private void Start()
     {
         Init();
         enemyManager = EnemyManager.instance;
+        enemyFactory = FactoryManager.instance.EnemyFactory;
     }
 
     public GameObject FindEnemy(EEnemy _type, Vector3 _pos, Quaternion _rot)
     {
-        enemyManager.OnEnemySpawn();
-        onEnemyCount?.Invoke();
-        return FindObject(_type, _pos, _rot);
+        string type = _type.ToString();
+
+        if (poolManager.poolDic.ContainsKey(type))
+        {
+            Queue<GameObject> pool = poolManager.poolDic[type];
+
+            if (pool.Count > 0)
+            {
+                for (int i = 0; i < pool.Count; i++)
+                {
+                    GameObject obj = pool.Dequeue();
+
+                    if (!obj.activeInHierarchy)
+                    {
+                        obj.transform.position = _pos;
+                        obj.transform.rotation = _rot;
+                        obj.SetActive(true);
+                        return obj;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public void ReturnEnemy(EEnemy _type, GameObject _obj)

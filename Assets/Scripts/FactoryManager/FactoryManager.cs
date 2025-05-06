@@ -1,0 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FactoryManager : Singleton<FactoryManager>
+{
+    [SerializeField] EnemyFactory enemyFactory;
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
+    public EnemyFactory EnemyFactory { get { return enemyFactory; } }
+}

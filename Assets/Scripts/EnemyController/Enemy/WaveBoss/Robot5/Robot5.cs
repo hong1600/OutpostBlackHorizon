@@ -5,17 +5,13 @@ using UnityEngine.UIElements;
 
 public class Robot5 : WaveBoss
 {
-    TableEnemy.Info info;
-
     [SerializeField] float totalTime;
     [SerializeField] float time;
     [SerializeField] float interval;
 
-    private void Start()
+    public override void Init(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy)
     {
-        info = DataManager.instance.TableEnemy.Get(205);
-
-        base.InitEnemyData(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, EEnemy.ROBOT5);
+        base.Init(_name, _maxHp, _spd, _range, _dmg, _eEnemy);
     }
 
     protected override IEnumerator StartAttack()

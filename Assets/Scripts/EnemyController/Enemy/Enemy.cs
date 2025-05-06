@@ -55,8 +55,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
     protected Coroutine attackCoroutine;
     Vector3 hpBarPos;
 
-    protected virtual void InitEnemyData(string _name, float _maxHp, float _spd,
-        float _range, float _dmg, EEnemy _eEnemy)
+    public virtual void Init(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy)
     {
         enemyAI = new EnemyAI();
         enemyAI.Init(this);

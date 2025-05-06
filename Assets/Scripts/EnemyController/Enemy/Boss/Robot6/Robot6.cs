@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Robot6 : Boss
 {
-    TableEnemy.Info info;
-
     [SerializeField] BoxCollider leftHandBox;
     [SerializeField] BoxCollider rightHandBox;
 
@@ -64,19 +62,16 @@ public class Robot6 : Boss
         laserMat = laserLine.material;
     }
 
-    protected override void Start()
+    public override void Init(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy)
     {
         base.Start();
 
-        info = DataManager.instance.TableEnemy.Get(206);
+        base.Init(_name, _maxHp, _spd, _range, _dmg, _eEnemy);
 
-        base.InitEnemyData(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, EEnemy.ROBOT6);
-
-        bodyHp = info.MaxHp / 3;
-        leftHandHp = info.MaxHp / 3;
-        rightHandHp = info.MaxHp / 3;
+        bodyHp = maxHp / 3;
+        leftHandHp = maxHp / 3;
+        rightHandHp = maxHp / 3;
     }
-
 
     protected override void Update()
     {
@@ -90,8 +85,7 @@ public class Robot6 : Boss
     {
         isAttack = true;
 
-        //ChangePatton();
-        pattonNum = 0;
+        ChangePatton();
 
         switch (pattonNum)
         {

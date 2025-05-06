@@ -10,6 +10,7 @@ public class TableEnemy : TableBase
     {
         public int ID;
         public string Name;
+        public string Enum;
         public int Speed;
         public int MaxHp;
         public string HpBarPath;
@@ -18,13 +19,13 @@ public class TableEnemy : TableBase
         public string Desc;
     }
 
-    public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
+    public Dictionary<EEnemy, Info> Dictionary = new Dictionary<EEnemy, Info>();
 
-    public Info Get(int _id)
+    public Info Get(EEnemy _eEnemy)
     {
-        if (Dictionary.ContainsKey(_id))
+        if (Dictionary.ContainsKey(_eEnemy))
         {
-            return Dictionary[_id];
+            return Dictionary[_eEnemy];
         }
 
         return null;
@@ -32,7 +33,7 @@ public class TableEnemy : TableBase
 
     public void Init_Binary(string _Name)
     {
-        Load_Binary<Dictionary<int, Info>>(_Name, ref Dictionary);
+        Load_Binary<Dictionary<EEnemy, Info>>(_Name, ref Dictionary);
     }
 
     public void Save_Binary(string _Name)
@@ -43,6 +44,7 @@ public class TableEnemy : TableBase
     public void Init_Csv(ETable _Name, int _StartRow, int _StartCol)
     {
         Dictionary.Clear();
+
         CSVReader reader = GetCSVReader(_Name);
 
         for (int row = _StartRow; row < reader.row; ++row)
@@ -52,7 +54,10 @@ public class TableEnemy : TableBase
             if (Read(reader, info, row, _StartCol) == false)
                 break;
 
-            Dictionary.Add(info.ID, info);
+            if (Enum.TryParse(info.Enum, out EEnemy eEnemy))
+            {
+                Dictionary.Add(eEnemy, info);
+            }
         }
     }
 
@@ -63,6 +68,7 @@ public class TableEnemy : TableBase
 
         _Reader.getInt(_Row, ref _Info.ID);
         _Reader.getString(_Row, ref _Info.Name);
+        _Reader.getString(_Row, ref _Info.Enum);
         _Reader.getInt(_Row, ref _Info.Speed);
         _Reader.getInt(_Row, ref _Info.MaxHp);
         _Reader.getString(_Row, ref _Info.HpBarPath);

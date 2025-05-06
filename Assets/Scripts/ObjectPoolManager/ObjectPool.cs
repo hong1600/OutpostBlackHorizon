@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class ObjectPool<T> : MonoBehaviour
 {
-    ObjectPoolManager poolManager;
+    protected ObjectPoolManager poolManager;
 
     [SerializeField] protected List<GameObject> objectList = new List<GameObject>();
     [SerializeField] protected List<Transform> parentList = new List<Transform>();

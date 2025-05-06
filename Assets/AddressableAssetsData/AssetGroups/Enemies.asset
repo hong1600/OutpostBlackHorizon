@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Enemies
+  m_EditorClassIdentifier: 
+  m_GroupName: Enemies
+  m_Data:
+    m_SerializedData: []
+  m_GUID: f325353c594299b4bb3650822834e43d
+  m_SerializeEntries:
+  - m_GUID: 077155289d2e14247bd0864b560f74ac
+    m_Address: Assets/AddressablesResources/Enemy/Robot5.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 422ef88a40628da409906a952317b108
+    m_Address: Assets/AddressablesResources/Enemy/Robot3.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85413646e0dfaf645a50e52025b31523
+    m_Address: Assets/AddressablesResources/Enemy/Robot2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1b887ca3437595449f281f7efe4c104
+    m_Address: Assets/AddressablesResources/Enemy/Robot6.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bdd91695cfcf4b643963af1fce587ef5
+    m_Address: Assets/AddressablesResources/Enemy/Robot1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e764774812edb8d42bfee98df23e49c8
+    m_Address: Assets/AddressablesResources/Enemy/Robot4.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 686f7499547ea3c4cb962ef9ad6e50cc, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5dd1207bfd2bfed42bfd0287cd0007ea, type: 2}
+    - {fileID: 11400000, guid: a05e22a2dcc0de441941efc774f8e44f, type: 2}
