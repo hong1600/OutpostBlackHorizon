@@ -291,6 +291,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c49df8310fcfcf34184cc32c6772dc53, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1364546999816342253, guid: c49df8310fcfcf34184cc32c6772dc53, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -363,10 +367,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d92084eed334e04bbe0664cdabe0c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  render: {fileID: 5699080534235238896}
-  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
+  aiState: 0
   sensor: {fileID: 6568166432750900498}
   box: {fileID: 8285691408571864697}
+  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
+  render: {fileID: 5699080534235238896}
+  curhp: 100
+  myTarget: {fileID: 0}
 --- !u!95 &-7023282270424945081
 Animator:
   serializedVersion: 5

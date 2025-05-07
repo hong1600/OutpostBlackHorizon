@@ -81,7 +81,7 @@ public class EnemySpawner : MonoBehaviour
 
             for (int j = 0; j < 4; j++)
             {
-                enemyFactory.Create(eEnemy, spawnPos[j], Quaternion.identity, null);
+                enemyFactory.Create(eEnemy, spawnPos[j], Quaternion.identity, null, null);
             }
 
             yield return new WaitForSeconds(2f);

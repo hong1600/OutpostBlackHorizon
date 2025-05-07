@@ -9,7 +9,7 @@ public abstract class ObjectPool<T> : MonoBehaviour
     [SerializeField] protected List<GameObject> objectList = new List<GameObject>();
     [SerializeField] protected List<Transform> parentList = new List<Transform>();
 
-    protected Dictionary<T, Transform> parentDic = new Dictionary<T, Transform>();
+    public Dictionary<T, Transform> parentDic = new Dictionary<T, Transform>();
 
     protected virtual void Init()
     {

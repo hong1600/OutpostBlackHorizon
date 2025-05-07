@@ -41,6 +41,10 @@ public class EnemyPool : ObjectPool<EEnemy>
                         obj.SetActive(true);
                         return obj;
                     }
+                    else
+                    {
+                        pool.Enqueue(obj);
+                    }
                 }
             }
         }

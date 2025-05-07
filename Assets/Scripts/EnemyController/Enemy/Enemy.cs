@@ -65,7 +65,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
         if (render != null)
         {
-            originMat = render.material;
+            originMat = render.sharedMaterial;
         }
 
         skinRender = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -259,7 +259,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
         if(hitMat != null && render != null) 
         {
-            render.material = hitMat;
+            render.sharedMaterial = hitMat;
 
             Invoke(nameof(UpdateMat), 0.2f);
         }

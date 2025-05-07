@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BossSpawner : MonoBehaviour
 {
-    ObjectPoolManager poolManager;
+    EnemyFactory enemyFactory;
 
     [SerializeField] Transform bossSpawnPos;
     [SerializeField] UIBossHpbar hpbar;
@@ -12,14 +12,13 @@ public class BossSpawner : MonoBehaviour
     private void Start()
     {
         GameManager.instance.Round.onBossRound += SpawnBoss;
-        poolManager = ObjectPoolManager.instance;
+        enemyFactory = FactoryManager.instance.EnemyFactory;
     }
 
     public void SpawnBoss()
     {
         hpbar.ShowHpBar();
 
-        GameObject boss = poolManager.EnemyPool.FindEnemy
-            (EEnemy.ROBOT6, bossSpawnPos.position, Quaternion.Euler(0,180,0));
+        enemyFactory.Create(EEnemy.ROBOT6, bossSpawnPos.position, Quaternion.Euler(0, 180, 0), null, null);
     }
 }

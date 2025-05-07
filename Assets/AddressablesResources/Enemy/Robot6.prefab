@@ -549,10 +549,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa45c9430c35184e909b663c364bc51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aiState: 0
   sensor: {fileID: 8133100515085763105}
   box: {fileID: 4858223030943345416}
-  render: {fileID: 0}
   hitMat: {fileID: 0}
+  render: {fileID: 0}
+  curhp: 3000
   myTarget: {fileID: 0}
   leftHandBox: {fileID: 868356223963333013}
   rightHandBox: {fileID: 3894611167745589104}

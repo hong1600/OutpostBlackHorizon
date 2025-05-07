@@ -7,24 +7,25 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public abstract class FactoryBase<T> : MonoBehaviour
 {
-    public virtual void Create(T _type, Vector3 _pos, Quaternion _rot, Action<GameObject> _onComplete)
+    public virtual void Create(T _type, Vector3 _pos, Quaternion _rot, Transform _parent, Action<GameObject> _onComplete)
     {
-        StartCoroutine(StartLoad(_type, _onComplete));
+        StartCoroutine(StartLoad(_type, _pos, _rot, _parent, _onComplete));
     }
 
-    IEnumerator StartLoad(T _type, Action<GameObject> _onComplete)
+    IEnumerator StartLoad(T _type, Vector3 _pos, Quaternion _rot, Transform _parent, Action<GameObject> _onComplete)
     {
         string address = ConvertKeyToAddress(_type);
-        var handle = Addressables.LoadAssetAsync<GameObject>(address);
+
+        AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(address);
         yield return handle;
 
         if(handle.Status == AsyncOperationStatus.Succeeded) 
         {
             GameObject prefab = handle.Result;
-            Init(prefab, _type);
-            _onComplete?.Invoke(prefab);
+            GameObject obj = Instantiate(prefab, _pos, _rot, _parent);
 
-            ObjectPoolManager.instance.ReturnObject(_type.ToString(), prefab);
+            Init(obj, _type);
+            _onComplete?.Invoke(obj);
         }
         else
         {
