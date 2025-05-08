@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Bundle : MonoBehaviour
 {
-    [SerializeField] GameObject monster;
-
     private void Start()
     {
         StartCoroutine(ILoad());

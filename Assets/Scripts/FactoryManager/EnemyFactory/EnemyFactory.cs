@@ -45,23 +45,4 @@ public class EnemyFactory : FactoryBase<EEnemy>
             }
         }
     }
-
-    public string GetEnemyKey(EEnemy _eEnemy)
-    {
-        switch (_eEnemy)
-        {
-            case EEnemy.ROBOT1: return "Robot1";
-            case EEnemy.ROBOT2: return "Robot2";
-            case EEnemy.ROBOT3: return "Robot3";
-            case EEnemy.ROBOT4: return "Robot4";
-            case EEnemy.ROBOT5: return "Robot5";
-            case EEnemy.ROBOT6: return "Robot6";
-            default: return null;
-        }
-    }
-
-    protected override string ConvertKeyToAddress(EEnemy _key)
-    {
-        return GetEnemyKey(_key);
-    }
 }

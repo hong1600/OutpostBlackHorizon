@@ -1,29 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public abstract class FactoryBase<T> : MonoBehaviour
+public abstract class FactoryBase<T> : MonoBehaviour where T : System.Enum
 {
-    public virtual void Create(T _type, Vector3 _pos, Quaternion _rot, Transform _parent, Action<GameObject> _onComplete)
+    protected SceneResourceBase<T> sceneResource;
+
+    private void Start()
     {
-        StartCoroutine(StartLoad(_type, _pos, _rot, _parent, _onComplete));
+        sceneResource = SceneResourceBase<T>.instance;
     }
 
-    IEnumerator StartLoad(T _type, Vector3 _pos, Quaternion _rot, Transform _parent, Action<GameObject> _onComplete)
+    public virtual void Create(T _type, Vector3 _pos, Quaternion _rot, Transform _parent, Action<GameObject> _onComplete)
     {
-        string address = ConvertKeyToAddress(_type);
+        GameObject prefab = sceneResource.GetPrefab(_type);
 
-        AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(address);
-        yield return handle;
-
-        if(handle.Status == AsyncOperationStatus.Succeeded) 
+        if (prefab != null)
         {
-            GameObject prefab = handle.Result;
             GameObject obj = Instantiate(prefab, _pos, _rot, _parent);
-
             Init(obj, _type);
             _onComplete?.Invoke(obj);
         }
@@ -33,6 +31,5 @@ public abstract class FactoryBase<T> : MonoBehaviour
         }
     }
 
-    protected abstract string ConvertKeyToAddress(T _type);
     protected abstract void Init(GameObject _obj, T _type); 
 }
