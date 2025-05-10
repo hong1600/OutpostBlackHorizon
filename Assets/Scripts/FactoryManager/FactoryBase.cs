@@ -6,18 +6,13 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public abstract class FactoryBase<T> : MonoBehaviour where T : System.Enum
+public abstract class FactoryBase<T> : MonoBehaviour where T : Enum
 {
-    protected SceneResourceBase<T> sceneResource;
-
-    private void Start()
-    {
-        sceneResource = SceneResourceBase<T>.instance;
-    }
+    protected SceneResourceBase<T> resource;
 
     public virtual void Create(T _type, Vector3 _pos, Quaternion _rot, Transform _parent, Action<GameObject> _onComplete)
     {
-        GameObject prefab = sceneResource.GetPrefab(_type);
+        GameObject prefab = resource.GetPrefab(_type);
 
         if (prefab != null)
         {

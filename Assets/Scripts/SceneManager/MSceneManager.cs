@@ -22,6 +22,11 @@ public class MSceneManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        LoadSceneResources(EScene.GAME);
+    }
+
     public void ChangeScene(EScene _eScene, bool _loading = false)
     {
         if (scene == _eScene)
@@ -35,6 +40,8 @@ public class MSceneManager : MonoBehaviour
         }
         else
         {
+            LoadSceneResources(_eScene);
+
             switch (_eScene)
             {
                 case EScene.LOGIN:
@@ -56,6 +63,26 @@ public class MSceneManager : MonoBehaviour
                     SceneManager.LoadScene("End");
                     break;
             }
+        }
+    }
+
+    private void LoadSceneResources(EScene _eScene)
+    {
+        ResourceManager.instance.GameSceneResource.Unload();
+
+        switch(_eScene) 
+        {
+            case EScene.LOGIN:
+                break;
+            case EScene.LOBBY:
+                break;
+            case EScene.WAITING:
+                break;
+            case EScene.GAME:
+                ResourceManager.instance.GameSceneResource.Load();
+                break;
+            default:
+                return;
         }
     }
 

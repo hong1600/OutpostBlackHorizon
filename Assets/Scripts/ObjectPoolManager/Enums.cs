@@ -79,3 +79,9 @@ public enum ESfx
     MACHINEGUN
 }
 
+public enum EGameResource
+{
+    ENEMY1, ENEMY2, ENEMY3, ENEMY4, ENEMY5, ENEMY6
+}
+
+

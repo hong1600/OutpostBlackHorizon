@@ -10,6 +10,7 @@ public class EnemyFactory : FactoryBase<EEnemy>
 
     private void Start()
     {
+        resource = ResourceManager.instance.GameSceneResource.EnemyResource;
         tableEnemy = DataManager.instance.TableEnemy;
         enemyPool = ObjectPoolManager.instance.EnemyPool;
     }
