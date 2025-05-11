@@ -22,7 +22,14 @@ public abstract class Boss : Enemy
 
     protected override void Die()
     {
-        GameManager.instance.GameState.SetGameState(EGameState.GAMECLEAR);
+        CameraManager.instance.CutScene.PlayCutScene(ECutScene.FINISH);
+        StartCoroutine(StartDie());
         base.Die();
+    }
+
+    IEnumerator StartBossDie()
+    {
+
+        yield return null;
     }
 }

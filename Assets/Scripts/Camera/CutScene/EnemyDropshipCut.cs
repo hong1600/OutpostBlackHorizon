@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayEnemyDropship : MonoBehaviour, ICutScene
+public class EnemyDropshipCut : MonoBehaviour, ICutScene
 {
     [Header("Camera")]
     [SerializeField] GameObject camObj;
@@ -47,7 +47,6 @@ public class PlayEnemyDropship : MonoBehaviour, ICutScene
             }
         }
 
-        GameUI.instance.SwitchNone();
         StartCoroutine(StartCutScene());
     }
 
@@ -60,16 +59,15 @@ public class PlayEnemyDropship : MonoBehaviour, ICutScene
 
     IEnumerator StartCutScene()
     {
-        cam.enabled = true;
-
-        yield return null;
+        camObj.SetActive(true);
 
         cam.m_Follow = dropshipList[1].transform;
         cam.m_LookAt = dropshipList[1].transform;
 
         GameManager.instance.Timer.SetTimer(false);
-        StartCoroutine(GameUI.instance.StartBlackout(1));
         GameManager.instance.ViewState.SetViewState(EViewState.NONE);
+
+        StartCoroutine(GameUI.instance.StartBlackout(1));
 
         yield return new WaitForSeconds(1);
 

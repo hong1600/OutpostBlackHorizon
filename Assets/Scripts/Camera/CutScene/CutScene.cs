@@ -6,6 +6,7 @@ using UnityEngine;
 public enum ECutScene
 {
     ENEMYDROPSHIP,
+    FINISH,
 }
 
 public class CutScene : MonoBehaviour

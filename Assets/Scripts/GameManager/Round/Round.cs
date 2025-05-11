@@ -8,9 +8,6 @@ public class Round : MonoBehaviour
     public event Action onRoundEvent;
     public event Action onBossRound;
 
-    [SerializeField] GameObject enemyCutSceneCam;
-    CutScene cutScene;
-
     public bool isBossRound;
     public int curRound;
 
@@ -20,18 +17,11 @@ public class Round : MonoBehaviour
         curRound = 2;
     }
 
-    private void Start()
-    {
-        cutScene = CameraManager.instance.CutScene;
-    }
-
     public void RoundCheck()
     {
         if(curRound == 1) 
         {
-            enemyCutSceneCam.SetActive(true);
-
-            cutScene.PlayCutScene(ECutScene.ENEMYDROPSHIP);
+            CameraManager.instance.CutScene.PlayCutScene(ECutScene.ENEMYDROPSHIP);
         }
 
         if (curRound == 3)

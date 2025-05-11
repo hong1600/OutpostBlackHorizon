@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class GameState : MonoBehaviour
 {
-    public event Action<EGameState> onGameFinish;
+    public event Action<EGameState> onGameState;
 
-    [SerializeField] EGameState curGameState;
+    EGameState curGameState;
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class GameState : MonoBehaviour
 
         if(_state == EGameState.GAMECLEAR || _state == EGameState.GAMEOVER) 
         {
-            onGameFinish?.Invoke(_state);
+            onGameState?.Invoke(_state);
         }
     }
 
@@ -28,4 +28,6 @@ public class GameState : MonoBehaviour
     { 
         return curGameState;
     }
+
+    public EGameState eGameState { get { return curGameState; } }
 }

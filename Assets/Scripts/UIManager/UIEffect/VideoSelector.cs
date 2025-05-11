@@ -30,6 +30,7 @@ public class VideoSelector : MonoBehaviour
     public void NextVideo(EVideo _eVideo)
     {
         eVideo = _eVideo;
-        PlayVideo(_eVideo);
+        videoPlayer.clip = videoClipList[(int)_eVideo];
+        videoPlayer.Play();
     }
 }

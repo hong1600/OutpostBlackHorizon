@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartDropship : MonoBehaviour
+public class StartDropshipCut : MonoBehaviour
 {
     [Header("Camera")]
     [SerializeField] GameObject camObj;

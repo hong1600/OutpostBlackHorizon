@@ -35,7 +35,7 @@ public class UIRewardPanel : MonoBehaviour
     private void Start()
     {
         rewarder = GameManager.instance.Rewarder;
-        GameManager.instance.GameState.onGameFinish += UpdateRewardPanel;
+        GameManager.instance.GameState.onGameState += UpdateRewardPanel;
     }
 
     IEnumerator StartAnim()

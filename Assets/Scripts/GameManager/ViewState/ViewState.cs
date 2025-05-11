@@ -12,6 +12,7 @@ public class ViewState : MonoBehaviour
 
     List<MonoBehaviour> topComponent = new List<MonoBehaviour>();
     List<MonoBehaviour> fpsComponent = new List<MonoBehaviour>();
+    GameObject rifle;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class ViewState : MonoBehaviour
         fpsComponent.Add(CameraManager.instance.CameraFpsMove);
         fpsComponent.Add(CameraManager.instance.CameraFpsShake);
         fpsComponent.Add(CameraManager.instance.CameraFpsZoom);
+        rifle = PlayerManager.instance.Rifle;
 
         topComponent.Add(FieldManager.instance.FieldBuild);
         topComponent.Add(CameraManager.instance.CameraTopMove);
@@ -61,6 +63,7 @@ public class ViewState : MonoBehaviour
         for (int i = 0; i < fpsComponent.Count; i++)
         {
             fpsComponent[i].enabled = true;
+            rifle.SetActive(true);
         }
         GameUI.instance.SwitchFps();
     }
@@ -74,6 +77,7 @@ public class ViewState : MonoBehaviour
         for (int i = 0; i < topComponent.Count; i++)
         {
             topComponent[i].enabled = true;
+            rifle.SetActive(false);
         }
 
         GameUI.instance.SwitchTop();
@@ -92,6 +96,7 @@ public class ViewState : MonoBehaviour
             fpsComponent[i].enabled = false;
         }
 
+        rifle.SetActive(false);
         GameUI.instance.SwitchNone();
     }
 

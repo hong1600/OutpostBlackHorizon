@@ -9,6 +9,8 @@ public class BossSpawner : MonoBehaviour
     [SerializeField] Transform bossSpawnPos;
     [SerializeField] UIBossHpbar hpbar;
 
+    public GameObject bossObj { get; private set; }
+
     private void Start()
     {
         GameManager.instance.Round.onBossRound += SpawnBoss;
@@ -19,6 +21,6 @@ public class BossSpawner : MonoBehaviour
     {
         hpbar.ShowHpBar();
 
-        enemyFactory.Create(EEnemy.ROBOT6, bossSpawnPos.position, Quaternion.Euler(0, 180, 0), null, null);
+        bossObj = enemyFactory.Create(EEnemy.ROBOT6, bossSpawnPos.position, Quaternion.Euler(0, 180, 0), null, null);
     }
 }

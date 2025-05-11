@@ -15,7 +15,7 @@ public class EnemyFactory : FactoryBase<EEnemy>
         enemyPool = ObjectPoolManager.instance.EnemyPool;
     }
 
-    public override void Create
+    public override GameObject Create
         (EEnemy _type, Vector3 _pos, Quaternion _rot, Transform _parent, Action<GameObject> _onComplete)
     {
         GameObject obj = enemyPool.FindEnemy(_type, _pos, _rot);
@@ -28,8 +28,10 @@ public class EnemyFactory : FactoryBase<EEnemy>
         }
         else
         {
-            base.Create(_type, _pos, _rot, parent, _onComplete);
+            return base.Create(_type, _pos, _rot, parent, _onComplete);
         }
+
+        return null;
     }
 
     protected override void Init(GameObject _obj, EEnemy _eEnemy)

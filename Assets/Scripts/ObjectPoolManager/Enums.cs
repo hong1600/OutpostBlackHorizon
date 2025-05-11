@@ -28,6 +28,7 @@ public enum EEffect
     PLASMA,
     ENEMYEXPLOSION,
     ROCKETEXPLOSION,
+    DUSTEXPLOSION
 }
 
 public enum EHpBar
