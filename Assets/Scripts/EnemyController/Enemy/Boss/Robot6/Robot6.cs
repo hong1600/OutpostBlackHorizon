@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class Robot6 : Boss
 {
+    [Header("Robot6")]
     [SerializeField] BoxCollider leftHandBox;
     [SerializeField] BoxCollider rightHandBox;
 
-    [SerializeField] GameObject leftHandEffect;
-    [SerializeField] GameObject rightHandEffect;
+    [SerializeField] GameObject[] leftArmEffect;
+    [SerializeField] GameObject[] rightArmEffect;
 
-    bool isLeftHand = true;
-    bool isRightHand = true;
+    [SerializeField] Transform leftArmTrs;
+    [SerializeField] Transform rightArmTrs;
+
+    bool isLeftActive = true;
+    bool isRightActive = true;
 
     int pattonNum;
+    float delayTime;
 
     [Header("Missile")]
     [SerializeField] float speed = 50;
@@ -34,6 +39,7 @@ public class Robot6 : Boss
     float emissionPower = 0f;
     float maxEmission = 2f;
     float laserTimer = 0.5f;
+
 
     public float bodyHp { get; private set; }
     public float leftHandHp { get; private set; }
@@ -71,10 +77,14 @@ public class Robot6 : Boss
         bodyHp = maxHp / 3;
         leftHandHp = maxHp / 3;
         rightHandHp = maxHp / 3;
+
+        delayTime = Time.time + 4f;
     }
 
     protected override void Update()
     {
+        if (Time.time < delayTime) return;
+
         base.Update();
 
         UpdateLaser();
@@ -182,7 +192,7 @@ public class Robot6 : Boss
 
             Ray ray = new Ray(start, smoothLaserEnd);
 
-            RaycastHit[] hits = Physics.SphereCastAll(ray, 2f, 2000f, LayerMask.GetMask("Player", "Field"));
+            RaycastHit[] hits = Physics.SphereCastAll(ray, 2f, 2000f, LayerMask.GetMask("Player", "Field", "Center"));
 
             laserTimer -= Time.deltaTime;
 
@@ -252,17 +262,19 @@ public class Robot6 : Boss
                 }
                 break;
             case EBossPart.LEFT:
-                if (leftHandHp > 0 && isLeftHand == true)
+                if (leftHandHp > 0 && isLeftActive == true)
                 {
                     leftHandHp -= _dmg;
-                    DestroyPart(leftHandHp, leftHandBox, _ePart);
+                    StartCoroutine(StartDestroyPart
+                        (leftHandHp, leftArmTrs, leftArmEffect, leftHandBox, _ePart, isLeftActive));
                 }
                 break;
             case EBossPart.RIGHT:
-                if(rightHandHp > 0 && isRightHand == true) 
+                if(rightHandHp > 0 && isRightActive == true) 
                 {
                     rightHandHp -= _dmg;
-                    DestroyPart(rightHandHp, rightHandBox, _ePart);
+                    StartCoroutine(StartDestroyPart
+                        (rightHandHp, rightArmTrs, rightArmEffect, rightHandBox, _ePart, isRightActive));
                 }
                 break;
         }
@@ -279,24 +291,29 @@ public class Robot6 : Boss
         }
     }
 
-    private void DestroyPart(float _hp, BoxCollider _box, EBossPart _part)
+    IEnumerator StartDestroyPart
+        (float _hp, Transform _armTrs, GameObject[] _effects, BoxCollider _box, EBossPart _part, bool _isActive)
     {
-        if (_hp <= 0)
-        {
-            AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
+        if (_hp > 0) yield break;
 
-            if (_part == EBossPart.LEFT)
-            {
-                leftHandEffect.SetActive(true);
+        AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
+        _isActive = false;
+        _box.enabled = false;
 
-                isLeftHand = false;
-            }
-            else if( _part == EBossPart.RIGHT)
-            {
-                rightHandEffect.SetActive(true);
+        _effects[0].SetActive(true);
 
-                isRightHand = false;
-            }
-        }
+        yield return new WaitForSeconds(0.3f);
+
+        _effects[1].SetActive(true);
+
+        yield return new WaitForSeconds(0.3f);
+
+        Rigidbody rigid = _armTrs.GetComponent<Rigidbody>();
+
+        _armTrs.SetParent(null, true);
+
+        rigid.velocity = Vector3.zero;
+        rigid.angularVelocity = Vector3.zero;
+        rigid.isKinematic = false;
     }
 }

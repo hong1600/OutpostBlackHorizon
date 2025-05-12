@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class BossSpawner : MonoBehaviour
 {
+    Terrain terrain;
+
     EnemyFactory enemyFactory;
 
     [SerializeField] Transform bossSpawnPos;
     [SerializeField] UIBossHpbar hpbar;
 
     public GameObject bossObj { get; private set; }
+
+    private void Awake()
+    {
+        terrain = Terrain.activeTerrain;
+    }
 
     private void Start()
     {
@@ -21,6 +28,9 @@ public class BossSpawner : MonoBehaviour
     {
         hpbar.ShowHpBar();
 
-        bossObj = enemyFactory.Create(EEnemy.ROBOT6, bossSpawnPos.position, Quaternion.Euler(0, 180, 0), null, null);
+        Vector3 spawnPos = bossSpawnPos.position;
+        spawnPos.y = terrain.SampleHeight(spawnPos);
+
+        bossObj = enemyFactory.Create(EEnemy.ROBOT6, spawnPos, Quaternion.Euler(0, 180, 0), null, null);
     }
 }

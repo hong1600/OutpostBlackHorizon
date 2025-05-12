@@ -38,6 +38,11 @@ public class EnemyFactory : FactoryBase<EEnemy>
     {
         Enemy enemy = _obj.GetComponent<Enemy>();
 
+        if(enemy == null) 
+        {
+            enemy = _obj.GetComponentInChildren<Enemy>();
+        }
+
         if (enemy != null)
         {
             TableEnemy.Info info = tableEnemy.Get(_eEnemy);

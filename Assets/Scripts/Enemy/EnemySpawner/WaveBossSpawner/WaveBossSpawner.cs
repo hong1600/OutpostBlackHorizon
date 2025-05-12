@@ -29,7 +29,6 @@ public class WaveBossSpawner : MonoBehaviour
         Invoke(nameof(SpawnWaveBoss), 5);
     }
 
-    //상속구조 팩토리패턴
     public void SpawnWaveBoss()
     {
         if (GameManager.instance.Timer.isSpawnTime)

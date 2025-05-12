@@ -22,18 +22,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0d1d863a62b12614f9fa42bc2ed9cfda
+    m_Address: Robot6
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 422ef88a40628da409906a952317b108
     m_Address: Robot3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 85413646e0dfaf645a50e52025b31523
-    m_Address: Robot2
+  - m_GUID: 71b505f156c369040a8ba97c99952018
+    m_Address: Robot6
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a1b887ca3437595449f281f7efe4c104
-    m_Address: Robot6
+  - m_GUID: 85413646e0dfaf645a50e52025b31523
+    m_Address: Robot2
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
