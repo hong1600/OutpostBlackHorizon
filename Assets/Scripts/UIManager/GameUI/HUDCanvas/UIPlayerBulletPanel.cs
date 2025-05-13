@@ -15,7 +15,7 @@ public class UIPlayerBulletPanel : MonoBehaviour
     {
         gunManager = GunManager.instance;
 
-        gunManager.onReloading += UpdateBullet;
+        gunManager.onUpdateBullet += UpdateBullet;
         PlayerManager.instance.playerCombat.onUseBullet += UpdateBullet;
 
         UpdateBullet();

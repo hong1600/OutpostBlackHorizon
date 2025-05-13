@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class DropBullet : MonoBehaviour
 {
-    [SerializeField] float bulletAmount;
+    [SerializeField] int bulletAmount;
 
-    public float BulletAmount { get; private set; }
+    [SerializeField] MeshRenderer rend;
+    Material mat;
+
+    Color baseColor = Color.black;
+
+    private void Awake()
+    {
+        mat = rend.sharedMaterial;
+    }
+
+
+    public int BulletAmount { get { return bulletAmount; } }
 }

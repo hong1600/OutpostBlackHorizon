@@ -88,7 +88,7 @@ public class UIRewardPanel : MonoBehaviour
 
     public void UpdateRewardPanel(EGameState _state)
     {
-        GameManager.instance.ViewState.SwitchNone();
+        GameManager.instance.ViewState.SetViewState(EViewState.NONE);
 
         if (DataManager.instance.UserDataLoader.curUserData != null)
         {

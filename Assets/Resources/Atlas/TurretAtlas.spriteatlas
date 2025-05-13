@@ -38,16 +38,19 @@ SpriteAtlas:
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
     - 280e83082c83e4448855aad6a08df5fe: 21300000
+    - ed1b1ae922d98ed438440bafe1e84235: 21300000
     - 8760c18a355b3db47a07907eb0f42d4c: 21300000
     - 766a2dfac9fa878468f7fd6ef6b48479: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 280e83082c83e4448855aad6a08df5fe, type: 3}
+  - {fileID: 21300000, guid: ed1b1ae922d98ed438440bafe1e84235, type: 3}
   - {fileID: 21300000, guid: 8760c18a355b3db47a07907eb0f42d4c, type: 3}
   - {fileID: 21300000, guid: 766a2dfac9fa878468f7fd6ef6b48479, type: 3}
   m_PackedSpriteNamesToIndex:
   - RocketTurret
-  - RazerTurret
+  - GrenadeTurret
+  - LaserTurret
   - MachineTurret
   m_RenderDataMap: {}
   m_Tag: TurretAtlas

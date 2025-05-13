@@ -158,7 +158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7423201384153228351}
   - component: {fileID: 3074260555835220746}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: LaserTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}

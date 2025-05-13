@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GunManager : Singleton<GunManager>
 {
-    public event Action onReloading;
+    public event Action onUpdateBullet;
 
     public int curBulletCount { get; private set; }
     public int maxBulletCount { get; private set; }
@@ -61,6 +61,12 @@ public class GunManager : Singleton<GunManager>
         }
     }
 
+    public void FillBullet(int _amount)
+    {
+        haveBulletCount += _amount;
+        onUpdateBullet?.Invoke();
+    }
+
     public void UseGrenade()
     {
         curGrenadeCount -= 1;
@@ -92,7 +98,7 @@ public class GunManager : Singleton<GunManager>
             }
         }
 
-        onReloading?.Invoke();
+        onUpdateBullet?.Invoke();
 
         isReloading = false;
     }

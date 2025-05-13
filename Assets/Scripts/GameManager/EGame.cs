@@ -20,6 +20,7 @@ public enum EViewState
 {
     FPS,
     TOP,
+    TURRET,
     NONE,
 }
 

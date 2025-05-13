@@ -11,6 +11,8 @@ public class Robot6 : Boss
     [SerializeField] GameObject[] leftArmEffect;
     [SerializeField] GameObject[] rightArmEffect;
 
+    [SerializeField] GameObject[] leftArmObjs;
+    [SerializeField] GameObject[] rightArmObjs;
     [SerializeField] Transform leftArmTrs;
     [SerializeField] Transform rightArmTrs;
 
@@ -266,7 +268,7 @@ public class Robot6 : Boss
                 {
                     leftHandHp -= _dmg;
                     StartCoroutine(StartDestroyPart
-                        (leftHandHp, leftArmTrs, leftArmEffect, leftHandBox, _ePart, isLeftActive));
+                        (leftHandHp, leftArmObjs, leftArmTrs, leftArmEffect, leftHandBox, _ePart, isLeftActive));
                 }
                 break;
             case EBossPart.RIGHT:
@@ -274,7 +276,7 @@ public class Robot6 : Boss
                 {
                     rightHandHp -= _dmg;
                     StartCoroutine(StartDestroyPart
-                        (rightHandHp, rightArmTrs, rightArmEffect, rightHandBox, _ePart, isRightActive));
+                        (rightHandHp, rightArmObjs, rightArmTrs, rightArmEffect, rightHandBox, _ePart, isRightActive));
                 }
                 break;
         }
@@ -292,7 +294,7 @@ public class Robot6 : Boss
     }
 
     IEnumerator StartDestroyPart
-        (float _hp, Transform _armTrs, GameObject[] _effects, BoxCollider _box, EBossPart _part, bool _isActive)
+        (float _hp, GameObject[] _armObjs, Transform _armTrs, GameObject[] _effects, BoxCollider _box, EBossPart _part, bool _isActive)
     {
         if (_hp > 0) yield break;
 
@@ -308,12 +310,47 @@ public class Robot6 : Boss
 
         yield return new WaitForSeconds(0.3f);
 
-        Rigidbody rigid = _armTrs.GetComponent<Rigidbody>();
+        //for (int i = 0; i < _armObjs.Length; i++)
+        //{
+        //    GameObject brokenArm =
+        //        Instantiate(_armObjs[i], _armObjs[i].transform.position, _armObjs[i].transform.rotation);
+        //    brokenArm.transform.SetParent(null, true);
 
-        _armTrs.SetParent(null, true);
+        //    _armObjs[i].gameObject.SetActive(false);
 
-        rigid.velocity = Vector3.zero;
-        rigid.angularVelocity = Vector3.zero;
-        rigid.isKinematic = false;
+        //    SkinnedMeshRenderer[] skins = brokenArm.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        //    for(int j = 0;  j < skins.Length; j++) 
+        //    {
+        //        SkinnedMeshRenderer smr = skins[j];
+
+        //        Transform trs = smr.transform;
+        //        GameObject go = smr.gameObject;
+
+        //        Vector3 worldPos = trs.position;
+        //        Quaternion worldRot = trs.rotation;
+        //        Vector3 worldScale = trs.lossyScale;
+
+        //        Mesh bakedMesh = new Mesh();
+        //        smr.BakeMesh(bakedMesh);
+
+        //        Material mat = smr.sharedMaterial;
+
+        //        Destroy(smr);
+
+        //        MeshFilter mf = go.AddComponent<MeshFilter>();
+        //        mf.sharedMesh = bakedMesh;
+
+        //        MeshRenderer mr = go.AddComponent<MeshRenderer>();
+        //        mr.sharedMaterial = mat;
+
+        //        trs.position = worldPos;
+        //        trs.rotation = worldRot;
+        //        trs.localScale = worldScale;
+        //    }
+
+        //    Rigidbody rigid = brokenArm.AddComponent<Rigidbody>();
+        //    rigid.isKinematic = true;
+        //}
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
@@ -14,8 +13,11 @@ public class PlayerManager : Singleton<PlayerManager>
 
     ViewState viewState;
     UIInteraction uiInteraction;
+    GunManager gunManager;
 
+    GameObject lastHitObj;
     bool isInteraction;
+    public bool isInTurret = false;
 
     public PlayerAI playerAI { get; private set; }
     public CapsuleCollider cap { get; private set; }
@@ -32,8 +34,6 @@ public class PlayerManager : Singleton<PlayerManager>
         cap = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
 
-        viewState = GameManager.instance.ViewState;
-
         playerMovement = GetComponent<PlayerMovement>();
         playerCombat = GetComponent<PlayerCombat>();
         playerStatus = GetComponent<PlayerStatus>();
@@ -42,35 +42,82 @@ public class PlayerManager : Singleton<PlayerManager>
         playerAI.Init(this);
     }
 
+    private void Start()
+    {
+        viewState = GameManager.instance.ViewState;
+        gunManager = GunManager.instance;
+        uiInteraction = GameUI.instance.UIInteraction;
+    }
+
     private void Update()
     {
         playerAI.State();
         ChangeAnim(playerAI.aiState);
-        //CheckObject();
+        CheckObject();
     }
 
-    //private void CheckObject()
-    //{
-    //    if (viewState.CurViewState == EViewState.FPS &&
-    //        Physics.Raycast(eyeTrs.position, Camera.main.transform.forward, 
-    //        out RaycastHit hit, checkDistance, LayerMask.GetMask("DropBullet")))
-    //    {
-    //        if (!isInteraction)
-    //        {
-    //            uiInteraction.OpenPanel();
+    private void CheckObject()
+    {
+        if (viewState.CurViewState == EViewState.FPS &&
+            Physics.Raycast(eyeTrs.position, Camera.main.transform.forward,
+            out RaycastHit hit, checkDistance, LayerMask.GetMask("Object", "Turret")))
+        {
+            DropBullet dropBullet = hit.collider.GetComponent<DropBullet>();
 
-    //            DropBullet dropBullet = hit.collider.gameObject.GetComponent<DropBullet>();
+            if(dropBullet != null)
+            {
+                if(hit.collider.gameObject != lastHitObj) 
+                {
+                    uiInteraction.OpenPanel(EObject.BULLET);
+                    lastHitObj = hit.collider.gameObject;
+                    isInteraction = true;
+                }
 
-    //            isInteraction = true;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        uiInteraction.ClosePanel();
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    gunManager.FillBullet(dropBullet.BulletAmount);
+                    Destroy(dropBullet.gameObject);
+                    uiInteraction.ClosePanel();
+                    isInteraction = false;
+                    lastHitObj = null;
+                }
+                return;
+            }
+            else
+            {
+                GrenadeTurret turret = hit.collider.GetComponent<GrenadeTurret>();
 
-    //        isInteraction = false;
-    //    }
-    //}
+                if(turret != null) 
+                {
+                    if (hit.collider.gameObject != lastHitObj)
+                    {
+                        uiInteraction.OpenPanel(EObject.TURRET);
+                        lastHitObj = hit.collider.gameObject;
+                        isInteraction = true;
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.F))
+                    {
+                        turret.enabled = true;
+                        turret.ChangeTurretView();
+                        isInTurret = true;
+
+                        uiInteraction.ClosePanel();
+                        isInteraction = false;
+                        lastHitObj = null;
+                    }
+                    return;
+                }
+            }
+        }
+
+        if (isInteraction)
+        {
+            uiInteraction.ClosePanel();
+            isInteraction = false;
+            lastHitObj = null;
+        }
+    }
 
 
     private void ChangeAnim(EPlayer _ePlayer)

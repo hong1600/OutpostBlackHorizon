@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &25676298069100783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4803763617335602230}
+  - component: {fileID: 2736776065371346484}
+  m_Layer: 0
+  m_Name: TurretMove
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4803763617335602230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25676298069100783}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7576716213142296352}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2736776065371346484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25676298069100783}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9892f5b4abba1f546a48eea9aae0f72d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turretObj: {fileID: 0}
+  mouseSpeed: 2
 --- !u!1 &46139423606604028
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +396,7 @@ Transform:
   - {fileID: 8397778060137924084}
   - {fileID: 2770322747845645355}
   - {fileID: 2963877924315393780}
+  - {fileID: 4803763617335602230}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2790119798373433276
@@ -371,6 +418,7 @@ MonoBehaviour:
   cameraTopMove: {fileID: 3927186304119371179}
   cameraTopZoom: {fileID: 4752132944796466631}
   cameraTopToFps: {fileID: 7809382323092126144}
+  cameraTurretMove: {fileID: 0}
   cutScene: {fileID: 7419331786006075503}
 --- !u!1 &4651329739642842087
 GameObject:

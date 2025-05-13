@@ -16,6 +16,11 @@ public class CameraFpsShake : MonoBehaviour
         mainCam = Camera.main;
     }
 
+    public void Init(Vector3 _pos)
+    {
+        originPos = _pos;
+    }
+
     private void OnEnable()
     {
         originPos = mainCam.transform.localPosition;

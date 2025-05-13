@@ -39,32 +39,32 @@ public class CameraTopToFps : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && isArrive)
+        if (Input.GetKeyDown(KeyCode.Q) && isArrive)
         {
             if (gameManager.ViewState.CurViewState == EViewState.FPS)
             {
                 gameManager.ViewState.SetViewState(EViewState.TOP);
             }
-            else
+            else if (gameManager.ViewState.CurViewState == EViewState.TOP)
             {
                 gameManager.ViewState.SetViewState(EViewState.FPS);
             }
         }
     }
 
-    private void SetCameraMode(EViewState _eGameState)
+    private void SetCameraMode(EViewState _eViewState)
     {
         isArrive = false;
 
-        if (_eGameState == EViewState.FPS)
+        if (_eViewState == EViewState.FPS)
         {
             mainCam.transform.SetParent(playerObj.transform);
-            MoveCamera(_eGameState);
+            StartCoroutine(StartMoveCamera(playerEyeTrs.position, playerObj.transform.rotation, _eViewState, 1.5f));
         }
-        else if( _eGameState == EViewState.TOP)
+        else if(_eViewState == EViewState.TOP)
         {
             rifle.transform.SetParent(playerObj.transform);
-            MoveCamera(_eGameState);
+            StartCoroutine(StartMoveCamera(topTrs.position, topTrs.transform.rotation, _eViewState, 1.5f));
         }
         else
         {
@@ -72,33 +72,37 @@ public class CameraTopToFps : MonoBehaviour
         }
     }
 
-    private void MoveCamera(EViewState _eGameState)
+    public void SetInTurretMode(Vector3 _pos, Quaternion _rot, EViewState _eViewState)
+    {
+        rifle.transform.SetParent(playerObj.transform);
+
+        StartCoroutine(StartMoveCamera(_pos, _rot, _eViewState, 0.4f));
+    }
+
+    private IEnumerator StartMoveCamera(Vector3 _targetTrs, Quaternion _targetRot, EViewState _eViewState, float _time)
     {
         isArrive = false;
 
-        Vector3 targetTrs = (gameManager.ViewState.CurViewState == EViewState.FPS) ?
-            playerEyeTrs.position : topTrs.position;
-        Quaternion targetRot = (gameManager.ViewState.CurViewState == EViewState.FPS) ?
-            playerObj.transform.rotation : topTrs.rotation;
-
-        StartCoroutine(StartMoveCamera(targetTrs, targetRot, _eGameState));
-    }
-
-    private IEnumerator StartMoveCamera(Vector3 _targetTrs, Quaternion _targetRot, EViewState _eGameState)
-    {
-        mainCam.transform.DOMove(_targetTrs, 1.5f)
+        mainCam.transform.DOMove(_targetTrs, _time)
         .SetEase(Ease.InOutSine);
 
-        mainCam.transform.DORotateQuaternion(_targetRot, 1.5f)
+        mainCam.transform.DORotateQuaternion(_targetRot, _time)
             .SetEase(Ease.InOutSine);
 
-        yield return new WaitForSeconds(1.51f);
+        yield return new WaitForSeconds(_time + 0.01f);
 
-        SwitchMode();
+        if(_eViewState != EViewState.TURRET) 
+        {
+            SwitchMode();
+        }
+        else
+        {
+            mainCam.transform.SetParent(CameraManager.instance.CameraTurretMove.turretObj.transform);
+        }
 
         yield return new WaitForEndOfFrame();
 
-        gameManager.ViewState.UpdateState(_eGameState);
+        gameManager.ViewState.UpdateState(_eViewState);
         isArrive = true;
     }
 

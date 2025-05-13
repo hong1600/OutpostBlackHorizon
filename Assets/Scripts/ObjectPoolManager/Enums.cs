@@ -28,7 +28,8 @@ public enum EEffect
     PLASMA,
     ENEMYEXPLOSION,
     ROCKETEXPLOSION,
-    DUSTEXPLOSION
+    DUSTEXPLOSION,
+    GRENADETURRETEXPLOSION
 }
 
 public enum EHpBar
@@ -56,7 +57,8 @@ public enum EBullet
     ROCKETMISSILE,
     LASERBULLET,
     ROBOT2BULLET,
-    BOSSMISSILE
+    BOSSMISSILE,
+    TURRETGRENADE
 }
 
 public enum EBgm
@@ -85,4 +87,8 @@ public enum EGameResource
     ENEMY1, ENEMY2, ENEMY3, ENEMY4, ENEMY5, ENEMY6
 }
 
-
+public enum EObject
+{
+    BULLET,
+    TURRET,
+}

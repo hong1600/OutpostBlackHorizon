@@ -16,6 +16,7 @@ public class GameUI : Singleton<GameUI>
     [Header("Switch")]
     [SerializeField] List<GameObject> fpsUI;
     [SerializeField] List<GameObject> topUI;
+    [SerializeField] GameObject restTimePanel;
 
     [Header("Scope")]
     [SerializeField] GameObject scopeObj;
@@ -26,6 +27,7 @@ public class GameUI : Singleton<GameUI>
     [SerializeField] UIMixRightSlot uiMixRightSlot;
     [SerializeField] UIBuild uiBuild;
     [SerializeField] UIBossHpbar uiBossHpbar;
+    [SerializeField] UIInteraction uiInteraction;
 
     [Header("Canvas")]
     [SerializeField] Transform skillBarParent;
@@ -60,6 +62,11 @@ public class GameUI : Singleton<GameUI>
         {
             fpsUI[i].SetActive(true);
         }
+
+        if (!EnemyManager.instance.EnemySpawner.IsSpawn)
+        {
+            restTimePanel.SetActive(true);
+        }
     }
 
     public void SwitchTop()
@@ -71,6 +78,11 @@ public class GameUI : Singleton<GameUI>
         for (int i = 0; i < topUI.Count; i++)
         {
             topUI[i].SetActive(true);
+        }
+
+        if (!EnemyManager.instance.EnemySpawner.IsSpawn)
+        {
+            restTimePanel.SetActive(true);
         }
     }
 
@@ -84,6 +96,7 @@ public class GameUI : Singleton<GameUI>
         {
             topUI[i].SetActive(false);
         }
+        restTimePanel.SetActive(false);
     }
 
     public Transform SkillBarParent { get { return skillBarParent; } }
@@ -91,6 +104,7 @@ public class GameUI : Singleton<GameUI>
     public UIMixRightSlot UIMixRightSlot { get { return uiMixRightSlot; } }
     public UIBuild UIBuild { get { return uiBuild; } }
     public UIBossHpbar UIBossHpbar { get { return uiBossHpbar; } }
+    public UIInteraction UIInteraction { get { return uiInteraction; } }
     public GameObject HitAim { get { return hitAim; } }
     public GameObject scope { get { return scopeObj; } }
 }

@@ -29,12 +29,12 @@ public class CameraFpsZoom : MonoBehaviour
     {
         if(!isZooming) 
         {
-            StartCoroutine(StartZoom());
+            StartCoroutine(StartZoom(zoomFOV));
         }
         
     }
 
-    IEnumerator StartZoom()
+    public IEnumerator StartZoom(float _amount)
     {
         isZooming = true;
 
@@ -51,7 +51,7 @@ public class CameraFpsZoom : MonoBehaviour
             scope.SetActive(true);
         }
 
-        float targetFOV = isZoom ? normalFOV : zoomFOV;
+        float targetFOV = isZoom ? normalFOV : _amount;
         isZoom = !isZoom;
 
         while (Mathf.Abs(mainCam.fieldOfView - targetFOV) > 0.01f)
