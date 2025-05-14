@@ -41,8 +41,8 @@ public class AudioManager : Singleton<AudioManager>
             sfxSources[i] = obj.AddComponent<AudioSource>();
             sfxSources[i].spatialBlend = 1f;
             sfxSources[i].rolloffMode = AudioRolloffMode.Logarithmic;
-            sfxSources[i].minDistance = 100f;
-            sfxSources[i].maxDistance = 100f;
+            sfxSources[i].minDistance = 10f;
+            sfxSources[i].maxDistance = 60f;
         }
     }
 

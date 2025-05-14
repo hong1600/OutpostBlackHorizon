@@ -104,7 +104,7 @@ public abstract class Missile : Projectile
         }
     }
 
-    private void Explode()
+    protected void Explode()
     {
         GameObject explosionEffect = effectPool.FindEffect
             (EEffect.ROCKETEXPLOSION, transform.position, Quaternion.identity);
@@ -121,7 +121,6 @@ public abstract class Missile : Projectile
     private void OnTriggerEnter(Collider coll)
     {
         if (coll.gameObject.layer != LayerMask.NameToLayer("EnemySensor") &&
-            coll.gameObject.layer != LayerMask.NameToLayer("Bullet") &&
             coll.gameObject.layer != LayerMask.NameToLayer("Effect"))
         {
             Explode ();

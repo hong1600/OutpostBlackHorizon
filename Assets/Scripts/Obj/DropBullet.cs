@@ -16,6 +16,5 @@ public class DropBullet : MonoBehaviour
         mat = rend.sharedMaterial;
     }
 
-
     public int BulletAmount { get { return bulletAmount; } }
 }

@@ -9,6 +9,7 @@ public class ViewState : MonoBehaviour
     public event Action<EViewState> onViewStateChange;
 
     CameraTopToFps cameraTopToFps;
+    CameraFpsZoom cameraFpsZoom;
 
     [SerializeField] EViewState curViewState;
 
@@ -19,8 +20,6 @@ public class ViewState : MonoBehaviour
 
     private void Start()
     {
-        cameraTopToFps = CameraManager.instance.CameraTopToFps;
-
         fpsComponent.Add(PlayerManager.instance.playerMovement);
         fpsComponent.Add(PlayerManager.instance.playerCombat);
         fpsComponent.Add(GunManager.instance);
@@ -35,6 +34,9 @@ public class ViewState : MonoBehaviour
         topComponent.Add(CameraManager.instance.CameraTopZoom);
 
         turretComponent.Add(CameraManager.instance.CameraTurretMove);
+
+        cameraTopToFps = CameraManager.instance.CameraTopToFps;
+        cameraFpsZoom = CameraManager.instance.CameraFpsZoom;
     }
 
     public void SetViewState(EViewState _state)
@@ -86,6 +88,11 @@ public class ViewState : MonoBehaviour
 
     private void SwitchTop()
     {
+        if(cameraFpsZoom.isZoom)
+        {
+            cameraFpsZoom.ZoomCamera();
+        }
+
         for (int i = 0; i < fpsComponent.Count; i++)
         {
             fpsComponent[i].enabled = false;
@@ -100,9 +107,17 @@ public class ViewState : MonoBehaviour
         GameUI.instance.SwitchTop();
     }
 
-    private void SwitchNone()
+    public void SwitchNone()
     {
         curViewState = EViewState.NONE;
+
+        if (cameraFpsZoom != null)
+        {
+            if (cameraFpsZoom.isZoom)
+            {
+                cameraFpsZoom.ZoomCamera();
+            }
+        }
 
         for (int i = 0; i < topComponent.Count; i++)
         {
@@ -119,6 +134,10 @@ public class ViewState : MonoBehaviour
             turretComponent[i].enabled = false;
         }
 
+        if (rifle == null)
+        {
+            rifle = PlayerManager.instance.Rifle;
+        }
         rifle.SetActive(false);
         GameUI.instance.SwitchNone();
     }
@@ -126,6 +145,11 @@ public class ViewState : MonoBehaviour
     public IEnumerator SwitchInTurret(Vector3 _pos, Quaternion _rot)
     {
         curViewState = EViewState.TURRET;
+
+        if (cameraFpsZoom.isZoom)
+        {
+            cameraFpsZoom.ZoomCamera();
+        }
 
         for (int i = 0; i < topComponent.Count; i++)
         {
@@ -146,7 +170,7 @@ public class ViewState : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        GameUI.instance.SwitchNone();
+        GameUI.instance.SwitchTurret();
     }
 
     public EViewState CurViewState { get { return curViewState; } }

@@ -24,7 +24,6 @@ public class UserDataLoader : MonoBehaviour
         {
             string jsonData = PlayerPrefs.GetString(key);
             UserData userData = JsonUtility.FromJson<UserData>(jsonData);
-            Debug.Log(jsonData);
             curUserData = userData;
 
             return userData;

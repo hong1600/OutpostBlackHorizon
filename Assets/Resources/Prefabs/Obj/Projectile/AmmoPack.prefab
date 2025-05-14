@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3208322993430470614}
   - component: {fileID: 1814642940296511281}
   m_Layer: 19
-  m_Name: Ammo_Pack
+  m_Name: AmmoPack
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,7 @@ public class GameUI : Singleton<GameUI>
     [Header("Switch")]
     [SerializeField] List<GameObject> fpsUI;
     [SerializeField] List<GameObject> topUI;
+    [SerializeField] List<GameObject> turretUI;
     [SerializeField] GameObject restTimePanel;
 
     [Header("Scope")]
@@ -83,6 +85,22 @@ public class GameUI : Singleton<GameUI>
         if (!EnemyManager.instance.EnemySpawner.IsSpawn)
         {
             restTimePanel.SetActive(true);
+        }
+    }
+
+    public void SwitchTurret()
+    {
+        for (int i = 0; i < fpsUI.Count; i++)
+        {
+            fpsUI[i].SetActive(false);
+        }
+        for (int i = 0; i < topUI.Count; i++)
+        {
+            topUI[i].SetActive(false);
+        }
+        for (int i = 0; i < turretUI.Count; i++)
+        {
+            turretUI[i].SetActive(true);
         }
     }
 

@@ -24,6 +24,12 @@ public class UnitSkillBar : MonoBehaviour
 
     private void Update()
     {
+        if (unit == null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         skillBar();
     }
 
@@ -36,20 +42,13 @@ public class UnitSkillBar : MonoBehaviour
 
     private void skillBar()
     {
-        if (unit.gameObject == null)
-        {
-            Destroy(this.gameObject);
-        }
-
-        if (unit == null) Destroy(this.gameObject);
-
         skillValue = Mathf.Clamp(skillValue, 0, 10);
 
         if (skillValue < 10)
         {
             skillValue += Time.deltaTime;
         }
-        else if(skillValue >= 10 && !unit.isSkill) 
+        else if (skillValue >= 10 && !unit.isSkill)
         {
             isSkillCast = true;
         }

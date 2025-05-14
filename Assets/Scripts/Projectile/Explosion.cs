@@ -40,7 +40,7 @@ public class Explosion : MonoBehaviour
             {
                 for (int i = 0; i < hits.Length; i++)
                 {
-                    if (hits[i].gameObject.CompareTag("Body"))
+                    if (hits[i].transform.CompareTag("Body"))
                     {
                         ITakeDmg iTakeDmg = hits[i].GetComponentInParent<ITakeDmg>();
 

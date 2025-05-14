@@ -17,7 +17,7 @@ public class FinishCut : MonoBehaviour, ICutScene
     {
         virtualCam.m_LookAt = EnemyManager.instance.BossSpawner.bossObj.transform;
         camObj.SetActive(true);
-        GameManager.instance.ViewState.SetViewState(EViewState.NONE);
+        GameManager.instance.ViewState.SwitchNone();
         StartCoroutine(GameUI.instance.StartBlackout(1));
 
         StartCoroutine(StartCutScene());

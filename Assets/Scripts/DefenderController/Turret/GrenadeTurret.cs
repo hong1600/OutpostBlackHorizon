@@ -34,20 +34,24 @@ public class GrenadeTurret : MonoBehaviour
         {
             StartCoroutine(StartAttackGrenade());
         }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            GameManager.instance.ViewState.SetViewState(EViewState.FPS);
+        }
     }
 
     IEnumerator StartAttackGrenade()
     {
         isAttack = true;
-        AudioManager.instance.PlaySfx(ESfx.GRENADESHOT, transform.position);
+        AudioManager.instance.PlaySfx(ESfx.GRENADETURRET, transform.position);
         GameObject obj = bulletPool.FindBullet(EBullet.TURRETGRENADE, fireTrs.position, fireTrs.rotation);
         TurretGrenade bullet = obj.GetComponent<TurretGrenade>();
-        bullet.Init(null, 100, 100);
+        bullet.Init(null, 300, 200);
 
-        //cameraFpsShake.Init(eyeTrs.position);
-        //cameraFpsShake.Shake();
+        cameraFpsShake.Init();
+        cameraFpsShake.Shake();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
 
         isAttack = false;
     }

@@ -10,8 +10,9 @@ public class CameraFpsZoom : MonoBehaviour
     [SerializeField] float normalFOV = 60;
     [SerializeField] float zoomFOV = 40f;
     [SerializeField] float zoomSpeed = 10f;
-    [SerializeField] bool isZoom = false;
-    [SerializeField] bool isZooming = false;
+
+    public bool isZoom { get; private set; } = false;
+    bool isZooming = false;
     GameObject scope;
 
     private void Awake()
@@ -25,7 +26,7 @@ public class CameraFpsZoom : MonoBehaviour
         InputManager.instance.onRightClickDown += ZoomCamera;
     }
 
-    private void ZoomCamera()
+    public void ZoomCamera()
     {
         if(!isZooming) 
         {

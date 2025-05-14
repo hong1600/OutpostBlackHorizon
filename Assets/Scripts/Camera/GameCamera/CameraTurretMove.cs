@@ -40,7 +40,7 @@ public class CameraTurretMove : MonoBehaviour
             turretObj.transform.Rotate(Vector3.up * mouseX * mouseSpeed);
 
             verticalRotation -= mouseY * mouseSpeed;
-            verticalRotation = Mathf.Clamp(verticalRotation, -60f, 60f);
+            verticalRotation = Mathf.Clamp(verticalRotation, -60f, 40f);
 
             shootObj.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
             mainCam.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);

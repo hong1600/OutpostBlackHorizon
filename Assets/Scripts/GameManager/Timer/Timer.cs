@@ -30,7 +30,7 @@ public class Timer : MonoBehaviour
         enemySpawner = EnemyManager.instance.EnemySpawner;
         waveBossSpawner = EnemyManager.instance.WaveBossSpawner;
 
-        sec = 120f;
+        sec = 130f;
         maxSec = sec;
 
         isTimerRunning = true;

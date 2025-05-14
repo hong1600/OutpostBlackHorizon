@@ -50,7 +50,7 @@ public abstract class Projectile : MonoBehaviour
 
     public virtual void Init(Transform _target, float _dmg, float _speed)
     {
-        time = 20;
+        time = 30;
 
         speed = _speed;
         dmg = _dmg;

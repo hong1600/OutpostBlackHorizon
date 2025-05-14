@@ -52,7 +52,7 @@ public class StartDropshipCut : MonoBehaviour
         FieldManager.instance.enabled = false;
         EnemyManager.instance.enabled = false;
         restBtn.SetActive(false);
-        GameManager.instance.ViewState.SetViewState(EViewState.NONE);
+        GameManager.instance.ViewState.SwitchNone();
         CameraManager.instance.enabled = false;
         playerRigid = player.GetComponent<Rigidbody>();
         playerRigid.isKinematic = true;
@@ -131,6 +131,7 @@ public class StartDropshipCut : MonoBehaviour
         this.enabled = false;
         restBtn.SetActive(true);
         GameManager.instance.ViewState.SetViewState(EViewState.FPS);
+        AudioManager.instance.SetBgmVolume(0.02f);
         playerRigid.isKinematic = false;
         playerMovement.enabled = true;
         playerCombat.enabled = true;

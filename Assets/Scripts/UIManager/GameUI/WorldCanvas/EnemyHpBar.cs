@@ -36,7 +36,10 @@ public class EnemyHpBar : MonoBehaviour
         this.gameObject.transform.position = 
             skinRender.bounds.center + new Vector3(0, skinRender.bounds.extents.y + 0.5f, 0);
 
-        this.gameObject.transform.LookAt(Camera.main.transform);
+        if (Camera.main.transform != null)
+        {
+            this.gameObject.transform.LookAt(Camera.main.transform);
+        }
     }
 
     private void UpdateHpBar()

@@ -79,7 +79,7 @@ public class EnemySpawner : MonoBehaviour
                 spawnPos[j].y = terrain.SampleHeight(spawnPos[j]);
             }
 
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < 3; j++)
             {
                 enemyFactory.Create(eEnemy, spawnPos[j], Quaternion.identity, null, null);
             }

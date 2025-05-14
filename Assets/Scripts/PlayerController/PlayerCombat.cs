@@ -33,7 +33,7 @@ public class PlayerCombat : MonoBehaviour
             StartCoroutine(StartAttackRifle());
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && !isAttack && !gunManager.isReloading) 
+        if (Input.GetKeyDown(KeyCode.E) && !isAttack && !gunManager.isReloading && gunManager.curGrenadeCount > 0) 
         {
             StartCoroutine(StartAttackGrenade());
         }

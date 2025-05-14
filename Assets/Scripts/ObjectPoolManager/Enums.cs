@@ -58,7 +58,8 @@ public enum EBullet
     LASERBULLET,
     ROBOT2BULLET,
     BOSSMISSILE,
-    TURRETGRENADE
+    TURRETGRENADE,
+    AMMOPACK
 }
 
 public enum EBgm
@@ -79,7 +80,8 @@ public enum ESfx
     EXPLOSION,
     CLICK,
     LASER,
-    MACHINEGUN
+    MACHINEGUN,
+    GRENADETURRET
 }
 
 public enum EGameResource

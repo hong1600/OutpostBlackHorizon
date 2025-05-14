@@ -115,11 +115,16 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
         if (skinRender != null)
         {
+            if (enemyHpBar != null)
+            {
+                hpBarPool.ReturnHpBar(EHpBar.NORMAL, enemyHpBar.gameObject);
+                enemyHpBar = null;
+            }
+
             GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, skinRender.bounds.center +
                 new Vector3(0, skinRender.bounds.extents.y + 0.5f, 0), Quaternion.identity);
 
             enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
-
             enemyHpBar.Init(this, skinRender);
         }
     }
@@ -304,7 +309,16 @@ public abstract class Enemy : MonoBehaviour, ITakeDmg
 
     protected virtual IEnumerator StartDie()
     {
-        GameObject explosionObj = effectPool.FindEffect(EEffect.ENEMYEXPLOSION, box.bounds.center, Quaternion.identity);
+        int rand = Random.Range(0, 10);
+
+        GameObject explosionObj = 
+            effectPool.FindEffect(EEffect.ENEMYEXPLOSION, box.bounds.center, Quaternion.identity);
+
+        if (rand <= 3)
+        {
+            GameObject ammoPack =
+                bulletPool.FindBullet(EBullet.AMMOPACK, transform.position, Quaternion.identity);
+        }
 
         rewarder.SetReward(EReward.GOLD, 50);
         rewarder.SetReward(EReward.GEM, 10);

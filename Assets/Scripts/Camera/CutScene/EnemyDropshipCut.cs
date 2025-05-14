@@ -65,7 +65,7 @@ public class EnemyDropshipCut : MonoBehaviour, ICutScene
         cam.m_LookAt = dropshipList[1].transform;
 
         GameManager.instance.Timer.SetTimer(false);
-        GameManager.instance.ViewState.SetViewState(EViewState.NONE);
+        GameManager.instance.ViewState.SwitchNone();
 
         StartCoroutine(GameUI.instance.StartBlackout(1));
 

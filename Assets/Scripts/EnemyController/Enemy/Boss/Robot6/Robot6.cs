@@ -104,6 +104,7 @@ public class Robot6 : Boss
             case 0:
                 StartCoroutine(StartAttackMissile(leftMissileTrs));
                 StartCoroutine(StartAttackMissile(rightMissileTrs));
+                yield return new WaitForSeconds(2.5f);
                 break;
 
             case 1:
@@ -194,7 +195,7 @@ public class Robot6 : Boss
 
             Ray ray = new Ray(start, smoothLaserEnd);
 
-            RaycastHit[] hits = Physics.SphereCastAll(ray, 2f, 2000f, LayerMask.GetMask("Player", "Field", "Center"));
+            RaycastHit[] hits = Physics.SphereCastAll(ray, 5f, 2000f, LayerMask.GetMask("Player", "Field", "Center"));
 
             laserTimer -= Time.deltaTime;
 

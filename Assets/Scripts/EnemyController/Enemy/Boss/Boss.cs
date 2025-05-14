@@ -22,6 +22,8 @@ public abstract class Boss : Enemy
 
     protected override void Die()
     {
+        StartCoroutine(GameUI.instance.StartBlackout(0.5f));
+        GameManager.instance.ViewState.SwitchNone();
         CameraManager.instance.CutScene.PlayCutScene(ECutScene.FINISH);
         StartCoroutine(StartDie());
         base.Die();

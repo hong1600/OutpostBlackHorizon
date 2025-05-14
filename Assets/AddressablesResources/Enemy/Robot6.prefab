@@ -40,9 +40,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4809176682179072832}
     m_Modifications:
+    - target: {fileID: 238026132589547104, guid: 71b505f156c369040a8ba97c99952018, type: 3}
+      propertyPath: m_TagString
+      value: Body
+      objectReference: {fileID: 0}
     - target: {fileID: 1641967131898247415, guid: 71b505f156c369040a8ba97c99952018, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2441338443977467073, guid: 71b505f156c369040a8ba97c99952018, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190343519624267632, guid: 71b505f156c369040a8ba97c99952018, type: 3}
+      propertyPath: m_TagString
+      value: Body
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279197650035673207, guid: 71b505f156c369040a8ba97c99952018, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 5908068370155247716, guid: 71b505f156c369040a8ba97c99952018, type: 3}
       propertyPath: m_LocalPosition.x
@@ -87,6 +103,14 @@ PrefabInstance:
     - target: {fileID: 6536548582640796382, guid: 71b505f156c369040a8ba97c99952018, type: 3}
       propertyPath: m_Name
       value: Robot6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7521393590300246317, guid: 71b505f156c369040a8ba97c99952018, type: 3}
+      propertyPath: m_TagString
+      value: Body
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740333278818723558, guid: 71b505f156c369040a8ba97c99952018, type: 3}
+      propertyPath: speed
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8740333278818723558, guid: 71b505f156c369040a8ba97c99952018, type: 3}
       propertyPath: leftArmObjs.Array.size
