@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPool : ObjectPool<EEnemy>
+public class EnemyPool : ObjectPoolBase<EEnemy>
 {
     public event Action onEnemyCount;
 

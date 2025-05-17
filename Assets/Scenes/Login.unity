@@ -363,6 +363,10 @@ PrefabInstance:
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3107033314699451925, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
+      propertyPath: m_text
+      value: BLACKHORIZON
+      objectReference: {fileID: 0}
     - target: {fileID: 3278427492007339368, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
@@ -422,6 +426,18 @@ PrefabInstance:
     - target: {fileID: 5924700518822883721, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7450436025724516967, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1072.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 7742157114357288084, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002025194878484079, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
+      propertyPath: m_Name
+      value: BlackText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

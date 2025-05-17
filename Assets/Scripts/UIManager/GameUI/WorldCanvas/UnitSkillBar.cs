@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UnitSkillBar : MonoBehaviour
 {
-    Unit unit;
+    UnitBase unit;
 
     [SerializeField] Image skillBarFill;
     [SerializeField] Vector3 offset;
@@ -33,7 +33,7 @@ public class UnitSkillBar : MonoBehaviour
         skillBar();
     }
 
-    public void Init(Unit _unit)
+    public void Init(UnitBase _unit)
     {
         unit = _unit;
 

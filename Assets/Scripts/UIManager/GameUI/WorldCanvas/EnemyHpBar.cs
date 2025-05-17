@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyHpBar : MonoBehaviour
 {
-    Enemy enemy;
+    EnemyBase enemy;
 
     [SerializeField] GameObject hpBack;
     [SerializeField] Image hpValue;
@@ -21,7 +21,7 @@ public class EnemyHpBar : MonoBehaviour
         enemy.onTakeDamage -= UpdateHpBar;
     }
 
-    public void Init(Enemy _enemy, SkinnedMeshRenderer _skin)
+    public void Init(EnemyBase _enemy, SkinnedMeshRenderer _skin)
     {
         enemy = _enemy;
         skinRender = _skin;

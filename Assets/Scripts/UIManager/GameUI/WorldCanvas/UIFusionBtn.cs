@@ -36,7 +36,7 @@ public class UIFusionBtn : MonoBehaviour
 
         if (fieldSelector.GetStartSelectField().transform.GetChild(0).transform.childCount == 3
             || fieldSelector.GetStartSelectField().transform.GetChild(0).transform.GetChild(0).
-            GetComponent<Unit>().eUnitGrade != EUnitGrade.S)
+            GetComponent<UnitBase>().eUnitGrade != EUnitGrade.S)
         {
             this.gameObject.transform.position = _fieldPos + offset;
 

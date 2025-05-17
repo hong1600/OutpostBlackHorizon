@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HpBarPool : ObjectPool<EHpBar>
+public class HpBarPool : ObjectPoolBase<EHpBar>
 {
     private void Start()
     {

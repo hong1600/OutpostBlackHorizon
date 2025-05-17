@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectPool : ObjectPool<EEffect>
+public class EffectPool : ObjectPoolBase<EEffect>
 {
     private void Start()
     {
