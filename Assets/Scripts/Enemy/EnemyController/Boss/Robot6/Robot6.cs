@@ -80,7 +80,7 @@ public class Robot6 : Boss
         leftHandHp = maxHp / 3;
         rightHandHp = maxHp / 3;
 
-        delayTime = Time.time + 4f;
+        delayTime = Time.time + 6f;
     }
 
     protected override void Update()

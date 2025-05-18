@@ -6,7 +6,6 @@ using UnityEngine;
 public class Round : MonoBehaviour
 {
     public event Action onRoundEvent;
-    public event Action onBossRound;
 
     public bool isBossRound;
     public int curRound;
@@ -14,7 +13,7 @@ public class Round : MonoBehaviour
     private void Awake()
     {
         isBossRound = false;
-        curRound = 1;
+        curRound = 2;
     }
 
     public void RoundCheck()
@@ -27,7 +26,7 @@ public class Round : MonoBehaviour
         if (curRound == 3)
         {
             isBossRound = true;
-            onBossRound?.Invoke();
+            CameraManager.instance.CutScene.PlayCutScene(ECutScene.BOSS);
         }
         else
         {

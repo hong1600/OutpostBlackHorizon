@@ -7,6 +7,7 @@ public enum ECutScene
 {
     ENEMYDROPSHIP,
     FINISH,
+    BOSS
 }
 
 public class CutScene : MonoBehaviour

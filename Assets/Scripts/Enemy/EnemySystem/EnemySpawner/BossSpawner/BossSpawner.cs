@@ -20,7 +20,6 @@ public class BossSpawner : MonoBehaviour
 
     private void Start()
     {
-        GameManager.instance.Round.onBossRound += SpawnBoss;
         enemyFactory = FactoryManager.instance.EnemyFactory;
     }
 
