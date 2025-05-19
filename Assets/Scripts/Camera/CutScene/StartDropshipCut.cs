@@ -60,7 +60,7 @@ public class StartDropshipCut : MonoBehaviour
         playerCombat.enabled = false;
         player.transform.SetParent(dropship.transform);
         player.transform.position = playerStartPos.position;
-        player.transform.rotation = Quaternion.Euler(0, 45, 0);
+        player.transform.localRotation = Quaternion.Euler(0, 180, 0);
         hatch.transform.localRotation = Quaternion.identity;
 
         CameraManager.instance.CutScene.PlayClip(clip);

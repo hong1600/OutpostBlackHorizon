@@ -62,6 +62,8 @@ public class BossCut : MonoBehaviour, ICutScene
             yield return null;
         }
 
+        AudioManager.instance.PlayBgm(EBgm.BOSSROUND);
+
         yield return new WaitForSeconds(1f);
 
         timer = 0f;

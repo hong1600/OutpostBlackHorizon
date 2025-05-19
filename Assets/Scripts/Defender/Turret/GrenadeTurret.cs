@@ -43,10 +43,10 @@ public class GrenadeTurret : MonoBehaviour
     IEnumerator StartAttackGrenade()
     {
         isAttack = true;
-        AudioManager.instance.PlaySfx(ESfx.GRENADETURRET, transform.position);
+        AudioManager.instance.PlaySfx(ESfx.GRENADETURRET, transform.position, null);
         GameObject obj = bulletPool.FindBullet(EBullet.TURRETGRENADE, fireTrs.position, fireTrs.rotation);
         TurretGrenade bullet = obj.GetComponent<TurretGrenade>();
-        bullet.Init(null, 300, 200);
+        bullet.Init(null, 300, 100);
 
         cameraFpsShake.Init();
         cameraFpsShake.Shake();

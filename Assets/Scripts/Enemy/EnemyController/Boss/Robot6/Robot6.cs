@@ -154,17 +154,14 @@ public class Robot6 : Boss
     IEnumerator StartAttackLaser()
     {
         chargeLaserEffect.SetActive(true);
+        AudioManager.instance.PlaySfx(ESfx.BOSSLASER, myTarget.transform.position, null);
 
-        Vector3 targetDir = (myTarget.position - laserFireTrs.position).normalized;
-        Quaternion targetRot = Quaternion.LookRotation(targetDir);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, 1);
-
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(3f);
 
         chargeLaserEffect.SetActive(false);
         laserEffect.SetActive(true);
 
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3.5f);
 
         laserEffect.SetActive(false);
     }
@@ -179,7 +176,6 @@ public class Robot6 : Boss
             }
 
             if (myTarget == null) return;
-
 
             Vector3 start = laserFireTrs.position;
             Vector3 dir = (myTarget.position - laserFireTrs.position).normalized;
@@ -288,7 +284,7 @@ public class Robot6 : Boss
 
         if (curhp <= 0)
         {
-            AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
+            AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position, null);
 
             isDie = true;
         }
@@ -299,7 +295,7 @@ public class Robot6 : Boss
     {
         if (_hp > 0) yield break;
 
-        AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
+        AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position, null);
         _isActive = false;
         _box.enabled = false;
 

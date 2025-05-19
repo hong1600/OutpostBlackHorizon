@@ -575,6 +575,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6958266394992732561}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3934410693402410984
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3771017933511150888}
+  m_Layer: 0
+  m_Name: AirstrikeExplosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3771017933511150888
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3934410693402410984}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7672675419605550537}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4302309845039522096
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +833,7 @@ Transform:
   - {fileID: 6081148205308655725}
   - {fileID: 2152651522131106215}
   - {fileID: 6884803139812149283}
+  - {fileID: 3771017933511150888}
   m_Father: {fileID: 2548385118938775885}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8439943599272780702
@@ -828,6 +860,7 @@ MonoBehaviour:
   - {fileID: 1000011797152326, guid: 784c95c222a1df94d96d47fd270190d1, type: 3}
   - {fileID: 1025285306637258, guid: d8f0099df63275647a8bcf646df1ca00, type: 3}
   - {fileID: 1121192042590650, guid: e4af4b030dca9644bbed39ddee7a7d66, type: 3}
+  - {fileID: 1121192042590650, guid: f418f4e0472a4834e8ce34f968fd826d, type: 3}
   parentList:
   - {fileID: 1323026624750079068}
   - {fileID: 8383525631141396778}
@@ -840,6 +873,7 @@ MonoBehaviour:
   - {fileID: 6081148205308655725}
   - {fileID: 2152651522131106215}
   - {fileID: 6884803139812149283}
+  - {fileID: 3771017933511150888}
 --- !u!1 &6333296405989404459
 GameObject:
   m_ObjectHideFlags: 0

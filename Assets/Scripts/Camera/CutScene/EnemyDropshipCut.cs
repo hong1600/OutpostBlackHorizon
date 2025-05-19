@@ -52,6 +52,11 @@ public class EnemyDropshipCut : MonoBehaviour, ICutScene
 
     private void MoveDropShip(GameObject _dropship, Transform _pos)
     {
+        _dropship.SetActive(true);
+
+        AudioManager.instance.PlaySfx
+                    (ESfx.UFOLAND, _dropship.transform.position, _dropship.transform);
+
         Vector3 dropPos = new Vector3(_pos.position.x, terrain.SampleHeight(_pos.position) + 3, _pos.position.z);
 
         _dropship.transform.DOMove(dropPos, 7).SetEase(Ease.Linear);

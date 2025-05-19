@@ -13,7 +13,7 @@ public class Round : MonoBehaviour
     private void Awake()
     {
         isBossRound = false;
-        curRound = 2;
+        curRound = 1;
     }
 
     public void RoundCheck()

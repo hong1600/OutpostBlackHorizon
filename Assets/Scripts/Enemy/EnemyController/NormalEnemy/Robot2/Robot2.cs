@@ -18,6 +18,7 @@ public class Robot2 : NormalEnemy
         isAttack = true;
 
         GameObject bulletObj = bulletPool.FindBullet(EBullet.ROBOT2BULLET, fireTrs.position, fireTrs.rotation);
+        AudioManager.instance.PlaySfx(ESfx.GUNSHOT, transform.position, null);
         Robot2Bullet bullet = bulletObj.GetComponent<Robot2Bullet>();
         bullet.Init(myTarget, attackDmg, bulletSpeed, EBulletType.ENEMY);
 

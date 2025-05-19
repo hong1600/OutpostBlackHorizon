@@ -20,7 +20,7 @@ public class PlayerGrenade : ArcProjectile
 
         GameObject plasma = effectPool.FindEffect(EEffect.PLASMA, transform.position,
             Quaternion.LookRotation(-transform.forward));
-        AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
+        AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position, null);
 
         ReturnPool();
     }

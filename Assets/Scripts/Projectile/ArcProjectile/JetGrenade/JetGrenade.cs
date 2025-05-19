@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
-public class TurretGrenade : ArcProjectile
+public class JetGrenade : ArcProjectile
 {
     public override void Init(Transform _target, float _dmg, float _speed)
     {
@@ -22,9 +23,9 @@ public class TurretGrenade : ArcProjectile
         out RaycastHit hit, speed * Time.deltaTime, ~LayerMask.GetMask("EnemySensor", "Bullet", "Effect")))
         {
             GameObject effect = effectPool.FindEffect
-                (EEffect.GRENADETURRETEXPLOSION, transform.position, transform.rotation);
+                (EEffect.AIRSTRIKEEXPLOSION, transform.position, transform.rotation);
             Explosion explosion = effect.GetComponent<Explosion>();
-            explosion.Init(300, EMissile.PLAYER);
+            explosion.Init(500, EMissile.PLAYER);
 
             AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position, null);
 
@@ -34,6 +35,6 @@ public class TurretGrenade : ArcProjectile
 
     protected override void ReturnPool()
     {
-        bulletPool.ReturnBullet(EBullet.PLAYERGRENADE, gameObject);
+        bulletPool.ReturnBullet(EBullet.JETGREANDE, gameObject);
     }
 }

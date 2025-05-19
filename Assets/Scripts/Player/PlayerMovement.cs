@@ -150,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
                 if (Time.time >= footstepTimer)
                 {
                     footstepTimer = Time.time + footstepInterval;
-                    AudioManager.instance.PlaySfx(ESfx.FOOTSTEP, transform.position);
+                    AudioManager.instance.PlaySfx(ESfx.FOOTSTEP, transform.position, null);
                 }
             }
         }

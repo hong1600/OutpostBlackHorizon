@@ -67,7 +67,7 @@ public class Center : MonoBehaviour, ITakeDmg
         {
             isDestroy = true;
 
-            AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
+            AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position, null);
 
             explosionEffect = effectPool.FindEffect(EEffect.ENEMYEXPLOSION, transform.position, Quaternion.identity);
 

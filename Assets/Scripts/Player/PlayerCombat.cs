@@ -42,7 +42,7 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator StartAttackRifle()
     {
         isAttack = true;
-        AudioManager.instance.PlaySfx(ESfx.GUNSHOT, transform.position);
+        AudioManager.instance.PlaySfx(ESfx.GUNSHOT, transform.position, null);
         gunManager.UseBullet();
         muzzleFlash.SetActive(true);
         gunMovement.RecoilGun();
@@ -62,7 +62,7 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator StartAttackGrenade()
     {
         isAttack = true;
-        AudioManager.instance.PlaySfx(ESfx.GRENADESHOT, transform.position);
+        AudioManager.instance.PlaySfx(ESfx.GRENADESHOT, transform.position, null);
         gunManager.UseGrenade();
         muzzleFlash.SetActive(true);
         gunMovement.RecoilGun();

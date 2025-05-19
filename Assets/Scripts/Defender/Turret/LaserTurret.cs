@@ -24,7 +24,7 @@ public class LaserTurret : DefenderBase
             LaserBullet bullet = bulletObj.GetComponent<LaserBullet>();
             bullet.Init(null, attackDamage, bulletSpd);
 
-            audioManager.PlaySfx(ESfx.LASER, transform.position);
+            audioManager.PlaySfx(ESfx.LASER, transform.position, null);
 
             yield return new WaitForSeconds(0.2f);
         }

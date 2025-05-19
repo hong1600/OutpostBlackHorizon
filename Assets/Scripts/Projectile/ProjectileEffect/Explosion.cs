@@ -22,7 +22,7 @@ public class Explosion : MonoBehaviour
         dmg = _dmg;
         eMissile = _eMissile;
 
-        AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position);
+        AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position, null);
         Damage();
         Invoke(nameof(Return), 1.5f);
     }

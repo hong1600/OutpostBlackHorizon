@@ -41,7 +41,7 @@ public class AudioManager : Singleton<AudioManager>
             sfxSources[i] = obj.AddComponent<AudioSource>();
             sfxSources[i].spatialBlend = 1f;
             sfxSources[i].rolloffMode = AudioRolloffMode.Logarithmic;
-            sfxSources[i].minDistance = 10f;
+            sfxSources[i].minDistance = 1f;
             sfxSources[i].maxDistance = 60f;
         }
     }
@@ -64,10 +64,13 @@ public class AudioManager : Singleton<AudioManager>
     }
 
 
-    public void PlaySfx(ESfx _eSfx, Vector3 _pos)
+    public void PlaySfx(ESfx _eSfx, Vector3 _pos, Transform _parent, float _minDist = 1f, float _maxDist = 60f)
     {
         AudioSource source = sfxSources[sfxIndex];
+        source.transform.parent = _parent;
         source.transform.position = _pos;
+        source.minDistance = _minDist;
+        source.maxDistance = _maxDist;
         source.PlayOneShot(sfxClips[(int)_eSfx], sfxVolume * masterVolume);
 
         sfxIndex = (sfxIndex + 1) % sfxSources.Length;

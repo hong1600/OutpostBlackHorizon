@@ -23,7 +23,7 @@ public class RocketTurret : DefenderBase
         RocketMissile missile = missileObj.GetComponent<RocketMissile>();
         missile.Init(target.transform, attackDamage, bulletSpd, EMissile.PLAYER, fireTrs);
 
-        audioManager.PlaySfx(ESfx.GRENADESHOT, transform.position);
+        audioManager.PlaySfx(ESfx.GRENADESHOT, transform.position, null);
 
         yield return new WaitForSeconds(1f);
 

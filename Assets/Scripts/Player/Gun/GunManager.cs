@@ -76,7 +76,7 @@ public class GunManager : Singleton<GunManager>
     {
         isReloading = true;
 
-        AudioManager.instance.PlaySfx(ESfx.GUNRELOAD, transform.position);
+        AudioManager.instance.PlaySfx(ESfx.GUNRELOAD, transform.position, null);
 
         yield return new WaitForSeconds(2.5f);
 

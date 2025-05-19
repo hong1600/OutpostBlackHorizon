@@ -85,7 +85,8 @@ public enum EEffect
     ENEMYEXPLOSION,
     ROCKETEXPLOSION,
     DUSTEXPLOSION,
-    GRENADETURRETEXPLOSION
+    GRENADETURRETEXPLOSION,
+    AIRSTRIKEEXPLOSION
 }
 
 public enum EHpBar
@@ -115,7 +116,8 @@ public enum EBullet
     ROBOT2BULLET,
     BOSSMISSILE,
     TURRETGRENADE,
-    AMMOPACK
+    AMMOPACK,
+    JETGREANDE
 }
 
 public enum EBgm
@@ -125,6 +127,7 @@ public enum EBgm
     GAMESTART,
     GAME,
     WATER,
+    BOSSROUND
 }
 
 public enum ESfx
@@ -137,7 +140,10 @@ public enum ESfx
     CLICK,
     LASER,
     MACHINEGUN,
-    GRENADETURRET
+    GRENADETURRET,
+    UFOLAND,
+    BOSSLASER,
+    AIRSKRIKE
 }
 
 public enum EGameResource

@@ -26,7 +26,7 @@ public class WaveBossSpawner : MonoBehaviour
 
     private void SpawnDelay()
     {
-        Invoke(nameof(SpawnWaveBoss), 5);
+        Invoke(nameof(SpawnWaveBoss), 10);
     }
 
     public void SpawnWaveBoss()
