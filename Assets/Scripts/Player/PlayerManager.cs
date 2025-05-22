@@ -25,6 +25,8 @@ public class PlayerManager : Singleton<PlayerManager>
     public PlayerMovement playerMovement { get; private set; }
     public PlayerCombat playerCombat { get; private set; }
     public PlayerStatus playerStatus { get; private set; }
+    public AirStrike airStrike { get; private set; }
+    public GuideMissile guideMissile { get; private set; }
     public GameObject Rifle { get { return rifle; } }
 
     protected override void Awake()
@@ -37,6 +39,8 @@ public class PlayerManager : Singleton<PlayerManager>
         playerMovement = GetComponent<PlayerMovement>();
         playerCombat = GetComponent<PlayerCombat>();
         playerStatus = GetComponent<PlayerStatus>();
+        airStrike = GetComponent<AirStrike>();
+        guideMissile = GetComponent<GuideMissile>();
 
         playerAI = new PlayerAI();
         playerAI.Init(this);

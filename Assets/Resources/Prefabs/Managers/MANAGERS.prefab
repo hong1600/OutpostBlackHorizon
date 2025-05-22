@@ -124,6 +124,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIMng
       objectReference: {fileID: 0}
+    - target: {fileID: 5017506273244842328, guid: 6e34924bf288c5e4889567a5ccd2dd2b, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983279472751471694, guid: 6e34924bf288c5e4889567a5ccd2dd2b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8329902201829636217, guid: 6e34924bf288c5e4889567a5ccd2dd2b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9045997851283843328, guid: 6e34924bf288c5e4889567a5ccd2dd2b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -290,7 +302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4109712552308508648, guid: 8be32c34b192c58448beef6fb87afe49, type: 3}
       propertyPath: bgmVolume
-      value: 0
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 4109712552308508648, guid: 8be32c34b192c58448beef6fb87afe49, type: 3}
       propertyPath: sfxVolume

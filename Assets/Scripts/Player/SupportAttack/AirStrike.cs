@@ -10,11 +10,14 @@ public class AirStrike : MonoBehaviour
     [SerializeField] Transform[] StartPos;
     [SerializeField] Transform[] EndPos;
 
+    public float coolTime { get; private set; } = 0f;
+    public float maxCollTime { get; private set; } = 30f;
+
     private void Awake()
     {
         for (int i = 0; i < 3; i++)
         {
-            GameObject go = Instantiate(jetPrefab, StartPos[i].transform.position, Quaternion.Euler(0, -90f, 0));
+            GameObject go = Instantiate(jetPrefab, StartPos[i].transform.position, Quaternion.identity);
             jetObjList.Add(go);
             jetObjList[i].SetActive(false);
         }
@@ -22,15 +25,19 @@ public class AirStrike : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (coolTime >= 0)
         {
-            PlayAirStrike();
+            coolTime -= Time.deltaTime;
         }
     }
 
     public void PlayAirStrike()
     {
-        StartCoroutine(StartAirStrike());
+        if(coolTime <= 0) 
+        {
+            coolTime = 30f;
+            StartCoroutine(StartAirStrike());
+        }
     }
 
     IEnumerator StartAirStrike()
@@ -50,12 +57,14 @@ public class AirStrike : MonoBehaviour
             Jet jet = go.GetComponent<Jet>();
         }
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3.25f);
 
         for (int i = 0; i < jetObjList.Count; i++)
         {
             Jet jet = jetObjList[i].GetComponent<Jet>();
             jet.Drop();
+
+            yield return null;
         }
 
         yield return new WaitForSeconds(3);

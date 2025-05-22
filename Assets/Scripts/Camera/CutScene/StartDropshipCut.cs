@@ -129,12 +129,9 @@ public class StartDropshipCut : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         this.enabled = false;
-        restBtn.SetActive(true);
         GameManager.instance.ViewState.SetViewState(EViewState.FPS);
-        AudioManager.instance.SetBgmVolume(0.02f);
+        restBtn.SetActive(true);
         playerRigid.isKinematic = false;
-        playerMovement.enabled = true;
-        playerCombat.enabled = true;
         camObj.SetActive(false);
     }
 }

@@ -7,11 +7,13 @@ public class PlayerCombat : MonoBehaviour
 {
     BulletPool bulletPool;
     CameraFpsShake cameraFpsShake;
+    GunManager gunManager;
+    GunMovement gunMovement;
+    AirStrike airStrike;
+    GuideMissile guideMissile;
 
     public event Action onUseBullet;
 
-    [SerializeField] GunManager gunManager;
-    [SerializeField] GunMovement gunMovement;
     [SerializeField] internal bool isAttack = false;
     [SerializeField] GameObject muzzleFlash;
     [SerializeField] Transform fireTrs;
@@ -24,6 +26,10 @@ public class PlayerCombat : MonoBehaviour
     {
         bulletPool = ObjectPoolManager.instance.BulletPool;
         cameraFpsShake = CameraManager.instance.CameraFpsShake;
+        gunManager = GunManager.instance;
+        gunMovement = GunManager.instance.GunMovement;
+        airStrike = PlayerManager.instance.airStrike;
+        guideMissile = PlayerManager.instance.guideMissile;
     }
 
     private void Update()
@@ -36,6 +42,16 @@ public class PlayerCombat : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && !isAttack && !gunManager.isReloading && gunManager.curGrenadeCount > 0) 
         {
             StartCoroutine(StartAttackGrenade());
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            airStrike.PlayAirStrike();
+        }
+
+        if(Input.GetKeyDown(KeyCode.X)) 
+        {
+            guideMissile.FireMissile();
         }
     }
 

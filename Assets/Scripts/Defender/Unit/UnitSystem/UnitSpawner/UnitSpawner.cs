@@ -51,8 +51,8 @@ public class UnitSpawner : MonoBehaviour
         Vector3 twoUnit1Pos = new Vector3(-0.3f, 0.5f, 0);
         Vector3 twoUnit2Pos = new Vector3(0.5f, 0.5f, 0);
 
-        Vector3 threeUnit1Pos = new Vector3(0, 0.5f, 0.4f);
-        Vector3 threeUnit2Pos = new Vector3(-0.6f, 0.5f, -0.4f);
+        Vector3 threeUnit1Pos = new Vector3(0, 0.5f, 0.3f);
+        Vector3 threeUnit2Pos = new Vector3(-0.4f, 0.5f, -0.3f);
         Vector3 threeUnit3Pos = new Vector3(0.6f, 0.5f, -0.4f);
 
         GameObject instantiateUnit;

@@ -10,6 +10,7 @@ public class ViewState : MonoBehaviour
 
     CameraTopToFps cameraTopToFps;
     CameraFpsZoom cameraFpsZoom;
+    CameraFpsShake cameraFpsShake;
 
     [SerializeField] EViewState curViewState;
 
@@ -20,13 +21,16 @@ public class ViewState : MonoBehaviour
 
     private void Start()
     {
+        cameraTopToFps = CameraManager.instance.CameraTopToFps;
+        cameraFpsZoom = CameraManager.instance.CameraFpsZoom;
+        cameraFpsShake = CameraManager.instance.CameraFpsShake;
+
         fpsComponent.Add(PlayerManager.instance.playerMovement);
         fpsComponent.Add(PlayerManager.instance.playerCombat);
         fpsComponent.Add(GunManager.instance);
         fpsComponent.Add(GunManager.instance.GunMovement);
         fpsComponent.Add(CameraManager.instance.CameraFpsMove);
-        fpsComponent.Add(CameraManager.instance.CameraFpsShake);
-        fpsComponent.Add(CameraManager.instance.CameraFpsZoom);
+        fpsComponent.Add(cameraFpsZoom);
         rifle = PlayerManager.instance.Rifle;
 
         topComponent.Add(FieldManager.instance.FieldBuild);
@@ -35,8 +39,6 @@ public class ViewState : MonoBehaviour
 
         turretComponent.Add(CameraManager.instance.CameraTurretMove);
 
-        cameraTopToFps = CameraManager.instance.CameraTopToFps;
-        cameraFpsZoom = CameraManager.instance.CameraFpsZoom;
     }
 
     public void SetViewState(EViewState _state)

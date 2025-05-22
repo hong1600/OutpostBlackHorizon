@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,7 +33,7 @@ public class AudioManager : Singleton<AudioManager>
 
         bgmSource.volume = bgmVolume * masterVolume;
 
-        sfxSources = new AudioSource[50];
+        sfxSources = new AudioSource[70];
 
         for (int i = 0; i < sfxSources.Length; i++)
         {
@@ -66,14 +67,32 @@ public class AudioManager : Singleton<AudioManager>
 
     public void PlaySfx(ESfx _eSfx, Vector3 _pos, Transform _parent, float _minDist = 1f, float _maxDist = 60f)
     {
-        AudioSource source = sfxSources[sfxIndex];
+        AudioSource source = null;
+
+        for(int i = 0; i < sfxSources.Length; i++) 
+        {
+            int index = (sfxIndex + i) % sfxSources.Length;
+
+            if (!sfxSources[index].isPlaying)
+            {
+                source = sfxSources[index];
+                sfxIndex = (index + 1) % sfxSources.Length;
+                break;
+            }
+        }
+
+        if (source == null)
+        {
+            source = sfxSources[sfxIndex];
+            source.Stop();
+            sfxIndex = (sfxIndex + 1) % sfxSources.Length;
+        }
+
         source.transform.parent = _parent;
         source.transform.position = _pos;
         source.minDistance = _minDist;
         source.maxDistance = _maxDist;
         source.PlayOneShot(sfxClips[(int)_eSfx], sfxVolume * masterVolume);
-
-        sfxIndex = (sfxIndex + 1) % sfxSources.Length;
     }
 
     public void PlaySfxUI(ESfx _eSfx)

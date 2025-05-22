@@ -23,7 +23,7 @@ public class BossSpawner : MonoBehaviour
         enemyFactory = FactoryManager.instance.EnemyFactory;
     }
 
-    public void SpawnBoss()
+    public GameObject SpawnBoss()
     {
         hpbar.ShowHpBar();
 
@@ -31,5 +31,7 @@ public class BossSpawner : MonoBehaviour
         spawnPos.y = terrain.SampleHeight(spawnPos);
 
         bossObj = enemyFactory.Create(EEnemy.ROBOT6, spawnPos, Quaternion.Euler(0, 180, 0), null, null);
+
+        return bossObj;
     }
 }

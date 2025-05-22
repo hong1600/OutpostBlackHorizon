@@ -24,7 +24,7 @@ public class TurretGrenade : ArcProjectile
             GameObject effect = effectPool.FindEffect
                 (EEffect.GRENADETURRETEXPLOSION, transform.position, transform.rotation);
             Explosion explosion = effect.GetComponent<Explosion>();
-            explosion.Init(300, EMissile.PLAYER);
+            explosion.Init(200, EMissile.PLAYER);
 
             AudioManager.instance.PlaySfx(ESfx.EXPLOSION, transform.position, null);
 

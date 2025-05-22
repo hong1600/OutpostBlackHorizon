@@ -4,14 +4,52 @@ using UnityEngine;
 
 public class MiniMap : MonoBehaviour
 {
-    [SerializeField] Transform target;
+    Camera mainCam;
+    [SerializeField] Camera minimapCam;
+    [SerializeField] RectTransform miniMapRect;
+    [SerializeField] RectTransform iconContainer;
+    [SerializeField] Transform playerTrs;
+    [SerializeField] RectTransform playerIcon;
 
-    private void LateUpdate()
+    private void Start()
     {
-        if (target != null)
+        mainCam = Camera.main;
+    }
+
+    private void Update()
+    {
+        if (mainCam != null)
         {
-            Vector3 pos = new Vector3(target.position.x, transform.position.y, target.position.z + 10);
-            transform.position = pos;
+            MoveCam();
+            UpdatePlayer();
         }
+    }
+
+    private void MoveCam()
+    {
+        transform.position = new Vector3(mainCam.transform.position.x, 30, mainCam.transform.position.z);
+    }
+
+    private void UpdatePlayer()
+    {
+        Vector3 screenPos = minimapCam.WorldToScreenPoint(playerTrs.position);
+
+        if (screenPos.z <= 0)
+        {
+            playerIcon.gameObject.SetActive(false);
+            return;
+        }
+
+        playerIcon.gameObject.SetActive(true);
+
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            iconContainer,
+            screenPos,
+            minimapCam,
+            out localPoint
+        );
+
+        playerIcon.anchoredPosition = localPoint;
     }
 }

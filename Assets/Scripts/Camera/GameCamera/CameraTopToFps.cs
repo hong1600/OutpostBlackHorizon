@@ -10,9 +10,7 @@ public class CameraTopToFps : MonoBehaviour
 
     GameManager gameManager;
 
-    [SerializeField] GameObject fpsMove;
-    [SerializeField] GameObject fpsShake;
-    [SerializeField] GameObject fpsZoom;
+    CameraFpsShake cameraShake;
 
     [SerializeField] GameObject playerObj;
     [SerializeField] Transform playerEyeTrs;
@@ -35,6 +33,7 @@ public class CameraTopToFps : MonoBehaviour
 
         gameManager = GameManager.instance;
         gameManager.ViewState.onViewStateChange += SetCameraMode;
+        cameraShake = CameraManager.instance.CameraFpsShake;
     }
 
     private void Update()
@@ -104,6 +103,7 @@ public class CameraTopToFps : MonoBehaviour
 
         gameManager.ViewState.UpdateState(_eViewState);
         isArrive = true;
+        cameraShake.Init();
     }
 
     private void SwitchMode()

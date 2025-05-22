@@ -15,8 +15,15 @@ public class Jet : MonoBehaviour
 
     public void Drop()
     {
-        GameObject go = pool.FindBullet(EBullet.JETGREANDE, fireTrs.position, Quaternion.Euler(50, -90, 0));
-        JetGrenade grenade = go.GetComponent<JetGrenade>();
-        grenade.Init(null, 500, 100);
+        for (int i = 0; i < 4;  i++) 
+        {
+            Vector3 offset = new Vector3(Random.Range(-3f, 3f), 0, Random.Range(-3f, 3f));
+            Vector3 spawnPos = fireTrs.position + offset;
+
+            GameObject go = pool.FindBullet(EBullet.JETMISSILE, spawnPos, Quaternion.Euler(45, 0, 0));
+
+            JetMissile missile = go.GetComponent<JetMissile>();
+            missile.Init(null, 500, 100);
+        }
     }
 }

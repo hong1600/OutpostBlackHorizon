@@ -55,6 +55,7 @@ public class BossCut : MonoBehaviour, ICutScene
         {
             timer += Time.deltaTime;
             swaySpeed += Time.deltaTime;
+
             float offset = Mathf.Sin(timer * swaySpeed) * swayAmount;
 
             camObj.transform.rotation = originRot * Quaternion.Euler(0f, offset, 0f);
@@ -64,23 +65,25 @@ public class BossCut : MonoBehaviour, ICutScene
 
         AudioManager.instance.PlayBgm(EBgm.BOSSROUND);
 
-        yield return new WaitForSeconds(1f);
-
         timer = 0f;
-        bossSpawner.SpawnBoss();
-        Transform bossTrs = EnemyManager.instance.BossSpawner.bossObj.transform;
+
+        GameObject boss = bossSpawner.SpawnBoss();
+        Transform bossTrs = boss.transform;
+
+        yield return null;
+
         Quaternion targetRot = Quaternion.LookRotation((bossTrs.position - camObj.transform.position).normalized);
         Quaternion targetRotOffset = Quaternion.Euler(targetRot.x - 18, targetRot.y, targetRot.z);
-
+        
         while (timer <= zoomDuration)
         {
             timer += Time.deltaTime;
-
+        
             float t = Mathf.Clamp01(timer / zoomDuration) * zoomSpeed;
             float fov = Mathf.Lerp(startFOV, endFOV, t);
             camObj.transform.rotation = Quaternion.Lerp(camObj.transform.rotation, targetRotOffset, t);
             virtualCam.m_Lens.FieldOfView = fov;
-
+        
             yield return null;
         }
 
@@ -88,7 +91,9 @@ public class BossCut : MonoBehaviour, ICutScene
 
         StartCoroutine(GameUI.instance.StartBlackout(1));
         virtualCam.m_Lens.FieldOfView = 60f;
+
         yield return null;
+
         camObj.SetActive(false);
         viewState.SetViewState(EViewState.FPS);
     }

@@ -98,6 +98,7 @@ public class Robot6 : Boss
         isAttack = true;
 
         ChangePatton();
+        pattonNum = 0;
 
         switch (pattonNum)
         {
