@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitAI : DefenderAI
+public class UnitAI : DefenderAIState
 {
     protected UnitBase unit;
 

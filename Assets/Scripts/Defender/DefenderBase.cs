@@ -6,12 +6,11 @@ using UnityEngine.UIElements;
 
 public abstract class DefenderBase : MonoBehaviour
 {
-    EDefenderAI curState;
+    protected DefenderAIState curState;
 
     protected AudioManager audioManager;
 
     protected EnemyBase enemy;
-    protected DefenderAI defenderAI;
     protected BulletPool bulletPool;
     protected EffectPool effectPool;
 
@@ -36,8 +35,7 @@ public abstract class DefenderBase : MonoBehaviour
 
         if (_isAI)
         {
-            defenderAI = new DefenderAI();
-            defenderAI.Init(this);
+            SetState(new DefenderCreateState(this));
         }
 
         defenderID = _id;
@@ -57,8 +55,10 @@ public abstract class DefenderBase : MonoBehaviour
 
     private void Update()
     {
-        defenderAI.State();
-        curState = defenderAI.aiState;
+        if (curState != null)
+        {
+            curState.Execute();
+        }
     }
 
     protected internal GameObject TargetEnemy()
@@ -71,19 +71,19 @@ public abstract class DefenderBase : MonoBehaviour
 
         float minDistance = Mathf.Infinity;
 
-        foreach (Collider coll in colls)
+        for (int i = 0; i < colls.Length; i++)
         {
-            enemy = coll.GetComponentInParent<EnemyBase>();
+            EnemyBase enemy = colls[i].GetComponentInParent<EnemyBase>();
 
             if (enemy == null || enemy.isDie == true)
                 continue;
 
-            float distance = Vector3.Distance(transform.position, coll.transform.position);
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
 
             if (distance < minDistance)
             {
                 minDistance = distance;
-                target = coll.gameObject.transform.parent.gameObject;
+                target = enemy.gameObject.transform.parent.gameObject;
             }
         }
 
