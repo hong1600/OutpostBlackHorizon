@@ -19,11 +19,11 @@ public class UIRoundPanel : MonoBehaviour
 
     private void RoundPanel()
     {
-        if (round.curRound == 3)
+        if (round.CurRound == 3)
         {
             roundText.text = $"BOSS";
             return;
         }
-        roundText.text = $"WAVE {round.curRound.ToString()}";
+        roundText.text = $"WAVE {round.CurRound.ToString()}";
     }
 }

@@ -7,13 +7,13 @@ public class Round : MonoBehaviour
 {
     public event Action onRoundEvent;
 
-    public bool isBossRound;
-    public int curRound;
+    [SerializeField] bool isBossRound;
+    [SerializeField] int curRound;
 
     private void Awake()
     {
         isBossRound = false;
-        curRound = 2;
+        curRound = 1;
     }
 
     public void RoundCheck()
@@ -35,4 +35,11 @@ public class Round : MonoBehaviour
 
         onRoundEvent?.Invoke();
     }
+
+    public int CurRound { get { return curRound; } }
+    public void increaseRound(int _amount)
+    {
+        curRound += _amount;
+    }
+    public bool IsBossRound { get { return isBossRound;} }
 }

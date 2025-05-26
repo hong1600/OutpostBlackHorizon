@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        if (!isSpawn || round.curRound == 0) { return; }
+        if (!isSpawn || round.CurRound == 0) { return; }
         
         if (enemySpawnDelay <= 0)
         {

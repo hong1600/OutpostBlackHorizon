@@ -4,14 +4,21 @@ using UnityEngine;
 
 public abstract class AIState
 {
-    public abstract void Enter();
-    public abstract void Exit();
+    protected StateMachine machine;
+
+    public AIState(StateMachine _machine)
+    {
+        this.machine = _machine;
+    }
+
+    public virtual void Enter() { }
     public virtual void Execute() { }
+    public virtual void Exit() { }
 }
 
-public abstract class StateMachine : MonoBehaviour
+public abstract class StateMachine
 {
-    protected AIState curState;
+    protected AIState curState = null;
 
     public void SetState(AIState _newState)
     {
@@ -28,7 +35,7 @@ public abstract class StateMachine : MonoBehaviour
         }
     }
 
-    protected virtual void Update()
+    public virtual void Update()
     {
         if(curState != null) 
         {

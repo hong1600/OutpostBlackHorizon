@@ -2125,6 +2125,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1748325363287898178, guid: e6b2197e298b96e4a935461769931318, type: 3}
+      propertyPath: curRound
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1748325363287898178, guid: e6b2197e298b96e4a935461769931318, type: 3}
       propertyPath: enemyCutSceneCam
       value: 
       objectReference: {fileID: 1312202824}

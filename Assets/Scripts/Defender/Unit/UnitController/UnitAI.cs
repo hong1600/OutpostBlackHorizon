@@ -2,42 +2,104 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitAI : DefenderAIState
+public class UnitAI : DefenderAI
 {
-    protected UnitBase unit;
+    public UnitBase unit;
 
     public void Init(UnitBase _unit)
     {
+        if (_unit == null)
+        {
+            Debug.LogError("Init parameter _unit is null!");
+            return;
+        }
+
+        this.unit = _unit;
         base.Init(_unit);
-        unit = _unit;
+        SetState(new UnitSearchState(this));
+    }
+}
+
+public abstract class UnitAIState : DefenderAIState
+{
+    protected UnitBase unit;
+    protected UnitAI unitAI;
+
+    public UnitAIState(StateMachine _machine) : base(_machine)
+    {
+        unitAI = (UnitAI)_machine;
+        this.unit = unitAI.unit;
+    }
+}
+
+public class UnitSearchState : UnitAIState
+{
+    public UnitSearchState(StateMachine machine) : base(machine) { }
+
+    public override void Enter()
+    {
+        unit.ChangeAnim(EDefenderAI.SEARCH);
     }
 
-    public override void Attack()
+    public override void Execute()
+    {
+        unit.TargetEnemy();
+
+        if (unit.target != null) 
+        {
+            machine.SetState(new UnitAttackState(machine));
+        }
+    }
+}
+
+public class UnitAttackState : DefenderAttackState
+{
+    UnitBase unit;
+
+    public UnitAttackState(StateMachine _machine) : base(_machine)
+    {
+        unit = (UnitBase)defender;
+    }
+
+    public override void Enter()
+    {
+        unit.ChangeAnim(EDefenderAI.ATTACK);
+    }
+
+    public override void Execute()
     {
         if (unit.isSkill)
         {
-            aiState = EDefenderAI.SKILL;
+            machine.SetState(new UnitSkillState(machine));
             return;
         }
 
         if (unit.isAttack)
         {
+            defender.LookTarget();
             return;
         }
         else
         {
-            base.Attack();
+            base.Execute();
         }
     }
+}
 
-    public override void Skill()
+public class UnitSkillState : UnitAIState
+{
+    public UnitSkillState(StateMachine machine) : base(machine) { }
+
+    public override void Enter()
     {
-        if (unit.isSkill == false)
-        {
-            aiState = EDefenderAI.SEARCH;
-            return;
-        }
+        unit.ChangeAnim(EDefenderAI.SKILL);
+    }
 
-        base.Skill();
+    public override void Execute()
+    {
+        if(!unit.isSkill) 
+        {
+            machine.SetState(new UnitAttackState(machine));
+        }
     }
 }

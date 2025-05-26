@@ -51,7 +51,7 @@ public class Timer : MonoBehaviour
 
     private void RunTimer()
     {
-        if (round.isBossRound)
+        if (round.IsBossRound)
         {
             isTimerRunning = false;
         }
@@ -68,7 +68,7 @@ public class Timer : MonoBehaviour
 
             if (!isSpawnTime) 
             {
-                if (round.curRound == 0)
+                if (round.CurRound == 0)
                 {
                     isTimerRunning = false;
                     ChangeSpawnTime();
@@ -90,11 +90,11 @@ public class Timer : MonoBehaviour
         isSpawnTime = !isSpawnTime;
         sec = spawnTime;
         maxSec = spawnTime;
-        if (round.curRound != 0)
+        if (round.CurRound != 0)
         {
             enemySpawner.IsSpawn = true;
         }
-        round.curRound++;
+        round.increaseRound(1);
         round.RoundCheck();
         onRestTime?.Invoke();
     }

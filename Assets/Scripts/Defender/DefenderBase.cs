@@ -6,13 +6,11 @@ using UnityEngine.UIElements;
 
 public abstract class DefenderBase : MonoBehaviour
 {
-    protected DefenderAIState curState;
-
+    protected DefenderAI defenderAI;
     protected AudioManager audioManager;
-
-    protected EnemyBase enemy;
     protected BulletPool bulletPool;
     protected EffectPool effectPool;
+    protected EnemyBase enemy;
 
     public int defenderID;
     public string defenderName;
@@ -35,7 +33,8 @@ public abstract class DefenderBase : MonoBehaviour
 
         if (_isAI)
         {
-            SetState(new DefenderCreateState(this));
+            defenderAI = new DefenderAI();
+            defenderAI.Init(this);
         }
 
         defenderID = _id;
@@ -53,11 +52,11 @@ public abstract class DefenderBase : MonoBehaviour
         effectPool = ObjectPoolManager.instance.EffectPool;
     }
 
-    private void Update()
+    protected virtual void Update() 
     {
-        if (curState != null)
+        if(defenderAI != null) 
         {
-            curState.Execute();
+            defenderAI.Update();
         }
     }
 
@@ -73,7 +72,7 @@ public abstract class DefenderBase : MonoBehaviour
 
         for (int i = 0; i < colls.Length; i++)
         {
-            EnemyBase enemy = colls[i].GetComponentInParent<EnemyBase>();
+            enemy = colls[i].GetComponentInParent<EnemyBase>();
 
             if (enemy == null || enemy.isDie == true)
                 continue;
@@ -83,7 +82,8 @@ public abstract class DefenderBase : MonoBehaviour
             if (distance < minDistance)
             {
                 minDistance = distance;
-                target = enemy.gameObject.transform.parent.gameObject;
+                enemy = colls[i].GetComponentInParent<EnemyBase>();
+                target = enemy.gameObject.transform.gameObject;
             }
         }
 
@@ -141,7 +141,7 @@ public abstract class DefenderBase : MonoBehaviour
                 }
             }
 
-            Vector3 targetVelocity = enemy.GetComponent<Rigidbody>().velocity;
+            Vector3 targetVelocity = target.GetComponent<Rigidbody>().velocity;
 
             Vector3 predictionPos = new Vector3
                 (target.transform.position.x, target.transform.position.y + 1, target.transform.position.z) + targetVelocity;

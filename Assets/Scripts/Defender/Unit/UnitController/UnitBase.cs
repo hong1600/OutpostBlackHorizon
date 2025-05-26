@@ -1,20 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public abstract class UnitBase : DefenderBase
 {
-    public EUnitGrade eUnitGrade;
-    public int lastUpgrade;
-    public int skillDamage;
-
-    [SerializeField] EDefenderAI aiState;
-    UnitAI unitAI;
     TableUnit tableUnit;
     Animator anim;
     BoxCollider box;
+    UnitAI unitAI;
 
+    public EUnitGrade eUnitGrade;
+    public int lastUpgrade;
+    public int skillDamage;
     [SerializeField] GameObject skillBar;
     Transform skillBarParent;
     protected UnitSkillBar unitSkillBar;
@@ -48,11 +45,12 @@ public abstract class UnitBase : DefenderBase
         InitSkillBar();
     }
 
-    private void Update()
+    protected override void Update()
     {
-        unitAI.State();
-        aiState = unitAI.aiState;
-        ChangeAnim(unitAI.aiState);
+        if (unitAI != null)
+        {
+            unitAI.Update();
+        }
     }
 
     protected internal override void Attack()
@@ -130,9 +128,11 @@ public abstract class UnitBase : DefenderBase
         }
     }
 
-    protected internal void ChangeAnim(EDefenderAI _curState)
+    public void ChangeAnim(EDefenderAI _curState)
     {
-        switch(_curState) 
+        if (anim == null) return;
+
+        switch (_curState) 
         {
             case EDefenderAI.CREATE:
                 anim.SetInteger("unitAnim", (int)EUnitAnim.IDLE);
@@ -146,8 +146,6 @@ public abstract class UnitBase : DefenderBase
             case EDefenderAI.SKILL:
                 anim.SetInteger("unitAnim", (int)EUnitAnim.SKILL);
                 anim.Play("Skill1");
-                break;
-            case EDefenderAI.RESET:
                 break;
         }
     }

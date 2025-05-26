@@ -1,39 +1,43 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DefenderAIState
+public class DefenderAI : StateMachine
 {
-    protected DefenderBase defender;
+    public DefenderBase defender;
 
-    public DefenderAIState(DefenderBase _defender)
+    public void Init(DefenderBase _defender)
     {
         this.defender = _defender;
+        SetState(new DefenderCreateState(this));
     }
+}
 
-    public abstract void Enter();
-    public abstract void Execute();
-    public abstract void Exit();
+public abstract class DefenderAIState : AIState
+{
+    protected DefenderBase defender;
+    protected DefenderAI defenderAI;
+
+    public DefenderAIState(StateMachine _machine) : base(_machine)
+    {
+        defenderAI = (DefenderAI)_machine;
+        this.defender = defenderAI.defender;
+    }
 }
 
 public class DefenderCreateState : DefenderAIState
 {
-    public DefenderCreateState(DefenderBase _defender) : base(_defender) { }
+    public DefenderCreateState(StateMachine _machine) : base(_machine) { }
 
-    public override void Enter() { }
     public override void Execute() 
     {
-        defender.SetState(new DefenderSearchState(defender));
+        machine.SetState(new DefenderSearchState(machine));
     }
-    public override void Exit() { }
 }
 
 public class DefenderSearchState : DefenderAIState
 {
-    public DefenderSearchState(DefenderBase _defender) : base(_defender) { }
-
-    public override void Enter() { }
+    public DefenderSearchState(StateMachine _machine) : base(_machine) { }
 
     public override void Execute()
     {
@@ -41,18 +45,14 @@ public class DefenderSearchState : DefenderAIState
 
         if (defender.target != null)
         {
-            defender.SetState(new DefenderAttackState(defender));
+            machine.SetState(new DefenderAttackState(machine));
         }
     }
-
-    public override void Exit() { }
 }
 
 public class DefenderAttackState : DefenderAIState
 {
-    public DefenderAttackState(DefenderBase _defender) : base(_defender) { }
-
-    public override void Enter() { }
+    public DefenderAttackState(StateMachine _machine) : base(_machine) { }
 
     public override void Execute()
     {
@@ -61,12 +61,19 @@ public class DefenderAttackState : DefenderAIState
         if (defender.target == null || Vector3.Distance
             (defender.target.transform.position, defender.transform.position) > defender.attackRange)
         {
-            defender.SetState(new DefenderSearchState(defender));
+            machine.SetState(new DefenderSearchState(machine));
         }
 
         defender.Attack();
         defender.LookTarget();
     }
+}
 
-    public override void Exit() { }
+public class DefenderSkillState : DefenderAIState
+{
+    public DefenderSkillState(StateMachine _machine) : base(_machine) { }
+
+    public override void Execute()
+    {
+    }
 }
