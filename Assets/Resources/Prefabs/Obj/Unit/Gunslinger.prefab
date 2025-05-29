@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6060998129432286617}
   m_Layer: 6
-  m_Name: BulletTrs
+  m_Name: FireTrs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -530,10 +530,9 @@ MonoBehaviour:
   eUnitGrade: 3
   lastUpgrade: 0
   skillDamage: 0
-  aiState: 0
   skillBar: {fileID: 7502093588942428381, guid: cde4b435fb9dbc54184be91195eed884, type: 3}
   isSkill: 0
-  bulletTrs: {fileID: 6060998129432286617}
+  fireTrs: {fileID: 6060998129432286617}
 --- !u!65 &-2203199589309370781
 BoxCollider:
   m_ObjectHideFlags: 0

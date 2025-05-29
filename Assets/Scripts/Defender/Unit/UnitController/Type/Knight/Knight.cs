@@ -21,7 +21,7 @@ public class Knight : UnitBase
         if (rand < 20 && skillCouroutine == null)
         {
             isSkill = true;
-            StartCoroutine(StartSkill());
+            StartCoroutine(AttackEvent());
         }
         else if (rand >= 20 && attackCoroutine == null)
         {
@@ -29,10 +29,8 @@ public class Knight : UnitBase
         }
     }
 
-    protected override IEnumerator StartSkill()
+    private IEnumerator AttackEvent()
     {
-        EnemyBase enemy = target.GetComponentInParent<EnemyBase>();
-
         yield return new WaitForSeconds(0.85f);
 
         GameObject effect = effectPool.FindEffect(EEffect.KNIGHT, enemy.transform.position, Quaternion.identity);

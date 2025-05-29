@@ -8,12 +8,6 @@ public class UnitAI : DefenderAI
 
     public void Init(UnitBase _unit)
     {
-        if (_unit == null)
-        {
-            Debug.LogError("Init parameter _unit is null!");
-            return;
-        }
-
         this.unit = _unit;
         base.Init(_unit);
         SetState(new UnitSearchState(this));
@@ -68,12 +62,6 @@ public class UnitAttackState : DefenderAttackState
 
     public override void Execute()
     {
-        if (unit.isSkill)
-        {
-            machine.SetState(new UnitSkillState(machine));
-            return;
-        }
-
         if (unit.isAttack)
         {
             defender.LookTarget();
@@ -82,24 +70,6 @@ public class UnitAttackState : DefenderAttackState
         else
         {
             base.Execute();
-        }
-    }
-}
-
-public class UnitSkillState : UnitAIState
-{
-    public UnitSkillState(StateMachine machine) : base(machine) { }
-
-    public override void Enter()
-    {
-        unit.ChangeAnim(EDefenderAI.SKILL);
-    }
-
-    public override void Execute()
-    {
-        if(!unit.isSkill) 
-        {
-            machine.SetState(new UnitAttackState(machine));
         }
     }
 }

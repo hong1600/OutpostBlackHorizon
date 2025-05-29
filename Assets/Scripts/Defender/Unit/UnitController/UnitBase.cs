@@ -16,6 +16,9 @@ public abstract class UnitBase : DefenderBase
     Transform skillBarParent;
     protected UnitSkillBar unitSkillBar;
 
+    protected IUnitSkillStrategy skill;
+    protected SkillContext skillContext;
+
     [SerializeField] protected internal bool isSkill;
     [SerializeField] protected internal Coroutine skillCouroutine;
 
@@ -59,9 +62,41 @@ public abstract class UnitBase : DefenderBase
         base.Attack();
     }
 
-    protected virtual IEnumerator StartSkill()
+    protected override IEnumerator StartAttack()
     {
-        yield return null;
+        if (skill == null)
+        {
+            yield return base.StartAttack();
+        }
+        else
+        {
+            if (unitSkillBar.isSkillCast && skillCouroutine == null)
+            {
+                SetSkill();
+                ChangeAnim(EDefenderAI.SKILL);
+                yield return skillCouroutine = StartCoroutine(skill.Excute(skillContext));
+                ChangeAnim(EDefenderAI.ATTACK);
+            }
+            else if (!isSkill && attackCoroutine == null)
+            {
+                yield return base.StartAttack();
+            }
+        }
+    }
+
+    protected virtual void SetSkill() { }
+
+    protected void OnSkillStart()
+    {
+        isSkill = true;
+    }
+    protected void OnSkillFinish()
+    {
+        skillCouroutine = null;
+    }
+    protected void OnSkillComplete()
+    {
+        isSkill = false;
     }
 
     protected internal override void LookTarget()
