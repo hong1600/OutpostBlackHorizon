@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class LobbyStartBtn : MonoBehaviour
 {
-    public void ClickGameStartBtn()
+    public void ClickSingleBtn()
     {
         MSceneManager.Instance.ChangeScene(EScene.WAITING);
+    }
+
+    public void ClickMachingBtn()
+    {
+        MSceneManager.Instance.ChangeScene(EScene.MACHING);
     }
 }

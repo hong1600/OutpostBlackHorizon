@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class PhotonMgr : MonoBehaviourPunCallbacks
+public partial class PhotonManager : MonoBehaviourPunCallbacks
 {
     public void CreateLobbyRoom(string _Room)
     {

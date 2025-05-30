@@ -6,7 +6,8 @@ using UnityEngine.Video;
 public enum EVideo
 {
     START,
-    LOGIN
+    LOGIN,
+    MACHING
 }
 
 public class VideoSelector : MonoBehaviour

@@ -132,6 +132,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7805279562373698147, guid: 6e34924bf288c5e4889567a5ccd2dd2b, type: 3}
+      propertyPath: videoClipList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805279562373698147, guid: 6e34924bf288c5e4889567a5ccd2dd2b, type: 3}
+      propertyPath: videoClipList.Array.data[2]
+      value: 
+      objectReference: {fileID: 32900000, guid: 62f63b0dc45b1814683ea99ba44ee5c8, type: 3}
     - target: {fileID: 8329902201829636217, guid: 6e34924bf288c5e4889567a5ccd2dd2b, type: 3}
       propertyPath: m_IsActive
       value: 1

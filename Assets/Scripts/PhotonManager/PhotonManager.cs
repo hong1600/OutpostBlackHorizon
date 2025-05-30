@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using Photon.Pun;
 using Photon.Realtime;
 
-public partial class PhotonMgr : MonoBehaviourPunCallbacks
+public partial class PhotonManager : MonoBehaviourPunCallbacks
 {
     public PhotonView PV;
 

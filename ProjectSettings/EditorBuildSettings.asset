@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Waiting.unity
     guid: 8f1a01e4b1a374aa6bfe472517a8a56e
   - enabled: 1
+    path: Assets/Scenes/Maching.unity
+    guid: 362dcdff3114da648a5f01b3d8b51062
+  - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 39c0a63ac645ce243957b1b91e02e3c0
   - enabled: 1

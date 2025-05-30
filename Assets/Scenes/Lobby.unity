@@ -270,7 +270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1705698971142474239, guid: 37c9c8c3d549204488c4228bb8b8424e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 1722724237263068931, guid: 37c9c8c3d549204488c4228bb8b8424e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -314,11 +314,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2485160737898318873, guid: 37c9c8c3d549204488c4228bb8b8424e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245561361770747587, guid: 37c9c8c3d549204488c4228bb8b8424e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickSingleBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245561361770747587, guid: 37c9c8c3d549204488c4228bb8b8424e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LobbyStartBtn, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4590631514925198921, guid: 37c9c8c3d549204488c4228bb8b8424e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: -120
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806624755017105834, guid: 37c9c8c3d549204488c4228bb8b8424e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickMachingBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806624755017105834, guid: 37c9c8c3d549204488c4228bb8b8424e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LobbyStartBtn, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6500642719094037580, guid: 37c9c8c3d549204488c4228bb8b8424e, type: 3}
+      propertyPath: m_Name
+      value: SingleBtn
       objectReference: {fileID: 0}
     - target: {fileID: 6880219164698790260, guid: 37c9c8c3d549204488c4228bb8b8424e, type: 3}
       propertyPath: m_Name
@@ -330,7 +350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8168504762485934238, guid: 37c9c8c3d549204488c4228bb8b8424e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 100
+      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
