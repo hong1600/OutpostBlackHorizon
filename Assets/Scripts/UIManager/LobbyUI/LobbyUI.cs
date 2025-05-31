@@ -11,6 +11,8 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] GameObject blackPanel;
     UserData userData;
 
+    [SerializeField] GameObject matchingPanel;
+
     private void Start()
     {
         if (DataManager.instance.UserDataLoader.curUserData != null)
@@ -32,5 +34,15 @@ public class LobbyUI : MonoBehaviour
     IEnumerator StartLobbyAnim()
     {
         yield return new WaitForSeconds(1);
+    }
+
+    public void ClickSingleBtn()
+    {
+        MSceneManager.Instance.ChangeScene(EScene.WAITING);
+    }
+
+    public void ClickMachingBtn()
+    {
+        matchingPanel.SetActive(true);
     }
 }
