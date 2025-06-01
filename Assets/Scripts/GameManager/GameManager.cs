@@ -12,42 +12,22 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GoldCoin goldCoin;
     [SerializeField] Rewarder rewarder;
     [SerializeField] ViewState viewState;
-
-    EnemySpawner enemySpawner;
-    WaveBossSpawner waveBossSpawner;
-    BossSpawner bossSpawner;
+    [SerializeField] PlayerSpawner playerSpawner;
+    [SerializeField] AirStrike airStrike;
+    [SerializeField] GuideMissile guideMissile;
 
     protected override void Awake()
     {
         base.Awake();
-
-        Timer = timer;
-        Round = round;
-        GameState = gameState;
-        GoldCoin = goldCoin;
-        Rewarder = rewarder;
-        ViewState = viewState;
     }
 
-    private void Start()
-    {
-        enemySpawner = EnemyManager.instance.EnemySpawner;
-        waveBossSpawner = EnemyManager.instance.WaveBossSpawner;
-        bossSpawner = EnemyManager.instance.BossSpawner;
-    }
-
-    private void Update()
-    {
-        if (enemySpawner.IsSpawn)
-        {
-            enemySpawner.SpawnEnemy();
-        }
-    }
-
-    public Timer Timer { get; private set; }
-    public Round Round { get; private set; }
-    public GameState GameState { get; private set; }
-    public GoldCoin GoldCoin { get; private set; }
-    public Rewarder Rewarder { get; private set; }
-    public ViewState ViewState { get; private set; }
+    public Timer Timer { get { return timer; }}
+    public Round Round { get { return round; } }
+    public GameState GameState { get { return gameState; } }
+    public GoldCoin GoldCoin { get { return goldCoin; } }
+    public Rewarder Rewarder { get { return rewarder; } }
+    public ViewState ViewState { get { return viewState; } }
+    public PlayerSpawner PlayerSpawner { get { return playerSpawner; } }
+    public AirStrike AirStrike { get { return airStrike; } }
+    public GuideMissile GuideMissile { get { return guideMissile; } }
 }

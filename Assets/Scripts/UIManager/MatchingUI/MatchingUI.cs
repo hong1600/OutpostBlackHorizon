@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MatchingUI : MonoBehaviour
+public class MatchingUI : Singleton<MatchingUI>
 {
     [SerializeField] GameObject matchingPanel;
     [SerializeField] GameObject cancleBtn;
@@ -47,7 +47,7 @@ public class MatchingUI : MonoBehaviour
         timerText.text = $"경과 시간: {min:00}:{sec:00}";
     }
 
-    private void CompleteMatch()
+    public void CompleteMatch()
     {
         stateText.text = "게임 발견!";
         timerText.text = "게임에 참가중";

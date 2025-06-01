@@ -28,8 +28,8 @@ public class PlayerCombat : MonoBehaviour
         cameraFpsShake = CameraManager.instance.CameraFpsShake;
         gunManager = GunManager.instance;
         gunMovement = GunManager.instance.GunMovement;
-        airStrike = PlayerManager.instance.airStrike;
-        guideMissile = PlayerManager.instance.guideMissile;
+        airStrike = GameManager.instance.AirStrike;
+        guideMissile = GameManager.instance.GuideMissile;
     }
 
     private void Update()

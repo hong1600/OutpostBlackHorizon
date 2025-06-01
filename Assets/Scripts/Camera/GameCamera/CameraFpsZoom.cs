@@ -5,7 +5,8 @@ using UnityEngine;
 public class CameraFpsZoom : MonoBehaviour
 {
     Camera mainCam;
-    [SerializeField] GameObject rifle;
+    GameObject rifle;
+
     [SerializeField] GameObject nomalAim;
     [SerializeField] float normalFOV = 60;
     [SerializeField] float zoomFOV = 40f;
@@ -22,6 +23,7 @@ public class CameraFpsZoom : MonoBehaviour
 
     private void Start()
     {
+        rifle = PlayerManager.instance.Rifle;
         scope = GameUI.instance.scope;
         InputManager.instance.onRightClickDown += ZoomCamera;
     }

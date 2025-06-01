@@ -9,7 +9,7 @@ public class CameraFpsMove : MonoBehaviour
     ViewState viewState;
     CameraTopToFps topToFps;
 
-    [SerializeField] GameObject playerObj;
+    GameObject playerObj;
     [SerializeField] float mouseSpeed = 2f;
     float verticalRotation = 0f;
 
@@ -22,6 +22,7 @@ public class CameraFpsMove : MonoBehaviour
     {
         viewState = GameManager.instance.ViewState;
         topToFps = CameraManager.instance.CameraTopToFps;
+        playerObj = PlayerManager.instance.gameObject;
     }
 
     private void LateUpdate()

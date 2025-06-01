@@ -108,7 +108,9 @@ public abstract class HomingProjectile : ProjectileBase
     {
         GameObject explosionEffect = effectPool.FindEffect
             (EEffect.ROCKETEXPLOSION, transform.position, Quaternion.identity);
+
         Explosion explosion = explosionEffect.GetComponent<Explosion>();
+
         explosion.Init(dmg, eMissile);
 
         rigid.velocity = Vector3.zero;

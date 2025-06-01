@@ -5,14 +5,16 @@ using UnityEngine;
 public class MiniMap : MonoBehaviour
 {
     Camera mainCam;
+    Transform playerTrs;
+
     [SerializeField] Camera minimapCam;
     [SerializeField] RectTransform miniMapRect;
     [SerializeField] RectTransform iconContainer;
-    [SerializeField] Transform playerTrs;
     [SerializeField] RectTransform playerIcon;
 
     private void Start()
     {
+        playerTrs = GameManager.instance.PlayerSpawner.player.transform;
         mainCam = Camera.main;
     }
 

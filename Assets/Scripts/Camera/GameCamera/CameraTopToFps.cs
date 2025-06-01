@@ -9,12 +9,11 @@ public class CameraTopToFps : MonoBehaviour
     Camera mainCam;
 
     GameManager gameManager;
-
     CameraFpsShake cameraShake;
+    GameObject playerObj;
+    Transform playerEyeTrs;
+    GameObject rifle;
 
-    [SerializeField] GameObject playerObj;
-    [SerializeField] Transform playerEyeTrs;
-    [SerializeField] GameObject rifle;
     [SerializeField] Transform topTrs;
 
     public bool isArrive { get; private set; }
@@ -34,6 +33,9 @@ public class CameraTopToFps : MonoBehaviour
         gameManager = GameManager.instance;
         gameManager.ViewState.onViewStateChange += SetCameraMode;
         cameraShake = CameraManager.instance.CameraFpsShake;
+        playerObj = PlayerManager.instance.gameObject;
+        playerEyeTrs = PlayerManager.instance.playerEyeTrs;
+        rifle = PlayerManager.instance.Rifle;
     }
 
     private void Update()

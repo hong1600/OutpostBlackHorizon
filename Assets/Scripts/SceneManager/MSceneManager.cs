@@ -53,9 +53,6 @@ public class MSceneManager : MonoBehaviour
                 case EScene.WAITING:
                     SceneManager.LoadScene("Waiting");
                     break;
-                case EScene.MACHING:
-                    SceneManager.LoadScene("Maching");
-                    break;
                 case EScene.LOADING:
                     SceneManager.LoadScene("Loading");
                     break;

@@ -84,6 +84,7 @@ public class UIRewardPanel : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         MSceneManager.Instance.ChangeScene(EScene.LOBBY);
+        UIManager.instance.Cursor.SetActive(true);
     }
 
     public void UpdateRewardPanel(EGameState _state)

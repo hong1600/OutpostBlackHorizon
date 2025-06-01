@@ -634,7 +634,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2956477217811749934}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIMapSelectBtn, Assembly-CSharp
         m_MethodName: ClickNextMap
         m_Mode: 3
@@ -903,7 +903,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2956477217811749934}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIMapSelectBtn, Assembly-CSharp
         m_MethodName: ClickPrevMap
         m_Mode: 3
@@ -2532,7 +2532,6 @@ GameObject:
   - component: {fileID: 3991409901851254401}
   - component: {fileID: 4397237461254735305}
   - component: {fileID: 1274403537472311946}
-  - component: {fileID: 1473787223645614898}
   m_Layer: 5
   m_Name: StartBtn
   m_TagString: Untagged
@@ -2642,7 +2641,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1473787223645614898}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: WaitingStartBtn, Assembly-CSharp
         m_MethodName: OnClickStartBtn
         m_Mode: 1
@@ -2654,18 +2653,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1473787223645614898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8222716266908860230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a604f6cc37a6d241bc1be06df808619, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8652076577536011620
 GameObject:
   m_ObjectHideFlags: 0
@@ -2812,7 +2799,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8173870237204367786}
   - component: {fileID: 6190983008900803063}
-  - component: {fileID: 2956477217811749934}
   m_Layer: 0
   m_Name: WaitingUI
   m_TagString: Untagged
@@ -2849,9 +2835,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapImg: {fileID: 7712391018297327578}
-  fieldAmountText: {fileID: 5707549537040748276}
+  mapNameText: {fileID: 3269786128331994120}
+  mapLevel: {fileID: 8346276668558092150}
   mapDescText: {fileID: 8710178685438773365}
+  fieldAmountText: {fileID: 5707549537040748276}
   outpostText: {fileID: 1987328875354372644}
+  mapNames: []
   mapSprites:
   - {fileID: 21300000, guid: b5bb832c5c57757408ed400daee0ac62, type: 3}
   - {fileID: 21300000, guid: 78b04af660069ba47850648291de5a8e, type: 3}
@@ -2864,19 +2853,6 @@ MonoBehaviour:
     \uC0B0\uC5C5\uACFC \uC5F0\uAD6C \uC2DC\uC124\uC774 \uC544\uC9C1 \uB0A8\uC544
     \uC788\uB2E4."
   curMapIndex: 1
---- !u!114 &2956477217811749934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9112991088794845702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31d7088a6171e444696a920e3e759eec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waitingUI: {fileID: 6190983008900803063}
 --- !u!1 &9197475296266845538
 GameObject:
   m_ObjectHideFlags: 0

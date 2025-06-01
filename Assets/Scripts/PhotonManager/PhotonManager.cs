@@ -12,21 +12,20 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
     //기본설정
     private void Awake()
     {
-        if (instance == null)
+        if (instance != null)
         {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             return;
         }
+
+        instance = this;
+
+        DontDestroyOnLoad(this.gameObject);
 
         PhotonNetwork.GameVersion = "1.0.0";
         PhotonNetwork.SendRate = 30;
         PhotonNetwork.SerializationRate = 10;
-        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.AutomaticallySyncScene = false;
 
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -43,21 +42,19 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
-        Debug.Log("로비 입장");
+        Debug.Log("로비참가");
     }
 
     //매칭큐 시작
     public void StartMatching()
     {
         PhotonNetwork.JoinRandomRoom();
-        Debug.Log("매칭 시작");
+        Debug.Log("매칭큐시작");
     }
 
     //방 없을 시 생성
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("방 없음 생성 시작");
-
         string id = Guid.NewGuid().ToString();
 
         string roomName = "Room"+ id;
@@ -67,9 +64,8 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.CreateRoom(roomName, options);
 
-        Debug.Log("방 생성");
-
         base.OnJoinRandomFailed(returnCode, message);
+        Debug.Log("방생성");
     }
 
     //매칭 취소 시 로비로 돌아가기
@@ -78,8 +74,7 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
         if(PhotonNetwork.InRoom) 
         {
             PhotonNetwork.LeaveRoom();
-
-            Debug.Log("방 떠남");
+            Debug.Log("방 떠나기");
         }
         else if(PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InLobby) 
         {
@@ -92,20 +87,25 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
     {
         base.OnPlayerEnteredRoom(newPlayer);
 
-        Debug.Log("새로운 플레이어 입장");
-
         if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
         {
-            StartGame();
+            StartCoroutine(StartGame());
         }
     }
 
     //게임시작
-    private void StartGame()
+    IEnumerator StartGame()
     {
+        MatchingUI.instance.CompleteMatch();
+
+        yield return new WaitForSeconds(1f);
+
         if(PhotonNetwork.IsMasterClient) 
         {
-            PhotonNetwork.LoadLevel("Game");
+            PhotonNetwork.AutomaticallySyncScene = true;
+            GameModeManager.instance.ChangeGameMode(EGameMode.MULTI);
+            PhotonNetwork.LoadLevel("Loading");
+            Debug.Log("게임시작");
         }
     }
 }

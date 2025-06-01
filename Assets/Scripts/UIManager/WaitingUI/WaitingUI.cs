@@ -55,4 +55,21 @@ public class WaitingUI : MonoBehaviour
         fieldAmountText.text = DataManager.instance.TableMap.GetMapData(700 + curMapIndex).fieldAmount.ToString();
         outpostText.text = $"전초 기지 No.{curMapIndex}";
     }
+
+    public void ClickStartBtn()
+    {
+        AudioManager.instance.StopBgm();
+        GameModeManager.instance.ChangeGameMode(EGameMode.SINGLE);
+        MSceneManager.Instance.ChangeScene(EScene.GAME, true);
+    }
+
+    public void ClickNextMap(int _index)
+    {
+        UpdateMap(_index);
+    }
+
+    public void ClickPrevMap(int _index)
+    {
+        UpdateMap(_index);
+    }
 }

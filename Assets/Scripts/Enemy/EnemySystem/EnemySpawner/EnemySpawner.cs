@@ -38,6 +38,14 @@ public class EnemySpawner : MonoBehaviour
         enemySpawnPos[3] = new Vector3(9f, 0, 0);
     }
 
+    private void Update()
+    {
+        if (isSpawn)
+        {
+            SpawnEnemy();
+        }
+    }
+
     public void SpawnEnemy()
     {
         if (!isSpawn || round.CurRound == 0) { return; }

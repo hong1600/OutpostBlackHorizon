@@ -33,8 +33,9 @@ public class StartDropshipCut : MonoBehaviour
 
     private void Start()
     {
-        playerMovement = PlayerManager.instance.playerMovement;
-        playerCombat = PlayerManager.instance.playerCombat;
+        player = GameManager.instance.PlayerSpawner.player;
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerCombat = player.GetComponent<PlayerCombat>();
         AudioManager.instance.PlayBgm(EBgm.GAMESTART);
         Init();
         StartCoroutine(StartMove());

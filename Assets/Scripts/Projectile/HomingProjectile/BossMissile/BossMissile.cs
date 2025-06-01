@@ -51,7 +51,6 @@ public class BossMissile : HomingProjectile
         rigid.velocity = transform.forward * speed;
     }
 
-
     protected override void ReturnPool()
     {
         bulletPool.ReturnBullet(EBullet.BOSSMISSILE, gameObject);

@@ -6,20 +6,14 @@ using UnityEngine.UI;
 
 public class UIPlayerSkill : MonoBehaviour
 {
-    AirStrike airStrike;
-    GuideMissile guideMissile;
+    [SerializeField] AirStrike airStrike;
+    [SerializeField] GuideMissile guideMissile;
 
     [SerializeField] Image skill1Value;
     [SerializeField] Image skill2Value;
 
     [SerializeField] TextMeshProUGUI skill1Text;
     [SerializeField] TextMeshProUGUI skill2Text;
-
-    private void Start()
-    {
-        airStrike = PlayerManager.instance.airStrike;
-        guideMissile = PlayerManager.instance.guideMissile;
-    }
 
     private void Update()
     {
