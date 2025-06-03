@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,7 +40,7 @@ public class LoadingScene : MonoBehaviour
         AsyncOperation sceneOp = SceneManager.LoadSceneAsync((int)nextScene);
         sceneOp.allowSceneActivation = false;
 
-        Coroutine resourceLoad = StartCoroutine(LoadResource());
+        StartCoroutine(LoadResource());
 
         while (!isSceneDone || !isResourceDone)
         {
@@ -47,7 +48,7 @@ public class LoadingScene : MonoBehaviour
             float totalProgress = (sceneProgress + resourceProgress) / 2f;
             sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, totalProgress, Time.deltaTime * 2f);
 
-            if(sceneOp.progress >= 0.9f) 
+            if (sceneOp.progress >= 0.9f)
             {
                 isSceneDone = true;
             }
@@ -55,9 +56,10 @@ public class LoadingScene : MonoBehaviour
             yield return null;
         }
 
-        while (sliderValue.fillAmount < 1f)
+        while (sliderValue.fillAmount <= 0.999f)
         {
             sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, 1f, Time.deltaTime * 2f);
+            yield return null;
         }
 
         sceneOp.allowSceneActivation = true;
@@ -70,13 +72,15 @@ public class LoadingScene : MonoBehaviour
         if (nextScene == EScene.GAME)
         {
             EEnemy[] gameResources = gameSceneResource.EnemyResource.GetTypeEnums();
+
             int total = gameResources.Length;
             int loaded = 0;
 
-            for(int i = 0; i < total; i++) 
+            for (int i = 0; i < total; i++)
             {
                 string address = gameSceneResource.EnemyResource.ConvertEnumToAddress(gameResources[i]);
-                AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(address);
+
+                var handle = Addressables.LoadAssetAsync<GameObject>(address);
 
                 yield return handle;
 

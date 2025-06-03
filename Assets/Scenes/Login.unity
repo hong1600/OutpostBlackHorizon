@@ -351,26 +351,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 38705479521057444, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 364642107775899715, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1751408227965051593, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3107033314699451925, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
-      propertyPath: m_text
-      value: BLACKHORIZON
-      objectReference: {fileID: 0}
-    - target: {fileID: 3278427492007339368, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4629577766591153831, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -411,33 +391,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5379385366804433325, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5710017347600651310, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
-      propertyPath: m_RenderMode
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1696857309}
     - target: {fileID: 5769694597477696621, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
       propertyPath: m_Name
       value: LoginUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 5924700518822883721, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450436025724516967, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1072.77
-      objectReference: {fileID: 0}
-    - target: {fileID: 7742157114357288084, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8002025194878484079, guid: 1182a7bbda22e104dafdce74f055be5a, type: 3}
-      propertyPath: m_Name
-      value: BlackText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

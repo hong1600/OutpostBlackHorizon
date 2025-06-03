@@ -1,44 +1,63 @@
-﻿using UnityEngine;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Exit Games GmbH"/>
+// <summary>Demo code for Photon Chat in Unity.</summary>
+// <author>developer@exitgames.com</author>
+// --------------------------------------------------------------------------------------------------------------------
+
+
+using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof (ChatGui))]
-public class NamePickGui : MonoBehaviour
+
+namespace Photon.Chat.Demo
 {
-    private const string UserNamePlayerPref = "NamePickUserName";
-
-    public ChatGui chatNewComponent;
-
-    public InputField idInput;
-
-    public void Start()
+    [RequireComponent(typeof(ChatGui))]
+    public class NamePickGui : MonoBehaviour
     {
-        this.chatNewComponent = FindObjectOfType<ChatGui>();
+        private const string UserNamePlayerPref = "NamePickUserName";
 
+        public ChatGui chatNewComponent;
 
-        string prefsName = PlayerPrefs.GetString(NamePickGui.UserNamePlayerPref);
-        if (!string.IsNullOrEmpty(prefsName))
+        public InputField idInput;
+
+        public void Start()
         {
-            this.idInput.text = prefsName;
+            #if UNITY_6000_0_OR_NEWER
+            this.chatNewComponent = FindFirstObjectByType<ChatGui>();
+            #else
+            this.chatNewComponent = FindObjectOfType<ChatGui>();
+            #endif
+
+            string prefsName = PlayerPrefs.GetString(UserNamePlayerPref);
+            if (!string.IsNullOrEmpty(prefsName))
+            {
+                this.idInput.text = prefsName;
+            }
         }
-    }
 
 
-    // new UI will fire "EndEdit" event also when loosing focus. So check "enter" key and only then StartChat.
-    public void EndEditOnEnter()
-    {
-        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+        // new UI will fire "EndEdit" event also when loosing focus. So check "enter" key and only then StartChat.
+        public void EndEditOnEnter()
         {
-            this.StartChat();
+            if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+            {
+                this.StartChat();
+            }
         }
-    }
 
-    public void StartChat()
-    {
-        ChatGui chatNewComponent = FindObjectOfType<ChatGui>();
-        chatNewComponent.UserName = this.idInput.text.Trim();
-		chatNewComponent.Connect();
-        enabled = false;
+        public void StartChat()
+        {
+            #if UNITY_6000_0_OR_NEWER
+            ChatGui chatNewComponent = FindFirstObjectByType<ChatGui>();
+            #else
+            ChatGui chatNewComponent = FindObjectOfType<ChatGui>();
+            #endif
 
-        PlayerPrefs.SetString(NamePickGui.UserNamePlayerPref, chatNewComponent.UserName);
+            chatNewComponent.UserName = this.idInput.text.Trim();
+            chatNewComponent.Connect();
+            this.enabled = false;
+
+            PlayerPrefs.SetString(UserNamePlayerPref, chatNewComponent.UserName);
+        }
     }
 }

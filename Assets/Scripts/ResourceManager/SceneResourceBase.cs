@@ -74,6 +74,8 @@ public abstract class SceneResourceBase<T> : MonoBehaviour where T : Enum
     }
 }
 
+#if UNITY_EDITOR
+
 [InitializeOnLoad]
 public static class EditorResourceCleaner
 {
@@ -95,3 +97,4 @@ public static class EditorResourceCleaner
         //GameSceneResource.instance.UnloadSceneResources();
     }
 }
+#endif

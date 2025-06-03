@@ -20,8 +20,6 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
 
         instance = this;
 
-        DontDestroyOnLoad(this.gameObject);
-
         PhotonNetwork.GameVersion = "1.0.0";
         PhotonNetwork.SendRate = 30;
         PhotonNetwork.SerializationRate = 10;

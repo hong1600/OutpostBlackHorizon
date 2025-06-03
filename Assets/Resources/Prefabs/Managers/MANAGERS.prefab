@@ -208,6 +208,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PhotonManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3305783986825563019, guid: 9b92f1446aec9064e800d69f74bbdff2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6636278442999124228, guid: 9b92f1446aec9064e800d69f74bbdff2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

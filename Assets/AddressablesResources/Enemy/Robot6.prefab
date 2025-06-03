@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.15
       objectReference: {fileID: 0}
+    - target: {fileID: 3606005395372280447, guid: 71b505f156c369040a8ba97c99952018, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5190343519624267632, guid: 71b505f156c369040a8ba97c99952018, type: 3}
       propertyPath: m_TagString
       value: Body
@@ -132,9 +136,7 @@ PrefabInstance:
       propertyPath: rightArmObjs.Array.data[0]
       value: 
       objectReference: {fileID: 6148489155489854688}
-    m_RemovedComponents:
-    - {fileID: 9051684924958616011, guid: 71b505f156c369040a8ba97c99952018, type: 3}
-    - {fileID: 2472058643089924616, guid: 71b505f156c369040a8ba97c99952018, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3285590677361018773, guid: 71b505f156c369040a8ba97c99952018, type: 3}
     m_AddedGameObjects: []
