@@ -37,24 +37,34 @@ public class LoadingScene : MonoBehaviour
     {
         yield return null;
 
+        yield return StartCoroutine(LoadResource());
+
         AsyncOperation sceneOp = SceneManager.LoadSceneAsync((int)nextScene);
         sceneOp.allowSceneActivation = false;
 
-        StartCoroutine(LoadResource());
-
-        while (!isSceneDone || !isResourceDone)
+        while (sceneOp.progress < 0.9f)
         {
             sceneProgress = Mathf.Clamp01(sceneOp.progress / 0.9f);
             float totalProgress = (sceneProgress + resourceProgress) / 2f;
             sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, totalProgress, Time.deltaTime * 2f);
-
-            if (sceneOp.progress >= 0.9f)
-            {
-                isSceneDone = true;
-            }
-
             yield return null;
         }
+
+        isSceneDone = true;
+
+        //while (!isSceneDone || !isResourceDone)
+        //{
+        //    sceneProgress = Mathf.Clamp01(sceneOp.progress / 0.9f);
+        //    float totalProgress = (sceneProgress + resourceProgress) / 2f;
+        //    sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, totalProgress, Time.deltaTime * 2f);
+
+        //    if (sceneOp.progress >= 0.9f)
+        //    {
+        //        isSceneDone = true;
+        //    }
+
+        //    yield return null;
+        //}
 
         while (sliderValue.fillAmount <= 0.999f)
         {
