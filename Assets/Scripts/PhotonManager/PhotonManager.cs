@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 using System;
 
-public partial class PhotonManager : MonoBehaviourPunCallbacks
+public partial class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
     public static PhotonManager instance;
+
+    const byte MATCHING_GAME_EVENT = 1;
+    const byte LOAD_COMPLETE_EVENT = 2;
+    const byte START_GAME_EVENT = 3;
+
+    int loadPlayerCount = 0;
 
     //기본설정
     private void Awake()
@@ -20,12 +27,22 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
 
         instance = this;
 
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.GameVersion = "1.0.0";
         PhotonNetwork.SendRate = 30;
         PhotonNetwork.SerializationRate = 10;
-        PhotonNetwork.AutomaticallySyncScene = false;
 
         PhotonNetwork.ConnectUsingSettings();
+    }
+
+    private void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
     }
 
     //연결되면 로비 참가
@@ -47,7 +64,6 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
     public void StartMatching()
     {
         PhotonNetwork.JoinRandomRoom();
-        Debug.Log("매칭큐시작");
     }
 
     //방 없을 시 생성
@@ -63,7 +79,6 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, options);
 
         base.OnJoinRandomFailed(returnCode, message);
-        Debug.Log("방생성");
     }
 
     //매칭 취소 시 로비로 돌아가기
@@ -72,7 +87,6 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
         if(PhotonNetwork.InRoom) 
         {
             PhotonNetwork.LeaveRoom();
-            Debug.Log("방 떠나기");
         }
         else if(PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InLobby) 
         {
@@ -87,7 +101,16 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
         {
-            StartCoroutine(StartGame());
+            if (PhotonNetwork.IsMasterClient) 
+            {
+                RaiseEventOptions options = new RaiseEventOptions();
+                options.Receivers = ReceiverGroup.All;
+
+                SendOptions sendOptions = new SendOptions();
+                sendOptions.Reliability = true;
+
+                PhotonNetwork.RaiseEvent(MATCHING_GAME_EVENT, null, options, sendOptions);
+            }
         }
     }
 
@@ -95,15 +118,43 @@ public partial class PhotonManager : MonoBehaviourPunCallbacks
     IEnumerator StartGame()
     {
         MatchingUI.instance.CompleteMatch();
+        LoadingScene.SetNextScene(EScene.GAME);
 
         yield return new WaitForSeconds(1f);
 
         if(PhotonNetwork.IsMasterClient) 
         {
-            PhotonNetwork.AutomaticallySyncScene = true;
             GameModeManager.instance.ChangeGameMode(EGameMode.MULTI);
             PhotonNetwork.LoadLevel("Loading");
-            Debug.Log("게임시작");
         }
+    }
+
+    public void OnEvent(EventData _photonEvent)
+    {
+        if (_photonEvent.Code == MATCHING_GAME_EVENT)
+        {
+            StartCoroutine(StartGame());
+        }
+        else if (_photonEvent.Code == LOAD_COMPLETE_EVENT)
+        {
+            loadPlayerCount++;
+            if(PhotonNetwork.IsMasterClient && loadPlayerCount >= PhotonNetwork.CurrentRoom.PlayerCount) 
+            {
+                RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+                SendOptions sendOptions = new SendOptions { Reliability = true };
+                PhotonNetwork.RaiseEvent(START_GAME_EVENT, null, options, sendOptions);
+            }
+        }
+        else if(_photonEvent.Code == START_GAME_EVENT) 
+        {
+            LoadingScene.AllowSceneActivation();
+        }
+    }
+
+    public void NotifySceneLoaded()
+    {
+        RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+        SendOptions sendOptions = new SendOptions { Reliability = true };
+        PhotonNetwork.RaiseEvent(LOAD_COMPLETE_EVENT, null, options, sendOptions);
     }
 }

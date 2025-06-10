@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,14 +17,24 @@ public class LoadingScene : MonoBehaviour
 
     float sceneProgress = 0f;
     float resourceProgress = 0f;
-    bool isSceneDone = false;
-    bool isResourceDone = false;
+
+    static bool isReadyToGame = false;
 
     private void Start()
     {
         gameSceneResource = ResourceManager.instance.GameSceneResource;
 
         StartCoroutine(StartLoadScene());
+    }
+
+    public static void AllowSceneActivation()
+    {
+        isReadyToGame = true;
+    }
+
+    public static void SetNextScene(EScene _eScene)
+    {
+        nextScene = _eScene;
     }
 
     public static void LoadScene(EScene _eScene)
@@ -50,26 +61,20 @@ public class LoadingScene : MonoBehaviour
             yield return null;
         }
 
-        isSceneDone = true;
-
-        //while (!isSceneDone || !isResourceDone)
-        //{
-        //    sceneProgress = Mathf.Clamp01(sceneOp.progress / 0.9f);
-        //    float totalProgress = (sceneProgress + resourceProgress) / 2f;
-        //    sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, totalProgress, Time.deltaTime * 2f);
-
-        //    if (sceneOp.progress >= 0.9f)
-        //    {
-        //        isSceneDone = true;
-        //    }
-
-        //    yield return null;
-        //}
-
         while (sliderValue.fillAmount <= 0.999f)
         {
             sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, 1f, Time.deltaTime * 2f);
             yield return null;
+        }
+
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonManager.instance.NotifySceneLoaded();
+
+            while (!isReadyToGame)
+            {
+                yield return null;
+            }
         }
 
         sceneOp.allowSceneActivation = true;
@@ -77,8 +82,6 @@ public class LoadingScene : MonoBehaviour
 
     IEnumerator LoadResource()
     {
-        isResourceDone = false;
-
         if (nextScene == EScene.GAME)
         {
             EEnemy[] gameResources = gameSceneResource.EnemyResource.GetTypeEnums();
@@ -105,6 +108,5 @@ public class LoadingScene : MonoBehaviour
         }
 
         resourceProgress = 1f;
-        isResourceDone = true;
     }
 }
