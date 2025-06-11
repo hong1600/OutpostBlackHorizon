@@ -6,6 +6,7 @@ public class CameraFpsMove : MonoBehaviour
 {
     Camera mainCam;
 
+    InputManager inputManager;
     ViewState viewState;
     CameraTopToFps topToFps;
 
@@ -20,6 +21,7 @@ public class CameraFpsMove : MonoBehaviour
 
     private void Start()
     {
+        inputManager = InputManager.instance;
         viewState = GameManager.instance.ViewState;
         topToFps = CameraManager.instance.CameraTopToFps;
         playerObj = PlayerManager.instance.gameObject;
@@ -27,6 +29,8 @@ public class CameraFpsMove : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (inputManager.isInputLock) return;
+
         LookMouse();
     }
 

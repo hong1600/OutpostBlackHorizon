@@ -23,6 +23,11 @@ public class AirStrike : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        InputManager.instance.onInputZ += FireAirStrike;
+    }
+
     private void Update()
     {
         if (coolTime >= 0)
@@ -31,7 +36,7 @@ public class AirStrike : MonoBehaviour
         }
     }
 
-    public void PlayAirStrike()
+    public void FireAirStrike()
     {
         if(coolTime <= 0) 
         {

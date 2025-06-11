@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    InputManager inputManager;
     PlayerManager playerManager;
     PlayerStatus playerStatus;
     Camera mainCam;
@@ -46,21 +47,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        inputManager = InputManager.instance;
         playerManager = PlayerManager.instance;
         playerStatus = playerManager.playerStatus;
     }
 
     private void Update()
     {
+        CheckGround();
+
+        if (inputManager.isInputLock) return;
+
         CheckInput();
         Run();
-        CheckGround();
     }
 
     private void FixedUpdate()
     {
-        Move();
         SetGravity();
+
+        if (inputManager.isInputLock) return;
+
+        Move();
     }
 
     private void CheckInput()

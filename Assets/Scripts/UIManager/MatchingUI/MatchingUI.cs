@@ -25,7 +25,7 @@ public class MatchingUI : Singleton<MatchingUI>
         elapsedTime = 0f;
         time = 0;
 
-        PhotonManager.instance.StartMatching();
+        PhotonManager.instance.PhotonMaching.StartMatching();
     }
 
     private void Update()
@@ -58,6 +58,6 @@ public class MatchingUI : Singleton<MatchingUI>
     public void ClickCancleBtn()
     {
         this.gameObject.SetActive(false);
-        PhotonManager.instance.CancleMatching();
+        PhotonManager.instance.PhotonMaching.CancleMatching();
     }
 }

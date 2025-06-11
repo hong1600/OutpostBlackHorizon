@@ -30,6 +30,7 @@ public class GameUI : Singleton<GameUI>
     [SerializeField] UIBuild uiBuild;
     [SerializeField] UIBossHpbar uiBossHpbar;
     [SerializeField] UIInteraction uiInteraction;
+    [SerializeField] UIGameChat uiGameChat;
 
     [Header("Canvas")]
     [SerializeField] Transform skillBarParent;
@@ -123,6 +124,7 @@ public class GameUI : Singleton<GameUI>
     public UIBuild UIBuild { get { return uiBuild; } }
     public UIBossHpbar UIBossHpbar { get { return uiBossHpbar; } }
     public UIInteraction UIInteraction { get { return uiInteraction; } }
+    public UIGameChat UIGameChat { get { return uiGameChat; } }
     public GameObject HitAim { get { return hitAim; } }
     public GameObject scope { get { return scopeObj; } }
 }

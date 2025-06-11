@@ -13,6 +13,8 @@ public class InputManager : Singleton<InputManager>
     public event Action<Vector2> onInputKey;
     public event Action onInputEsc;
     public event Action onInputB;
+    public event Action onInputZ;
+    public event Action onInputX;
 
     public FieldSelector fieldSelector;
     public CustomCursor cursor;
@@ -25,6 +27,8 @@ public class InputManager : Singleton<InputManager>
 
     public Vector3 keyDelta { get; private set; }
 
+    public bool isInputLock = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -32,6 +36,8 @@ public class InputManager : Singleton<InputManager>
 
     private void Update()
     {
+        if (isInputLock) return;
+
         DownMouseLeft();
         DragMouseLeft();
         UpMouseLeft();
@@ -40,6 +46,18 @@ public class InputManager : Singleton<InputManager>
         InputMouse();
         InputEsc();
         InputB();
+        InputX();
+        InputZ();
+    }
+
+    public void LockInput()
+    {
+        isInputLock = true;
+    }
+
+    public void UnlockInput()
+    {
+        isInputLock = false;
     }
 
     private void DownMouseLeft()
@@ -116,6 +134,22 @@ public class InputManager : Singleton<InputManager>
         if(Input.GetKeyDown(KeyCode.B)) 
         {
             onInputB?.Invoke();
+        }
+    }
+
+    private void InputX()
+    {
+        if(Input.GetKeyDown(KeyCode.X)) 
+        {
+            onInputX?.Invoke();
+        }
+    }
+
+    private void InputZ()
+    {
+        if(Input.GetKeyDown(KeyCode.Z)) 
+        {
+            onInputZ?.Invoke();
         }
     }
 }

@@ -32,6 +32,8 @@ public class GuideMissile : MonoBehaviour
         bulletPool = ObjectPoolManager.instance.BulletPool;
         effectPool = ObjectPoolManager.instance.EffectPool;
         viewState = GameManager.instance.ViewState;
+
+        InputManager.instance.onInputX += FireMissile;
     }
 
     private void Update()

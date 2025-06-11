@@ -9,8 +9,6 @@ public class PlayerCombat : MonoBehaviour
     CameraFpsShake cameraFpsShake;
     GunManager gunManager;
     GunMovement gunMovement;
-    AirStrike airStrike;
-    GuideMissile guideMissile;
 
     public event Action onUseBullet;
 
@@ -28,8 +26,6 @@ public class PlayerCombat : MonoBehaviour
         cameraFpsShake = CameraManager.instance.CameraFpsShake;
         gunManager = GunManager.instance;
         gunMovement = GunManager.instance.GunMovement;
-        airStrike = GameManager.instance.AirStrike;
-        guideMissile = GameManager.instance.GuideMissile;
     }
 
     private void Update()
@@ -42,16 +38,6 @@ public class PlayerCombat : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && !isAttack && !gunManager.isReloading && gunManager.curGrenadeCount > 0) 
         {
             StartCoroutine(StartAttackGrenade());
-        }
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            airStrike.PlayAirStrike();
-        }
-
-        if(Input.GetKeyDown(KeyCode.X)) 
-        {
-            guideMissile.FireMissile();
         }
     }
 

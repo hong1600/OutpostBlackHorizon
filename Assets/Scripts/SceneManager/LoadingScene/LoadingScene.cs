@@ -69,7 +69,7 @@ public class LoadingScene : MonoBehaviour
 
         if (PhotonNetwork.InRoom)
         {
-            PhotonManager.instance.NotifySceneLoaded();
+            PhotonManager.instance.PhotonMaching.NotifySceneLoaded();
 
             while (!isReadyToGame)
             {
