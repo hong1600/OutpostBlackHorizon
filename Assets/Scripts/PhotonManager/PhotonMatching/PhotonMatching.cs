@@ -108,12 +108,12 @@ public class PhotonMatching : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         MatchingUI.instance.CompleteMatch();
         LoadingScene.SetNextScene(EScene.GAME);
+        GameModeManager.instance.ChangeGameMode(EGameMode.MULTI);
 
         yield return new WaitForSeconds(1f);
 
         if(PhotonNetwork.IsMasterClient) 
         {
-            GameModeManager.instance.ChangeGameMode(EGameMode.MULTI);
             PhotonNetwork.LoadLevel("Loading");
         }
     }
@@ -137,6 +137,11 @@ public class PhotonMatching : MonoBehaviourPunCallbacks, IOnEventCallback
         else if(_photonEvent.Code == START_GAME_EVENT) 
         {
             LoadingScene.AllowSceneActivation();
+
+            if(PhotonNetwork.IsMasterClient) 
+            {
+                PhotonNetwork.LoadLevel("Game");
+            }
         }
     }
 

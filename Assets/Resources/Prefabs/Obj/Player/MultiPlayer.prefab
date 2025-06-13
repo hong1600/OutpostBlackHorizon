@@ -433,7 +433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: MultiPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}
       propertyPath: m_Layer
@@ -779,13 +779,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 4222848065165452146}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 8418064328776378238}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8155216342624451183}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4307799046590901684}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4480630026918142115}
@@ -795,12 +795,37 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8167821733436501344}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6017252154739866988}
   m_SourcePrefab: {fileID: 100100000, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}
 --- !u!1 &8645897318515516571 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}
   m_PrefabInstance: {fileID: 8880267355827182026}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4222848065165452146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8645897318515516571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &8418064328776378238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -835,33 +860,6 @@ MonoBehaviour:
   bulletDmg: 30
   bulletSpd: 200
   grenadeSpd: 50
---- !u!114 &4307799046590901684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8645897318515516571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 559c777c1cdcb5c4e97b9fd91f426648, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 5
-  runSpeed: 10
-  walkInterval: 0.5
-  runInterval: 0.4
-  energyInterval: 0.1
-  energyRecovery: 30
-  jumpForce: 5
-  jumpCount: 0
-  gravity: -9.81
-  fallGravity: 0.5
-  maxFallSpeed: 50
-  slopeLimit: 45
-  isGround: 0
-  isRun: 0
-  isJump: 0
 --- !u!114 &4480630026918142115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -924,6 +922,34 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-6017252154739866988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8645897318515516571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b34d617457d664bb7a1b3b2abb99eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMove: 0
+  walkSpeed: 5
+  runSpeed: 10
+  walkInterval: 0.5
+  runInterval: 0.4
+  energyInterval: 0.1
+  energyRecovery: 30
+  jumpForce: 5
+  jumpCount: 0
+  gravity: -9.81
+  fallGravity: 0.5
+  maxFallSpeed: 50
+  slopeLimit: 45
+  isGround: 0
+  isRun: 0
+  isJump: 0
 --- !u!4 &8986851010600173089 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ef5a0fc8492ea446b80e5c3b6a8d714, type: 3}

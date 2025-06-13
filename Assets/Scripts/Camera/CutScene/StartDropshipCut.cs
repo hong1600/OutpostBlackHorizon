@@ -25,7 +25,7 @@ public class StartDropshipCut : MonoBehaviour
     [Header("Player Settings")]
     [SerializeField] GameObject player;
     [SerializeField] Transform playerStartPos;
-    PlayerMovement playerMovement;
+    PlayerMovementBase playerMovement;
     PlayerCombat playerCombat;
     Rigidbody playerRigid;
 
@@ -34,7 +34,7 @@ public class StartDropshipCut : MonoBehaviour
     private void Start()
     {
         player = GameManager.instance.PlayerSpawner.player;
-        playerMovement = player.GetComponent<PlayerMovement>();
+        playerMovement = PlayerManager.instance.playerMovement;
         playerCombat = player.GetComponent<PlayerCombat>();
         AudioManager.instance.PlayBgm(EBgm.GAMESTART);
         Init();

@@ -3,84 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : PlayerMovementBase
 {
-    InputManager inputManager;
-    PlayerManager playerManager;
-    PlayerStatus playerStatus;
-    Camera mainCam;
-    Rigidbody rigid;
-    CapsuleCollider cap;
-
-    public bool isMove { get; private set; }
-    [SerializeField] float walkSpeed = 5f;
-    [SerializeField] float runSpeed = 10f;
-    [SerializeField] float walkInterval = 0.5f;
-    [SerializeField] float runInterval = 0.4f;
-    float footstepTimer = 0f;
-    Vector3 moveDir;
-
-    [SerializeField] float energyInterval = 0.1f;
-    [SerializeField] float energyRecovery = 30;
-    float energyTimer;
-    bool isCanRun = true;
-
-    [SerializeField] float jumpForce = 5f;
-    [SerializeField] int jumpCount = 0;
-
-    [SerializeField] float gravity = -9.81f;
-    [SerializeField] float fallGravity = 0.5f;
-    [SerializeField] float maxFallSpeed = 50f;
-
-    [SerializeField] float slopeLimit = 45f;
-
-    [SerializeField] internal bool isGround = false;
-    [SerializeField] internal bool isRun = false;
-    [SerializeField] bool isJump = false;
-
-    private void Awake()
-    {
-        mainCam = Camera.main;
-        rigid = GetComponent<Rigidbody>();
-        cap = GetComponent<CapsuleCollider>();
-    }
-
-    private void Start()
-    {
-        inputManager = InputManager.instance;
-        playerManager = PlayerManager.instance;
-        playerStatus = playerManager.playerStatus;
-    }
-
-    private void Update()
-    {
-        CheckGround();
-
-        if (inputManager.isInputLock) return;
-
-        CheckInput();
-        Run();
-    }
-
-    private void FixedUpdate()
-    {
-        SetGravity();
-
-        if (inputManager.isInputLock) return;
-
-        Move();
-    }
-
-    private void CheckInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Space)) 
-        {
-            jumpCount++;
-            Jump();
-        }
-    }
-
-    private void CheckGround()
+    protected override void CheckGround()
     {
         if (Physics.SphereCast(cap.bounds.center, cap.radius, Vector3.down,
             out RaycastHit hit, cap.bounds.extents.y + 0.2f , LayerMask.GetMask("Ground"))
@@ -96,23 +21,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void CheckSlope()
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(cap.bounds.center, Vector3.down, out hit,
-            cap.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground")))
-        {
-            float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
-
-            if(slopeAngle > slopeLimit) 
-            {
-                rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
-            }
-        }
-    }
-
-    private void SetGravity()
+    protected override void SetGravity()
     {
         if (!isGround) 
         {
@@ -131,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Move()
+    protected override void Move()
     {
         if (playerStatus.isDie || isJump) return;
 
@@ -175,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Run()
+    protected override void Run()
     {
         if(Input.GetKey(KeyCode.LeftShift) && playerStatus.curEnergy > 0 && isCanRun)
         {
@@ -210,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Jump()
+    protected override void Jump()
     {
         if (jumpCount == 0)
         {

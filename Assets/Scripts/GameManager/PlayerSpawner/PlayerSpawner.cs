@@ -27,11 +27,11 @@ public class PlayerSpawner : MonoBehaviour
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                player = Instantiate(playerPref, mutiPlayerTrs[0].transform.position, Quaternion.identity);
+                player = PhotonNetwork.Instantiate("Prefabs/Obj/Player/MultiPlayer", mutiPlayerTrs[0].transform.position, Quaternion.identity);
             }
             else
             {
-                player = Instantiate(playerPref, mutiPlayerTrs[1].transform.position, Quaternion.identity);
+                player = PhotonNetwork.Instantiate("Prefabs/Obj/Player/MultiPlayer", mutiPlayerTrs[1].transform.position, Quaternion.identity);
             }
         }
     }

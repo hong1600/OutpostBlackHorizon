@@ -50,34 +50,37 @@ public class LoadingScene : MonoBehaviour
 
         yield return StartCoroutine(LoadResource());
 
-        AsyncOperation sceneOp = SceneManager.LoadSceneAsync((int)nextScene);
-        sceneOp.allowSceneActivation = false;
-
-        while (sceneOp.progress < 0.9f)
-        {
-            sceneProgress = Mathf.Clamp01(sceneOp.progress / 0.9f);
-            float totalProgress = (sceneProgress + resourceProgress) / 2f;
-            sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, totalProgress, Time.deltaTime * 2f);
-            yield return null;
-        }
-
-        while (sliderValue.fillAmount <= 0.999f)
-        {
-            sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, 1f, Time.deltaTime * 2f);
-            yield return null;
-        }
-
-        if (PhotonNetwork.InRoom)
+        if (PhotonNetwork.InRoom && nextScene == EScene.GAME)
         {
             PhotonManager.instance.PhotonMaching.NotifySceneLoaded();
 
-            while (!isReadyToGame)
+            if (!PhotonNetwork.IsMasterClient)
             {
-                yield return null;
+                while (!isReadyToGame)
+                    yield return null;
             }
         }
+        else
+        {
+            AsyncOperation sceneOp = SceneManager.LoadSceneAsync((int)nextScene);
+            sceneOp.allowSceneActivation = false;
 
-        sceneOp.allowSceneActivation = true;
+            while (sceneOp.progress < 0.9f)
+            {
+                sceneProgress = Mathf.Clamp01(sceneOp.progress / 0.9f);
+                float totalProgress = (sceneProgress + resourceProgress) / 2f;
+                sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, totalProgress, Time.deltaTime * 2f);
+                yield return null;
+            }
+
+            while (sliderValue.fillAmount <= 0.999f)
+            {
+                sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, 1f, Time.deltaTime * 2f);
+                yield return null;
+            }
+
+            sceneOp.allowSceneActivation = true;
+        }
     }
 
     IEnumerator LoadResource()

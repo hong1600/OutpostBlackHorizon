@@ -23,7 +23,7 @@ public class PlayerManager : Singleton<PlayerManager>
     public PlayerAI playerAI { get; private set; }
     public CapsuleCollider cap { get; private set; }
     public Animator anim { get; private set; }
-    public PlayerMovement playerMovement { get; private set; }
+    public PlayerMovementBase playerMovement { get; private set; }
     public PlayerCombat playerCombat { get; private set; }
     public PlayerStatus playerStatus { get; private set; }
     public GameObject Rifle { get { return rifle; } }
@@ -35,7 +35,7 @@ public class PlayerManager : Singleton<PlayerManager>
         cap = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
 
-        playerMovement = GetComponent<PlayerMovement>();
+        playerMovement = GetComponent<PlayerMovementBase>();
         playerCombat = GetComponent<PlayerCombat>();
         playerStatus = GetComponent<PlayerStatus>();
 
