@@ -21,24 +21,29 @@ public class ViewState : MonoBehaviour
 
     private void Start()
     {
+        GameManager.instance.PlayerSpawner.onSpawnPlayer += InitPlayer;
+
         cameraTopToFps = CameraManager.instance.CameraTopToFps;
         cameraFpsZoom = CameraManager.instance.CameraFpsZoom;
         cameraFpsShake = CameraManager.instance.CameraFpsShake;
 
-        fpsComponent.Add(PlayerManager.instance.playerMovement);
-        fpsComponent.Add(PlayerManager.instance.playerCombat);
-        fpsComponent.Add(GunManager.instance);
-        fpsComponent.Add(GunManager.instance.GunMovement);
         fpsComponent.Add(CameraManager.instance.CameraFpsMove);
         fpsComponent.Add(cameraFpsZoom);
-        rifle = PlayerManager.instance.Rifle;
 
         topComponent.Add(FieldManager.instance.FieldBuild);
         topComponent.Add(CameraManager.instance.CameraTopMove);
         topComponent.Add(CameraManager.instance.CameraTopZoom);
 
         turretComponent.Add(CameraManager.instance.CameraTurretMove);
+    }
 
+    private void InitPlayer()
+    {
+        fpsComponent.Add(GameManager.instance.PlayerSpawner.player.GetComponent<PlayerMovement>());
+        fpsComponent.Add(GameManager.instance.PlayerSpawner.player.GetComponent<PlayerCombat>());
+        fpsComponent.Add(GameManager.instance.PlayerSpawner.player.GetComponent<PlayerManager>().GunManager);
+        fpsComponent.Add(GameManager.instance.PlayerSpawner.player.GetComponent<PlayerManager>().GunManager.GunMovement);
+        rifle = GameManager.instance.PlayerSpawner.player.GetComponent<PlayerManager>().Rifle;
     }
 
     public void SetViewState(EViewState _state)
@@ -138,7 +143,7 @@ public class ViewState : MonoBehaviour
 
         if (rifle == null)
         {
-            rifle = PlayerManager.instance.Rifle;
+            rifle = GameManager.instance.PlayerSpawner.player.GetComponent<PlayerManager>().Rifle;
         }
         rifle.SetActive(false);
         GameUI.instance.SwitchNone();

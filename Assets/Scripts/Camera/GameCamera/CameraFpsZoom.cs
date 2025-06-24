@@ -23,7 +23,7 @@ public class CameraFpsZoom : MonoBehaviour
 
     private void Start()
     {
-        rifle = PlayerManager.instance.Rifle;
+        rifle = GameManager.instance.PlayerSpawner.player.GetComponent<PlayerManager>().Rifle;
         scope = GameUI.instance.scope;
         InputManager.instance.onRightClickDown += ZoomCamera;
     }

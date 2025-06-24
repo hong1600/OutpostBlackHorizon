@@ -1,4 +1,6 @@
 using DG.Tweening;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
@@ -31,11 +33,17 @@ public class CameraTopToFps : MonoBehaviour
         isArrive = true;
 
         gameManager = GameManager.instance;
-        gameManager.ViewState.onViewStateChange += SetCameraMode;
         cameraShake = CameraManager.instance.CameraFpsShake;
-        playerObj = PlayerManager.instance.gameObject;
-        playerEyeTrs = PlayerManager.instance.playerEyeTrs;
-        rifle = PlayerManager.instance.Rifle;
+
+        GameManager.instance.PlayerSpawner.onSpawnPlayer += InitPlayer;
+        gameManager.ViewState.onViewStateChange += SetCameraMode;
+    }
+
+    private void InitPlayer()
+    {
+        playerObj = gameManager.PlayerSpawner.player;
+        playerEyeTrs = gameManager.PlayerSpawner.player.GetComponent<PlayerManager>().playerEyeTrs;
+        rifle = gameManager.PlayerSpawner.player.GetComponent<PlayerManager>().Rifle;
     }
 
     private void Update()
@@ -108,12 +116,14 @@ public class CameraTopToFps : MonoBehaviour
         cameraShake.Init();
     }
 
+
     private void SwitchMode()
     {
         bool isFPS = gameManager.ViewState.CurViewState == EViewState.FPS;
 
         if(isFPS) 
         {
+            Debug.Log(rifle);
             rifle.transform.SetParent(mainCam.transform, true);
             rifle.transform.localPosition = new Vector3(0.07f, -0.27f, 0.29f);
             rifle.transform.localRotation = Quaternion.identity;

@@ -19,6 +19,10 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
+
+        Debug.Log($"[GameManager] Awake ? instanceID={GetInstanceID()}");
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public Timer Timer { get { return timer; }}

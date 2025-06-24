@@ -14,13 +14,19 @@ public class MiniMap : MonoBehaviour
 
     private void Start()
     {
-        playerTrs = GameManager.instance.PlayerSpawner.player.transform;
+        GameManager.instance.PlayerSpawner.onSpawnPlayer += InitPlayer;
+
         mainCam = Camera.main;
+    }
+
+    private void InitPlayer()
+    {
+        playerTrs = GameManager.instance.PlayerSpawner.player.transform;
     }
 
     private void Update()
     {
-        if (mainCam != null)
+        if (mainCam != null && playerTrs != null)
         {
             MoveCam();
             UpdatePlayer();

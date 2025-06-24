@@ -22,11 +22,6 @@ public class MSceneManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        LoadSceneResources(EScene.GAME);
-    }
-
     public void ChangeScene(EScene _eScene, bool _loading = false)
     {
         if (scene == _eScene)
@@ -56,8 +51,11 @@ public class MSceneManager : MonoBehaviour
                 case EScene.LOADING:
                     SceneManager.LoadScene("Loading");
                     break;
-                case EScene.GAME:
-                    SceneManager.LoadScene("Game");
+                case EScene.SINGLEGAME:
+                    SceneManager.LoadScene("SingleGame");
+                    break;
+                case EScene.MULTIGAME:
+                    SceneManager.LoadScene("MultiGame");
                     break;
                 case EScene.END:
                     SceneManager.LoadScene("End");
@@ -78,7 +76,10 @@ public class MSceneManager : MonoBehaviour
                 break;
             case EScene.WAITING:
                 break;
-            case EScene.GAME:
+            case EScene.SINGLEGAME:
+                ResourceManager.instance.GameSceneResource.Load();
+                break;
+            case EScene.MULTIGAME:
                 ResourceManager.instance.GameSceneResource.Load();
                 break;
             default:
@@ -96,8 +97,10 @@ public class MSceneManager : MonoBehaviour
                 return EScene.LOBBY;
             case "Waiting":
                 return EScene.WAITING;
-            case "Game":
-                return EScene.GAME;
+            case "SingleGame":
+                return EScene.SINGLEGAME;
+            case "MultiGame":
+                return EScene.MULTIGAME;
             default:
                 return 0;
         }

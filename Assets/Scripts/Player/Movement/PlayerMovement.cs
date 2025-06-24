@@ -3,49 +3,92 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : PlayerMovementBase
+public class PlayerMovement : MonoBehaviour
 {
-    protected override void CheckGround()
+    protected InputManager inputManager;
+    protected PlayerManager playerManager;
+    protected PlayerStatus playerStatus;
+    protected Camera mainCam;
+    protected Rigidbody rigid;
+    protected CapsuleCollider cap;
+
+    public bool isMove;
+    [SerializeField] protected float walkSpeed = 5f;
+    [SerializeField] protected float runSpeed = 10f;
+    [SerializeField] protected float walkInterval = 0.5f;
+    [SerializeField] protected float runInterval = 0.4f;
+    protected float footstepTimer = 0f;
+    protected Vector3 moveDir;
+
+    [SerializeField] protected float energyInterval = 0.1f;
+    [SerializeField] protected float energyRecovery = 30;
+    protected float energyTimer;
+    protected bool isCanRun = true;
+
+    [SerializeField] protected float jumpForce = 5f;
+    [SerializeField] protected int jumpCount = 0;
+
+    [SerializeField] protected float gravity = -9.81f;
+    [SerializeField] protected float fallGravity = 0.5f;
+    [SerializeField] protected float maxFallSpeed = 50f;
+
+    [SerializeField] protected float slopeLimit = 45f;
+
+    [SerializeField] protected internal bool isGround = false;
+    [SerializeField] protected internal bool isRun = false;
+    [SerializeField] protected bool isJump = false;
+
+    protected float moveX;
+    protected float moveZ;
+
+    protected virtual void Awake()
     {
-        if (Physics.SphereCast(cap.bounds.center, cap.radius, Vector3.down,
-            out RaycastHit hit, cap.bounds.extents.y + 0.2f , LayerMask.GetMask("Ground"))
-            && rigid.velocity.y <= 0.5f)
+        mainCam = Camera.main;
+        rigid = GetComponent<Rigidbody>();
+        cap = GetComponent<CapsuleCollider>();
+    }
+
+    protected virtual void Start()
+    {
+        inputManager = InputManager.instance;
+        playerManager = GetComponent<PlayerManager>();
+        playerStatus = playerManager.playerStatus;
+    }
+
+    protected virtual void Update()
+    {
+        CheckGround();
+
+        if (inputManager.isInputLock) return;
+
+        CheckInput();
+        Run();
+    }
+
+    private void FixedUpdate()
+    {
+        SetGravity();
+
+        if (inputManager.isInputLock) return;
+
+        Move();
+    }
+
+    private void CheckInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            isGround = true;
-            isJump = false;
-            jumpCount = 0;
-        }
-        else
-        {
-            isGround = false;
+            jumpCount++;
+            Jump();
         }
     }
 
-    protected override void SetGravity()
-    {
-        if (!isGround) 
-        {
-            fallGravity -= gravity * Time.fixedDeltaTime;
-            rigid.velocity += Vector3.up * gravity * Time.fixedDeltaTime;
-
-            if (rigid.velocity.y < 0)
-            {
-                rigid.velocity += Vector3.up * gravity * (fallGravity - 1) * Time.fixedDeltaTime;
-            }
-
-            if (rigid.velocity.y < -maxFallSpeed)
-            {
-                rigid.velocity = new Vector3(rigid.velocity.x, -maxFallSpeed, rigid.velocity.z);
-            }
-        }
-    }
-
-    protected override void Move()
+    protected virtual void Move()
     {
         if (playerStatus.isDie || isJump) return;
 
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
+        moveX = Input.GetAxisRaw("Horizontal");
+        moveZ = Input.GetAxisRaw("Vertical");
 
         Vector3 inputDir = new Vector3(moveX, 0, moveZ).normalized;
 
@@ -84,13 +127,65 @@ public class PlayerMovement : PlayerMovementBase
         }
     }
 
-    protected override void Run()
+
+    private void CheckSlope()
     {
-        if(Input.GetKey(KeyCode.LeftShift) && playerStatus.curEnergy > 0 && isCanRun)
+        RaycastHit hit;
+
+        if (Physics.Raycast(cap.bounds.center, Vector3.down, out hit,
+            cap.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground")))
+        {
+            float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
+
+            if (slopeAngle > slopeLimit)
+            {
+                rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
+            }
+        }
+    }
+
+    private void CheckGround()
+    {
+        if (Physics.SphereCast(cap.bounds.center, cap.radius, Vector3.down,
+            out RaycastHit hit, cap.bounds.extents.y + 0.2f, LayerMask.GetMask("Ground"))
+            && rigid.velocity.y <= 0.5f)
+        {
+            isGround = true;
+            isJump = false;
+            jumpCount = 0;
+        }
+        else
+        {
+            isGround = false;
+        }
+    }
+
+    private void SetGravity()
+    {
+        if (!isGround)
+        {
+            fallGravity -= gravity * Time.fixedDeltaTime;
+            rigid.velocity += Vector3.up * gravity * Time.fixedDeltaTime;
+
+            if (rigid.velocity.y < 0)
+            {
+                rigid.velocity += Vector3.up * gravity * (fallGravity - 1) * Time.fixedDeltaTime;
+            }
+
+            if (rigid.velocity.y < -maxFallSpeed)
+            {
+                rigid.velocity = new Vector3(rigid.velocity.x, -maxFallSpeed, rigid.velocity.z);
+            }
+        }
+    }
+
+    private void Run()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && playerStatus.curEnergy > 0 && isCanRun)
         {
             isRun = true;
 
-            if(Time.time > energyTimer) 
+            if (Time.time > energyTimer)
             {
                 playerStatus.UseEnergy(1);
                 energyTimer = Time.time + energyInterval;
@@ -106,7 +201,7 @@ public class PlayerMovement : PlayerMovementBase
         {
             isRun = false;
 
-            if(playerStatus.curEnergy >= energyRecovery) 
+            if (playerStatus.curEnergy >= energyRecovery)
             {
                 isCanRun = true;
             }
@@ -119,7 +214,7 @@ public class PlayerMovement : PlayerMovementBase
         }
     }
 
-    protected override void Jump()
+    private void Jump()
     {
         if (jumpCount == 0)
         {

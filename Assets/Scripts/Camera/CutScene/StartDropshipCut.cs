@@ -1,5 +1,8 @@
 using Cinemachine;
 using DG.Tweening;
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,20 +25,13 @@ public class StartDropshipCut : MonoBehaviour
     [SerializeField] GameObject hatch;
     [SerializeField] float hatchSpeed = 2f;
 
-    [Header("Player Settings")]
-    [SerializeField] GameObject player;
-    [SerializeField] Transform playerStartPos;
-    PlayerMovementBase playerMovement;
-    PlayerCombat playerCombat;
-    Rigidbody playerRigid;
-
     [SerializeField] GameObject restBtn;
+
+    bool isWaiting = true;
+    bool isArrive = false;
 
     private void Start()
     {
-        player = GameManager.instance.PlayerSpawner.player;
-        playerMovement = PlayerManager.instance.playerMovement;
-        playerCombat = player.GetComponent<PlayerCombat>();
         AudioManager.instance.PlayBgm(EBgm.GAMESTART);
         Init();
         StartCoroutine(StartMove());
@@ -53,19 +49,17 @@ public class StartDropshipCut : MonoBehaviour
         FieldManager.instance.enabled = false;
         EnemyManager.instance.enabled = false;
         restBtn.SetActive(false);
-        GameManager.instance.ViewState.SwitchNone();
+        GameUI.instance.SwitchNone();
         CameraManager.instance.enabled = false;
-        playerRigid = player.GetComponent<Rigidbody>();
-        playerRigid.isKinematic = true;
-        playerMovement.enabled = false;
-        playerCombat.enabled = false;
-        player.transform.SetParent(dropship.transform);
-        player.transform.position = playerStartPos.position;
-        player.transform.localRotation = Quaternion.Euler(0, 180, 0);
         hatch.transform.localRotation = Quaternion.identity;
 
         CameraManager.instance.CutScene.PlayClip(clip);
         cam.enabled = true;
+    }
+
+    public void WaitingSpawn()
+    {
+        isWaiting = false;
     }
 
     IEnumerator StartMove()
@@ -75,6 +69,14 @@ public class StartDropshipCut : MonoBehaviour
         moveSpeed = 40f;
 
         yield return StartCoroutine(StartMoveToTarget(pos2));
+
+        isArrive = true;
+
+        yield return new WaitForSeconds(2);
+
+        StartCoroutine(StartOpenHatch());
+
+        PhotonManager.instance.PhotonMaching.ArriveDropship();
     }
 
     IEnumerator StartMoveToTarget(Transform _target)
@@ -88,28 +90,29 @@ public class StartDropshipCut : MonoBehaviour
 
             dropship.transform.position = Vector3.MoveTowards
                 (dropship.transform.position, _target.position, speed * Time.deltaTime);
-            player.transform.position = playerStartPos.position;
 
             yield return null;
         }
 
-        if (Vector3.Distance(dropship.transform.position, pos2.position) <= 0.1f)
+        if (Vector3.Distance(dropship.transform.position, pos2.position) <= 0.1f && !isArrive)
         {
-            yield return new WaitForSeconds(2);
-
-            StartCoroutine(StartOpenHatch());
+            yield break;
         }
     }
 
     IEnumerator StartOpenHatch()
     {
+        while (isWaiting) 
+        {
+            yield return null;
+        }
+
         Quaternion targetRot = Quaternion.Euler(-45, 0, 0);
 
         hatch.transform.DOLocalRotate(targetRot.eulerAngles, hatchSpeed).SetEase(Ease.InOutSine);
 
         yield return new WaitForSeconds(hatchSpeed);
 
-        player.transform.SetParent(null);
         hatch.transform.localRotation = targetRot;
 
         StartCoroutine(StartChangePlayer());
@@ -132,7 +135,6 @@ public class StartDropshipCut : MonoBehaviour
         this.enabled = false;
         GameManager.instance.ViewState.SetViewState(EViewState.FPS);
         restBtn.SetActive(true);
-        playerRigid.isKinematic = false;
         camObj.SetActive(false);
     }
 }

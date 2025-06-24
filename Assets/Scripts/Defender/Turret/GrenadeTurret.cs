@@ -6,7 +6,7 @@ public class GrenadeTurret : MonoBehaviour
 {
     PlayerManager playerManager;
     CameraFpsShake cameraFpsShake;
-    BulletPool bulletPool;
+    IBulletPool bulletPool;
 
     [SerializeField] Transform eyeTrs;
     [SerializeField] Transform fireTrs;
@@ -16,9 +16,15 @@ public class GrenadeTurret : MonoBehaviour
 
     private void Start()
     {
-        playerManager = PlayerManager.instance;
+        GameManager.instance.PlayerSpawner.onSpawnPlayer += InitPlayer;
+
         cameraFpsShake = CameraManager.instance.CameraFpsShake;
-        bulletPool = ObjectPoolManager.instance.BulletPool;
+        bulletPool = Shared.Instance.poolManager.BulletPool;
+    }
+
+    private void InitPlayer()
+    {
+        playerManager = GameManager.instance.PlayerSpawner.player.GetComponent<PlayerManager>();
     }
 
     public void ChangeTurretView()

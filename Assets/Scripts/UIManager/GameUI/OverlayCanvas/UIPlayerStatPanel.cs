@@ -15,7 +15,12 @@ public class UIPlayerStatPanel : MonoBehaviour
 
     private void Start()
     {
-        playerStatus = PlayerManager.instance.playerStatus;
+        GameManager.instance.PlayerSpawner.onSpawnPlayer += InitPlayer;
+    }
+
+    private void InitPlayer()
+    {
+        playerStatus = GameManager.instance.PlayerSpawner.player.GetComponent<PlayerStatus>();
         playerStatus.onTakeDmg += UpdateHp;
         playerStatus.onFillHp += UpdateHp;
         playerStatus.onUseEnergy += UpdateEnergy;

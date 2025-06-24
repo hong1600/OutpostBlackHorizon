@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class LoadingScene : MonoBehaviour
 {
     GameSceneResource gameSceneResource;
+    GameModeManager gameModeManager;
 
     static EScene nextScene;
     [SerializeField] Image sliderValue;
@@ -23,6 +24,7 @@ public class LoadingScene : MonoBehaviour
     private void Start()
     {
         gameSceneResource = ResourceManager.instance.GameSceneResource;
+        gameModeManager = GameModeManager.instance;
 
         StartCoroutine(StartLoadScene());
     }
@@ -50,42 +52,37 @@ public class LoadingScene : MonoBehaviour
 
         yield return StartCoroutine(LoadResource());
 
-        if (PhotonNetwork.InRoom && nextScene == EScene.GAME)
+        AsyncOperation sceneOp = SceneManager.LoadSceneAsync((int)nextScene);
+        sceneOp.allowSceneActivation = false;
+
+        while (sceneOp.progress < 0.9f)
+        {
+            sceneProgress = Mathf.Clamp01(sceneOp.progress / 0.9f);
+            float totalProgress = (sceneProgress + resourceProgress) / 2f;
+            sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, totalProgress, Time.deltaTime * 2f);
+            yield return null;
+        }
+
+        if(gameModeManager.eGameMode == EGameMode.MULTI) 
         {
             PhotonManager.instance.PhotonMaching.NotifySceneLoaded();
-
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                while (!isReadyToGame)
-                    yield return null;
-            }
         }
-        else
+
+        while (sliderValue.fillAmount <= 0.999f)
         {
-            AsyncOperation sceneOp = SceneManager.LoadSceneAsync((int)nextScene);
-            sceneOp.allowSceneActivation = false;
-
-            while (sceneOp.progress < 0.9f)
-            {
-                sceneProgress = Mathf.Clamp01(sceneOp.progress / 0.9f);
-                float totalProgress = (sceneProgress + resourceProgress) / 2f;
-                sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, totalProgress, Time.deltaTime * 2f);
-                yield return null;
-            }
-
-            while (sliderValue.fillAmount <= 0.999f)
-            {
-                sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, 1f, Time.deltaTime * 2f);
-                yield return null;
-            }
-
-            sceneOp.allowSceneActivation = true;
+            sliderValue.fillAmount = Mathf.MoveTowards(sliderValue.fillAmount, 1f, Time.deltaTime * 2f);
+            yield return null;
         }
+
+        while(!isReadyToGame && gameModeManager.eGameMode == EGameMode.MULTI)
+            yield return null;
+
+        sceneOp.allowSceneActivation = true;
     }
 
     IEnumerator LoadResource()
     {
-        if (nextScene == EScene.GAME)
+        if (nextScene == EScene.SINGLEGAME || nextScene == EScene.MULTIGAME)
         {
             EEnemy[] gameResources = gameSceneResource.EnemyResource.GetTypeEnums();
 

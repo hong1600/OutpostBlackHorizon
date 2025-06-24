@@ -24,7 +24,7 @@ public class CameraFpsMove : MonoBehaviour
         inputManager = InputManager.instance;
         viewState = GameManager.instance.ViewState;
         topToFps = CameraManager.instance.CameraTopToFps;
-        playerObj = PlayerManager.instance.gameObject;
+        playerObj = GameManager.instance.PlayerSpawner.player;
     }
 
     private void LateUpdate()

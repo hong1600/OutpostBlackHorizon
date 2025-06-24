@@ -60,7 +60,7 @@ public class WaitingUI : MonoBehaviour
     {
         AudioManager.instance.StopBgm();
         GameModeManager.instance.ChangeGameMode(EGameMode.SINGLE);
-        MSceneManager.Instance.ChangeScene(EScene.GAME, true);
+        MSceneManager.Instance.ChangeScene(EScene.SINGLEGAME, true);
     }
 
     public void ClickNextMap(int _index)

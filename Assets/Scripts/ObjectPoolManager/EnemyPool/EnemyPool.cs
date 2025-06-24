@@ -22,12 +22,8 @@ public class EnemyPool : ObjectPoolBase<EEnemy>
 
     public GameObject FindEnemy(EEnemy _type, Vector3 _pos, Quaternion _rot)
     {
-        string type = _type.ToString();
-
-        if (poolManager.poolDic.ContainsKey(type))
+        if (poolDic.TryGetValue(_type, out Queue<GameObject> pool))
         {
-            Queue<GameObject> pool = poolManager.poolDic[type];
-
             if (pool.Count > 0)
             {
                 for (int i = 0; i < pool.Count; i++)

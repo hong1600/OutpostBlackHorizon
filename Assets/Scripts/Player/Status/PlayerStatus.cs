@@ -85,7 +85,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
     IEnumerator StartDie()
     {
-        PlayerManager.instance.Rifle.SetActive(false);
+        GetComponent<PlayerManager>().Rifle.SetActive(false);
         CameraManager.instance.CameraFpsDead.MoveCam();
         GameManager.instance.GameState.SetGameState(EGameState.GAMEOVER);
         yield return null;

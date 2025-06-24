@@ -7,7 +7,7 @@ public class GuideMissile : MonoBehaviour
     Camera mainCam;
     SphereCollider sphere;
 
-    BulletPool bulletPool;
+    IBulletPool bulletPool;
     EffectPool effectPool;
     ViewState viewState;
 
@@ -29,7 +29,7 @@ public class GuideMissile : MonoBehaviour
 
     private void Start()
     {
-        bulletPool = ObjectPoolManager.instance.BulletPool;
+        bulletPool = Shared.Instance.poolManager.BulletPool;
         effectPool = ObjectPoolManager.instance.EffectPool;
         viewState = GameManager.instance.ViewState;
 

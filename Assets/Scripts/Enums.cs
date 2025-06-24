@@ -68,7 +68,8 @@ public enum EScene
     LOGIN,
     LOBBY,
     WAITING,
-    GAME,
+    SINGLEGAME,
+    MULTIGAME,
     LOADING,
     END,
 }

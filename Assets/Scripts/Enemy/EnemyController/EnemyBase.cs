@@ -31,7 +31,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     protected GoldCoin goldCoin;
     protected Round round;
     protected Timer timer;
-    protected BulletPool bulletPool;
+    protected IBulletPool bulletPool;
     GameState gameState;
 
     public string enemyName { get; private set; }
@@ -76,7 +76,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         round = GameManager.instance.Round;
         timer = GameManager.instance.Timer;
         rewarder = GameManager.instance.Rewarder;
-        bulletPool = ObjectPoolManager.instance.BulletPool;
+        bulletPool = Shared.Instance.poolManager.BulletPool;
         hpBarPool = ObjectPoolManager.instance.HpBarPool;
         enemyPool = ObjectPoolManager.instance.EnemyPool;
         effectPool = ObjectPoolManager.instance.EffectPool;

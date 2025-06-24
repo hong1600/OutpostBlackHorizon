@@ -8,7 +8,7 @@ public abstract class DefenderBase : MonoBehaviour
 {
     protected DefenderAI defenderAI;
     protected AudioManager audioManager;
-    protected BulletPool bulletPool;
+    protected IBulletPool bulletPool;
     protected EffectPool effectPool;
     protected EnemyBase enemy;
 
@@ -48,7 +48,7 @@ public abstract class DefenderBase : MonoBehaviour
         isAttack = false;
         attackCoroutine = null;
 
-        bulletPool = ObjectPoolManager.instance.BulletPool;
+        bulletPool = Shared.Instance.poolManager.BulletPool;
         effectPool = ObjectPoolManager.instance.EffectPool;
     }
 

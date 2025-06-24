@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class GameUI : Singleton<GameUI>
 {
-    public EScene eScene { get; private set; } = EScene.GAME;
-
     [SerializeField] List<GameObject> functionUI;
 
     [Header("BlackOut")]

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : Singleton<PlayerManager>
+public class PlayerManager : MonoBehaviour
 {
     EPlayer curPlayerState;
 
@@ -13,7 +13,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     ViewState viewState;
     UIInteraction uiInteraction;
-    GunManager gunManager;
 
     public Transform playerEyeTrs { get { return eyeTrs; } }
     GameObject lastHitObj;
@@ -23,21 +22,21 @@ public class PlayerManager : Singleton<PlayerManager>
     public PlayerAI playerAI { get; private set; }
     public CapsuleCollider cap { get; private set; }
     public Animator anim { get; private set; }
-    public PlayerMovementBase playerMovement { get; private set; }
+    public PlayerMovement playerMovement { get; private set; }
     public PlayerCombat playerCombat { get; private set; }
     public PlayerStatus playerStatus { get; private set; }
+    public GunManager GunManager { get; private set; }
     public GameObject Rifle { get { return rifle; } }
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         cap = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
 
-        playerMovement = GetComponent<PlayerMovementBase>();
+        playerMovement = GetComponent<PlayerMovement>();
         playerCombat = GetComponent<PlayerCombat>();
         playerStatus = GetComponent<PlayerStatus>();
+        GunManager = rifle.GetComponent<GunManager>();
 
         playerAI = new PlayerAI();
         playerAI.Init(this);
@@ -46,7 +45,6 @@ public class PlayerManager : Singleton<PlayerManager>
     private void Start()
     {
         viewState = GameManager.instance.ViewState;
-        gunManager = GunManager.instance;
         uiInteraction = GameUI.instance.UIInteraction;
     }
 
@@ -76,7 +74,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    gunManager.FillBullet(dropBullet.BulletAmount);
+                    GunManager.FillBullet(dropBullet.BulletAmount);
                     Destroy(dropBullet.gameObject);
                     uiInteraction.ClosePanel();
                     isInteraction = false;

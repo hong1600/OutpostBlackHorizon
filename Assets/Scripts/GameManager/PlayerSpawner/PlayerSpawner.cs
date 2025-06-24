@@ -1,23 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerSpawner : MonoBehaviour
 {
+    public event Action onSpawnPlayer;
+
     [SerializeField] GameObject playerPref;
 
     [SerializeField] Transform singlePlayerTrs;
-    [SerializeField] Transform[] mutiPlayerTrs;
+    [SerializeField] Transform[] multiPlayerTrs;
 
-    public GameObject player { get; private set; }
+    public GameObject player;
 
-    private void Awake()
-    {
-        SpawnPlayer();
-    }
-
-    private void SpawnPlayer()
+    public void SpawnPlayer()
     {
         if (GameModeManager.instance.eGameMode == EGameMode.SINGLE) 
         {
@@ -25,14 +24,28 @@ public class PlayerSpawner : MonoBehaviour
         }
         else if(GameModeManager.instance.eGameMode == EGameMode.MULTI)
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                player = PhotonNetwork.Instantiate("Prefabs/Obj/Player/MultiPlayer", mutiPlayerTrs[0].transform.position, Quaternion.identity);
-            }
-            else
-            {
-                player = PhotonNetwork.Instantiate("Prefabs/Obj/Player/MultiPlayer", mutiPlayerTrs[1].transform.position, Quaternion.identity);
-            }
+            int index = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+            Vector3 spawnPos = multiPlayerTrs[index].position;
+
+            player = PhotonNetwork.Instantiate("Prefabs/Obj/Player/MultiPlayer", spawnPos, Quaternion.Euler(0, -125, 0));
+        }
+
+        StartCoroutine(StartInitPlayer());
+    }
+
+    IEnumerator StartInitPlayer()
+    {
+        onSpawnPlayer?.Invoke();
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (player != null)
+        {
+            GameManager.instance.PlayerSpawner.player.GetComponent<PlayerCombat>().enabled = false;
+            GameManager.instance.PlayerSpawner.player.GetComponent<PlayerMovement>().enabled = false;
+
+            StartDropshipCut dropship = FindObjectOfType<StartDropshipCut>();
+            dropship.WaitingSpawn();
         }
     }
 }

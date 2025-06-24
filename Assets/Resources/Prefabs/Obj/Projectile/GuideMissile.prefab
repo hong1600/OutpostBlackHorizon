@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 6896658814919595235}
   - component: {fileID: 8669761262626381865}
   - component: {fileID: 2050413612324807921}
+  - component: {fileID: 6899898296588261238}
   m_Layer: 0
   m_Name: GuideMissile
   m_TagString: Untagged
@@ -275,6 +276,28 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 6.2029667
   m_Center: {x: -0.0072631836, y: 0.003290087, z: 3.1854162}
+--- !u!114 &6899898296588261238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7156731764451705340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8718118666658834152
 GameObject:
   m_ObjectHideFlags: 0

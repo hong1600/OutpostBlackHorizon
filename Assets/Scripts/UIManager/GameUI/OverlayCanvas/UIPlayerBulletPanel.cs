@@ -13,13 +13,19 @@ public class UIPlayerBulletPanel : MonoBehaviour
 
     private void Start()
     {
-        gunManager = GunManager.instance;
+        GameManager.instance.PlayerSpawner.onSpawnPlayer += InitPlayer;
+    }
+
+    private void InitPlayer()
+    {
+        gunManager = GameManager.instance.PlayerSpawner.player.GetComponent<PlayerManager>().GunManager;
 
         gunManager.onUpdateBullet += UpdateBullet;
-        PlayerManager.instance.playerCombat.onUseBullet += UpdateBullet;
+        GameManager.instance.PlayerSpawner.player.GetComponent<PlayerCombat>().onUseBullet += UpdateBullet;
 
         UpdateBullet();
     }
+
 
     private void UpdateBullet()
     {

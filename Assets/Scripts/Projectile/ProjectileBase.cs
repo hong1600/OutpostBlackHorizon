@@ -12,7 +12,7 @@ public abstract class ProjectileBase : MonoBehaviour
 
     [Header("Pools")]
     protected EffectPool effectPool;
-    protected BulletPool bulletPool;
+    protected IBulletPool bulletPool;
 
     [Header("Hit Effects")]
     protected GameObject hitAim;
@@ -35,7 +35,7 @@ public abstract class ProjectileBase : MonoBehaviour
 
     private void Start()
     {
-        bulletPool = ObjectPoolManager.instance.BulletPool;
+        bulletPool = Shared.Instance.poolManager.BulletPool;
         effectPool = ObjectPoolManager.instance.EffectPool;
 
         hitAim = GameUI.instance.HitAim;

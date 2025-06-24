@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunManager : Singleton<GunManager>
+public class GunManager : MonoBehaviour
 {
     public event Action onUpdateBullet;
 
@@ -15,10 +15,8 @@ public class GunManager : Singleton<GunManager>
 
     [SerializeField] GunMovement gunMovemnet;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         curBulletCount = 30;
         maxBulletCount = 30;
         haveBulletCount = 300;
