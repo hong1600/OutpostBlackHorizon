@@ -123,7 +123,6 @@ public class CameraTopToFps : MonoBehaviour
 
         if(isFPS) 
         {
-            Debug.Log(rifle);
             rifle.transform.SetParent(mainCam.transform, true);
             rifle.transform.localPosition = new Vector3(0.07f, -0.27f, 0.29f);
             rifle.transform.localRotation = Quaternion.identity;

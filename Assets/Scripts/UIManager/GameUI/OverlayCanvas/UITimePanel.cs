@@ -25,6 +25,7 @@ public class UITimePanel : MonoBehaviour
         float maxSec = timer.maxSec;
         timerText.text = $"{(int)sec}s";
         sliderValue.fillAmount = sec / maxSec;
+        Debug.Log("ui업데이트");
     }
 
     private void UpdateRestText()

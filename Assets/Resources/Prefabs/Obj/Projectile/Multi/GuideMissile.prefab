@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 6896658814919595235}
   - component: {fileID: 8669761262626381865}
   - component: {fileID: 2050413612324807921}
-  - component: {fileID: 6899898296588261238}
+  - component: {fileID: -2351114123341821594}
   m_Layer: 0
   m_Name: GuideMissile
   m_TagString: Untagged
@@ -276,7 +276,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 6.2029667
   m_Center: {x: -0.0072631836, y: 0.003290087, z: 3.1854162}
---- !u!114 &6899898296588261238
+--- !u!114 &-2351114123341821594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

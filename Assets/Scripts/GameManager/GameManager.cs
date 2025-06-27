@@ -20,8 +20,6 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
 
-        Debug.Log($"[GameManager] Awake ? instanceID={GetInstanceID()}");
-
         DontDestroyOnLoad(gameObject);
     }
 

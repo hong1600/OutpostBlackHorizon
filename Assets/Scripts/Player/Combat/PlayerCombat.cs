@@ -41,7 +41,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    protected IEnumerator StartFireRifle(bool _isMine)
+    protected virtual IEnumerator StartFireRifle(bool _isMine)
     {
         isAttack = true;
 
@@ -70,7 +70,7 @@ public class PlayerCombat : MonoBehaviour
         isAttack = false;
     }
 
-    protected IEnumerator StartFireGrenade(bool _isMine)
+    protected virtual IEnumerator StartFireGrenade(bool _isMine)
     {
         isAttack = true;
 
@@ -97,5 +97,10 @@ public class PlayerCombat : MonoBehaviour
         muzzleFlash.SetActive(false);
 
         isAttack = false;
+    }
+
+    protected void InvokeUseBullet()
+    {
+        onUseBullet?.Invoke();
     }
 }

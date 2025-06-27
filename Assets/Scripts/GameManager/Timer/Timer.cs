@@ -9,14 +9,14 @@ public class Timer : MonoBehaviour
     public event Action onRestTime;
 
     EnemyManager enemyManager;
-    GameState gameState;
+    protected GameState gameState;
     Round round;
     EnemySpawner enemySpawner;
     WaveBossSpawner waveBossSpawner;
 
     public float sec;
     public float maxSec { get; private set; }
-    bool isTimerRunning = false;
+    protected bool isTimerRunning = false;
     public bool isSpawnTime { get; private set; } = false;
 
     [SerializeField] float spawnTime;
@@ -37,7 +37,7 @@ public class Timer : MonoBehaviour
         StartCoroutine(StartTimerLoop());
     }
 
-    IEnumerator StartTimerLoop()
+    protected virtual IEnumerator StartTimerLoop()
     {
         while (gameState.GetGameState() == EGameState.PLAYING)
         {
@@ -49,7 +49,7 @@ public class Timer : MonoBehaviour
         }
     }
 
-    private void RunTimer()
+    protected void RunTimer()
     {
         if (round.IsBossRound)
         {
@@ -60,6 +60,7 @@ public class Timer : MonoBehaviour
             sec -= Time.deltaTime;
             sec = Mathf.Max(0f, sec);
             onTimeEvent?.Invoke();
+            Debug.Log(sec);
         }
 
         if (sec <= 0f)
@@ -83,6 +84,11 @@ public class Timer : MonoBehaviour
                 ChangeRestTime();
             }
         }
+    }
+
+    protected void OnTimeEvent()
+    {
+        onTimeEvent?.Invoke();
     }
 
     private void ChangeSpawnTime()

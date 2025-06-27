@@ -44,6 +44,11 @@ MonoBehaviour:
   - RpcFireGrenade
   - RpcFireRifle
   - StartOffFlash
+  - BaseRPCMove
+  - RpcMove
+  - Init
+  - RPCInitBullet
+  - RPCInit
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

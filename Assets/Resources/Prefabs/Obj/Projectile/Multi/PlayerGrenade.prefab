@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2909988103197671830}
-  - component: {fileID: -9049740784505841289}
   - component: {fileID: -8193992022049431076}
   - component: {fileID: -7153505484620758551}
-  - component: {fileID: 5643371425463973262}
+  - component: {fileID: 1473948211256374772}
+  - component: {fileID: 1349902330147585403}
   m_Layer: 15
-  m_Name: RocketMissile
+  m_Name: PlayerGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,28 +30,13 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4419312223551504960}
   - {fileID: 6757632703260876614}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-9049740784505841289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5919220286410709334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66bc492e05cb14d4a954722ab0276c5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upDuration: 1
-  upTimer: 0
-  rotSpd: 100
 --- !u!135 &-8193992022049431076
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -100,7 +85,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &5643371425463973262
+--- !u!114 &1473948211256374772
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,6 +107,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1349902330147585403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919220286410709334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7931e5ce16ee9e46878c7dccfd3a219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8048810760565586807
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8193907743918563093, guid: db97ba35f680c914480ecc075d752dbf, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 1.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8193907743918563093, guid: db97ba35f680c914480ecc075d752dbf, type: 3}
       propertyPath: InitialModule.startSize.minScalar
