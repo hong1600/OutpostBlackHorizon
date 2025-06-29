@@ -8,10 +8,10 @@ public class Timer : MonoBehaviour
     public event Action onTimeEvent;
     public event Action onRestTime;
 
-    EnemyManager enemyManager;
+    protected EnemyManager enemyManager;
     protected GameState gameState;
-    Round round;
-    EnemySpawner enemySpawner;
+    protected Round round;
+    protected EnemySpawner enemySpawner;
     WaveBossSpawner waveBossSpawner;
 
     public float sec;
@@ -22,7 +22,7 @@ public class Timer : MonoBehaviour
     [SerializeField] float spawnTime;
     [SerializeField] float restTime;
 
-    private void Start()
+    protected virtual void Start()
     {
         enemyManager = EnemyManager.instance;
         gameState = GameManager.instance.GameState;
@@ -30,7 +30,7 @@ public class Timer : MonoBehaviour
         enemySpawner = EnemyManager.instance.EnemySpawner;
         waveBossSpawner = EnemyManager.instance.WaveBossSpawner;
 
-        sec = 130f;
+        sec = 13f;
         maxSec = sec;
 
         isTimerRunning = true;
@@ -49,7 +49,7 @@ public class Timer : MonoBehaviour
         }
     }
 
-    protected void RunTimer()
+    protected virtual void RunTimer()
     {
         if (round.IsBossRound)
         {
@@ -60,7 +60,6 @@ public class Timer : MonoBehaviour
             sec -= Time.deltaTime;
             sec = Mathf.Max(0f, sec);
             onTimeEvent?.Invoke();
-            Debug.Log(sec);
         }
 
         if (sec <= 0f)
@@ -91,7 +90,7 @@ public class Timer : MonoBehaviour
         onTimeEvent?.Invoke();
     }
 
-    private void ChangeSpawnTime()
+    protected void ChangeSpawnTime()
     {
         isSpawnTime = !isSpawnTime;
         sec = spawnTime;
@@ -105,7 +104,7 @@ public class Timer : MonoBehaviour
         onRestTime?.Invoke();
     }
 
-    private void ChangeRestTime()
+    protected void ChangeRestTime()
     {
         isSpawnTime = !isSpawnTime;
         enemySpawner.IsSpawn = false;

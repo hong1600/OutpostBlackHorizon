@@ -11,6 +11,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>, IObjectPoolManage
     [SerializeField] BulletPool bulletPool;
 
     IBulletPool iBulletPool;
+    IEnemyPool iEnemyPool;
 
     protected override void Awake()
     {
@@ -21,14 +22,15 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>, IObjectPoolManage
         hpBarPool.Init();
         bulletPool.Init();
 
-        EnemyPool = enemyPool;
         EffectPool = effectPool;
         HpBarPool = hpBarPool;
         iBulletPool = bulletPool;
+        iEnemyPool = enemyPool;
     }
 
-    public EnemyPool EnemyPool { get; private set; }
     public EffectPool EffectPool { get; private set; }
     public HpBarPool HpBarPool { get; private set; }
     public IBulletPool BulletPool { get { return bulletPool; } }
+    public IEnemyPool EnemyPool { get { return enemyPool; } }
+
 }

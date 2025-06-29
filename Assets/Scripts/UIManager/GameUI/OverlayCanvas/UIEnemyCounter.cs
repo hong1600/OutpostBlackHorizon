@@ -14,7 +14,7 @@ public class UIEnemyCounter : MonoBehaviour
     private void Start()
     {
         enemyManager = EnemyManager.instance;
-        ObjectPoolManager.instance.EnemyPool.onEnemyCount += UpdateEnemyCounter;
+        Shared.Instance.poolManager.EnemyPool.AddEvent(UpdateEnemyCounter);
 
         enemyCountText.text = $"{enemyManager.GetCurEnemy()}  /  {enemyManager.GetMaxEnemy()}";
         sliderValue.fillAmount = 0;

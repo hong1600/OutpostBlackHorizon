@@ -7,13 +7,13 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
-    Terrain terrain;
-    EnemyPool enemyPool;
+    protected Terrain terrain;
+    IEnemyPool enemyPool;
     Round round;
-    EnemyFactory enemyFactory;
+    protected EnemyFactory enemyFactory;
 
     public Vector3[] enemySpawnPos { get; private set; } = new Vector3[4];
-    [SerializeField] List<Transform> enemySpawnPointList;
+    [SerializeField] protected List<Transform> enemySpawnPointList;
     [SerializeField] Transform centerPoint;
     [SerializeField] float enemySpawnDelay;
 
@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        enemyPool = ObjectPoolManager.instance.EnemyPool;
+        enemyPool = Shared.Instance.poolManager.EnemyPool;
         enemyFactory = FactoryManager.instance.EnemyFactory;
         round = GameManager.instance.Round;
         enemySpawnDelay = 0;
@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void SpawnEnemy()
+    protected virtual void SpawnEnemy()
     {
         if (!isSpawn || round.CurRound == 0) { return; }
         
@@ -72,7 +72,7 @@ public class EnemySpawner : MonoBehaviour
         enemySpawnDelay -= Time.deltaTime;
     }
 
-    IEnumerator StartSpawn(int _spawnPoint)
+    protected virtual IEnumerator StartSpawn(int _spawnPoint)
     {
         for (int i = 0; i < 3; i++)
         {
@@ -98,6 +98,7 @@ public class EnemySpawner : MonoBehaviour
 
     public List<Transform> EnemySpawnPointList() { return enemySpawnPointList; }
     public Transform GetCenterPoint() { return centerPoint; }
+
     public float EnemySpawnDelay
     {
         get { return enemySpawnDelay; }

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PhotonChat : MonoBehaviour, IOnEventCallback
 {
-    const byte GAME_CHAT_EVENT = 100;
+    const byte GAME_CHAT_EVENT = 6;
 
     private void OnEnable()
     {

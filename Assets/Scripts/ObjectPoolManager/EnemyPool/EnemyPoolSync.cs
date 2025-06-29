@@ -1,28 +1,18 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPool : ObjectPoolBase<EEnemy>, IEnemyPool
+public class EnemyPoolSync : ObjectPoolBaseSync<EEnemy>, IEnemyPool
 {
     public event Action onEnemyCount;
 
     EnemyManager enemyManager;
-    EnemyFactory enemyFactory;
-
-    Vector3 spawnPos;
-    Quaternion spawnRot;
-
-    private void Start()
-    {
-        Init();
-        enemyManager = EnemyManager.instance;
-        enemyFactory = FactoryManager.instance.EnemyFactory;
-    }
 
     public GameObject FindEnemy(EEnemy _type, Vector3 _pos, Quaternion _rot)
     {
-        if (poolDic.TryGetValue(_type, out Queue<GameObject> pool))
+        if (myPoolDic.TryGetValue(_type, out Queue<GameObject> pool))
         {
             if (pool.Count > 0)
             {
@@ -30,17 +20,17 @@ public class EnemyPool : ObjectPoolBase<EEnemy>, IEnemyPool
                 {
                     GameObject obj = pool.Dequeue();
 
-                    if (!obj.activeInHierarchy)
+                    PhotonView pv = obj.GetComponent<PhotonView>();
+
+                    if (!obj.activeInHierarchy && pv != null && pv.IsMine)
                     {
                         obj.transform.position = _pos;
                         obj.transform.rotation = _rot;
                         obj.SetActive(true);
                         return obj;
                     }
-                    else
-                    {
-                        pool.Enqueue(obj);
-                    }
+
+                    pool.Enqueue(obj);
                 }
             }
         }
@@ -49,8 +39,8 @@ public class EnemyPool : ObjectPoolBase<EEnemy>, IEnemyPool
 
     public void ReturnEnemy(EEnemy _type, GameObject _obj)
     {
-        enemyManager.OnEnemyDie();
         ReturnPool(_type, _obj);
+        enemyManager.OnEnemyDie();
         onEnemyCount?.Invoke();
     }
 

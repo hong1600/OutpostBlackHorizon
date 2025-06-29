@@ -23,7 +23,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     protected EnemyAI enemyAI;
     protected EnemyHpBar enemyHpBar;
-    protected EnemyPool enemyPool;
+    protected IEnemyPool enemyPool;
     protected HpBarPool hpBarPool;
     protected EffectPool effectPool;
     protected Rewarder rewarder;
@@ -78,7 +78,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         rewarder = GameManager.instance.Rewarder;
         bulletPool = Shared.Instance.poolManager.BulletPool;
         hpBarPool = ObjectPoolManager.instance.HpBarPool;
-        enemyPool = ObjectPoolManager.instance.EnemyPool;
+        enemyPool = Shared.Instance.poolManager.EnemyPool;
         effectPool = ObjectPoolManager.instance.EffectPool;
         gameState = GameManager.instance.GameState;
 

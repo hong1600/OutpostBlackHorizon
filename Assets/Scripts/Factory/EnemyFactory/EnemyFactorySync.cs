@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFactory : FactoryBase<EEnemy>
+public class EnemyFactorySync : FactoryBaseSync<EEnemy>
 {
     TableEnemy tableEnemy;
     IEnemyPool enemyPool;
@@ -38,7 +38,7 @@ public class EnemyFactory : FactoryBase<EEnemy>
     {
         EnemyBase enemy = _obj.GetComponent<EnemyBase>();
 
-        if(enemy == null) 
+        if (enemy == null)
         {
             enemy = _obj.GetComponentInChildren<EnemyBase>();
         }
