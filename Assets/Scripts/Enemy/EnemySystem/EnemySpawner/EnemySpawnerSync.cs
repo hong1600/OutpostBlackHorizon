@@ -17,6 +17,16 @@ public class EnemySpawnerSync : EnemySpawner, IOnEventCallback
         base.SpawnEnemy();
     }
 
+    private void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
     protected override IEnumerator StartSpawn(int _spawnPoint)
     {
         for (int i = 0; i < 3; i++)
@@ -38,12 +48,11 @@ public class EnemySpawnerSync : EnemySpawner, IOnEventCallback
 
                 object[] data = new object[] { (int)eEnemy, spawnPos[j].x, spawnPos[j].y, spawnPos[j].z };
                 RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-                PhotonNetwork.RaiseEvent(ENEMY_SPAWN_EVENT, data, options);
+                PhotonNetwork.RaiseEvent(ENEMY_SPAWN_EVENT, data, options, new SendOptions { Reliability = true});
             }
 
             yield return new WaitForSeconds(2f);
         }
-
     }
 
     public void OnEvent(EventData _photonEvent)

@@ -12,6 +12,9 @@ public class TimerSync : Timer, IOnEventCallback
     private const byte REST_TIME_EVENT = 8;
     private const byte SPAWN_TIME_EVENT = 9;
 
+    float lastSyncSec = 0;
+    float lastSyncTime = 0;
+
     private void OnEnable()
     {
         PhotonNetwork.AddCallbackTarget(this);
@@ -90,7 +93,7 @@ public class TimerSync : Timer, IOnEventCallback
 
     IEnumerator SendTimeEvent()
     {
-        WaitForSeconds wait = new WaitForSeconds(0.2f);
+        WaitForSeconds wait = new WaitForSeconds(0.05f);
 
         while (true)
         {
@@ -112,8 +115,9 @@ public class TimerSync : Timer, IOnEventCallback
             if (PhotonNetwork.IsMasterClient) return;
 
             object[] data = (object[])_photonEvent.CustomData;
+            lastSyncSec = (float)data[0];
+            lastSyncTime = Time.time;
 
-            sec = (float)data[0];
             OnTimeEvent();
         }
         else if (_photonEvent.Code == SPAWN_TIME_EVENT)
@@ -124,5 +128,14 @@ public class TimerSync : Timer, IOnEventCallback
         {
             ChangeRestTime();
         }
+    }
+
+    public override float GetSec()
+    {
+        if (PhotonNetwork.IsMasterClient) return sec;
+
+        float interpolated = lastSyncSec - (Time.time - lastSyncTime);
+        return Mathf.Max(0f, interpolated);
+
     }
 }

@@ -165,7 +165,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         }
     }
 
-    protected void Move()
+    protected virtual void Move()
     {
         if (myTarget == null) return;
 
@@ -174,7 +174,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         rigid.MovePosition(transform.position + targetPointDir * enemySpeed * Time.fixedDeltaTime);
     }
 
-    protected void Turn()
+    protected virtual void Turn()
     {
         Quaternion rotation = Quaternion.LookRotation(new Vector3(targetPointDir.x, 0, targetPointDir.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
@@ -216,7 +216,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         return 0;
     }
 
-    protected void ReadyAttack()
+    protected virtual void ReadyAttack()
     {
         if(myTarget == null) return;
 
@@ -366,7 +366,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         }
     }
 
-    public void MoveAI()
+    public virtual void MoveAI()
     {
         if (myTarget == null)
         {
@@ -384,7 +384,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         Turn();
     }
 
-    public void AttackAI()
+    public virtual void AttackAI()
     {
         ReadyAttack();
 
@@ -398,7 +398,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         Turn();
     }
 
-    public void DieAI()
+    public virtual void DieAI()
     {
         if (isDie && isOneShot)
         {

@@ -114,6 +114,6 @@ public class Timer : MonoBehaviour
     }
 
     public void SetTimer(bool _value) { isTimerRunning = _value; }
-    public float GetSec() { return sec; }
+    public virtual float GetSec() { return sec; }
     public void SetSec(float _value) { sec = _value; }
 }

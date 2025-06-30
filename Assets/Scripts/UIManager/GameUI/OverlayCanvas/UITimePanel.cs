@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -23,9 +24,27 @@ public class UITimePanel : MonoBehaviour
     {
         float sec = timer.GetSec();
         float maxSec = timer.maxSec;
+
         timerText.text = $"{(int)sec}s";
-        sliderValue.fillAmount = sec / maxSec;
+
+        sliderValue.DOFillAmount(sec / maxSec, 0.2f).SetEase(Ease.Linear);
     }
+
+    //IEnumerator StartSmoothSilder(float _targetValue)
+    //{
+    //    float duration = 0.2f;
+    //    float elapsed = 0f;
+    //    float startValue = sliderValue.fillAmount;
+
+    //    while (elapsed < duration) 
+    //    {
+    //        elapsed += Time.deltaTime;
+    //        sliderValue.fillAmount = Mathf.Lerp(startValue, _targetValue, elapsed / duration);
+    //        yield return null;
+    //    }
+
+    //    sliderValue.fillAmount = _targetValue;
+    //}
 
     private void UpdateRestText()
     {

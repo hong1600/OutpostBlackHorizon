@@ -18,6 +18,7 @@ public class ObjectPoolManagerSync : Singleton<ObjectPoolManagerSync>, IObjectPo
         base.Awake();
 
         bulletPoolSync.Init();
+        enemyPoolSync.Init();
 
         bulletPool = bulletPoolSync;
         enemyPool = enemyPoolSync;

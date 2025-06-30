@@ -2221,7 +2221,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1722218479}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63cd8583e42939b409c7a1b5fecc81aa, type: 3}
   m_Name: 
@@ -3229,6 +3229,10 @@ PrefabInstance:
       propertyPath: enemyPool
       value: 
       objectReference: {fileID: 1397530477}
+    - target: {fileID: 909356983780183948, guid: e0e44ebd77fa88142a310ecd7c63e913, type: 3}
+      propertyPath: enemyPoolSync
+      value: 
+      objectReference: {fileID: 7497837206430783951}
     - target: {fileID: 4068284742543804324, guid: e0e44ebd77fa88142a310ecd7c63e913, type: 3}
       propertyPath: parentList.Array.data[0]
       value: 
