@@ -1468,6 +1468,7 @@ GameObject:
   - component: {fileID: -125787320387887900}
   - component: {fileID: 95259621755087314}
   - component: {fileID: 4499870408297987897}
+  - component: {fileID: 1383993480182681368}
   m_Layer: 3
   m_Name: Robot1
   m_TagString: Untagged
@@ -1507,13 +1508,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc5b0311519cf4429e0000e5e04b2ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiState: 0
   sensor: {fileID: 8755128622380913693}
-  box: {fileID: 401580923112423202}
-  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
-  render: {fileID: 137276531836346760}
+  enemyView: {fileID: 1383993480182681368}
   curhp: 50
-  myTarget: {fileID: 0}
 --- !u!95 &95259621755087314
 Animator:
   serializedVersion: 5
@@ -1562,6 +1559,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1383993480182681368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765116360898588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f563e19cebc20184486d49f6838bf24f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
+  render: {fileID: 137276531836346760}
+  originMat: {fileID: 0}
 --- !u!1 &1769269502818274
 GameObject:
   m_ObjectHideFlags: 0

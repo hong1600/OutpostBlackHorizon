@@ -8,6 +8,7 @@ public class EnemyFactory : FactoryBase<EEnemy>
     TableEnemy tableEnemy;
     IEnemyPool enemyPool;
 
+    int id = 0;
     private void Start()
     {
         resource = ResourceManager.instance.GameSceneResource.EnemyResource;
@@ -36,6 +37,8 @@ public class EnemyFactory : FactoryBase<EEnemy>
 
     protected override void Init(GameObject _obj, EEnemy _eEnemy)
     {
+        id++;
+
         EnemyBase enemy = _obj.GetComponent<EnemyBase>();
 
         if(enemy == null) 
@@ -49,7 +52,7 @@ public class EnemyFactory : FactoryBase<EEnemy>
 
             if (info != null)
             {
-                enemy.Init(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, _eEnemy);
+                enemy.Init(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, _eEnemy, id);
             }
         }
     }

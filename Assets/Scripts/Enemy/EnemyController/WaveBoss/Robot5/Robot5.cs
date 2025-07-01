@@ -9,9 +9,9 @@ public class Robot5 : WaveBoss
     [SerializeField] float time;
     [SerializeField] float interval;
 
-    public override void Init(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy)
+    public override void Init(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy, int _id)
     {
-        base.Init(_name, _maxHp, _spd, _range, _dmg, _eEnemy);
+        base.Init(_name, _maxHp, _spd, _range, _dmg, _eEnemy, _id);
     }
 
     protected override IEnumerator StartAttack()
@@ -20,9 +20,9 @@ public class Robot5 : WaveBoss
 
         while (time < totalTime)
         {
-            render.material = hitMat;
+            enemyView.render.material = enemyView.hitMat;
             yield return new WaitForSeconds(interval);
-            render.material = originMat;
+            enemyView.render.material = enemyView.originMat;
             yield return new WaitForSeconds(interval);
 
             time += interval * 2;
@@ -39,10 +39,7 @@ public class Robot5 : WaveBoss
         Explosion explosion = effect.GetComponent<Explosion>();
         explosion.Init(attackDmg, EMissile.ENEMY);
 
-        if (enemyHpBar != null)
-        {
-            hpBarPool.ReturnHpBar(EHpBar.NORMAL, enemyHpBar.gameObject);
-        }
+        enemyView.ReturnHpBar();
 
         enemyPool.ReturnEnemy(eEnemy, this.gameObject);
     }

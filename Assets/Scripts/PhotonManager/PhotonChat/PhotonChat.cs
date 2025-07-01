@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class PhotonChat : MonoBehaviour, IOnEventCallback
 {
-    const byte GAME_CHAT_EVENT = 6;
-
     private void OnEnable()
     {
         PhotonNetwork.AddCallbackTarget(this);
@@ -25,12 +23,12 @@ public class PhotonChat : MonoBehaviour, IOnEventCallback
         RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         SendOptions sendOptions = new SendOptions { Reliability = true };
 
-        PhotonNetwork.RaiseEvent(GAME_CHAT_EVENT, content, options, sendOptions);
+        PhotonNetwork.RaiseEvent(PhotonEventCode.GAME_CHAT_EVENT, content, options, sendOptions);
     }
 
     public void OnEvent(EventData _photonEvent)
     {
-        if (_photonEvent.Code == GAME_CHAT_EVENT)
+        if (_photonEvent.Code == PhotonEventCode.GAME_CHAT_EVENT)
         {
             object[] data = (object[])_photonEvent.CustomData;
             string sender = (string)data[0];

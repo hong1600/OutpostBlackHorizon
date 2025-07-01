@@ -8,12 +8,6 @@ using System;
 
 public class PhotonMatching : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-    const byte MATCHING_GAME_EVENT = 1;
-    const byte LOAD_COMPLETE_EVENT = 2;
-    const byte START_GAME_EVENT = 3;
-    const byte ARRIVE_DROPSHIP_EVENT = 4;
-    const byte SPAWN_PLAYER_EVENT = 5;
-
     int loadPlayerCount = 0;
     int arrivePlayerCount = 0;
 
@@ -102,7 +96,7 @@ public class PhotonMatching : MonoBehaviourPunCallbacks, IOnEventCallback
                 SendOptions sendOptions = new SendOptions();
                 sendOptions.Reliability = true;
 
-                PhotonNetwork.RaiseEvent(MATCHING_GAME_EVENT, null, options, sendOptions);
+                PhotonNetwork.RaiseEvent(PhotonEventCode.MATCHING_GAME_EVENT, null, options, sendOptions);
             }
         }
     }
@@ -121,11 +115,11 @@ public class PhotonMatching : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void OnEvent(EventData _photonEvent)
     {
-        if (_photonEvent.Code == MATCHING_GAME_EVENT)
+        if (_photonEvent.Code == PhotonEventCode.MATCHING_GAME_EVENT)
         {
             StartCoroutine(StartGame());
         }
-        else if (_photonEvent.Code == LOAD_COMPLETE_EVENT)
+        else if (_photonEvent.Code == PhotonEventCode.LOAD_COMPLETE_EVENT)
         {
             loadPlayerCount++;
 
@@ -133,14 +127,14 @@ public class PhotonMatching : MonoBehaviourPunCallbacks, IOnEventCallback
             {
                 RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.All };
                 SendOptions sendOptions = new SendOptions { Reliability = true };
-                PhotonNetwork.RaiseEvent(START_GAME_EVENT, null, options, sendOptions);
+                PhotonNetwork.RaiseEvent(PhotonEventCode.START_GAME_EVENT, null, options, sendOptions);
             }
         }
-        else if(_photonEvent.Code == START_GAME_EVENT) 
+        else if(_photonEvent.Code == PhotonEventCode.START_GAME_EVENT) 
         {
             LoadingScene.AllowSceneActivation();
         }
-        else if (_photonEvent.Code == ARRIVE_DROPSHIP_EVENT)
+        else if (_photonEvent.Code == PhotonEventCode.ARRIVE_DROPSHIP_EVENT)
         {
             arrivePlayerCount++;
 
@@ -151,7 +145,7 @@ public class PhotonMatching : MonoBehaviourPunCallbacks, IOnEventCallback
                 StartCoroutine(SendSpawnPlayerEvents());
             }
         }
-        else if (_photonEvent.Code == SPAWN_PLAYER_EVENT)
+        else if (_photonEvent.Code == PhotonEventCode.SPAWN_PLAYER_EVENT)
         {
             int actorNum = (int)_photonEvent.CustomData;
 
@@ -170,7 +164,7 @@ public class PhotonMatching : MonoBehaviourPunCallbacks, IOnEventCallback
             var p = PhotonNetwork.PlayerList[i];
             int actorNum = p.ActorNumber;
             var options = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-            PhotonNetwork.RaiseEvent(SPAWN_PLAYER_EVENT, actorNum, options, new SendOptions { Reliability = true });
+            PhotonNetwork.RaiseEvent(PhotonEventCode.SPAWN_PLAYER_EVENT, actorNum, options, new SendOptions { Reliability = true });
 
             yield return new WaitForSeconds(0.1f);
         }
@@ -180,14 +174,14 @@ public class PhotonMatching : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
         SendOptions sendOptions = new SendOptions { Reliability = true };
-        PhotonNetwork.RaiseEvent(LOAD_COMPLETE_EVENT, null, options, sendOptions);
+        PhotonNetwork.RaiseEvent(PhotonEventCode.LOAD_COMPLETE_EVENT, null, options, sendOptions);
     }
 
     public void ArriveDropship()
     {
         RaiseEventOptions options = new RaiseEventOptions{Receivers = ReceiverGroup.MasterClient};
         SendOptions sendOptions = new SendOptions { Reliability = true };
-        PhotonNetwork.RaiseEvent(ARRIVE_DROPSHIP_EVENT, null, options, sendOptions);
+        PhotonNetwork.RaiseEvent(PhotonEventCode.ARRIVE_DROPSHIP_EVENT, null, options, sendOptions);
     }
 
     IEnumerator DelayedSpawnPlayer(int _actorNum)

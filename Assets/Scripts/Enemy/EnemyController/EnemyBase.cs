@@ -1,3 +1,6 @@
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,35 +8,55 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[Serializable]
+public class EnemySyncData
+{
+    public int id;
+    public Vector3 pos;
+    public Quaternion rot;
+    public EEnemyAI state;
+    public float hp;
+}
+
 public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 {
     public event Action onTakeDamage;
 
-    [SerializeField] protected EEnemyAI aiState;
+    [Header("AI")]
+    protected EnemyAI enemyAI;
+    protected EEnemyAI aiState;
     protected EEnemy eEnemy;
 
+    [Header("Internal Components")]
     [SerializeField] protected SphereCollider sensor;
-    [SerializeField] protected BoxCollider box;
-    [SerializeField] protected Material hitMat;
-    [SerializeField] protected Renderer render;
-    protected Material originMat;
-    protected Rigidbody rigid;
-    protected Animator anim;
-    SkinnedMeshRenderer skinRender;
 
-    protected EnemyAI enemyAI;
-    protected EnemyHpBar enemyHpBar;
-    protected IEnemyPool enemyPool;
-    protected HpBarPool hpBarPool;
-    protected EffectPool effectPool;
+    [Header("External Components")]
+    protected Rigidbody rigid;
     protected Rewarder rewarder;
     protected EnemySpawner enemySpawner;
     protected GoldCoin goldCoin;
     protected Round round;
     protected Timer timer;
-    protected IBulletPool bulletPool;
     GameState gameState;
 
+    [Header("View")]
+    [SerializeField] protected EnemyView enemyView;
+
+    [Header("Pool")]
+    protected IEnemyPool enemyPool;
+    protected EffectPool effectPool;
+    protected IBulletPool bulletPool;
+
+    [Header("Runtime Value")]
+    protected Transform myTarget;
+    protected Vector3 targetPointDir;
+    Transform centerPoint;
+    protected bool isAttack;
+    bool isOneShot = true;
+    bool isReset;
+    protected Coroutine attackCoroutine;
+
+    public int ID { get; private set; }
     public string enemyName { get; private set; }
     public float maxHp { get; private set; }
     public float curhp;
@@ -42,34 +65,21 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     public float attackRange { get; private set; }
     public float attackDmg { get; private set; }
 
-    [SerializeField] protected Transform myTarget;
-    Transform centerPoint;
-    protected Vector3 targetPointDir;
-
     public bool isStay { get; private set; }
     public bool attackReady { get; private set; }
     public bool isDie { get; protected set; }
-    bool isOneShot = true;
-    protected bool isAttack;
-    bool isReset;
 
-    protected Coroutine attackCoroutine;
-    Vector3 hpBarPos;
-
-    public virtual void Init(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy)
+    public virtual void Init(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy, int _id)
     {
         enemyAI = new EnemyAI();
         enemyAI.Init(this);
 
         rigid = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
 
-        if (render != null)
+        if (enemyView.render != null)
         {
-            originMat = render.sharedMaterial;
+            enemyView.originMat = GetComponent<Renderer>().sharedMaterial;
         }
-
-        skinRender = GetComponentInChildren<SkinnedMeshRenderer>();
 
         enemySpawner = EnemyManager.instance.EnemySpawner;
         goldCoin = GameManager.instance.GoldCoin;
@@ -77,21 +87,13 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         timer = GameManager.instance.Timer;
         rewarder = GameManager.instance.Rewarder;
         bulletPool = Shared.Instance.poolManager.BulletPool;
-        hpBarPool = ObjectPoolManager.instance.HpBarPool;
         enemyPool = Shared.Instance.poolManager.EnemyPool;
         effectPool = ObjectPoolManager.instance.EffectPool;
         gameState = GameManager.instance.GameState;
 
-        if (skinRender != null)
-        {
-            GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, skinRender.bounds.center +
-                new Vector3(0, skinRender.bounds.extents.y + 0.5f, 0), Quaternion.identity);
+        enemyView.CreateHpBar(this);
 
-            enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
-
-            enemyHpBar.Init(this, skinRender);
-        }
-
+        ID = _id;
         enemyName = _name;
         maxHp = _maxHp;
         enemySpeed = _spd;
@@ -109,26 +111,14 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     {
         ResetState();
         enemyAI.aiState = EEnemyAI.CREATE;
+        this.enabled = false;
     }
 
     private void OnEnable()
     {
         ResetState();
 
-        if (skinRender != null)
-        {
-            if (enemyHpBar != null)
-            {
-                hpBarPool.ReturnHpBar(EHpBar.NORMAL, enemyHpBar.gameObject);
-                enemyHpBar = null;
-            }
-
-            GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, skinRender.bounds.center +
-                new Vector3(0, skinRender.bounds.extents.y + 0.5f, 0), Quaternion.identity);
-
-            enemyHpBar = hpBar.GetComponent<EnemyHpBar>();
-            enemyHpBar.Init(this, skinRender);
-        }
+        enemyView.InitHpBar(this);
     }
 
     private void ResetState()
@@ -150,7 +140,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     {
         if (gameState.GetGameState() != EGameState.PLAYING)
         {
-            ChangeAnim(EEnemyAI.CREATE);
+            enemyView.ChangeAnim(EEnemyAI.CREATE);
             return;
         }
 
@@ -161,7 +151,31 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         if (enemyAI != null)
         {
             enemyAI.State();
-            ChangeAnim(enemyAI.aiState);
+            enemyView.ChangeAnim(enemyAI.aiState);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        SendSyncData();
+    }
+
+    private void SendSyncData()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            EnemySyncData data = new EnemySyncData()
+            {
+                id = ID,
+                pos = transform.position,
+                rot = transform.rotation,
+                state = enemyAI.aiState,
+                hp = curhp
+            };
+
+            RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+            SendOptions sendOptions = new SendOptions { Reliability = true };
+            PhotonNetwork.RaiseEvent(PhotonEventCode.ENEMY_SYNC_EVENT, data, options, sendOptions);
         }
     }
 
@@ -270,12 +284,8 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
         curhp -= _dmg;
 
-        if(hitMat != null && render != null) 
-        {
-            render.sharedMaterial = hitMat;
-
-            Invoke(nameof(UpdateMat), 0.2f);
-        }
+        enemyView.ChangeHitMat();
+        Invoke(nameof(enemyView.ResetMat), 0.2f);
 
         onTakeDamage?.Invoke();
 
@@ -290,10 +300,6 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         onTakeDamage?.Invoke();
     }
 
-    private void UpdateMat()
-    {
-        render.material = originMat;
-    }
 
     public void StayEnemy(float _time)
     {
@@ -319,8 +325,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     {
         int rand = Random.Range(0, 10);
 
-        GameObject explosionObj = 
-            effectPool.FindEffect(EEffect.ENEMYEXPLOSION, box.bounds.center, Quaternion.identity);
+        GameObject dieEffect = enemyView.PlayDieEffect();
 
         if (rand <= 3)
         {
@@ -333,37 +338,12 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         rewarder.SetReward(EReward.PAPER, 20);
         rewarder.SetReward(EReward.EXP, 1);
 
-        if (enemyHpBar != null)
-        {
-            hpBarPool.ReturnHpBar(EHpBar.NORMAL, enemyHpBar.gameObject);
-        }
+        enemyView.ReturnHpBar();
 
         yield return new WaitForSeconds(1f);
 
-        effectPool.ReturnEffect(EEffect.ENEMYEXPLOSION, explosionObj);
+        effectPool.ReturnEffect(EEffect.ENEMYEXPLOSION, dieEffect);
         enemyPool.ReturnEnemy(eEnemy, this.gameObject);
-    }
-
-    protected virtual void ChangeAnim(EEnemyAI _curState)
-    {
-        switch (_curState)
-        {
-            case EEnemyAI.CREATE:
-                anim.SetInteger("EnemyAnim", (int)EEnemyAnim.IDLE);
-                break;
-            case EEnemyAI.MOVE:
-                anim.SetInteger("EnemyAnim", (int)EEnemyAnim.WALK);
-                break;
-            case EEnemyAI.ATTACK:
-                anim.SetInteger("EnemyAnim", (int)EEnemyAnim.ATTACK);
-                break;
-            case EEnemyAI.STAY:
-                anim.SetInteger("EnemyAnim", (int)EEnemyAnim.IDLE);
-                break;
-            case EEnemyAI.DIE:
-                anim.SetInteger("EnemyAnim", (int)EEnemyAnim.DIE);
-                break;
-        }
     }
 
     public virtual void MoveAI()

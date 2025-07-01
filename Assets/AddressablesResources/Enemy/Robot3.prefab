@@ -321,6 +321,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24ff06e862895ae478f6f2baa0e1eb1c, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1477446720263275924}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24ff06e862895ae478f6f2baa0e1eb1c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1851473534541686942}
   m_SourcePrefab: {fileID: 100100000, guid: 24ff06e862895ae478f6f2baa0e1eb1c, type: 3}
 --- !u!137 &1079746219512559485 stripped
 SkinnedMeshRenderer:
@@ -349,13 +352,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcdefc1c9dc6d5a49a957a31729117cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiState: 0
   sensor: {fileID: 475667410486345779}
-  box: {fileID: 5365138288202076564}
-  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
-  render: {fileID: 1079746219512559485}
+  enemyView: {fileID: -1851473534541686942}
   curhp: 50
-  myTarget: {fileID: 0}
 --- !u!95 &-3681909280183985509
 Animator:
   serializedVersion: 5
@@ -404,3 +403,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &-1851473534541686942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139189959466484279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f563e19cebc20184486d49f6838bf24f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
+  render: {fileID: 1079746219512559485}
+  originMat: {fileID: 0}

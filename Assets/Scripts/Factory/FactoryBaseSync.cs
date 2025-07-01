@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,16 @@ public abstract class FactoryBaseSync<T> : MonoBehaviour where T : Enum
         if (prefab != null)
         {
             GameObject obj = Instantiate(prefab, _pos, _rot, _parent);
-            Init(obj, _type);
+
+            if (PhotonNetwork.IsMasterClient) 
+            {
+                Init(obj, _type, true);
+            }
+            else
+            {
+                Init(obj, _type, false);
+            }
+
             _onComplete?.Invoke(obj);
             return obj;
         }
@@ -25,5 +35,5 @@ public abstract class FactoryBaseSync<T> : MonoBehaviour where T : Enum
         }
     }
 
-    protected abstract void Init(GameObject _obj, T _type);
+    protected abstract void Init(GameObject _obj, T _type, bool _isMaster);
 }

@@ -1073,6 +1073,7 @@ GameObject:
   - component: {fileID: 95302132483740286}
   - component: {fileID: 4537774072615625206}
   - component: {fileID: -6380105466428476663}
+  - component: {fileID: 4829323468179343720}
   m_Layer: 3
   m_Name: Robot5
   m_TagString: Untagged
@@ -1136,11 +1137,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensor: {fileID: 8710550942721740163}
-  box: {fileID: 1580906269645871538}
-  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
-  render: {fileID: 137794024807100558}
+  enemyView: {fileID: 4829323468179343720}
   curhp: 0
-  myTarget: {fileID: 0}
   totalTime: 2
   time: 0
   interval: 0.4
@@ -1171,6 +1169,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &4829323468179343720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762146786600250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f563e19cebc20184486d49f6838bf24f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
+  render: {fileID: 137284849524366382}
+  originMat: {fileID: 0}
 --- !u!1 &177272626061297424
 GameObject:
   m_ObjectHideFlags: 0

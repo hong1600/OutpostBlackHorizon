@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +8,8 @@ public class EnemyFactorySync : FactoryBaseSync<EEnemy>
 {
     TableEnemy tableEnemy;
     IEnemyPool enemyPool;
+
+    int id = 0;
 
     private void Start()
     {
@@ -23,7 +26,15 @@ public class EnemyFactorySync : FactoryBaseSync<EEnemy>
 
         if (obj != null)
         {
-            Init(obj, _type);
+            if(PhotonNetwork.IsMasterClient) 
+            {
+                Init(obj, _type, true);
+            }
+            else
+            {
+                Init(obj, _type, false);
+            }
+
             _onComplete?.Invoke(obj);
         }
         else
@@ -34,23 +45,40 @@ public class EnemyFactorySync : FactoryBaseSync<EEnemy>
         return null;
     }
 
-    protected override void Init(GameObject _obj, EEnemy _eEnemy)
+    protected override void Init(GameObject _obj, EEnemy _eEnemy, bool _isMaster)
     {
-        EnemyBase enemy = _obj.GetComponent<EnemyBase>();
+        id++;
 
-        if (enemy == null)
+        EnemyBase enemyBase = _obj.GetComponent<EnemyBase>();
+        EnemySync enemySync = _obj.GetComponent<EnemySync>();
+
+        if (enemyBase == null)
         {
-            enemy = _obj.GetComponentInChildren<EnemyBase>();
+            enemyBase = _obj.GetComponentInChildren<EnemyBase>();
+        }
+        if (enemySync == null)
+        {
+            enemySync = _obj.GetComponentInChildren<EnemySync>();
         }
 
-        if (enemy != null)
+        if (_isMaster)
         {
-            TableEnemy.Info info = tableEnemy.Get(_eEnemy);
-
-            if (info != null)
+            if (enemyBase != null)
             {
-                enemy.Init(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, _eEnemy);
+                TableEnemy.Info info = tableEnemy.Get(_eEnemy);
+
+                if (info != null)
+                {
+                    enemyBase.Init(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, _eEnemy, id);
+                    enemyBase.enabled = true;
+                }
             }
+
+        }
+        else
+        {
+            enemySync.Init(id);
+            enemySync.enabled = true;
         }
     }
 }

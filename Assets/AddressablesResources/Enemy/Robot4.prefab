@@ -349,6 +349,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c49df8310fcfcf34184cc32c6772dc53, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8621937245204287041}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c49df8310fcfcf34184cc32c6772dc53, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5238254750299800840}
   m_SourcePrefab: {fileID: 100100000, guid: c49df8310fcfcf34184cc32c6772dc53, type: 3}
 --- !u!1 &4766922838903117664 stripped
 GameObject:
@@ -367,13 +370,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d92084eed334e04bbe0664cdabe0c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiState: 0
   sensor: {fileID: 6568166432750900498}
-  box: {fileID: 8285691408571864697}
-  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
-  render: {fileID: 5699080534235238896}
+  enemyView: {fileID: -5238254750299800840}
   curhp: 100
-  myTarget: {fileID: 0}
 --- !u!95 &-7023282270424945081
 Animator:
   serializedVersion: 5
@@ -422,6 +421,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &-5238254750299800840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766922838903117664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f563e19cebc20184486d49f6838bf24f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
+  render: {fileID: 5699080534235238896}
+  originMat: {fileID: 0}
 --- !u!4 &5290695730484481498 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c49df8310fcfcf34184cc32c6772dc53, type: 3}

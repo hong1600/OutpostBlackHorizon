@@ -70,11 +70,11 @@ public class Robot6 : Boss
         laserMat = laserLine.material;
     }
 
-    public override void Init(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy)
+    public override void Init(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy, int _id)
     {
         base.Start();
 
-        base.Init(_name, _maxHp, _spd, _range, _dmg, _eEnemy);
+        base.Init(_name, _maxHp, _spd, _range, _dmg, _eEnemy, _id);
 
         bodyHp = maxHp / 3;
         leftHandHp = maxHp / 3;
