@@ -1074,6 +1074,7 @@ GameObject:
   - component: {fileID: 4537774072615625206}
   - component: {fileID: -6380105466428476663}
   - component: {fileID: 4829323468179343720}
+  - component: {fileID: 8802124921112932405}
   m_Layer: 3
   m_Name: Robot5
   m_TagString: Untagged
@@ -1131,7 +1132,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762146786600250}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3385d7cafec0a4241933d0d47202ae71, type: 3}
   m_Name: 
@@ -1181,9 +1182,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f563e19cebc20184486d49f6838bf24f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  box: {fileID: 1580906269645871538}
   hitMat: {fileID: 2100000, guid: f7eca97f0997cc340baa395c6f0fa44a, type: 2}
   render: {fileID: 137284849524366382}
   originMat: {fileID: 0}
+--- !u!114 &8802124921112932405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762146786600250}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970ee040fa16b23479a9427a047ed355, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &177272626061297424
 GameObject:
   m_ObjectHideFlags: 0

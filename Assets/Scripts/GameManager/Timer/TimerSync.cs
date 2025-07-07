@@ -8,10 +8,6 @@ using UnityEngine;
 
 public class TimerSync : Timer, IOnEventCallback
 {
-    private const byte TIMER_UPDATE_EVENT = 7;
-    private const byte REST_TIME_EVENT = 8;
-    private const byte SPAWN_TIME_EVENT = 9;
-
     float lastSyncSec = 0;
     float lastSyncTime = 0;
 
@@ -73,20 +69,20 @@ public class TimerSync : Timer, IOnEventCallback
                     isTimerRunning = false;
                     ChangeSpawnTime();
 
-                    PhotonNetwork.RaiseEvent(SPAWN_TIME_EVENT, null, options, SendOptions.SendUnreliable);
+                    PhotonNetwork.RaiseEvent(PhotonEventCode.SPAWN_TIME_EVENT, null, options, SendOptions.SendUnreliable);
                 }
                 else
                 {
                     ChangeSpawnTime();
 
-                    PhotonNetwork.RaiseEvent(SPAWN_TIME_EVENT, null, options, SendOptions.SendUnreliable);
+                    PhotonNetwork.RaiseEvent(PhotonEventCode.SPAWN_TIME_EVENT, null, options, SendOptions.SendUnreliable);
                 }
             }
             else if (isSpawnTime && enemyManager.GetCurEnemy() <= 0)
             {
                 ChangeRestTime();
 
-                PhotonNetwork.RaiseEvent(REST_TIME_EVENT, null, options, SendOptions.SendUnreliable);
+                PhotonNetwork.RaiseEvent(PhotonEventCode.REST_TIME_EVENT, null, options, SendOptions.SendUnreliable);
             }
         }
     }
@@ -101,7 +97,7 @@ public class TimerSync : Timer, IOnEventCallback
             {
                 object[] content = new object[] { sec };
                 RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-                PhotonNetwork.RaiseEvent(TIMER_UPDATE_EVENT, content, options, SendOptions.SendUnreliable);
+                PhotonNetwork.RaiseEvent(PhotonEventCode.TIMER_UPDATE_EVENT, content, options, SendOptions.SendUnreliable);
             }
 
             yield return wait;
@@ -110,7 +106,7 @@ public class TimerSync : Timer, IOnEventCallback
 
     public void OnEvent(EventData _photonEvent)
     {
-        if (_photonEvent.Code == TIMER_UPDATE_EVENT)
+        if (_photonEvent.Code == PhotonEventCode.TIMER_UPDATE_EVENT)
         {
             if (PhotonNetwork.IsMasterClient) return;
 
@@ -120,11 +116,11 @@ public class TimerSync : Timer, IOnEventCallback
 
             OnTimeEvent();
         }
-        else if (_photonEvent.Code == SPAWN_TIME_EVENT)
+        else if (_photonEvent.Code == PhotonEventCode.SPAWN_TIME_EVENT)
         {
             ChangeSpawnTime();
         }
-        else if (_photonEvent.Code == REST_TIME_EVENT)
+        else if (_photonEvent.Code == PhotonEventCode.REST_TIME_EVENT)
         {
             ChangeRestTime();
         }

@@ -18,6 +18,13 @@ public class PhotonMatching : MonoBehaviourPunCallbacks, IOnEventCallback
         PhotonNetwork.SerializationRate = 10;
 
         PhotonNetwork.ConnectUsingSettings();
+
+        PhotonPeer.RegisterType(
+            typeof(EnemySyncData),
+            PhotonCustomTypes.EnemySyncDataCode,
+            PhotonCustomTypes.SerializeEnemySyncData,
+            PhotonCustomTypes.DeserializeEnemySyncData
+            );
     }
 
     public override void OnEnable()

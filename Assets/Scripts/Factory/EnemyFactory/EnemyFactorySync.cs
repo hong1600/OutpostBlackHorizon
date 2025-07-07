@@ -36,13 +36,13 @@ public class EnemyFactorySync : FactoryBaseSync<EEnemy>
             }
 
             _onComplete?.Invoke(obj);
+            return obj;
         }
         else
         {
+            _onComplete?.Invoke(null);
             return base.Create(_type, _pos, _rot, parent, _onComplete);
         }
-
-        return null;
     }
 
     protected override void Init(GameObject _obj, EEnemy _eEnemy, bool _isMaster)
@@ -51,6 +51,8 @@ public class EnemyFactorySync : FactoryBaseSync<EEnemy>
 
         EnemyBase enemyBase = _obj.GetComponent<EnemyBase>();
         EnemySync enemySync = _obj.GetComponent<EnemySync>();
+
+        Debug.Log(enemySync);
 
         if (enemyBase == null)
         {
@@ -69,16 +71,16 @@ public class EnemyFactorySync : FactoryBaseSync<EEnemy>
 
                 if (info != null)
                 {
-                    enemyBase.Init(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, _eEnemy, id);
                     enemyBase.enabled = true;
+                    enemyBase.Init(info.Name, info.MaxHp, info.Speed, info.AttackRange, info.AttackDmg, _eEnemy, id);
                 }
             }
-
         }
         else
         {
-            enemySync.Init(id);
             enemySync.enabled = true;
+            Debug.Log(enemySync);
+            enemySync.Init(id);
         }
     }
 }

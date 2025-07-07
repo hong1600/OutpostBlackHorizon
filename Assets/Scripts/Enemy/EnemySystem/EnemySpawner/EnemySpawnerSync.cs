@@ -9,7 +9,13 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawnerSync : EnemySpawner, IOnEventCallback
 {
-    const byte ENEMY_SPAWN_EVENT = 10;
+    EnemyFactorySync enemyFactorySync;
+
+    protected override void Start()
+    {
+        base.Start();
+        enemyFactorySync = FactoryManager.instance.EnemyFactorySync;
+    }
 
     protected override void SpawnEnemy()
     {
@@ -44,11 +50,11 @@ public class EnemySpawnerSync : EnemySpawner, IOnEventCallback
 
             for (int j = 0; j < 3; j++)
             {
-                enemyFactory.Create(eEnemy, spawnPos[j], Quaternion.identity, null, null);
+                enemyFactorySync.Create(eEnemy, spawnPos[j], Quaternion.identity, null, null);
 
                 object[] data = new object[] { (int)eEnemy, spawnPos[j].x, spawnPos[j].y, spawnPos[j].z };
                 RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-                PhotonNetwork.RaiseEvent(ENEMY_SPAWN_EVENT, data, options, new SendOptions { Reliability = true});
+                PhotonNetwork.RaiseEvent(PhotonEventCode.ENEMY_SPAWN_EVENT, data, options, new SendOptions { Reliability = true});
             }
 
             yield return new WaitForSeconds(2f);
@@ -57,14 +63,14 @@ public class EnemySpawnerSync : EnemySpawner, IOnEventCallback
 
     public void OnEvent(EventData _photonEvent)
     {
-        if (_photonEvent.Code == ENEMY_SPAWN_EVENT)
+        if (_photonEvent.Code == PhotonEventCode.ENEMY_SPAWN_EVENT)
         {
             object[] data = (object[])_photonEvent.CustomData;
 
             EEnemy type = (EEnemy)(int)data[0];
             Vector3 pos = new Vector3((float)data[1], (float)data[2], (float)data[3]);
 
-            enemyFactory.Create(type, pos, Quaternion.identity, null, null);
+            enemyFactorySync.Create(type, pos, Quaternion.identity, null, null);
         }
     }
 }

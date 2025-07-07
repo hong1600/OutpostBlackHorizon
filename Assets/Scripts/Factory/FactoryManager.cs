@@ -5,6 +5,7 @@ using UnityEngine;
 public class FactoryManager : Singleton<FactoryManager>
 {
     [SerializeField] EnemyFactory enemyFactory;
+    [SerializeField] EnemyFactorySync enemyFactorySync;
 
     protected override void Awake()
     {
@@ -12,4 +13,5 @@ public class FactoryManager : Singleton<FactoryManager>
     }
 
     public EnemyFactory EnemyFactory { get { return enemyFactory; } }
+    public EnemyFactorySync EnemyFactorySync { get { return enemyFactorySync; } }
 }

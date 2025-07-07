@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
         terrain = Terrain.activeTerrain;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         enemyPool = Shared.Instance.poolManager.EnemyPool;
         enemyFactory = FactoryManager.instance.EnemyFactory;

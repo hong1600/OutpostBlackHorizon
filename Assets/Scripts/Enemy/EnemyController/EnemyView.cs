@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class EnemyView : MonoBehaviour
 {
     Animator anim;
-    BoxCollider box;
+    [SerializeField] BoxCollider box;
 
     [Header("HitEffect")]
     public Material hitMat;
@@ -33,14 +33,13 @@ public class EnemyView : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        hpBarPool = ObjectPoolManager.instance.HpBarPool;
-        effectPool = ObjectPoolManager.instance.EffectPool;
-    }
-
     public void CreateHpBar(EnemyBase _enemyBase)
     {
+        if (hpBarPool == null)
+        {
+            hpBarPool = ObjectPoolManager.instance.HpBarPool;
+        }
+
         if (skinRender != null)
         {
             GameObject hpBar = hpBarPool.FindHpbar(EHpBar.NORMAL, skinRender.bounds.center +
@@ -54,6 +53,11 @@ public class EnemyView : MonoBehaviour
 
     public void InitHpBar(EnemyBase _enemyBase)
     {
+        if (hpBarPool == null)
+        {
+            hpBarPool = ObjectPoolManager.instance.HpBarPool;
+        }
+
         if (skinRender != null)
         {
             if (enemyHpBar != null)
@@ -81,6 +85,11 @@ public class EnemyView : MonoBehaviour
 
     public GameObject PlayDieEffect()
     {
+        if (effectPool == null)
+        {
+            effectPool = ObjectPoolManager.instance.EffectPool;
+        }
+
         GameObject explosionObj =
             effectPool.FindEffect(EEffect.ENEMYEXPLOSION, box.bounds.center, Quaternion.identity);
 

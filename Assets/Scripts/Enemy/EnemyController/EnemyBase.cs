@@ -8,16 +8,6 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[Serializable]
-public class EnemySyncData
-{
-    public int id;
-    public Vector3 pos;
-    public Quaternion rot;
-    public EEnemyAI state;
-    public float hp;
-}
-
 public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 {
     public event Action onTakeDamage;
@@ -71,15 +61,10 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     public virtual void Init(string _name, float _maxHp, float _spd, float _range, float _dmg, EEnemy _eEnemy, int _id)
     {
-        enemyAI = new EnemyAI();
-        enemyAI.Init(this);
-
         rigid = GetComponent<Rigidbody>();
 
-        if (enemyView.render != null)
-        {
-            enemyView.originMat = GetComponent<Renderer>().sharedMaterial;
-        }
+        enemyAI = new EnemyAI();
+        enemyAI.Init(this);
 
         enemySpawner = EnemyManager.instance.EnemySpawner;
         goldCoin = GameManager.instance.GoldCoin;
@@ -106,19 +91,22 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
         myTarget = centerPoint;
     }
+    private void OnEnable()
+    {
+        ResetState();
+
+        enemyView.InitHpBar(this);
+
+        StartCoroutine(StartSendSyncData());
+    }
 
     private void OnDisable()
     {
         ResetState();
         enemyAI.aiState = EEnemyAI.CREATE;
         this.enabled = false;
-    }
 
-    private void OnEnable()
-    {
-        ResetState();
-
-        enemyView.InitHpBar(this);
+        StopAllCoroutines();
     }
 
     private void ResetState()
@@ -155,27 +143,28 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         }
     }
 
-    private void FixedUpdate()
+    IEnumerator StartSendSyncData()
     {
-        SendSyncData();
-    }
+        WaitForSeconds wait = new WaitForSeconds(0.1f);
 
-    private void SendSyncData()
-    {
-        if (PhotonNetwork.IsMasterClient)
+        while (true)
         {
-            EnemySyncData data = new EnemySyncData()
+            if (PhotonNetwork.IsMasterClient)
             {
-                id = ID,
-                pos = transform.position,
-                rot = transform.rotation,
-                state = enemyAI.aiState,
-                hp = curhp
-            };
+                EnemySyncData data = new EnemySyncData()
+                {
+                    id = ID,
+                    pos = transform.position,
+                    rot = transform.rotation,
+                };
 
-            RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-            SendOptions sendOptions = new SendOptions { Reliability = true };
-            PhotonNetwork.RaiseEvent(PhotonEventCode.ENEMY_SYNC_EVENT, data, options, sendOptions);
+                RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+                SendOptions sendOptions = new SendOptions { Reliability = false };
+
+                PhotonNetwork.RaiseEvent(PhotonEventCode.ENEMY_SYNC_EVENT, data, options, sendOptions);
+            }
+
+            yield return wait;
         }
     }
 

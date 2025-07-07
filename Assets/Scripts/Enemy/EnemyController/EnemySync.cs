@@ -35,6 +35,8 @@ public class EnemySync : MonoBehaviour, IOnEventCallback
     {
         transform.position = Vector3.Lerp(transform.position, pos, Time.fixedDeltaTime);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.fixedDeltaTime);
+
+        Debug.Log($"{transform.position}");
     }
 
     public void Init(int _id)
@@ -46,11 +48,13 @@ public class EnemySync : MonoBehaviour, IOnEventCallback
     {
         if (_photonEvent.Code == PhotonEventCode.ENEMY_SYNC_EVENT)
         {
-            EnemySyncData data = _photonEvent.CustomData as EnemySyncData;
+            EnemySyncData data = (EnemySyncData)_photonEvent.CustomData;
 
             if (data != null && data.id == this.ID)
             {
                 MoveSync(data.pos, data.rot);
+
+                Debug.Log($"{data.pos}{data.rot}");
             }
         }
     }
@@ -59,5 +63,7 @@ public class EnemySync : MonoBehaviour, IOnEventCallback
     {
         pos = _pos;
         rot = _rot;
+
+        Debug.Log($"{pos}{rot}");
     }
 }

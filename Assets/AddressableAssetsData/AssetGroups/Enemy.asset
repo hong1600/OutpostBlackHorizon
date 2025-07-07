@@ -17,32 +17,32 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 339cff414a982bc46ac69b8055207c28
   m_SerializeEntries:
-  - m_GUID: 077155289d2e14247bd0864b560f74ac
-    m_Address: Robot5
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 422ef88a40628da409906a952317b108
-    m_Address: Robot3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 85413646e0dfaf645a50e52025b31523
-    m_Address: Robot2
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bdd91695cfcf4b643963af1fce587ef5
+  - m_GUID: aa11a950c66e96448a937b62ebbb2495
     m_Address: Robot1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e764774812edb8d42bfee98df23e49c8
+  - m_GUID: e5102de90184b904caa06beefaeb1cad
+    m_Address: Robot5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e62bfcbfa157a5f4eb3777e13af81363
+    m_Address: Robot2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2081011e7e14de4a8894bb276000ad4
     m_Address: Robot4
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e8441b944c984b24f921848aa36ab92e
+  - m_GUID: f2c425276bf68104a94dc18a0226c18b
+    m_Address: Robot3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f9f392a20a9cd2048ae0c7a35869b85c
     m_Address: Robot6
     m_ReadOnly: 0
     m_SerializedLabels: []
