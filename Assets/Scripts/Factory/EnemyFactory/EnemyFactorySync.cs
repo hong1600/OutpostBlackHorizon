@@ -52,8 +52,6 @@ public class EnemyFactorySync : FactoryBaseSync<EEnemy>
         EnemyBase enemyBase = _obj.GetComponent<EnemyBase>();
         EnemySync enemySync = _obj.GetComponent<EnemySync>();
 
-        Debug.Log(enemySync);
-
         if (enemyBase == null)
         {
             enemyBase = _obj.GetComponentInChildren<EnemyBase>();
@@ -79,7 +77,6 @@ public class EnemyFactorySync : FactoryBaseSync<EEnemy>
         else
         {
             enemySync.enabled = true;
-            Debug.Log(enemySync);
             enemySync.Init(id);
         }
     }

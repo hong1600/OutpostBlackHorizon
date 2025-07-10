@@ -27,21 +27,14 @@ public abstract class ProjectileBaseSync : MonoBehaviour
     protected float time;
     protected bool isHead;
 
-    [Header("Sync")]
-    PhotonView pv;
-
     protected Vector3 targetPos;
     protected Quaternion targetRot;
-
-    float syncRate = 0.05f;
-    float syncTimer = 0f;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         sphere = GetComponent<SphereCollider>();
         trail = GetComponent<TrailRenderer>();
-        pv = GetComponent<PhotonView>();
     }
 
     private void Start()
@@ -67,10 +60,7 @@ public abstract class ProjectileBaseSync : MonoBehaviour
         dmg = _dmg;
         target = _target;
 
-        if (pv.IsMine)
-        {
-            rigid.velocity = transform.forward * speed;
-        }
+        rigid.velocity = transform.forward * speed;
     }
 
     private void Update()
@@ -81,29 +71,6 @@ public abstract class ProjectileBaseSync : MonoBehaviour
         {
             ReturnPool();
         }
-
-        if (pv.IsMine)
-        {
-            syncTimer += Time.deltaTime;
-
-            if (syncTimer >= syncRate)
-            {
-                syncTimer = 0;
-                pv.RPC(nameof(RpcMove), RpcTarget.Others, transform.position, transform.rotation);
-            }
-        }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 20f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, Time.deltaTime * 20f);
-        }
-    }
-
-    [PunRPC]
-    protected virtual void RpcMove(Vector3 _pos, Quaternion _rot)
-    {
-        targetPos = _pos;
-        targetRot = _rot;
     }
 
     protected abstract void ReturnPool();

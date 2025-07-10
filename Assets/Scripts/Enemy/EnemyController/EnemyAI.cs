@@ -8,6 +8,8 @@ public class EnemyAI
 
     public EEnemyAI aiState = EEnemyAI.CREATE;
 
+    public EEnemyAI lastState;
+
     public void Init(EnemyBase _enemy)
     {
         enemy = _enemy;
@@ -37,11 +39,25 @@ public class EnemyAI
 
     public virtual void Create()
     {
+        if(lastState != EEnemyAI.CREATE) 
+        {
+            lastState = EEnemyAI.CREATE;
+
+            enemy.ChangeState();
+        }
+
         aiState = EEnemyAI.MOVE;
     }
 
     public virtual void Move()
     {
+        if (lastState != EEnemyAI.MOVE)
+        {
+            lastState = EEnemyAI.MOVE;
+
+            enemy.ChangeState();
+        }
+
         if (enemy.isDie)
         {
             aiState = EEnemyAI.DIE;
@@ -62,6 +78,13 @@ public class EnemyAI
 
     public virtual void Stay()
     {
+        if (lastState != EEnemyAI.STAY)
+        {
+            lastState = EEnemyAI.STAY;
+
+            enemy.ChangeState();
+        }
+
         if (!enemy.isStay && !enemy.isDie)
         {
             aiState = EEnemyAI.MOVE;
@@ -74,6 +97,13 @@ public class EnemyAI
 
     public virtual void Attack()
     {
+        if (lastState != EEnemyAI.ATTACK)
+        {
+            lastState = EEnemyAI.ATTACK;
+
+            enemy.ChangeState();
+        }
+
         enemy.AttackAI();
 
         if (enemy.isStay)
@@ -88,6 +118,13 @@ public class EnemyAI
 
     public virtual void Die()
     {
+        if (lastState != EEnemyAI.DIE)
+        {
+            lastState = EEnemyAI.DIE;
+
+            enemy.ChangeState();
+        }
+
         if (enemy.isDie)
         {
             enemy.DieAI();

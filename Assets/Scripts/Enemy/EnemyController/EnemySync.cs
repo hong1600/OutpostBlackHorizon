@@ -35,8 +35,6 @@ public class EnemySync : MonoBehaviour, IOnEventCallback
     {
         transform.position = Vector3.Lerp(transform.position, pos, Time.fixedDeltaTime);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.fixedDeltaTime);
-
-        Debug.Log($"{transform.position}");
     }
 
     public void Init(int _id)
@@ -53,17 +51,33 @@ public class EnemySync : MonoBehaviour, IOnEventCallback
             if (data != null && data.id == this.ID)
             {
                 MoveSync(data.pos, data.rot);
-
-                Debug.Log($"{data.pos}{data.rot}");
             }
         }
+        else if (_photonEvent.Code == PhotonEventCode.ENEMY_STATE_EVENT)
+        {
+            object[] data = (object[])_photonEvent.CustomData;
+
+            int aiState = (int)data[0];
+            int id = (int)data[1];
+
+            if (data != null && id == this.ID)
+            {
+                ChangeAnim(aiState);
+            }
+        }
+        
     }
 
     private void MoveSync(Vector3 _pos, Quaternion _rot)
     {
         pos = _pos;
         rot = _rot;
+    }
 
-        Debug.Log($"{pos}{rot}");
+    private void ChangeAnim(int _aiState)
+    {
+        EEnemyAI curState = (EEnemyAI)_aiState;
+
+        enemyView.ChangeAnim(curState);
     }
 }

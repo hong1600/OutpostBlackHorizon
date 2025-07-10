@@ -18,14 +18,17 @@ public class PlayerMovementSync : PlayerMovement
         pv = GetComponent<PhotonView>();
     }
 
-    protected override void Start()
+    private void OnEnable()
     {
-        base.Start();
-
-        if(pv.IsMine) 
+        if (pv.IsMine)
         {
-            pv.RPC(nameof(RPCMove), RpcTarget.Others, transform.position, transform.rotation, isRun, 0f, 0f);
+            StartCoroutine(StartSendMoveSync());
         }
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     protected override void Update()
@@ -42,14 +45,26 @@ public class PlayerMovementSync : PlayerMovement
 
     protected override void Move()
     {
-        base.Move();
-
         if (pv.IsMine)
         {
-            pv.RPC(nameof(RPCMove), RpcTarget.Others, transform.position, transform.rotation, isRun, moveX, moveZ);
+            base.Move();
         }
     }
 
+    IEnumerator StartSendMoveSync()
+    {
+        WaitForSeconds wait = new WaitForSeconds(0.1f);
+
+        while (true)
+        {
+            if (pv.IsMine)
+            {
+                pv.RPC(nameof(RPCMove), RpcTarget.Others, transform.position, transform.rotation, isRun, moveX, moveZ);
+            }
+
+            yield return wait;
+        }
+    }
 
     [PunRPC]
     private void RPCMove(Vector3 _pos, Quaternion _rot, bool _isRun, float _moveX, float _moveZ)

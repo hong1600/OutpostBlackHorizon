@@ -25,6 +25,13 @@ public class PhotonMatching : MonoBehaviourPunCallbacks, IOnEventCallback
             PhotonCustomTypes.SerializeEnemySyncData,
             PhotonCustomTypes.DeserializeEnemySyncData
             );
+
+        PhotonPeer.RegisterType(
+            typeof(BulletSyncData),
+            PhotonCustomTypes.BulletSyncDataCode,
+            PhotonCustomTypes.SerializeBulletSyncData,
+            PhotonCustomTypes.DeserializeBulletSyncData
+            );
     }
 
     public override void OnEnable()

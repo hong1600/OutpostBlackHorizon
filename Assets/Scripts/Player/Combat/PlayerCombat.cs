@@ -32,16 +32,16 @@ public class PlayerCombat : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && cameraFpsShake.enabled == true && !isAttack && !gunManager.isReloading) 
         {
-            StartCoroutine(StartFireRifle(true));
+            StartCoroutine(StartFireRifle());
         }
 
         if (Input.GetKeyDown(KeyCode.E) && !isAttack && !gunManager.isReloading && gunManager.curGrenadeCount > 0) 
         {
-            StartCoroutine(StartFireGrenade(true));
+            StartCoroutine(StartFireGrenade());
         }
     }
 
-    protected virtual IEnumerator StartFireRifle(bool _isMine)
+    protected virtual IEnumerator StartFireRifle()
     {
         isAttack = true;
 
@@ -49,19 +49,16 @@ public class PlayerCombat : MonoBehaviour
 
         muzzleFlash.SetActive(true);
 
-        if(_isMine) 
-        {
-            gunManager.UseBullet();
-            gunMovement.RecoilGun();
+        gunManager.UseBullet();
+        gunMovement.RecoilGun();
 
-            GameObject obj = bulletPool.FindBullet(EBullet.PLAYERBULLET, fireTrs.position, fireTrs.rotation);
-            PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
-            bullet.Init(null, bulletDmg, bulletSpd, EBulletType.PLAYER);
+        GameObject obj = bulletPool.FindBullet(EBullet.PLAYERBULLET, fireTrs.position, fireTrs.rotation);
+        PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
+        bullet.Init(null, bulletDmg, bulletSpd, EBulletType.PLAYER);
 
-            cameraFpsShake.Shake();
+        cameraFpsShake.Shake();
 
-            onUseBullet?.Invoke();
-        }
+        onUseBullet?.Invoke();
 
         yield return new WaitForSeconds(0.1f);
 
@@ -70,7 +67,7 @@ public class PlayerCombat : MonoBehaviour
         isAttack = false;
     }
 
-    protected virtual IEnumerator StartFireGrenade(bool _isMine)
+    protected virtual IEnumerator StartFireGrenade()
     {
         isAttack = true;
 
@@ -78,19 +75,16 @@ public class PlayerCombat : MonoBehaviour
 
         muzzleFlash.SetActive(true);
 
-        if(_isMine) 
-        {
-            gunManager.UseGrenade();
-            gunMovement.RecoilGun();
+        gunManager.UseGrenade();
+        gunMovement.RecoilGun();
 
-            GameObject obj = bulletPool.FindBullet(EBullet.PLAYERGRENADE, fireTrs.position, fireTrs.rotation);
-            PlayerGrenade bullet = obj.GetComponent<PlayerGrenade>();
-            bullet.Init(null, 100, grenadeSpd);
+        GameObject obj = bulletPool.FindBullet(EBullet.PLAYERGRENADE, fireTrs.position, fireTrs.rotation);
+        PlayerGrenade bullet = obj.GetComponent<PlayerGrenade>();
+        bullet.Init(null, 100, grenadeSpd);
 
-            cameraFpsShake.Shake();
+        cameraFpsShake.Shake();
 
-            onUseBullet?.Invoke();
-        }
+        onUseBullet?.Invoke();
 
         yield return new WaitForSeconds(0.1f);
 

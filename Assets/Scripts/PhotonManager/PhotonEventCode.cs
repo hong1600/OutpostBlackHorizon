@@ -15,5 +15,7 @@ public static class PhotonEventCode
     public const byte TIMER_UPDATE_EVENT = 9;
     public const byte REST_TIME_EVENT = 10;
     public const byte SPAWN_TIME_EVENT = 11;
-
+    public const byte ENEMY_STATE_EVENT = 12;
+    public const byte SPAWN_BULLET_EVENT = 13;
+    public const byte SPAWN_GRENADE_EVENT = 13;
 }

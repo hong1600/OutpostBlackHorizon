@@ -26,7 +26,7 @@ public abstract class ObjectPoolBaseSync<T> : MonoBehaviour
         }
     }
 
-    public GameObject FindObject(T _type, Vector3 _pos, Quaternion _rot, string _path)
+    public virtual GameObject FindObject(T _type, Vector3 _pos, Quaternion _rot, string _path)
     {
         if (myPoolDic.TryGetValue(_type, out Queue<GameObject> pool))
         {
@@ -50,7 +50,7 @@ public abstract class ObjectPoolBaseSync<T> : MonoBehaviour
                 }
             }
 
-            GameObject newObj = PhotonNetwork.Instantiate(_path + prefabDic[_type].name, _pos, _rot);
+            GameObject newObj = Instantiate(prefabDic[_type], _pos, _rot);
             newObj.name = prefabDic[_type].name;
             newObj.SetActive(true);
             return newObj;

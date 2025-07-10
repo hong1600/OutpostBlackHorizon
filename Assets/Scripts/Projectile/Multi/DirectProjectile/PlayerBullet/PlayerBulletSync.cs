@@ -15,12 +15,6 @@ public class PlayerBulletSync : DirectProjectileSync
         time = 3f;
     }
 
-    [PunRPC]
-    public void RPCInit(float _dmg, float _spd, int _eBulletType)
-    {
-        Init(null, _dmg, _spd, (EBulletType)_eBulletType);
-    }
-
     protected override IEnumerator StartHitBullet(Vector3 _hitPos, Collider _hitObj)
     {
         if (_hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy"))
@@ -37,12 +31,6 @@ public class PlayerBulletSync : DirectProjectileSync
     {
         hitAim.transform.localScale = new Vector3(1, 1, 1);
         hitAim.SetActive(false);
-    }
-
-    [PunRPC]
-    protected override void RpcMove(Vector3 _pos, Quaternion _rot)
-    {
-        base.RpcMove(_pos, _rot);
     }
 
     protected override void ReturnPool()

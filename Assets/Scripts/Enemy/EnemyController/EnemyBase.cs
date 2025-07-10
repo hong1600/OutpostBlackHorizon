@@ -46,6 +46,9 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     bool isReset;
     protected Coroutine attackCoroutine;
 
+    RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+    SendOptions sendOptions = new SendOptions { Reliability = false };
+
     public int ID { get; private set; }
     public string enemyName { get; private set; }
     public float maxHp { get; private set; }
@@ -157,9 +160,6 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
                     pos = transform.position,
                     rot = transform.rotation,
                 };
-
-                RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-                SendOptions sendOptions = new SendOptions { Reliability = false };
 
                 PhotonNetwork.RaiseEvent(PhotonEventCode.ENEMY_SYNC_EVENT, data, options, sendOptions);
             }
@@ -333,6 +333,13 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
         effectPool.ReturnEffect(EEffect.ENEMYEXPLOSION, dieEffect);
         enemyPool.ReturnEnemy(eEnemy, this.gameObject);
+    }
+
+    public void ChangeState()
+    {
+        object[] data = new object[] { (int)aiState, ID};
+
+        PhotonNetwork.RaiseEvent(PhotonEventCode.ENEMY_STATE_EVENT, data, options, sendOptions);
     }
 
     public virtual void MoveAI()
