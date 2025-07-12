@@ -53,7 +53,7 @@ public class TimerSync : Timer, IOnEventCallback
         {
             sec -= Time.deltaTime;
             sec = Mathf.Max(0f, sec);
-            OnTimeEvent();
+            OnTimeEvent(sec);
         }
 
         if (sec <= 0f)
@@ -114,7 +114,7 @@ public class TimerSync : Timer, IOnEventCallback
             lastSyncSec = (float)data[0];
             lastSyncTime = Time.time;
 
-            OnTimeEvent();
+            OnTimeEvent(lastSyncSec);
         }
         else if (_photonEvent.Code == PhotonEventCode.SPAWN_TIME_EVENT)
         {

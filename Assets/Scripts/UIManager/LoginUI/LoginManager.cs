@@ -41,6 +41,8 @@ public class LoginManager : MonoBehaviour
 
             UserData loadData = DataManager.instance.UserDataLoader.LoadUserData(_id);
 
+            Debug.Log(DataManager.instance.UserDataLoader.curUserData.userName);
+
             if (loadData.first)
             {
                 userNamePanel.SetActive(true);

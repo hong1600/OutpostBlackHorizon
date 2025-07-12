@@ -5,7 +5,7 @@ using System;
 
 public class Timer : MonoBehaviour
 {
-    public event Action onTimeEvent;
+    public event Action<float> onTimeEvent;
     public event Action onRestTime;
 
     protected EnemyManager enemyManager;
@@ -30,7 +30,7 @@ public class Timer : MonoBehaviour
         enemySpawner = EnemyManager.instance.EnemySpawner;
         waveBossSpawner = EnemyManager.instance.WaveBossSpawner;
 
-        sec = 28f;
+        sec = 38f;
         maxSec = sec;
 
         isTimerRunning = true;
@@ -59,7 +59,7 @@ public class Timer : MonoBehaviour
         {
             sec -= Time.deltaTime;
             sec = Mathf.Max(0f, sec);
-            onTimeEvent?.Invoke();
+            onTimeEvent?.Invoke(sec);
         }
 
         if (sec <= 0f)
@@ -85,9 +85,9 @@ public class Timer : MonoBehaviour
         }
     }
 
-    protected void OnTimeEvent()
+    protected void OnTimeEvent(float _sec)
     {
-        onTimeEvent?.Invoke();
+        onTimeEvent?.Invoke(_sec);
     }
 
     protected void ChangeSpawnTime()

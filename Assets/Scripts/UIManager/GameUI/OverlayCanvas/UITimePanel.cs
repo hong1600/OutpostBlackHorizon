@@ -20,14 +20,14 @@ public class UITimePanel : MonoBehaviour
         timer.onRestTime += UpdateRestText;
     }
 
-    private void UpdateTimePanel()
+    private void UpdateTimePanel(float _sec)
     {
         float sec = timer.GetSec();
         float maxSec = timer.maxSec;
 
         timerText.text = $"{(int)sec}s";
 
-        sliderValue.DOFillAmount(sec / maxSec, 0.2f).SetEase(Ease.Linear);
+        sliderValue.DOFillAmount(_sec / maxSec, 0.2f).SetEase(Ease.Linear);
     }
 
     //IEnumerator StartSmoothSilder(float _targetValue)

@@ -12,21 +12,29 @@ public class LobbyUI : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] GameObject blackPanel;
-    UserData userData;
 
     [SerializeField] GameObject matchingPanel;
 
     private void Start()
     {
-        if (DataManager.instance.UserDataLoader.curUserData != null)
-        {
-            userData = DataManager.instance.UserDataLoader.curUserData;
-        }
+        SetUserName();
 
         Invoke("OffBlackPanel", 1);
         AudioManager.instance.PlayBgm(EBgm.LOBBYWAITING);
 
         StartCoroutine(StartLobbyAnim());
+    }
+
+    private void SetUserName()
+    {
+        if (DataManager.instance.UserDataLoader.curUserData != null)
+        {
+            nameText.text = DataManager.instance.UserDataLoader.curUserData.userName;
+        }
+        else
+        {
+            return;
+        }
     }
 
     private void OffBlackPanel()
