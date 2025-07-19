@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossMissileSync : HomingProjectile
+public class BossMissileSync : HomingProjectileSync
 {
     Vector3 randomOffset;
 

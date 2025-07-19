@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineBulletSync : DirectProjectile
+public class MachineBulletSync : DirectProjectileSync
 {
     public override void Init(Transform _target, float _dmg, float _speed)
     {

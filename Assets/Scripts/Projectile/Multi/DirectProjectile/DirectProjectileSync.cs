@@ -5,8 +5,6 @@ using UnityEngine;
 
 public abstract class DirectProjectileSync : ProjectileBaseSync
 {
-    protected EBulletType type;
-
     private void FixedUpdate()
     {
         CheckMoveBullet();
@@ -46,25 +44,7 @@ public abstract class DirectProjectileSync : ProjectileBaseSync
 
         ITakeDmg iTakeDmg = _hitObj.GetComponentInParent<ITakeDmg>();
 
-        if (type == EBulletType.PLAYER)
-        {
-            if (iTakeDmg != null && 
-                _hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-            {
-                isHead = _hitObj.CompareTag("Head");
-                float finalDmg = isHead ? dmg * 1.5f : dmg;
-                iTakeDmg.TakeDmg(finalDmg, isHead);
-            }
-        }
-        else
-        {
-            if (iTakeDmg != null && (_hitObj.gameObject.layer == LayerMask.NameToLayer("Player")
-                || _hitObj.gameObject.layer == LayerMask.NameToLayer("Field")
-                || _hitObj.gameObject.layer == LayerMask.NameToLayer("Center")))
-            {
-                iTakeDmg.TakeDmg(dmg, false);
-            }
-        }
+        HitEnemy(_hitObj);
 
         ReturnPool();
         yield return null;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Robot2BulletSync : DirectProjectile
+public class Robot2BulletSync : DirectProjectileSync
 {
     public void Init(Transform _target, float _dmg, float _speed, EBulletType _eBulletType)
     {

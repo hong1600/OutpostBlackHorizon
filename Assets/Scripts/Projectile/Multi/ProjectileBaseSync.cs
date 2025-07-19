@@ -26,6 +26,7 @@ public abstract class ProjectileBaseSync : MonoBehaviour
     protected float dmg;
     protected float time;
     protected bool isHead;
+    protected EBulletType type;
 
     protected Vector3 targetPos;
     protected Quaternion targetRot;
@@ -71,6 +72,32 @@ public abstract class ProjectileBaseSync : MonoBehaviour
         {
             ReturnPool();
         }
+    }
+
+    protected void HitEnemy(Collider _hitObj)
+    {
+        ITakeDmg iTakeDmg = _hitObj.GetComponentInParent<ITakeDmg>();
+
+        if (type == EBulletType.PLAYER)
+        {
+            if (iTakeDmg != null &&
+                _hitObj.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                isHead = _hitObj.CompareTag("Head");
+                float finalDmg = isHead ? dmg * 1.5f : dmg;
+                iTakeDmg.TakeDmg(finalDmg, isHead);
+            }
+        }
+        else
+        {
+            if (iTakeDmg != null && (_hitObj.gameObject.layer == LayerMask.NameToLayer("Player")
+                || _hitObj.gameObject.layer == LayerMask.NameToLayer("Field")
+                || _hitObj.gameObject.layer == LayerMask.NameToLayer("Center")))
+            {
+                iTakeDmg.TakeDmg(dmg, false);
+            }
+        }
+
     }
 
     protected abstract void ReturnPool();

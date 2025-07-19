@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RocketMissileSync : HomingProjectile
+public class RocketMissileSync : HomingProjectileSync
 {
     Transform fireTrs;
 

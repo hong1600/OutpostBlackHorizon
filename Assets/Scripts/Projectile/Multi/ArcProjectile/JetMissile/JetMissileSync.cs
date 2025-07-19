@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
-public class JetMissileSync : ArcProjectile
+public class JetMissileSync : ArcProjectileSync
 {
     Vector3 randomOffset;
 
