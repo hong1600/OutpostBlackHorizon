@@ -132,32 +132,6 @@ public class PlayerCombatSync : PlayerCombat, IOnEventCallback
         }
     }
 
-    private void SyncFireRifle(Vector3 _pos, Quaternion _rot, float _dmg, float _spd)
-    {
-        AudioManager.instance.PlaySfx(ESfx.GUNSHOT, _pos, null);
-
-        muzzleFlash.SetActive(true);
-
-        StartCoroutine(StartOffFlash());
-
-        GameObject obj = bulletPool.FindBullet(EBullet.PLAYERBULLET, _pos, _rot);
-        PlayerBulletSync bullet = obj.GetComponent<PlayerBulletSync>();
-        bullet.Init(null, _dmg, _spd, EBulletType.PLAYER);
-    }
-
-    private void SyncFireGrenade(Vector3 _pos, Quaternion _rot, float _dmg, float _spd)
-    {
-        AudioManager.instance.PlaySfx(ESfx.GRENADESHOT, _pos, null);
-
-        muzzleFlash.SetActive(true);
-
-        StartCoroutine(StartOffFlash());
-
-        GameObject obj = bulletPool.FindBullet(EBullet.PLAYERGRENADE, _pos, _rot);
-        PlayerGrenadeSync bullet = obj.GetComponent<PlayerGrenadeSync>();
-        bullet.Init(null, _dmg, _spd);
-    }
-
     public void OnEvent(EventData _photonEvent)
     {
         if(!pv.IsMine) 
@@ -175,5 +149,27 @@ public class PlayerCombatSync : PlayerCombat, IOnEventCallback
                 SyncFireGrenade(data.pos, data.rot, data.dmg, data.spd);
             }
         }
+    }
+
+    private void SyncFireRifle(Vector3 _pos, Quaternion _rot, float _dmg, float _spd)
+    {
+        AudioManager.instance.PlaySfx(ESfx.GUNSHOT, _pos, null);
+
+        muzzleFlash.SetActive(true);
+
+        StartCoroutine(StartOffFlash());
+
+        GameObject obj = bulletPool.FindBullet(EBullet.PLAYERBULLET, _pos, _rot);
+    }
+
+    private void SyncFireGrenade(Vector3 _pos, Quaternion _rot, float _dmg, float _spd)
+    {
+        AudioManager.instance.PlaySfx(ESfx.GRENADESHOT, _pos, null);
+
+        muzzleFlash.SetActive(true);
+
+        StartCoroutine(StartOffFlash());
+
+        GameObject obj = bulletPool.FindBullet(EBullet.PLAYERGRENADE, _pos, _rot);
     }
 }

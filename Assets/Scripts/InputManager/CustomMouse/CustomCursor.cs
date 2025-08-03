@@ -144,7 +144,7 @@ public class CustomCursor : MonoBehaviour
         if (lastEventObj != null)
         {
             ExecuteEvents.Execute(lastEventObj, eventData, ExecuteEvents.pointerClickHandler);
-            //Debug.Log(lastEventObj);
+            Debug.Log(lastEventObj);
 
             Vector3 soundPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 1f));
 
