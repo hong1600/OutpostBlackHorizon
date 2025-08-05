@@ -1396,9 +1396,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6800495055880068307}
-  - {fileID: 6325429570439306299}
-  - {fileID: 2693386954349939794}
   - {fileID: 1288473803331508097}
+  - {fileID: 2693386954349939794}
+  - {fileID: 6325429570439306299}
   m_Father: {fileID: 905301434580326738}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2892,8 +2892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0101877cd8c20d74293b825a85d34df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modeDropdown: {fileID: 8532862706213748361}
-  modeText: {fileID: 8144780609604790411}
+  labelText: {fileID: 0}
 --- !u!1 &2826502723034030141
 GameObject:
   m_ObjectHideFlags: 0
@@ -3061,8 +3060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0101877cd8c20d74293b825a85d34df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modeDropdown: {fileID: 7288877282711765359}
-  modeText: {fileID: 569080695503961542}
+  labelText: {fileID: 0}
 --- !u!1 &2866696479578356927
 GameObject:
   m_ObjectHideFlags: 0
@@ -4793,8 +4791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435a758ef9fe9ad49858f3bfecae2d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resDropdown: {fileID: 7441781271432994566}
-  resText: {fileID: 4475991004542542608}
+  labelText: {fileID: 0}
 --- !u!1 &4048315712309167672
 GameObject:
   m_ObjectHideFlags: 0
@@ -7176,8 +7173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7480def8842b27a4699a0724fdcbde24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  qualDropdown: {fileID: 6607020671226086207}
-  qualText: {fileID: 2760842822139423539}
+  labelText: {fileID: 0}
 --- !u!1 &6601050716376805896
 GameObject:
   m_ObjectHideFlags: 0
@@ -7268,8 +7264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7480def8842b27a4699a0724fdcbde24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  qualDropdown: {fileID: 4496819055419710421}
-  qualText: {fileID: 5079994084848894443}
+  labelText: {fileID: 0}
 --- !u!1 &6612867860451278365
 GameObject:
   m_ObjectHideFlags: 0
@@ -9077,8 +9072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435a758ef9fe9ad49858f3bfecae2d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resDropdown: {fileID: 8284927148836669990}
-  resText: {fileID: 5389201280258930038}
+  labelText: {fileID: 0}
 --- !u!1 &8101235532689657245
 GameObject:
   m_ObjectHideFlags: 0

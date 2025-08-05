@@ -21,8 +21,6 @@ public class CustomDropdown : MonoBehaviour
     private void Start()
     {
         CreateOption();
-
-        labelText.text = "Ã¢¸ðµå";
     }
 
     public void ClickDropdown()

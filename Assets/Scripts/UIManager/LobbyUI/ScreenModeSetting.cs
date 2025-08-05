@@ -6,10 +6,22 @@ using UnityEngine.UI;
 
 public class ScreenModeSetting : MonoBehaviour
 {
-    [SerializeField] CustomDropdown dropDown;
+    [SerializeField] CustomDropdown dropdown;
+    [SerializeField] ResolutionSetting resolutionSetting;
+
+    [SerializeField] TextMeshProUGUI labelText;
+
+    private void Start()
+    {
+        labelText.text = "전체화면";
+
+        dropdown.onOptionSelectedEvent.AddListener(SetFullScreen);
+    }
 
     public void SetFullScreen(int _index)
     {
+        Debug.Log(_index);
+
         if (_index == 0)
         {
             Screen.fullScreen = false;
@@ -19,8 +31,13 @@ public class ScreenModeSetting : MonoBehaviour
             Screen.fullScreen = true;
         }
 
-        Resolution res = Screen.currentResolution;
-        Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+        StartCoroutine(ApplyResolutionAfterFullscreenChange());
+    }
+
+    IEnumerator ApplyResolutionAfterFullscreenChange()
+    {
+        yield return null;
+        resolutionSetting.ReapplyCurrentResolution();
     }
 }
 

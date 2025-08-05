@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class QualitySetting : MonoBehaviour
 {
+    [SerializeField] CustomDropdown dropdown;
+
+    [SerializeField] TextMeshProUGUI labelText;
+
     List<string> qualOptionList = new List<string>()
     {
         "낮음", "중간", "높음", "매우높음"
@@ -12,9 +16,9 @@ public class QualitySetting : MonoBehaviour
 
     private void Start()
     {
-        QualitySettings.SetQualityLevel(3);
+        labelText.text = qualOptionList[2];
 
-        int curQual = QualitySettings.GetQualityLevel() -1;
+        dropdown.onOptionSelectedEvent.AddListener(SetQuality);
     }
 
     public void SetQuality(int _index)
