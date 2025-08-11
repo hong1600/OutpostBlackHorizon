@@ -78,29 +78,6 @@ public abstract class ProjectileBase : MonoBehaviour
         {
             ReturnPool();
         }
-
-        if (pv.IsMine)
-        {
-            syncTimer += Time.deltaTime;
-
-            if (syncTimer >= syncRate)
-            {
-                syncTimer = 0;
-                pv.RPC(nameof(RPCMove), RpcTarget.Others, transform.position, transform.rotation);
-            }
-        }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 20f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, Time.deltaTime * 20f);
-        }
-    }
-
-    [PunRPC]
-    private void RPCMove(Vector3 _pos, Quaternion _rot)
-    {
-        targetPos = _pos;
-        targetRot = _rot;
     }
 
     protected abstract void ReturnPool();

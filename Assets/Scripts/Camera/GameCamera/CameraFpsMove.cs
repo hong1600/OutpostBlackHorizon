@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,10 @@ public class CameraFpsMove : MonoBehaviour
     GameObject playerObj;
     [SerializeField] float mouseSpeed = 2f;
     float verticalRotation = 0f;
+
+    float walkFOV = 60f;
+    float runFOV = 70f;
+    float duration = 0.12f;
 
     private void Awake()
     {
@@ -46,6 +51,18 @@ public class CameraFpsMove : MonoBehaviour
             verticalRotation -= mouseY * mouseSpeed;
             verticalRotation = Mathf.Clamp(verticalRotation, -60f, 60f);
             mainCam.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+        }
+    }
+
+    public void SetRunFOV(bool _isRun)
+    {
+        if (_isRun)
+        {
+            mainCam.DOFieldOfView(runFOV, duration).SetEase(Ease.OutSine);
+        }
+        else
+        {
+            mainCam.DOFieldOfView(walkFOV, duration).SetEase(Ease.OutSine);
         }
     }
 }

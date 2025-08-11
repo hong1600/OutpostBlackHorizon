@@ -17,12 +17,13 @@ public class CustomCursor : MonoBehaviour
     private void Awake()
     {
         InputManager.instance.cursor = this;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         InputManager.instance.onInputMouse += CheckUIOrObj;
         InputManager.instance.onLeftClickUp += ClickMouseEvent;
 
@@ -38,38 +39,31 @@ public class CustomCursor : MonoBehaviour
 
     private void UpdateCursorLock()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            if (Cursor.visible == true)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = false;
+            }
         }
     }
 
     private void MoveMouseCursor()
     {
-        if(Cursor.lockState == CursorLockMode.Locked) 
-        {
-            float mouseX = Input.GetAxis("Mouse X") * mouseSpeed;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSpeed;
-
-            mousePos += new Vector2(mouseX, mouseY);
-            mousePos.x = Mathf.Clamp(mousePos.x, 0, Screen.width);
-            mousePos.y = Mathf.Clamp(mousePos.y, 0, Screen.height);
-
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                cursorImg.canvas.transform as RectTransform,
-                mousePos,
-                cursorImg.canvas.worldCamera,
-                out Vector2 localPoint
-            );
-            cursorImg.rectTransform.localPosition = localPoint;
-        }
+        mousePos = Input.mousePosition;
+        
+        mousePos.x = Mathf.Clamp(mousePos.x, 0, Screen.width);
+        mousePos.y = Mathf.Clamp(mousePos.y, 0, Screen.height);
+        
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            cursorImg.canvas.transform as RectTransform,
+            mousePos,
+            cursorImg.canvas.worldCamera,
+            out Vector2 localPoint
+        );
+        
+        cursorImg.rectTransform.localPosition = localPoint;
     }
 
     private void CheckUIOrObj()
@@ -143,10 +137,8 @@ public class CustomCursor : MonoBehaviour
 
         if (lastEventObj != null)
         {
-            ExecuteEvents.Execute(lastEventObj, eventData, ExecuteEvents.pointerClickHandler);
-            Debug.Log(lastEventObj);
-
-            Vector3 soundPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 1f));
+            //ExecuteEvents.Execute(lastEventObj, eventData, ExecuteEvents.pointerClickHandler);
+            //Debug.Log(lastEventObj);
 
             if (lastEventObj.TryGetComponent<Button>(out Button button))
             {
@@ -159,7 +151,6 @@ public class CustomCursor : MonoBehaviour
             {
                 AudioManager.instance.PlaySfxUI(ESfx.CLICK);
             }
-
         }
     }
 

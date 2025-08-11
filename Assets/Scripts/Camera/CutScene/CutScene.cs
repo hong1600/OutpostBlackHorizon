@@ -17,9 +17,12 @@ public class CutScene : MonoBehaviour
     [SerializeField] List<MonoBehaviour> cutSceneList = new List<MonoBehaviour>();
     Dictionary<ECutScene, ICutScene> cutSceneDic = new Dictionary<ECutScene, ICutScene>();
 
+    CameraFpsZoom zoom;
+
     private void Start()
     {
         AddCutScene();
+        zoom = CameraManager.instance.CameraFpsZoom;
     }
 
     private void AddCutScene()
@@ -43,6 +46,11 @@ public class CutScene : MonoBehaviour
         {
             ICutScene iCutScene = cutSceneDic[_eCutScene];
             iCutScene.Play();
+        }
+
+        if (zoom.isZoom)
+        {
+            zoom.ZoomCamera();
         }
     }
 

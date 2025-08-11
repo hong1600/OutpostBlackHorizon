@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public abstract class BuildBase : MonoBehaviour
@@ -249,11 +250,14 @@ public abstract class BuildBase : MonoBehaviour
     {
         box.isTrigger = false;
 
+        AudioManager.instance.PlaySfx(ESfx.BUILD, previewObj.transform.position, null);
+
         Destroy(previewObj);
 
         previewObj = null;
 
         goldCoin.UseGold(cost);
+
     }
 
     public void CancleBuild()

@@ -72,11 +72,19 @@ public class StartDropshipCut : MonoBehaviour
 
         isArrive = true;
 
+        if (!PhotonNetwork.InRoom)
+        {
+            GameManager.instance.PlayerSpawner.SpawnPlayer();
+        }
+
         yield return new WaitForSeconds(2);
 
         StartCoroutine(StartOpenHatch());
 
-        PhotonManager.instance.PhotonMaching.ArriveDropship();
+        if(PhotonNetwork.InRoom) 
+        {
+            PhotonManager.instance.PhotonMaching.ArriveDropship();
+        }
     }
 
     IEnumerator StartMoveToTarget(Transform _target)
@@ -102,7 +110,7 @@ public class StartDropshipCut : MonoBehaviour
 
     IEnumerator StartOpenHatch()
     {
-        while (isWaiting) 
+        while (isWaiting && PhotonNetwork.InRoom) 
         {
             yield return null;
         }

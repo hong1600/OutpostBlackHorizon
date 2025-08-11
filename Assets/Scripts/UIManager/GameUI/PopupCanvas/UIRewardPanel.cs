@@ -91,6 +91,8 @@ public class UIRewardPanel : MonoBehaviour
     {
         GameManager.instance.ViewState.SwitchNone();
 
+        AudioManager.instance.PlayBgm(EBgm.FINISH);
+
         if (DataManager.instance.UserDataLoader.curUserData != null)
         {
             userNameText.text = DataManager.instance.UserDataLoader.curUserData.userName;

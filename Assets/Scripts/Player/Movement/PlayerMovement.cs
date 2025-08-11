@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    protected InputManager inputManager;
-    protected PlayerManager playerManager;
-    protected PlayerStatus playerStatus;
     protected Camera mainCam;
     protected Rigidbody rigid;
     protected CapsuleCollider cap;
+
+    protected InputManager inputManager;
+    protected PlayerManager playerManager;
+    protected PlayerStatus playerStatus;
+    protected CameraFpsMove cameraFpsMove;
+    protected CameraFpsZoom cameraFpsZoom;
 
     public bool isMove;
     [SerializeField] protected float walkSpeed = 5f;
@@ -19,27 +22,26 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] protected float runInterval = 0.4f;
     protected float footstepTimer = 0f;
     protected Vector3 moveDir;
+    protected internal bool isRun = false;
+    protected float moveX;
+    protected float moveZ;
 
     [SerializeField] protected float energyInterval = 0.1f;
     [SerializeField] protected float energyRecovery = 30;
     protected float energyTimer;
     protected bool isCanRun = true;
+    bool prevRunState = false;
 
     [SerializeField] protected float jumpForce = 5f;
     [SerializeField] protected int jumpCount = 0;
+    protected bool isJump = false;
 
     [SerializeField] protected float gravity = -9.81f;
     [SerializeField] protected float fallGravity = 0.5f;
     [SerializeField] protected float maxFallSpeed = 50f;
+    protected internal bool isGround = false;
 
     [SerializeField] protected float slopeLimit = 45f;
-
-    [SerializeField] protected internal bool isGround = false;
-    [SerializeField] protected internal bool isRun = false;
-    [SerializeField] protected bool isJump = false;
-
-    protected float moveX;
-    protected float moveZ;
 
     protected virtual void Awake()
     {
@@ -53,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
         inputManager = InputManager.instance;
         playerManager = GetComponent<PlayerManager>();
         playerStatus = playerManager.playerStatus;
+        cameraFpsMove = CameraManager.instance.CameraFpsMove;
+        cameraFpsZoom = CameraManager.instance.CameraFpsZoom;
     }
 
     protected virtual void Update()
@@ -100,7 +104,6 @@ public class PlayerMovement : MonoBehaviour
             moveDir = cameraRot * inputDir;
 
             float speed = isRun ? runSpeed : walkSpeed;
-
             rigid.velocity = new Vector3(moveDir.x * speed, rigid.velocity.y, moveDir.z * speed);
 
             if (isGround)
@@ -124,6 +127,12 @@ public class PlayerMovement : MonoBehaviour
         {
             playerManager.anim.SetFloat("Horizontal", moveX);
             playerManager.anim.SetFloat("Vertical", moveZ);
+        }
+
+        if (isRun != prevRunState)
+        {
+            prevRunState = isRun;
+            cameraFpsMove.SetRunFOV(isRun);
         }
     }
 
@@ -181,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Run()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && playerStatus.curEnergy > 0 && isCanRun)
+        if (Input.GetKey(KeyCode.LeftShift) && playerStatus.curEnergy > 0 && isCanRun && !cameraFpsZoom.isZoom)
         {
             isRun = true;
 

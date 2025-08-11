@@ -15,6 +15,8 @@ public class InputManager : Singleton<InputManager>
     public event Action onInputB;
     public event Action onInputZ;
     public event Action onInputX;
+    public event Action<int> onInput1;
+    public event Action<int> onInput2;
 
     public FieldSelector fieldSelector;
     public CustomCursor cursor;
@@ -48,6 +50,8 @@ public class InputManager : Singleton<InputManager>
         InputB();
         InputX();
         InputZ();
+        Input1();
+        Input2();
     }
 
     public void LockInput()
@@ -150,6 +154,22 @@ public class InputManager : Singleton<InputManager>
         if(Input.GetKeyDown(KeyCode.Z)) 
         {
             onInputZ?.Invoke();
+        }
+    }
+
+    private void Input1()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1)) 
+        {
+            onInput1?.Invoke((int)EPlayerWeapon.RIFLE);
+        }
+    }
+
+    private void Input2()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha2)) 
+        {
+            onInput2?.Invoke((int)EPlayerWeapon.PISTOL);
         }
     }
 }

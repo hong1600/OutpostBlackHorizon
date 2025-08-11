@@ -19,29 +19,6 @@ public class CameraManager : Singleton<CameraManager>
         base.Awake();
     }
 
-    private void Update()
-    {
-        CursorLock();
-    }
-
-    private void CursorLock()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (Cursor.lockState == CursorLockMode.None)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
-        }
-    }
-
     public CameraFpsMove CameraFpsMove { get { return cameraFpsMove; } }
     public CameraFpsShake CameraFpsShake { get { return cameraFpsShake; } }
     public CameraFpsZoom CameraFpsZoom { get { return cameraFpsZoom; } }

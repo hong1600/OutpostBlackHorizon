@@ -35,6 +35,7 @@ public class ViewState : MonoBehaviour
         topComponent.Add(CameraManager.instance.CameraTopZoom);
 
         turretComponent.Add(CameraManager.instance.CameraTurretMove);
+
     }
 
     private void InitPlayer()
@@ -90,6 +91,7 @@ public class ViewState : MonoBehaviour
             rifle.SetActive(true);
         }
 
+        Cursor.lockState = CursorLockMode.Locked;
         GameUI.instance.SwitchFps();
     }
 
@@ -111,6 +113,7 @@ public class ViewState : MonoBehaviour
             rifle.SetActive(false);
         }
 
+        Cursor.lockState = CursorLockMode.None;
         GameUI.instance.SwitchTop();
     }
 

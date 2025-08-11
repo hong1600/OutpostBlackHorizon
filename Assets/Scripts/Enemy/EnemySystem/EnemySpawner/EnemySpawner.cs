@@ -8,9 +8,11 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : MonoBehaviour
 {
     protected Terrain terrain;
-    IEnemyPool enemyPool;
-    Round round;
+
     protected EnemyFactory enemyFactory;
+    Round round;
+
+    IEnemyPool enemyPool;
 
     public Vector3[] enemySpawnPos { get; private set; } = new Vector3[4];
     [SerializeField] protected List<Transform> enemySpawnPointList;

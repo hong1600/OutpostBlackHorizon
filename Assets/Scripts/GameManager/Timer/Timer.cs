@@ -30,7 +30,7 @@ public class Timer : MonoBehaviour
         enemySpawner = EnemyManager.instance.EnemySpawner;
         waveBossSpawner = EnemyManager.instance.WaveBossSpawner;
 
-        sec = 38f;
+        sec = 28f;
         maxSec = sec;
 
         isTimerRunning = true;
@@ -95,10 +95,12 @@ public class Timer : MonoBehaviour
         isSpawnTime = !isSpawnTime;
         sec = spawnTime;
         maxSec = spawnTime;
+
         if (round.CurRound != 0)
         {
             enemySpawner.IsSpawn = true;
         }
+
         round.increaseRound(1);
         round.RoundCheck();
         onRestTime?.Invoke();

@@ -12,6 +12,12 @@ public enum EEnemyAI
     RESET,
 }
 
+public enum EPlayerWeapon
+{
+    RIFLE,
+    PISTOL
+}
+
 public enum EEnemyAnim
 {
     IDLE,
@@ -129,8 +135,8 @@ public enum EBgm
     LOBBYWAITING,
     GAMESTART,
     GAME,
-    WATER,
-    BOSSROUND
+    BOSSROUND,
+    FINISH
 }
 
 public enum ESfx
@@ -146,7 +152,8 @@ public enum ESfx
     GRENADETURRET,
     UFOLAND,
     BOSSLASER,
-    AIRSKRIKE
+    AIRSKRIKE,
+    BUILD
 }
 
 public enum EGameResource

@@ -9,6 +9,7 @@ public class PlayerCombat : MonoBehaviour
 
     protected IBulletPool bulletPool;
     protected CameraFpsShake cameraFpsShake;
+    CameraFpsZoom cameraFpsZoom;
     protected GunMovement gunMovement;
 
     public event Action onUseBullet;
@@ -25,7 +26,10 @@ public class PlayerCombat : MonoBehaviour
     {
         bulletPool = Shared.Instance.poolManager.BulletPool;
         cameraFpsShake = CameraManager.instance.CameraFpsShake;
+        cameraFpsZoom = CameraManager.instance.CameraFpsZoom;
         gunMovement = gunManager.GunMovement;
+
+        InputManager.instance.onInput1 += SwapWeapon;
     }
 
     protected virtual void Update()
@@ -50,7 +54,11 @@ public class PlayerCombat : MonoBehaviour
         muzzleFlash.SetActive(true);
 
         gunManager.UseBullet();
-        gunMovement.RecoilGun();
+
+        if (!cameraFpsZoom.isZoom)
+        {
+            gunMovement.RecoilGun();
+        }
 
         GameObject obj = bulletPool.FindBullet(EBullet.PLAYERBULLET, fireTrs.position, fireTrs.rotation);
         PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
@@ -96,5 +104,20 @@ public class PlayerCombat : MonoBehaviour
     protected void InvokeUseBullet()
     {
         onUseBullet?.Invoke();
+    }
+
+    private void SwapWeapon(int _weaponIndex)
+    {
+        EPlayerWeapon weapon = (EPlayerWeapon)_weaponIndex;
+
+        switch (weapon) 
+        {
+            case EPlayerWeapon.RIFLE:
+
+                break;
+            case EPlayerWeapon.PISTOL:
+
+                break;
+        }
     }
 }
