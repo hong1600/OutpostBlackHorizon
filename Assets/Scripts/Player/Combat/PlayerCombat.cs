@@ -1,3 +1,5 @@
+using DG.Tweening;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +24,20 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] protected float bulletSpd;
     [SerializeField] protected float grenadeSpd;
 
+    public GameObject curWeapon;
+
+    [SerializeField] Vector3 showPos;
+    [SerializeField] Vector3 hideOffset;
+    float swapDuration = 0.15f;
+    public bool isSwapping { get; private set; } = false;
+
+    public List<GameObject> weaponList = new List<GameObject>();
+
+    private void Awake()
+    {
+        curWeapon = weaponList[0];
+    }
+
     private void Start()
     {
         bulletPool = Shared.Instance.poolManager.BulletPool;
@@ -30,6 +46,7 @@ public class PlayerCombat : MonoBehaviour
         gunMovement = gunManager.GunMovement;
 
         InputManager.instance.onInput1 += SwapWeapon;
+        InputManager.instance.onInput2 += SwapWeapon;
     }
 
     protected virtual void Update()
@@ -108,16 +125,51 @@ public class PlayerCombat : MonoBehaviour
 
     private void SwapWeapon(int _weaponIndex)
     {
+        if (isSwapping || gunManager.isReloading) return;
+
+        if (cameraFpsZoom.isZoom)
+        {
+            cameraFpsZoom.ZoomCamera();
+        }
+
         EPlayerWeapon weapon = (EPlayerWeapon)_weaponIndex;
 
         switch (weapon) 
         {
             case EPlayerWeapon.RIFLE:
-
+                StartCoroutine(StartSwapWeapon(weaponList[0], weaponList[1]));
                 break;
             case EPlayerWeapon.PISTOL:
-
+                StartCoroutine(StartSwapWeapon(weaponList[1], weaponList[0]));
                 break;
         }
+    }
+
+    IEnumerator StartSwapWeapon(GameObject _newWeapon, GameObject _oldWeapon)
+    {
+        if (_newWeapon == null || _oldWeapon == null) yield break;
+
+        isSwapping = true;
+
+        _oldWeapon.transform.DOKill(true);
+        _newWeapon.transform.DOKill(true);
+
+        Vector3 hidePos = _oldWeapon.transform.position + hideOffset;
+
+        Tween t = _oldWeapon.transform.DOLocalMove(hidePos, swapDuration).SetEase(Ease.InSine);
+
+        yield return t.WaitForCompletion();
+
+        _oldWeapon.SetActive(false);
+
+        _newWeapon.SetActive(true);
+
+        t = _newWeapon.transform.DOLocalMove(showPos, swapDuration).SetEase(Ease.OutSine);
+
+        yield return t.WaitForCompletion();
+
+        curWeapon = _newWeapon;
+
+        isSwapping = false;
     }
 }

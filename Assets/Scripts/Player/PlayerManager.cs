@@ -118,7 +118,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-
     private void ChangeAnim(EPlayer _ePlayer)
     {
         if (curPlayerState == EPlayer.DIE) return;
@@ -135,5 +134,4 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
     }
-
 }

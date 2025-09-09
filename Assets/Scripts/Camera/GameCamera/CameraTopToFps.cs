@@ -4,6 +4,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 public class CameraTopToFps : MonoBehaviour
@@ -12,11 +13,14 @@ public class CameraTopToFps : MonoBehaviour
 
     GameManager gameManager;
     CameraFpsShake cameraShake;
+    PlayerCombat playerCombat;
+
     GameObject playerObj;
     Transform playerEyeTrs;
-    GameObject rifle;
 
     [SerializeField] Transform topTrs;
+
+    List<GameObject> weaponList = new List<GameObject>();
 
     public bool isArrive { get; private set; }
 
@@ -43,7 +47,8 @@ public class CameraTopToFps : MonoBehaviour
     {
         playerObj = gameManager.PlayerSpawner.player;
         playerEyeTrs = gameManager.PlayerSpawner.player.GetComponent<PlayerManager>().playerEyeTrs;
-        rifle = gameManager.PlayerSpawner.player.GetComponent<PlayerManager>().Rifle;
+        playerCombat = playerObj.GetComponent<PlayerCombat>();
+        weaponList = playerCombat.weaponList;
     }
 
     private void Update()
@@ -72,7 +77,11 @@ public class CameraTopToFps : MonoBehaviour
         }
         else if(_eViewState == EViewState.TOP)
         {
-            rifle.transform.SetParent(playerObj.transform);
+            for (int i = 0; i < weaponList.Count; i++)
+            {
+                weaponList[i].transform.SetParent(playerObj.transform);
+            }
+
             StartCoroutine(StartMoveCamera(topTrs.position, topTrs.transform.rotation, _eViewState, 1.5f));
         }
         else
@@ -83,7 +92,10 @@ public class CameraTopToFps : MonoBehaviour
 
     public void SetInTurretMode(Vector3 _pos, Quaternion _rot, EViewState _eViewState)
     {
-        rifle.transform.SetParent(playerObj.transform);
+        for (int i = 0; i < weaponList.Count; i++)
+        {
+            weaponList[i].transform.SetParent(playerObj.transform);
+        }
 
         StartCoroutine(StartMoveCamera(_pos, _rot, _eViewState, 0.4f));
     }
@@ -102,7 +114,7 @@ public class CameraTopToFps : MonoBehaviour
 
         if(_eViewState != EViewState.TURRET) 
         {
-            SwitchMode();
+            SwitchMode(playerCombat.curWeapon);
         }
         else
         {
@@ -117,16 +129,16 @@ public class CameraTopToFps : MonoBehaviour
     }
 
 
-    private void SwitchMode()
+    private void SwitchMode(GameObject _curWeapon)
     {
         bool isFPS = gameManager.ViewState.CurViewState == EViewState.FPS;
 
         if(isFPS) 
         {
-            rifle.transform.SetParent(mainCam.transform, true);
-            rifle.transform.localPosition = new Vector3(0.07f, -0.27f, 0.29f);
-            rifle.transform.localRotation = Quaternion.identity;
-            rifle.GetComponent<GunMovement>().InitPos();
+            _curWeapon.transform.SetParent(mainCam.transform, true);
+            _curWeapon.transform.localPosition = new Vector3(0.07f, -0.27f, 0.29f);
+            _curWeapon.transform.localRotation = Quaternion.identity;
+            _curWeapon.GetComponent<GunMovement>().InitPos();
         }
         else
         {

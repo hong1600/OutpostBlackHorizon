@@ -32,9 +32,6 @@ public abstract class ProjectileBase : MonoBehaviour
     Vector3 targetPos;
     Quaternion targetRot;
 
-    float syncRate = 0.05f;
-    float syncTimer = 0f;
-
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
